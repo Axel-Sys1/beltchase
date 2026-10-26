@@ -2,7 +2,7 @@
 import { resetAll, update } from '../store.js';
 import { claimBonus, currentPlayer, login, logout, register, renamePlayer } from '../services/players.js';
 import { acceptOdds, clearSlip, placeSlip, quickStake, removeSelection, setSlipMode, setStake, toggleSelection } from '../services/bets.js';
-import { fastForward, refreshReal } from '../services/matches.js';
+import { fastForward, refreshReal, syncAll } from '../services/matches.js';
 import { createLeague, joinLeague, leaveLeague, noteLeagueCreated } from '../services/leagues.js';
 import { go, render } from './app.js';
 import { betStamp, flyToSlip, replay, toast } from './effects.js';
@@ -24,6 +24,33 @@ import { shareLeague } from '../services/invite.js';
 import { adsLeft, rewardAdWatched } from '../services/rewardAd.js';
 import { watchRewardAd } from './rewardAd.js';
 import { openCookieSettings } from './ads.js';
+import { readFights } from '../providers/beltchase.js';
+import { saveFight, deleteFight } from '../services/cloud.js';
+import { uid } from '../util.js';
+
+// ─── Page admin : combats saisis à la main ───────────────────────────────────
+async function loadAdminFights() {
+  if (ui.adminLoading) return;
+  ui.adminLoading = true;
+  try {
+    ui.adminFights = await readFights(Date.now() - 60 * 86_400_000);
+  } catch (err) {
+    ui.adminFights = [];
+    toast(`Combats illisibles : ${err.message}`, 'error');
+  } finally {
+    ui.adminLoading = false;
+    render();
+  }
+}
+ui.adminLoad = loadAdminFights;
+
+// Après une écriture : liste relue, et le jeu reprend tout de suite les combats saisis.
+async function afterAdminWrite() {
+  ui.adminFights = null;
+  await loadAdminFights();
+  syncAll({ force: true, only: (p) => p.id === 'bc' });
+}
+const adminFight = (id) => (ui.adminFights || []).find((f) => f.id === id);
 
 const actions = {
   login: (el) => login(el.dataset.id),
@@ -64,6 +91,18 @@ const actions = {
   },
   'cloud-mode': (el) => { cloud.mode = el.dataset.mode === 'signup' ? 'signup' : 'login'; render(); },
   'cloud-google': () => signInWithGoogle(),
+  'admin-edit': (el) => { ui.adminEdit = adminFight(el.dataset.id) || null; render(); window.scrollTo({ top: 0, behavior: 'smooth' }); },
+  'admin-cancel': () => { ui.adminEdit = null; render(); },
+  'admin-refresh': () => { ui.adminFights = null; loadAdminFights(); },
+  'admin-delete': async (el) => {
+    const f = adminFight(el.dataset.id);
+    if (!f) return;
+    const ok = await confirmDialog({ title: 'Supprimer ce combat ?', message: `${f.home.name} vs ${f.away.name} : les paris placés dessus seront remboursés.`, confirmLabel: 'Supprimer', danger: true });
+    if (!ok) return;
+    await deleteFight(f.id);
+    toast('Combat supprimé.', 'info');
+    await afterAdminWrite();
+  },
   'cookie-settings': () => {
     if (!openCookieSettings()) toast('Aucun cookie publicitaire pour le moment : BeltChase garde seulement ta partie et ta connexion, indispensables au jeu.', 'info');
   },
@@ -237,6 +276,48 @@ const actions = {
 };
 
 const forms = {
+  'fight-save': async (data, form) => {
+    const prev = data.get('id') ? adminFight(data.get('id')) : null;
+    const startsAt = new Date(String(data.get('startsAt'))).getTime();
+    if (!Number.isFinite(startsAt)) throw new Error('Date invalide.');
+    const name = (k) => String(data.get(k) || '').trim().replace(/\s+/g, ' ');
+    const record = (k) => name(k) || undefined;
+    if (!name('home') || !name('away')) throw new Error('Il faut les deux combattants.');
+    const f = {
+      ...(prev || {}),
+      id: prev?.id || uid('f'),
+      sport: String(data.get('sport')),
+      event: name('event'),
+      label: name('label') || undefined,
+      home: { name: name('home'), record: record('homeRecord') },
+      away: { name: name('away'), record: record('awayRecord') },
+      startsAt,
+      rounds: Math.max(0, Math.min(12, Number(data.get('rounds')) || 0)),
+      p1: Math.max(0.05, Math.min(0.95, (Number(data.get('p1')) || 50) / 100)),
+      status: prev?.status || 'scheduled',
+    };
+    await saveFight(f);
+    ui.adminDraft = { event: f.event, sport: f.sport, startsAt: String(data.get('startsAt')), rounds: f.rounds };
+    ui.adminEdit = null;
+    form.reset();
+    toast(prev ? 'Combat modifié.' : `Combat ajouté : ${f.home.name} vs ${f.away.name}.`, 'success');
+    await afterAdminWrite();
+  },
+  'fight-result': async (data, form) => {
+    const f = adminFight(form.dataset.id);
+    if (!f) return;
+    const outcome = String(data.get('outcome') || '');
+    if (!outcome) throw new Error('Choisis le vainqueur.');
+    const method = String(data.get('method') || '');
+    const round = Number(data.get('round')) || null;
+    const next = outcome === 'void'
+      ? { ...f, status: 'void', outcome: null, result: null }
+      : { ...f, status: 'finished', outcome, result: outcome !== 'X' && method ? { method, round: method === 'DEC' ? f.rounds || null : round } : null };
+    if (next.result && method !== 'DEC' && f.rounds && !round) throw new Error('Choisis le round de l\'arrêt.');
+    await saveFight(next);
+    toast('Résultat enregistré : les paris seront réglés dans quelques minutes.', 'success');
+    await afterAdminWrite();
+  },
   referral: async (data) => {
     const name = await applyReferral(data.get('pseudo'));
     toast(`Parrain enregistré : ${name}. +${REWARD} Gold !`, 'success');

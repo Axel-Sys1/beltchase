@@ -1650,3 +1650,29 @@ a.ad-ph:focus-visible { outline-offset: -2px; }
 .odd.odd-sm { padding: 7px 8px; min-height: 0; }
 .odd.odd-sm .odd-label { font-size: 11px; }
 .odd.odd-sm .odd-val { font-size: 16px; }
+
+/* ---------- Page admin des combats (js/ui/screens/admin.js) ---------- */
+.admin-link { text-decoration: none; color: var(--text); border-color: rgba(var(--accent-rgb), 0.5); margin-bottom: 14px; }
+.admin-link strong { display: inline-flex; align-items: center; gap: 6px; }
+.admin-link svg { width: 16px; height: 16px; color: var(--accent); }
+.admin-form { display: grid; gap: 12px; margin: 14px 0; }
+.admin-form h2 { margin: 0; font: italic 800 22px/1 var(--display); text-transform: uppercase; }
+.admin-grid { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); }
+.admin-grid label { display: grid; gap: 4px; font-size: 12px; font-weight: 700; color: var(--muted); }
+.admin-grid input, .admin-grid select, .admin-result select {
+  width: 100%; padding: 9px 10px; border-radius: 8px; border: 1px solid var(--line-2); background: var(--surface-2); color: var(--text); font: inherit; font-size: 14px;
+}
+.admin-hint { margin: 0; font-size: 12px; }
+.admin-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.admin-event { margin-bottom: 12px; }
+.admin-event h3 { margin: 0 0 8px; font: italic 800 19px/1.1 var(--display); text-transform: uppercase; }
+.admin-event ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.admin-fight { display: grid; gap: 6px; padding-top: 10px; border-top: 1px solid var(--line); }
+.admin-fight:first-child { border-top: 0; padding-top: 0; }
+.admin-fight-head { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; font-size: 14px; }
+.admin-fight-head small { color: var(--accent); font-weight: 700; }
+.admin-due { color: var(--accent); }
+.admin-result { display: flex; gap: 6px; flex-wrap: wrap; }
+.admin-result select { width: auto; flex: 1 1 120px; padding: 7px 8px; }
+.admin-row-actions { display: flex; gap: 4px; }
+.btn.btn-sm { padding: 7px 12px; font-size: 14px; }

@@ -3,7 +3,7 @@ import { escapeHtml, fmt, fmtOdds } from '../../util.js';
 import { BADGES } from '../../services/badges.js';
 import { coin, icons } from '../icons.js';
 import { renderAccountCard } from './account.js';
-import { cloud } from '../../services/cloud.js';
+import { cloud, isAdmin } from '../../services/cloud.js';
 import { ui } from '../uiState.js';
 import { REWARD, referralLink } from '../../services/referral.js';
 import { soundOn } from '../sounds.js';
@@ -90,6 +90,11 @@ function statsView(p) {
 
 function settingsView(p) {
   return `
+    ${isAdmin() ? `
+    <a class="card settings-row admin-link" href="#admin">
+      <div class="grow"><strong>${icons.crown} Admin des combats</strong><span class="muted">Ajouter des soirées (JJB, lutte, kick, ONE, ARES…) et saisir les résultats.</span></div>
+      <span aria-hidden="true">›</span>
+    </a>` : ''}
     ${pseudoCard(p)}
     ${referralCard(p)}
 

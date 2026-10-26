@@ -715,6 +715,21 @@ export async function signOutCloud() {
 // faire clignoter les écrans verrouillés. Service de compte injoignable : tout reste ouvert.
 export const isGuest = (s = getState()) => cloud.enabled && !cloud.user && (cloud.ready || !s.cloudUid);
 
+// ─── Admin : combats saisis à la main (providers/beltchase.js) ────────────────
+export const isAdmin = () => !!cloud.user?.email && (CONFIG.ADMIN_EMAILS || []).includes(cloud.user.email.toLowerCase());
+
+export async function saveFight(f) {
+  if (!isAdmin()) throw new Error('Réservé à l\'admin.');
+  const { F, db } = await sdk();
+  await F.setDoc(F.doc(db, 'fights', f.id), { data: JSON.stringify(f), startsAt: f.startsAt, updatedAt: F.serverTimestamp() });
+}
+
+export async function deleteFight(id) {
+  if (!isAdmin()) throw new Error('Réservé à l\'admin.');
+  const { F, db } = await sdk();
+  await F.deleteDoc(F.doc(db, 'fights', id));
+}
+
 // À appeler au démarrage. `notify(message, type)` affiche un message à l'utilisateur.
 export async function initCloud({ notify } = {}) {
   if (!cloud.enabled) return;

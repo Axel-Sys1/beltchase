@@ -2,6 +2,8 @@
 export const CONFIG = {
   STORAGE_KEY: 'goalz:v1',
   CONTACT_EMAIL: 'contact.goalzzbusiness@gmail.com', // pied de page et mentions légales
+  // Comptes admin (page #admin : combats saisis à la main). Doit correspondre aux règles Firestore.
+  ADMIN_EMAILS: ['axel.sirieys@gmail.com', 'contact.goalzzbusiness@gmail.com'],
   STARTING_BALANCE: 100,  // monnaie rare : on démarre petit et on gagne en pariant juste
   DAILY_BONUS: 50,
   MIN_STAKE: 1,

@@ -23,6 +23,7 @@ import { bonusFor, nextStreakDay } from '../services/daily.js';
 import { legalLinks } from './screens/legal.js';
 import { isGuest } from '../services/cloud.js';
 import { renderLocked } from './screens/onboarding.js';
+import { renderAdmin } from './screens/admin.js';
 
 const ROUTES = [
   { id: 'matchs', label: 'Combats', icon: 'ball', render: renderMatches },
@@ -31,6 +32,7 @@ const ROUTES = [
   { id: 'boutique', label: 'Boutique', icon: 'bag', render: renderShop, account: true },
   { id: 'classement', label: 'Rangs', icon: 'trophy', render: renderRanking, account: true },
   { id: 'profil', label: 'Profil', icon: 'user', render: renderProfile, account: true },
+  { id: 'admin', label: 'Admin', icon: 'crown', render: renderAdmin, hidden: true },
 ];
 
 export function currentRoute() {
@@ -83,7 +85,7 @@ const shellHtml = () => `
 
 function navHtml(route, p) {
   const guest = isGuest();
-  return ROUTES.map((r) => `
+  return ROUTES.filter((r) => !r.hidden).map((r) => `
     <a href="#${r.id}" class="nav-item ${r.id === route.id ? 'active' : ''}" ${r.id === route.id ? 'aria-current="page"' : ''}>
       <span class="nav-icon">${icons[r.icon]}${r.id === 'panier' && p.slip.length ? `<span class="nav-badge">${p.slip.length}</span>` : ''}${r.account && guest ? `<span class="nav-lock">${icons.lock}</span>` : ''}</span>
       <span>${r.label}</span>

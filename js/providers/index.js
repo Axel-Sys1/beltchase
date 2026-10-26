@@ -40,6 +40,7 @@ import { createFakeProvider } from './fakeProvider.js';
 import { createSnapshotProvider } from './snapshotProvider.js';
 import { createEspnProvider } from './espn/index.js';
 import { createBoxingProvider, createThrottle } from './thesportsdb/boxing.js';
+import { createBeltChaseProvider } from './beltchase.js';
 
 export const fakeProvider = createFakeProvider();
 export const snapshotProvider = createSnapshotProvider();
@@ -52,6 +53,7 @@ export function createLiveProviders({ getJson, unthrottled = false } = {}) {
   return [
     createEspnProvider(net),
     createBoxingProvider({ ...net, ...(unthrottled ? { throttle: createThrottle({ perMinute: 1e6, pauseMs: 0 }) } : {}) }),
+    createBeltChaseProvider(), // combats saisis à la main (page admin)
   ];
 }
 
