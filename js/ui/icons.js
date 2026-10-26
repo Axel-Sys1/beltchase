@@ -68,8 +68,8 @@ export const beltLogo = `<svg class="belt-logo" viewBox="0 0 64 64" width="24" h
   <path d="M32 22.5l2.9 5.9 6.5.9-4.7 4.6 1.1 6.4-5.8-3-5.8 3 1.1-6.4-4.7-4.6 6.5-.9z" fill="#fff7d6" stroke="#8a5e0f" stroke-width="0.8"/>
 </svg>`;
 
-// Ballon en boule de Noël (logo pendant Noël, à la place du ballon) : boule rouge brillante, motif du
-// ballon doré, attache dorée et son anneau.
+// Boule de Noël (logo pendant Noël, à la place de la ceinture) : boule rouge brillante, rubans et étoile
+// dorés, attache dorée et son anneau.
 export const baubleLogo = `<svg class="bauble-logo" viewBox="0 0 64 64" width="24" height="24" aria-hidden="true">
   <defs>
     <radialGradient id="bauble-red" cx="0.36" cy="0.34" r="0.75">
@@ -80,10 +80,8 @@ export const baubleLogo = `<svg class="bauble-logo" viewBox="0 0 64 64" width="2
   <rect x="25" y="11" width="14" height="7" rx="2" fill="#f2c14e"/>
   <path d="M26 13.5h12" stroke="#b8862b" stroke-width="1.2"/>
   <circle cx="32" cy="39" r="22" fill="url(#bauble-red)"/>
-  <g fill="none" stroke="#ffd166" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round">
-    <path d="M32 31l7.6 5.5-2.9 9h-9.4l-2.9-9z" fill="#ffd166"/>
-    <path d="M32 17v14M39.6 36.5l11.6-3.8M36.7 45.5l7 9.6M27.3 45.5l-7 9.6M24.4 36.5l-11.6-3.8"/>
-  </g>
+  <path d="M11.5 36c13 5 28 5 41 0M10.5 44c14 5 29 5 43 0" fill="none" stroke="#ffd166" stroke-width="2.2" opacity="0.9"/>
+  <path d="M32 26.5l3.3 6.7 7.4 1.1-5.4 5.2 1.3 7.3-6.6-3.5-6.6 3.5 1.3-7.3-5.4-5.2 7.4-1.1z" fill="#ffd166" stroke="#b8862b" stroke-width="0.8"/>
   <ellipse cx="24" cy="29" rx="6" ry="3.6" fill="#fff" opacity="0.35" transform="rotate(-35 24 29)"/>
 </svg>`;
 
