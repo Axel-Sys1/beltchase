@@ -27,7 +27,8 @@
 // Règles maison : nul → 'X' (pas de cote X, donc remboursé par le cœur) ; no contest, combat annulé → 'void'.
 import { MIN } from '../../util.js';
 import { defaultGetJson, settleAll, etDay, etRange, parseDate, espnPhase, toInt, matchId, HOUR, DAY } from './common.js';
-import { americanToDecimal, combatProbs, fromBookmaker, fromProbabilities, parseRecord } from '../odds.js';
+import { americanToDecimal, combatProbs, devig, fromBookmaker, fromProbabilities, parseRecord } from '../odds.js';
+import { fightOdds } from '../../services/markets.js';
 
 const SITE = 'https://site.api.espn.com/apis/site/v2/sports/mma';
 const CORE = 'https://sports.core.api.espn.com/v2/sports/mma/leagues';
@@ -240,7 +241,17 @@ function finishText(resultName, status) {
   return r ? `${head} · R${r}` : head;
 }
 
-// Combat terminé → { status, outcome?, score } ; null s'il faut attendre (vainqueur ou méthode inconnus).
+// result.name de l'API core → méthode des paris (services/markets.js) ; null : disqualification,
+// méthode inconnue… (les paris méthode / round sont alors remboursés).
+export function methodCode(name) {
+  const n = String(name ?? '').toLowerCase();
+  if (n.includes('decision')) return 'DEC';
+  if (n.includes('submission')) return 'SUB';
+  if (n.includes('ko')) return 'KO';
+  return null;
+}
+
+// Combat terminé → { status, outcome?, score, result? } ; null s'il faut attendre (vainqueur ou méthode inconnus).
 // resultName vient de l'API core ; null si elle n'a pas répondu.
 export function finalState(bout, resultName) {
   const n = String(resultName ?? '').toLowerCase();
@@ -250,7 +261,10 @@ export function finalState(bout, resultName) {
   if (!pair) return null;
   const [a, b] = pair.map((c) => c.winner === true);
   if (a === b) return null;
-  return { status: 'finished', outcome: a ? '1' : '2', score: finishText(resultName, bout.status) };
+  const out = { status: 'finished', outcome: a ? '1' : '2', score: finishText(resultName, bout.status) };
+  const method = methodCode(resultName);
+  if (method) out.result = { method, round: toInt(bout.status?.period) || null };
+  return out;
 }
 
 // ─── Cotes ───────────────────────────────────────────────────────────────────
@@ -338,6 +352,8 @@ export function createMmaAdapter({ getJson = defaultGetJson, leagues = MMA_LEAGU
   function toMatch(row) {
     const { league, event: e, bout, pair, startsAt } = row;
     const [home, away] = pair.map(fighterInfo);
+    const rounds = toInt(bout.format?.regulation?.periods) || 3;
+    const win = row.odds || modelOdds(home, away);
     const m = {
       id: matchId(SPORT, league, boutKey(bout, pair)), // un combattant remplacé = un nouveau pari
       source: 'espn',
@@ -347,12 +363,13 @@ export function createMmaAdapter({ getJson = defaultGetJson, leagues = MMA_LEAGU
       home,
       away,
       startsAt,
-      odds: row.odds || modelOdds(home, away),
+      // Vainqueur (bookmaker ou modèle) + méthode et round de fin, estimés à partir du vainqueur.
+      odds: { ...win, ...fightOdds(SPORT, devig(win), rounds) },
       oddsSource: row.odds ? 'bookmaker' : 'model',
       status: 'scheduled',
       outcome: null,
       score: null,
-      meta: { adapter: SPORT, league, eventId: String(e.id), day: etDay(startsAt) },
+      meta: { adapter: SPORT, league, eventId: String(e.id), day: etDay(startsAt), rounds },
     };
     if (row.logo) m.competitionLogo = row.logo;
     const round = roundLabel(e, bout, pair);

@@ -7,6 +7,7 @@ export const ui = {
   installPrompt: null,   // proposition d'installation du navigateur (Android, ordinateur)
   profileTab: 'stats',   // stats | settings (Profil)
   challengesOpen: false,  // défis du jour dépliés sur l'écran Matchs
+  openMarkets: new Set(), // combats dont les paris méthode / round sont dépliés
   emailOpen: false,      // inscription : formulaire email déplié (Google en avant)
   shopTab: 'daily',      // boutique : daily (cartes du jour) | album | boost | style
   albumSet: null,        // sport affiché dans l'album (null : le premier, Foot)

@@ -109,7 +109,7 @@ const actions = {
     }
   },
   'filter-sport': (el) => { ui.sport = el.dataset.sport; ui.gender = 'all'; render(); window.scrollTo({ top: 0 }); },
-  'filter-gender': (el) => { ui.gender = el.dataset.gender; render(); },
+  'toggle-markets': (el) => { const id = el.dataset.match; if (ui.openMarkets.has(id)) ui.openMarkets.delete(id); else ui.openMarkets.add(id); render(); },
   'filter-day': (el) => { ui.day = el.dataset.day; render(); },
   'set-mode': (el) => {
     ui.sport = 'all';

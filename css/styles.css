@@ -1632,3 +1632,21 @@ a.ad-ph:focus-visible { outline-offset: -2px; }
 /* Logo BeltChase : ceinture un peu plus large que l'ancien ballon */
 .logo svg.belt-logo { width: 34px; height: 34px; margin: -4px 0; }
 .brand-big svg.belt-logo { width: 1.05em; height: 1.05em; }
+
+/* ---------- Paris méthode & round (services/markets.js) ---------- */
+.more-markets {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; margin-top: 8px; padding: 8px 10px;
+  border: 1px dashed var(--line-2); border-radius: 9px; background: transparent; color: var(--text); font-size: 13px; font-weight: 700; text-align: left;
+}
+.more-markets small { color: var(--muted); font-weight: 600; margin-left: 4px; }
+.more-markets b { color: var(--accent); }
+.more-markets.is-open { border-style: solid; border-color: rgba(var(--accent-rgb), 0.5); }
+.markets { display: grid; gap: 8px; margin-top: 8px; }
+.market-title { margin: 2px 0 0; font-size: 11px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.market-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.market-col { display: grid; gap: 6px; align-content: start; }
+.market-who { font: italic 800 14px/1 var(--display); text-transform: uppercase; color: var(--text); text-align: center; }
+.market-row { display: grid; gap: 6px; grid-template-columns: repeat(auto-fit, minmax(64px, 1fr)); }
+.odd.odd-sm { padding: 7px 8px; min-height: 0; }
+.odd.odd-sm .odd-label { font-size: 11px; }
+.odd.odd-sm .odd-val { font-size: 16px; }

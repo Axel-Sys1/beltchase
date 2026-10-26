@@ -11,6 +11,7 @@ import { simulateBots } from './bots.js';
 import { matchStatus, matchTitle } from './matchInfo.js';
 import { frenchTeamName } from '../countries.js';
 import { LIVE_SPORTS } from '../providers/liveOdds.js';
+import { isCombat } from '../sports.js';
 
 const HOUR = 60 * MIN;
 const RETRY_MS = 60_000;
@@ -28,10 +29,21 @@ let ready = false;
 
 // Choisit les sources (direct ou instantané) puis lance la première synchronisation.
 export async function startSync() {
+  retireOldSports();
   await initProviders();
   ready = true;
   emit();
   await syncAll();
+}
+
+// Passage à BeltChase (sports de combat seulement) : les matchs des autres sports pas encore réglés
+// sont annulés, leurs paris remboursés (même règle qu'un match reporté).
+function retireOldSports() {
+  update((s) => {
+    for (const m of Object.values(s.matches)) {
+      if (!isCombat(m.sport) && !isSettled(m)) applyUpdate(s, { matchId: m.id, status: 'void' }, { trusted: true });
+    }
+  });
 }
 
 export function realFeedState() {
@@ -109,6 +121,7 @@ async function syncProvider(p, force) {
 }
 
 function upsertMatch(s, incoming, p) {
+  if (!isCombat(incoming.sport)) return false; // ancien instantané : on ne garde que les combats
   const cur = s.matches[incoming.id];
   // La source d'origine est conservée : un match ESPN reste un match ESPN, même lu via l'instantané.
   const m = { outcome: null, score: null, meta: {}, ...incoming, source: cur?.source || incoming.source || p.id, real: !!p.real };
@@ -143,7 +156,7 @@ function applyUpdate(s, u, { trusted = false } = {}) {
   // car les sources publient parfois un statut erroné pendant quelques secondes.
   const terminal = (u.status === 'finished' && OUTCOMES.has(u.outcome)) || u.status === 'void';
   if (m.real && terminal && !trusted) {
-    const key = `${u.status}|${u.outcome ?? ''}|${u.score ?? ''}`;
+    const key = `${u.status}|${u.outcome ?? ''}|${u.score ?? ''}|${u.result?.method ?? ''}${u.result?.round ?? ''}`;
     const wall = Date.now();
     // Deux lectures identiques, espacées d'au moins CONFIRM_GAP_MS (deux requêtes du même
     // instant ne comptent que pour une).
@@ -160,7 +173,8 @@ function applyUpdate(s, u, { trusted = false } = {}) {
   if (u.status === 'finished' && OUTCOMES.has(u.outcome)) {
     // Nul sur un pari à 2 issues (MMA, boxe, basket…) : remboursé.
     const outcome = m.odds[u.outcome] ? u.outcome : 'void';
-    Object.assign(m, { status: 'finished', outcome, score: u.score ?? m.liveScore ?? m.score, liveScore: null, clock: null, finishedAt: settledAt });
+    // result : méthode et round du combat ({ method, round }), qui règlent les paris méthode / round.
+    Object.assign(m, { status: 'finished', outcome, result: u.result ?? m.result ?? null, score: u.score ?? m.liveScore ?? m.score, liveScore: null, clock: null, finishedAt: settledAt });
     delete m.pendingFinal;
     settleMatch(s, m);
     if (!m.real) simulateBots(s, 1);

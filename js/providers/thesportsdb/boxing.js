@@ -332,7 +332,8 @@ export function createBoxingProvider({ getJson = defaultGetJson, throttle = crea
     async fetchUpcoming({ now, existing = [], days = 7 }) {
       const known = new Set(existing.map((m) => m.id));
       const from = now - LOOKBACK;
-      const to = now + days * DAY;
+      // Une requête par jour (clé gratuite) : 14 jours au plus, même si l'appli regarde plus loin.
+      const to = now + Math.min(days, 14) * DAY;
       const today = utcDay(now);
       const all = utcDays(from, to);
       // Aujourd'hui et les jours à venir d'abord : en cas de refus, le passé attendra.

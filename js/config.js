@@ -21,7 +21,7 @@ export const CONFIG = {
   TICK_MS: 3000,         // fréquence à laquelle on vérifie si un provider doit être rappelé
   FAST_FORWARD_MIN: 15,  // bouton "avancer le temps" (matchs fictifs uniquement)
   RECENT_FINISHED: 12,   // matchs fictifs terminés conservés hors paris
-  REAL_DAYS_AHEAD: 7,    // fenêtre des vrais matchs
+  REAL_DAYS_AHEAD: 28,   // fenêtre des vrais combats (les soirées s'annoncent des semaines avant)
   REAL_FINISHED_KEEP_H: 36, // vrais matchs terminés gardés pour l'affichage (hors paris)
   REAL_STALE_H: 8,       // vrai match jamais terminé après ce délai et sans pari : supprimé
 

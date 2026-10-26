@@ -4,7 +4,7 @@ import { clockFor, realNow } from '../../store.js';
 import { escapeHtml, fmt, fmtOdds, formatKickoff, todayKey } from '../../util.js';
 import { SPORT_ORDER, sportMeta } from '../../sports.js';
 import { canClaimBonus } from '../../services/players.js';
-import { isAwaitingKickoff, matchStatus, outcomeShort } from '../../services/matchInfo.js';
+import { isAwaitingKickoff, matchStatus, outcomeLabel, outcomeShort } from '../../services/matchInfo.js';
 import { realFeedState } from '../../services/matches.js';
 import { LIVE_SPORTS, liveMarket } from '../../providers/liveOdds.js';
 import { spotlight } from '../../services/spotlight.js';
@@ -17,6 +17,7 @@ import { cloud, isGuest } from '../../services/cloud.js';
 import { LEAGUE_PAGES, matchPath } from '../../seo/pages.js';
 import { DAYS as SEO_DAYS } from '../../seo/data.js';
 import { starOf } from '../stars.js';
+import { METHOD_LABEL, marketOf, settleKey } from '../../services/markets.js';
 
 const ORDER = { 1: 0, X: 1, 2: 2 };
 
@@ -74,7 +75,7 @@ function moveOf(key, v) {
 
 // market : marché en direct (providers/liveOdds.js) ; sans lui, cotes d'avant-match.
 function oddsButtons(m, status, slipPick, market = null, guest = false) {
-  const outcomes = Object.keys(m.odds || {}).sort((a, b) => ORDER[a] - ORDER[b]);
+  const outcomes = Object.keys(m.odds || {}).filter((k) => marketOf(k) === 'winner').sort((a, b) => ORDER[a] - ORDER[b]);
   return `
     <div class="odds cols-${outcomes.length}">
       ${outcomes.map((o) => {
@@ -93,6 +94,54 @@ function oddsButtons(m, status, slipPick, market = null, guest = false) {
           <span class="odd-val">${v ? fmtOdds(v) : icons.lock}${move ? `<i class="odd-move" aria-hidden="true">${move === 'up' ? '▲' : '▼'}</i>` : ''}</span>
         </button>`;
       }).join('')}
+    </div>`;
+}
+
+// Bouton de cote d'un marché méthode / round (même fonctionnement que les cotes du vainqueur).
+function marketButton(m, key, label, status, slipPick, guest) {
+  const v = m.odds[key];
+  const selected = slipPick === key;
+  const won = status === 'finished' && settleKey(key, m) === 'won';
+  const open = status === 'upcoming' && !!v;
+  return `
+        <button class="odd odd-sm ${selected ? 'selected' : ''} ${won ? 'won' : ''}" type="button"
+          data-action="${guest ? 'guest-pick' : 'pick'}" data-match="${escapeHtml(m.id)}" data-outcome="${key}"
+          ${open ? '' : 'disabled'} aria-pressed="${selected}" aria-label="${escapeHtml(outcomeLabel(m, key))} ${v ? `à ${fmtOdds(v)}` : ''}">
+          <span class="odd-label">${escapeHtml(label)}</span>
+          <span class="odd-val">${v ? fmtOdds(v) : icons.lock}</span>
+        </button>`;
+}
+
+// Paris « méthode » (vainqueur + KO/TKO, soumission, décision…) et « fin du combat » (round ou décision),
+// repliés sous les cotes du vainqueur.
+function fightMarkets(m, status, slipPick, guest) {
+  const keys = Object.keys(m.odds || {}).filter((k) => marketOf(k) !== 'winner');
+  if (!keys.length || status === 'void') return '';
+  const open = ui.openMarkets.has(m.id);
+  const picked = slipPick && marketOf(slipPick) !== 'winner' ? outcomeLabel(m, slipPick) : null;
+  const methods = [...new Set(keys.filter((k) => marketOf(k) === 'method').map((k) => k.split('-')[1]))];
+  const ends = keys.filter((k) => marketOf(k) === 'end').sort((a, b) => (a === 'DEC' ? 1 : b === 'DEC' ? -1 : a.localeCompare(b)));
+  const toggle = `
+    <button class="more-markets ${open ? 'is-open' : ''}" data-action="toggle-markets" data-match="${escapeHtml(m.id)}" type="button" aria-expanded="${open}">
+      <span>${picked ? `Ton prono : <b>${escapeHtml(picked)}</b>` : `Méthode & round <small>${keys.length} paris</small>`}</span>
+      <span aria-hidden="true">${open ? '▴' : '▾'}</span>
+    </button>`;
+  if (!open) return toggle;
+  return `${toggle}
+    <div class="markets">
+      <p class="market-title">Vainqueur et méthode</p>
+      <div class="market-grid">
+        ${['1', '2'].map((side) => `
+        <div class="market-col">
+          <span class="market-who">${escapeHtml(side === '1' ? m.home.short || m.home.name : m.away.short || m.away.name)}</span>
+          ${methods.map((k) => marketButton(m, `${side}-${k}`, METHOD_LABEL[k] || k, status, slipPick, guest)).join('')}
+        </div>`).join('')}
+      </div>
+      ${ends.length ? `
+      <p class="market-title">Fin du combat</p>
+      <div class="market-row cols-${ends.length}">
+        ${ends.map((k) => marketButton(m, k, k === 'DEC' ? 'Décision' : `Round ${k.slice(1)}`, status, slipPick, guest)).join('')}
+      </div>` : ''}
     </div>`;
 }
 
@@ -121,7 +170,7 @@ function spotlightCard({ m, tag }, slipPick, first) {
   <article class="featured spot-card ${first ? 'spot-first' : ''} ${stars.some(Boolean) ? 'has-stars' : ''}">
     ${photo(stars[0], 'spot-star-home')}${photo(stars[1], 'spot-star-away')}
     <header class="featured-head">
-      <span class="featured-tag">${escapeHtml(first && tag === m.competition ? 'Match à la une' : tag)}</span>
+      <span class="featured-tag">${escapeHtml(first && tag === m.competition ? 'Combat à la une' : tag)}</span>
       <span class="kick" data-kickoff="${m.startsAt}"${m.real ? ' data-real="1"' : ''}>${formatKickoff(m.startsAt, t)}</span>
     </header>
     <div class="ft-teams">${side(m.home)}<span class="ft-vs">VS</span>${side(m.away)}</div>
@@ -133,10 +182,10 @@ function spotlightCard({ m, tag }, slipPick, first) {
 function spotlightSection(list, picks) {
   if (!list.length) return '';
   return `
-    <section class="spotlight" aria-label="Matchs à l'affiche">
+    <section class="spotlight" aria-label="Combats à l'affiche">
       <div class="section-row spot-head">
         <h2 class="section-title">À l'affiche</h2>
-        ${list.length > 1 ? `<span class="muted spot-hint">${list.length} gros matchs →</span>` : ''}
+        ${list.length > 1 ? `<span class="muted spot-hint">${list.length} gros combats →</span>` : ''}
       </div>
       <div class="spot-track">
         ${list.map((x, i) => spotlightCard(x, picks.get(x.m.id), i === 0)).join('')}
@@ -188,6 +237,7 @@ export function matchCard(m, { slipPick = null, grouped = false, guest = false }
       ${extra}
     </div>
     ${oddsButtons(m, status, slipPick, market, guest)}
+    ${fightMarkets(m, status, slipPick, guest)}
     ${liveNote}
     ${analysisLink(m, status, t)}
   </article>`;
@@ -201,8 +251,7 @@ function sportChips(list, countOf) {
     counts[m.sport] = (counts[m.sport] || 0) + 1;
   }
   const present = SPORT_ORDER.filter((k) => list.some((m) => m.sport === k));
-  const extra = [...new Set(list.map((m) => m.sport))].filter((k) => !present.includes(k));
-  if (ui.sport !== 'all' && !present.includes(ui.sport) && !extra.includes(ui.sport)) ui.sport = 'all';
+  if (ui.sport !== 'all' && !present.includes(ui.sport)) ui.sport = 'all';
   const tile = (key, icon, label) => `
     <button class="sport-tile ${ui.sport === key ? 'active' : ''}" data-action="filter-sport" data-sport="${key}" type="button"
       aria-pressed="${ui.sport === key}">
@@ -212,19 +261,19 @@ function sportChips(list, countOf) {
     </button>`;
   return `
     <nav class="sports-bar" aria-label="Choisir un sport">
-      ${tile('all', '🏟️', 'Tout')}
-      ${[...present, ...extra].map((k) => tile(k, sportMeta(k).icon, sportMeta(k).label)).join('')}
+      ${tile('all', '🏆', 'Tout')}
+      ${present.map((k) => tile(k, sportMeta(k).icon, sportMeta(k).label)).join('')}
     </nav>`;
 }
 
 function modeSwitch(mode) {
   return `
-    <div class="mode-switch" role="tablist" aria-label="Type de matchs">
+    <div class="mode-switch" role="tablist" aria-label="Type de combats">
       <button class="mode ${mode === 'real' ? 'active' : ''}" role="tab" aria-selected="${mode === 'real'}" data-action="set-mode" data-mode="real" type="button">
-        <span class="mode-icon">${icons.stadium}</span><span><strong>Vrais matchs</strong><small>Résultats réels</small></span>
+        <span class="mode-icon">${icons.stadium}</span><span><strong>Vrais combats</strong><small>UFC, PFL, boxe…</small></span>
       </button>
       <button class="mode ${mode === 'fake' ? 'active' : ''}" role="tab" aria-selected="${mode === 'fake'}" data-action="set-mode" data-mode="fake" type="button">
-        <span class="mode-icon">${icons.bolt}</span><span><strong>Matchs éclair</strong><small>Fictifs · 2 min</small></span>
+        <span class="mode-icon">${icons.bolt}</span><span><strong>Combats éclair</strong><small>Fictifs · 2 min</small></span>
       </button>
     </div>`;
 }
@@ -233,26 +282,23 @@ function renderReal(s, p, picks) {
   const feed = realFeedState();
   const t = realNow();
   const all = Object.values(s.matches).filter((m) => m.real);
-  const hasWomen = ui.sport === 'football' && all.some((m) => m.women);
-  if (!hasWomen) ui.gender = 'all';
-  const inSport = all.filter((m) => (ui.sport === 'all' || m.sport === ui.sport)
-    && (ui.gender === 'all' || !!m.women === (ui.gender === 'women')));
+  const inSport = all.filter((m) => ui.sport === 'all' || m.sport === ui.sport);
   const card = (m) => matchCard(m, { slipPick: picks.get(m.id), grouped: true });
 
   if (!feed.configured) {
-    return `<div class="empty"><p><strong>Aucune source de vrais matchs n'est configurée.</strong></p></div>`;
+    return `<div class="empty"><p><strong>Aucune source de vrais combats n'est configurée.</strong></p></div>`;
   }
   if (!all.length) {
     if (feed.error && !feed.loading) {
       return `
       <div class="empty feed-error">
-        <p><strong>Impossible de charger les vrais matchs</strong></p>
+        <p><strong>Impossible de charger les vrais combats</strong></p>
         <p class="muted">Vérifie ta connexion internet. (${escapeHtml(feed.error)})</p>
         <button class="btn btn-ghost" data-action="refresh-real" type="button">Réessayer</button>
       </div>`;
     }
     return `
-      <div class="skeletons" aria-busy="true" aria-label="Chargement des vrais matchs">
+      <div class="skeletons" aria-busy="true" aria-label="Chargement des vrais combats">
         ${'<div class="skeleton"></div>'.repeat(4)}
       </div>`;
   }
@@ -281,12 +327,6 @@ function renderReal(s, p, picks) {
     ${spotlightSection(spot, picks)}
 
     ${sportChips(all, (m) => matchStatus(m, t) === 'upcoming')}
-
-    ${hasWomen ? `
-      <div class="gender-switch" role="group" aria-label="Foot masculin ou féminin">
-        ${[['all', 'Tout'], ['men', 'Hommes'], ['women', 'Femmes']].map(([k, label]) => `
-          <button class="day-chip ${ui.gender === k ? 'active' : ''}" data-action="filter-gender" data-gender="${k}" type="button" aria-pressed="${ui.gender === k}">${label}</button>`).join('')}
-      </div>` : ''}
 
     ${live.length ? `
       <h2 class="section-title"><span class="live-dot"></span>En direct <span class="muted section-note">${live.some((m) => LIVE_SPORTS.has(m.sport)) ? 'paris en direct' : 'paris fermés'}</span></h2>

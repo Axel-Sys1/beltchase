@@ -3,8 +3,6 @@
 // de lui renvoyer ses propres matchs au moment de chercher les résultats.
 import { MIN } from '../../util.js';
 import { defaultGetJson, settleAll } from './common.js';
-import { createTeamSportsAdapter } from './teamSports.js';
-import { createTennisAdapter } from './tennis.js';
 import { createMmaAdapter } from './mma.js';
 
 // Réponses gardées 15 s et requêtes en cours partagées : la liste et les résultats d'une même
@@ -26,11 +24,8 @@ function memoize(getJson, ttlMs = 15_000) {
 
 export function createEspnProvider({ getJson: rawGetJson = defaultGetJson, adapters = null } = {}) {
   const getJson = memoize(rawGetJson);
-  const list = adapters || [
-    createTeamSportsAdapter({ getJson }),
-    createTennisAdapter({ getJson }),
-    createMmaAdapter({ getJson }),
-  ];
+  // BeltChase : sports de combat seulement (ESPN n'a pas de boxe ; elle vient de TheSportsDB).
+  const list = adapters || [createMmaAdapter({ getJson })];
   const byKey = new Map(list.map((a) => [a.key, a]));
 
   return {

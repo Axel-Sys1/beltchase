@@ -12,6 +12,7 @@ import { liveMarket } from '../providers/liveOdds.js';
 import { RR_VERSION } from './ranks.js';
 import { addXp, XP } from './progress.js';
 import { placeEvents, track } from './daily.js';
+import { settleKey } from './markets.js';
 
 export const potentialGain = (stake, odds) => Math.floor((Number(stake) || 0) * odds);
 
@@ -219,7 +220,7 @@ function settleCombos(s, m) {
     if (!p) continue;
     const leg = bet.legs.find((l) => l.matchId === m.id);
     if (leg.status !== 'pending') continue;
-    leg.status = m.outcome === 'void' ? 'void' : leg.outcome === m.outcome ? 'won' : 'lost';
+    leg.status = settleKey(leg.outcome, m);
     const label = `Combiné ${bet.legs.length} matchs`;
     if (leg.status === 'lost') {
       bet.status = 'lost';
@@ -298,10 +299,10 @@ export function settleMatch(s, m) {
       delete bet.check;
       bet.refused = true;
       refund(p, bet, bet.settledAt, `${matchTitle(m)} : pari en direct non validé avant la fin`);
-    } else if (m.outcome === 'void') {
-      // Reporté, annulé ou nul sur un pari à 2 issues : mise rendue, série intacte.
+    } else if (settleKey(bet.outcome, m) === 'void') {
+      // Reporté, annulé, nul sur un pari à 2 issues, ou méthode inconnue : mise rendue, série intacte.
       refund(p, bet, bet.settledAt, label);
-    } else if (bet.outcome === m.outcome) {
+    } else if (settleKey(bet.outcome, m) === 'won') {
       bet.status = 'won';
       bet.rrv = RR_VERSION;
       bet.payout = bet.potential;
