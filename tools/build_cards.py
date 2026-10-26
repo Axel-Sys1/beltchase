@@ -12,9 +12,9 @@ SETS = [
     Dricus du Plessis E; Khamzat Chimaev E; Conor McGregor E; Kayla Harrison E; Valentina Shevchenko E; Zhang Weili E;
     Israel Adesanya E; Alexander Volkanovski E; Usman Nurmagomedov E; Alexandre Pantoja R; Belal Muhammad R;
     Max Holloway R; Sean O'Malley R; Manon Fiorot R; Nassourdine Imavov R; Charles Oliveira R; Cedric Doumbe R;
-    Salahdine Parnasse R; Morgan Charriere R; Leon Edwards R; Jack Della Maddalena R; Shavkat Rakhmonov R;
-    Arman Tsarukyan R; Paddy Pimblett R; Ian Machado Garry R; Diego Lopes R; Patricio Freire R; Justin Gaethje C;
-    Dustin Poirier C; Taylor Lapilus C; William Gomis C; Fares Ziam C; Nora Cornolle C; Oumar Sy C; Kevin Jousset C;
+    Salahdine Parnasse R #France; Morgan Charriere R; Leon Edwards R; Jack Della Maddalena R; Shavkat Rakhmonov R;
+    Arman Tsarukyan R; Paddy Pimblett R; Ian Machado Garry R; Diego Lopes R #Brésil; Patricio Freire R; Justin Gaethje C;
+    Dustin Poirier C; Taylor Lapilus C; William Gomis C; Fares Ziam C; Nora Cornolle C; Oumar Sy C #France; Kevin Jousset C;
     Bo Nickal C; Kevin Holland C; Johnny Eblen C'''),
   ('boxe', 'Boxe', 'boxing', '''
     Oleksandr Usyk M; Muhammad Ali M; Canelo Alvarez L; Naoya Inoue L; Terence Crawford L; Mike Tyson L;
