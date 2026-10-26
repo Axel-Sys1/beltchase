@@ -11,8 +11,8 @@ export function tutorialStep(p) {
 
 const TEXT = {
   1: ['Ton premier prono', 'Touche une cote sur un match qui te tente : elle part dans ton panier.'],
-  2: ['Valide ton pari', 'Choisis ta mise, puis touche « Valider le pari ». Tu as 100 Goalz pour commencer !'],
-  3: ['Bravo, c\'est parti ! 🎉', 'Chaque pari te fait monter de niveau. Les défis du jour rapportent des Goalz, à dépenser en cartes de joueurs dans la Boutique.'],
+  2: ['Valide ton pari', 'Choisis ta mise, puis touche « Valider le pari ». Tu as 100 Gold pour commencer !'],
+  3: ['Bravo, c\'est parti ! 🎉', 'Chaque pari te fait monter de niveau. Les défis du jour rapportent des Gold, à dépenser en cartes de joueurs dans la Boutique.'],
 };
 // Sans compte : la boutique et les défis sont verrouillés, l'étape 3 invite à créer un compte.
 const GUEST_DONE = ['Bravo, c\'est parti ! 🎉', 'Crée ton compte gratuit pour débloquer les défis du jour, les bonus, la boutique de cartes et le classement. Ton pari te suit.'];

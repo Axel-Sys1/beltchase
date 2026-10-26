@@ -1,5 +1,5 @@
 // Défis du jour (les mêmes pour tous les joueurs, renouvelés à minuit) et série de connexion
-// (le bonus du jour grandit chaque jour d'affilée). Récompenses en Goalz et en XP, versées
+// (le bonus du jour grandit chaque jour d'affilée). Récompenses en Gold et en XP, versées
 // automatiquement dès qu'un défi est réussi.
 import { CONFIG } from '../config.js';
 import { todayKey } from '../util.js';
@@ -80,7 +80,7 @@ export function track(p, events) {
       d.done[c.id] = true;
       p.balance += c.goalz;
       addXp(p, c.xp, { boostable: false });
-      p.inbox.push({ type: 'reward', amount: c.goalz, text: `Défi réussi : ${c.text} · +${c.goalz} Goalz, +${c.xp} XP` });
+      p.inbox.push({ type: 'reward', amount: c.goalz, text: `Défi réussi : ${c.text} · +${c.goalz} Gold, +${c.xp} XP` });
     }
   }
 }

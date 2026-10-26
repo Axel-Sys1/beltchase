@@ -51,10 +51,10 @@ export function showPack(results, onClose) {
         ${results.map(({ card, duplicate, refund }, i) => `
           <div class="pack-slot" style="--i:${i}">
             <div class="pack-flip">
-              <div class="pack-back"><span>GOAL<b>ZZ</b></span></div>
+              <div class="pack-back"><span>BELT<b>CHASE</b></span></div>
               <div class="pack-front">${cardHtml(card)}</div>
             </div>
-            <span class="pack-tag ${duplicate ? 'is-dup' : 'is-new'}">${duplicate ? `Doublon · +${refund} Goalz` : `Nouvelle · ${escapeHtml(setById(card.sport)?.name || '')}`}</span>
+            <span class="pack-tag ${duplicate ? 'is-dup' : 'is-new'}">${duplicate ? `Doublon · +${refund} Gold` : `Nouvelle · ${escapeHtml(setById(card.sport)?.name || '')}`}</span>
           </div>`).join('')}
       </div>
       <button class="btn btn-primary btn-lg" data-pack-close type="button">Super !</button>

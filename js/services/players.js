@@ -60,7 +60,7 @@ export async function register(rawPseudo) {
   });
 }
 
-// Changer le pseudo du joueur actuel : coûte CONFIG.RENAME_COST Goalz, sauf si son pseudo
+// Changer le pseudo du joueur actuel : coûte CONFIG.RENAME_COST Gold, sauf si son pseudo
 // actuel est déjà pris par un autre compte (il doit alors en changer, gratuitement).
 export async function renamePlayer(rawPseudo, { free = false } = {}) {
   const p = currentPlayer();
@@ -68,11 +68,11 @@ export async function renamePlayer(rawPseudo, { free = false } = {}) {
   const pseudo = cleanPseudo(rawPseudo);
   if (pseudo.toLowerCase() === p.pseudo.toLowerCase() && pseudo === p.pseudo) throw new Error('C\'est déjà ton pseudo.');
   const cost = free ? 0 : CONFIG.RENAME_COST;
-  if (p.balance < cost) throw new Error(`Il te faut ${cost.toLocaleString('fr-FR')} Goalz pour changer de pseudo.`);
+  if (p.balance < cost) throw new Error(`Il te faut ${cost.toLocaleString('fr-FR')} Gold pour changer de pseudo.`);
   await ensureFreePseudo(pseudo, p.id);
   update((st) => {
     const me = st.players[p.id];
-    if (me.balance < cost) throw new Error(`Il te faut ${cost.toLocaleString('fr-FR')} Goalz pour changer de pseudo.`);
+    if (me.balance < cost) throw new Error(`Il te faut ${cost.toLocaleString('fr-FR')} Gold pour changer de pseudo.`);
     me.balance -= cost;
     me.pseudo = pseudo;
   });

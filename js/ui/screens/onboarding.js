@@ -75,7 +75,7 @@ function signupCard({ title = null, note = null } = {}) {
   title = login ? 'Content de te revoir' : title || 'Crée ton compte gratuit';
   return `
         <section class="register signup-first">
-          ${pendingReferral() && !login ? `<p class="referral-hello">🎁 <b>${escapeHtml(pendingReferral())}</b> t'invite : crée ton compte et vous gagnez <b>${REWARD} Goalz</b> chacun !</p>` : ''}
+          ${pendingReferral() && !login ? `<p class="referral-hello">🎁 <b>${escapeHtml(pendingReferral())}</b> t'invite : crée ton compte et vous gagnez <b>${REWARD} Gold</b> chacun !</p>` : ''}
           <h2>${title}</h2>
           ${login ? '<span class="muted">Connecte-toi pour retrouver ta partie.</span>' : note ? `<p class="saved-game">${note}</p>` : `
           <ul class="perks">${PERKS.map(([icon, text]) => `<li>${icons[icon]}<span>${text}</span></li>`).join('')}</ul>`}
@@ -93,7 +93,7 @@ function signupCard({ title = null, note = null } = {}) {
             <button class="link-btn" data-action="cloud-mode" data-mode="${login ? 'signup' : 'login'}" type="button">${login ? 'Créer un compte' : 'J\'ai déjà un compte'}</button>
             ${login && emailOpen ? '<button class="link-btn" data-action="cloud-reset" type="button">Mot de passe oublié ?</button>' : ''}
           </div>
-          <span class="fineprint">${note ? 'Gratuit, sans argent réel.' : `${fmt(CONFIG.STARTING_BALANCE)} Goalz offerts à l'inscription · jeu gratuit, sans argent réel.`}</span>
+          <span class="fineprint">${note ? 'Gratuit, sans argent réel.' : `${fmt(CONFIG.STARTING_BALANCE)} Gold offerts à l'inscription · jeu gratuit, sans argent réel.`}</span>
         </section>`;
 }
 
@@ -117,7 +117,7 @@ export function renderLocked(routeId) {
       <h1 class="page-title">${label}</h1>
       ${signupCard({
         title: 'Crée ton compte pour débloquer',
-        note: `${icons.lock} Sans compte, tu peux seulement parier. Avec un compte gratuit : ${what}, les bonus du jour et les défis. Tes paris et tes Goalz te suivent.`,
+        note: `${icons.lock} Sans compte, tu peux seulement parier. Avec un compte gratuit : ${what}, les bonus du jour et les défis. Tes paris et tes Gold te suivent.`,
       })}
     </div>`;
 }
@@ -134,7 +134,7 @@ export function renderOnboarding(s) {
     ${eventDecor({ landing: true })}
     <div class="landing">
       <section class="landing-hero">
-        <div class="brand-big">${eventLogo()}<span>GOAL<b>ZZ</b></span></div>
+        <div class="brand-big">${eventLogo()}<span>BELT<b>CHASE</b></span></div>
         <h1 class="landing-title">Pronostique.<br>Collectionne.<br><b>Domine tes potes.</b></h1>
         <p class="tagline">Le jeu de pronos sportifs gratuit avec une monnaie 100 % virtuelle${eventTag({ short: true })}.</p>
         ${showcase.length ? `
@@ -173,7 +173,7 @@ export function renderOnboarding(s) {
         ${cloud.enabled ? '' : renderAccountCard({ compact: true })}
 
         <p class="fineprint">
-          Jeu gratuit, sans argent réel. Les Goalz ne s'achètent pas et ne s'échangent pas contre
+          Jeu gratuit, sans argent réel. Le Gold ne s'achète pas et ne s'échange pas contre
           de l'argent ou des lots.
         </p>
         ${legalLinks()}

@@ -277,7 +277,7 @@ function topView(s, p) {
     return `
       <div class="card division-locked">
         <strong>Le classement de tous les joueurs</strong>
-        <span class="muted">Connecte-toi pour apparaître dans le classement général et voir qui est le meilleur pronostiqueur de Goalzz.</span>
+        <span class="muted">Connecte-toi pour apparaître dans le classement général et voir qui est le meilleur pronostiqueur de BeltChase.</span>
       </div>
       ${renderAccountCard()}
       ${localView(s, p)}`;

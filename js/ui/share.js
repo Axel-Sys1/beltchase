@@ -6,7 +6,7 @@ import { getState } from '../store.js';
 import { fmt, fmtOdds } from '../util.js';
 
 const SITE = 'goalzz.fr';
-const C = { bg: '#08122a', bg2: '#0f1f40', line: '#20365f', text: '#edf2fb', muted: '#8a9abb', accent: '#ff6b1a', green: '#3ddc84', red: '#ff4d63' };
+const C = { bg: '#08122a', bg2: '#0f1f40', line: '#20365f', text: '#edf2fb', muted: '#8a9abb', accent: '#f2b630', green: '#3ddc84', red: '#ff4d63' };
 const DISPLAY = '"Barlow Condensed", "Arial Narrow", sans-serif';
 const BODY = 'Barlow, system-ui, sans-serif';
 
@@ -102,8 +102,8 @@ export async function shareBet(id) {
   const blob = await drawBet(b);
   const file = new File([blob], 'mon-pari-goalzz.png', { type: 'image/png' });
   const text = b.status === 'won'
-    ? `Pari gagné sur Goalzz : +${fmt(b.payout)} Goalz ! Viens me défier : https://${SITE}`
-    : `Mon prono sur Goalzz, tu suis ? https://${SITE}`;
+    ? `Pari gagné sur BeltChase : +${fmt(b.payout)} Gold ! Viens me défier : https://${SITE}`
+    : `Mon prono sur BeltChase, tu suis ? https://${SITE}`;
   if (navigator.canShare?.({ files: [file] })) {
     try {
       await navigator.share({ files: [file], text });

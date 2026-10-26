@@ -25,7 +25,7 @@ export const CONFIG = {
   REAL_FINISHED_KEEP_H: 36, // vrais matchs terminés gardés pour l'affichage (hors paris)
   REAL_STALE_H: 8,       // vrai match jamais terminé après ce délai et sans pari : supprimé
 
-  // Paris en direct (cotes recalculées par Goalz selon le score et le temps restant).
+  // Paris en direct (cotes recalculées par Gold selon le score et le temps restant).
   LIVE: {
     MIN_ODDS: 1.25,        // issue plus probable que ça : non proposée (fin de match jouée d'avance)
     MAX_ODDS: 15,          // issue moins probable : non proposée
@@ -47,7 +47,7 @@ export const CONFIG = {
     // true : la balise AdSense se charge dès l'ouverture sur `hosts`, pour que le message s'affiche.
     consent: false,
     contact: '',                         // lien des encarts (ex. 'mailto:…') ; vide : pas de lien
-    // Pub récompensée : le joueur regarde une pub et gagne des Goalz, quelques fois par jour.
+    // Pub récompensée : le joueur regarde une pub et gagne des Gold, quelques fois par jour.
     // live: false → pub simulée (encart + compte à rebours), partout. live: true → vraie pub Google
     // (« H5 Games Ads », à demander dans AdSense) sur `hosts`. test: true → pubs de test de Google.
     rewarded: { enabled: true, goalz: 500, perDay: 5, seconds: 15, live: false, test: false },

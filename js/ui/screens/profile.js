@@ -81,7 +81,7 @@ function statsView(p) {
     <section class="card disclaimer">
       <h2>Jeu gratuit, sans argent réel</h2>
       <p class="muted">
-        Les Goalz sont une monnaie 100 % virtuelle. Ils ne peuvent pas être achetés, ni échangés
+        Le Gold est une monnaie 100 % virtuelle. Il ne peut pas être acheté, ni échangé
         contre de l'argent, des lots ou quoi que ce soit d'autre. Les « matchs éclair » sont
         fictifs ; les « vrais matchs » suivent les résultats officiels.
       </p>
@@ -130,14 +130,14 @@ function pseudoCard(p) {
       <strong>${!taken ? 'Changer de pseudo' : cloud.pseudoBanned ? `Le pseudo « ${escapeHtml(p.pseudo)} » n'est pas autorisé` : `Le pseudo « ${escapeHtml(p.pseudo)} » est déjà pris`}</strong>
       <span class="muted">${taken
         ? `${cloud.pseudoBanned ? 'Il contient un mot interdit.' : 'Un autre joueur l\'utilise déjà.'} Choisis-en un nouveau (gratuit) pour apparaître dans le classement.`
-        : `Ton pseudo doit être unique dans tout le jeu. Le changer coûte ${fmt(cost)} Goalz.`}</span>
+        : `Ton pseudo doit être unique dans tout le jeu. Le changer coûte ${fmt(cost)} Gold.`}</span>
       <div class="input-row">
         <input id="rename-input" name="pseudo" maxlength="16" placeholder="Nouveau pseudo" required ${short ? 'disabled' : ''}>
         <button class="btn btn-primary" type="submit" ${short ? 'disabled' : ''}>
           ${taken ? 'Valider' : `${fmt(cost)} ${coin('coin coin-sm')}`}
         </button>
       </div>
-      ${short ? `<span class="warn">Il te manque ${fmt(cost - p.balance)} Goalz.</span>` : ''}
+      ${short ? `<span class="warn">Il te manque ${fmt(cost - p.balance)} Gold.</span>` : ''}
     </form>`;
 }
 
@@ -161,15 +161,15 @@ function referralCard(p) {
   if (!cloud.user) {
     return `
     <section class="card referral-card">
-      <strong>Parrainage : +${REWARD} Goalz</strong>
-      <span class="muted">Crée ton compte pour inviter tes potes : ${REWARD} Goalz pour toi et ${REWARD} pour chaque ami qui s'inscrit.</span>
+      <strong>Parrainage : +${REWARD} Gold</strong>
+      <span class="muted">Crée ton compte pour inviter tes potes : ${REWARD} Gold pour toi et ${REWARD} pour chaque ami qui s'inscrit.</span>
     </section>`;
   }
   const count = p.stats.referrals || 0;
   return `
     <section class="card referral-card">
-      <strong>Parrainage : +${REWARD} Goalz par ami</strong>
-      <span class="muted">Envoie ton lien : quand un ami crée son compte avec, vous gagnez ${REWARD} Goalz chacun.${count ? ` Déjà ${count} ami${count > 1 ? 's' : ''} parrainé${count > 1 ? 's' : ''} !` : ''}</span>
+      <strong>Parrainage : +${REWARD} Gold par ami</strong>
+      <span class="muted">Envoie ton lien : quand un ami crée son compte avec, vous gagnez ${REWARD} Gold chacun.${count ? ` Déjà ${count} ami${count > 1 ? 's' : ''} parrainé${count > 1 ? 's' : ''} !` : ''}</span>
       <div class="input-row">
         <input value="${escapeHtml(referralLink(p.pseudo))}" readonly aria-label="Ton lien de parrainage">
         <button class="btn btn-primary" data-action="share-referral" type="button">${icons.share} Partager</button>
@@ -190,7 +190,7 @@ export function renamePanel(p) {
   return pseudoTaken(p) ? pseudoCard(p) : '';
 }
 
-// Installer Goalz comme une appli : bouton du navigateur (Android, ordinateur) ou consigne iPhone.
+// Installer Gold comme une appli : bouton du navigateur (Android, ordinateur) ou consigne iPhone.
 function installRow() {
   const standalone = window.matchMedia?.('(display-mode: standalone)').matches || navigator.standalone;
   if (standalone) return '';
@@ -199,7 +199,7 @@ function installRow() {
   return `
       <div class="settings-row">
         <div class="grow"><strong>Installer l'appli</strong><span class="muted">${ui.installPrompt
-          ? 'Ajoute Goalzz à ton écran d\'accueil, comme une vraie appli.'
+          ? 'Ajoute BeltChase à ton écran d\'accueil, comme une vraie appli.'
           : 'Sur iPhone : touche Partager, puis « Sur l\'écran d\'accueil ».'}</span></div>
         ${ui.installPrompt ? '<button class="btn btn-primary" data-action="install-app" type="button">Installer</button>' : ''}
       </div>`;

@@ -52,6 +52,22 @@ export const pumpkinLogo = `<svg class="pumpkin-logo" viewBox="0 0 64 64" width=
   <path fill="#2a1200" d="M18 33l6-5 5 5zM35 33l5-5 6 5zM19 44c4 5 9 7 13 7s9-2 13-7l-4 1-2 3-3-2-4 3-4-3-3 2-2-3z"/>
 </svg>`;
 
+// Logo BeltChase : ceinture de champion (sangle, plaques latérales, grande plaque dorée et son étoile).
+export const beltLogo = `<svg class="belt-logo" viewBox="0 0 64 64" width="24" height="24" aria-hidden="true">
+  <defs>
+    <linearGradient id="belt-gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffe08a"/><stop offset="0.5" stop-color="#f2b630"/><stop offset="1" stop-color="#b9821a"/>
+    </linearGradient>
+  </defs>
+  <rect x="1" y="23" width="62" height="18" rx="4" fill="#1a2c55" stroke="#f2b630" stroke-width="1.6"/>
+  <path d="M3 27.5h58M3 36.5h58" stroke="#f2b630" stroke-width="1" stroke-dasharray="2.5 2.5" opacity="0.7"/>
+  <rect x="6" y="25" width="9" height="14" rx="2.5" fill="url(#belt-gold)"/>
+  <rect x="49" y="25" width="9" height="14" rx="2.5" fill="url(#belt-gold)"/>
+  <ellipse cx="32" cy="32" rx="17" ry="19" fill="url(#belt-gold)" stroke="#8a5e0f" stroke-width="1.4"/>
+  <ellipse cx="32" cy="32" rx="12" ry="14" fill="none" stroke="#8a5e0f" stroke-width="1.2" opacity="0.7"/>
+  <path d="M32 22.5l2.9 5.9 6.5.9-4.7 4.6 1.1 6.4-5.8-3-5.8 3 1.1-6.4-4.7-4.6 6.5-.9z" fill="#fff7d6" stroke="#8a5e0f" stroke-width="0.8"/>
+</svg>`;
+
 // Ballon en boule de Noël (logo pendant Noël, à la place du ballon) : boule rouge brillante, motif du
 // ballon doré, attache dorée et son anneau.
 export const baubleLogo = `<svg class="bauble-logo" viewBox="0 0 64 64" width="24" height="24" aria-hidden="true">

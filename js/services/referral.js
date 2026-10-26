@@ -1,5 +1,5 @@
 // Parrainage : un joueur avec un compte donne le pseudo de son parrain (ou arrive par le lien
-// https://goalzz.fr/?parrain=PSEUDO) et chacun reçoit REWARD Goalz.
+// https://goalzz.fr/?parrain=PSEUDO) et chacun reçoit REWARD Gold.
 // En ligne : referrals/<uid du filleul> = { parrain: uid, pseudo, at, claimed } ; créé une seule fois
 // par le filleul (règles Firestore), puis « réclamé » par le parrain à sa prochaine visite.
 import { cloud, referralDb } from './cloud.js';
@@ -61,7 +61,7 @@ export async function applyReferral(rawPseudo) {
     update((s) => { const me = currentPlayer(s); if (me) me.referredBy = me.referredBy || '?'; });
     throw new Error('Ce compte a déjà un parrain.');
   }
-  credit(REWARD, `Parrainage : +${REWARD} Goalz grâce à ${pseudo} !`, (me) => { me.referredBy = pseudo; });
+  credit(REWARD, `Parrainage : +${REWARD} Gold grâce à ${pseudo} !`, (me) => { me.referredBy = pseudo; });
   clearPending();
   return pseudo;
 }
@@ -88,13 +88,13 @@ export async function claimReferralRewards() {
   try {
     const names = await referralDb.claimAll();
     for (const name of names) {
-      credit(REWARD, `Parrainage : ${name} a rejoint Goalzz avec ton lien, +${REWARD} Goalz !`, (me) => {
+      credit(REWARD, `Parrainage : ${name} a rejoint BeltChase avec ton lien, +${REWARD} Gold !`, (me) => {
         me.stats.referrals = (me.stats.referrals || 0) + 1;
       });
     }
     return names.length;
   } catch (err) {
-    console.warn('Goalz : parrainages indisponibles', err);
+    console.warn('Gold : parrainages indisponibles', err);
     return 0;
   } finally {
     busy = false;

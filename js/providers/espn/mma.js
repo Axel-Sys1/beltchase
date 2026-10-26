@@ -1,10 +1,10 @@
 // Adaptateur ESPN pour le MMA (UFC, PFL), réuni aux autres dans espn/index.js.
 //
 // Particularités d'ESPN pour le MMA (vérifiées sur l'API le 27/09/2026) :
-// - Un "event" est une SOIRÉE (card) ; chaque competitions[j] est un COMBAT. Un match Goalz = un combat.
+// - Un "event" est une SOIRÉE (card) ; chaque competitions[j] est un COMBAT. Un match Gold = un combat.
 // - L'id d'un combat (competitions[j].id) NE CHANGE PAS quand ESPN change un combattant : 401891663
 //   (Contender Series) a été créé 'TBA' vs 'Opponent TBA', il oppose aujourd'hui Abushaar et Staines.
-//   Id Goalz = combat + ids des combattants order 1 et order 2 ('401911630_5088844_3075570') :
+//   Id Gold = combat + ids des combattants order 1 et order 2 ('401911630_5088844_3075570') :
 //   un remplaçant (ou des coins inversés) ouvre un NOUVEAU match et l'ancien est remboursé,
 //   jamais réglé sur le résultat du remplaçant.
 // - Les plages ?dates=AAAAMMJJ-AAAAMMJJ fonctionnent ; le jour est celui de la soirée (fuseau de New York).
@@ -91,10 +91,10 @@ function fighterInfo(c) {
 // ─── Identité d'un match ─────────────────────────────────────────────────────
 const pairKey = (pair) => pair.map((c) => String(c.id)).join('_');
 
-// Dernière partie de l'id Goalz : '401911630_5088844_3075570' (combat, order 1, order 2).
+// Dernière partie de l'id Gold : '401911630_5088844_3075570' (combat, order 1, order 2).
 export const boutKey = (bout, pair) => `${bout.id}_${pairKey(pair)}`;
 
-// Id Goalz → { boutId, pair } ; pair null pour un ancien id sans combattants ('espn:mma:ufc:401911630',
+// Id Gold → { boutId, pair } ; pair null pour un ancien id sans combattants ('espn:mma:ufc:401911630',
 // instantanés publiés jusqu'au 27/09/2026).
 export function parseBoutKey(id) {
   const [boutId, ...ids] = String(id ?? '').split(':').pop().split('_');
@@ -263,7 +263,7 @@ function sideDecimal(side) {
     ?? (cur?.decimal > 1 ? cur.decimal : null);
 }
 
-// Réponse core /odds → cotes Goalz { 1, 2 } (marge maison), ou null.
+// Réponse core /odds → cotes BeltChase { 1, 2 } (marge maison), ou null.
 // home/away sont rattachés aux combattants par l'id de athlete.$ref, sinon home = order 1.
 export function boutOdds(data, pair) {
   const want = pair.map((c) => String(c.id));

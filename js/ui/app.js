@@ -50,7 +50,7 @@ let liveSig = '';
 const shellHtml = () => `
   <header class="topbar">
     <div class="topbar-inner">
-      <a class="logo" href="#matchs" aria-label="Goalzz, accueil">${eventLogo()}<span>GOAL<b>ZZ</b></span></a>
+      <a class="logo" href="#matchs" aria-label="BeltChase, accueil">${eventLogo()}<span>BELT<b>CHASE</b></span></a>
       <nav class="nav-top" id="nav-top" aria-label="Navigation principale"></nav>
       <div class="top-right">
         <a class="level-chip" id="level-chip" href="#profil" aria-label="Niveau"><b>1</b><i><span></span></i></a>
@@ -60,7 +60,7 @@ const shellHtml = () => `
         </div>
       </div>
     </div>
-    <div class="freebar">${eventTag()}Jeu gratuit, sans argent réel<span class="hide-sm"> · Les Goalz n'ont aucune valeur monétaire</span></div>
+    <div class="freebar">${eventTag()}Jeu gratuit, sans argent réel<span class="hide-sm"> · Le Gold n'a aucune valeur monétaire</span></div>
   </header>
   ${eventDecor()}
   ${adSlot('top') ? `<div class="ad-band">${adSlot('top')}</div>` : ''}
@@ -74,7 +74,7 @@ const shellHtml = () => `
     <footer class="site-footer">
       <p>Une question, un partenariat ? <a href="mailto:${CONFIG.CONTACT_EMAIL}">${CONFIG.CONTACT_EMAIL}</a></p>
       ${legalLinks()}
-      <p class="muted">© ${new Date().getFullYear()} Goalzz · Jeu gratuit, sans argent réel</p>
+      <p class="muted">© ${new Date().getFullYear()} BeltChase · Jeu gratuit, sans argent réel</p>
     </footer>
   </div>
   <div id="slipbar"></div>

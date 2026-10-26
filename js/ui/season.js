@@ -2,7 +2,7 @@
 // L'événement actif est posé sur <html data-event="…"> au démarrage (main.js) ; les couleurs sont
 // dans styles.css (:root[data-event="…"]).
 import { CONFIG } from '../config.js';
-import { baubleLogo, icons, pumpkinLogo } from './icons.js';
+import { baubleLogo, beltLogo, pumpkinLogo } from './icons.js';
 
 // Événement du jour : le premier dont la période (dates incluses) contient aujourd'hui. Aperçu avant
 // l'heure : ?theme=noel dans l'adresse (?theme=aucun pour aucun habillage).
@@ -15,11 +15,11 @@ export function activeEvent(t = new Date()) {
 const current = () => document.documentElement.dataset.event || null;
 const event = () => (CONFIG.EVENTS || []).find((e) => e.id === current()) || null;
 
-// Logo : citrouille à Halloween, ballon en boule de Noël à Noël, ballon le reste du temps.
+// Logo : citrouille à Halloween, boule de Noël à Noël, ceinture de champion le reste du temps.
 export function eventLogo() {
   if (current() === 'halloween') return pumpkinLogo;
   if (current() === 'noel') return baubleLogo;
-  return icons.ball;
+  return beltLogo;
 }
 
 // « 🎃 Spécial Halloween · » en tête de la barre du haut ; `short` : « · 🎃 spécial Halloween » (accroche).

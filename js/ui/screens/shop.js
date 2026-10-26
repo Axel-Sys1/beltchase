@@ -59,10 +59,10 @@ function packOffer(p) {
   return `
     <article class="card-offer pack-offer ${left ? '' : 'is-empty'}">
       <div class="pack-art">
-        <span class="pack-pouch"><span>GOAL<b>ZZ</b></span><small>${PACK.size} cartes</small></span>
+        <span class="pack-pouch"><span>BELT<b>CHASE</b></span><small>${PACK.size} cartes</small></span>
       </div>
       <strong class="shop-name">Pochette surprise</strong>
-      <span class="pack-desc">${PACK.size} cartes au hasard. Doublon repris en Goalz.</span>
+      <span class="pack-desc">${PACK.size} cartes au hasard. Doublon repris en Gold.</span>
       <span class="pack-left">${left ? `Encore ${left} aujourd'hui` : 'Plus de pochette aujourd\'hui'}</span>
       <div class="shop-action">${left
         ? buyBtn('pack-open', '', PACK.price, p)
@@ -82,7 +82,7 @@ function dailyView(p) {
       ${shop.items.map((x) => offer(p, x.id, x.price)).join('')}
       ${packOffer(p)}
     </div>
-    <p class="muted shop-note">Les cartes à l'unité ne sont en vente que dans ta boutique du jour. Complète une collection pour un gros bonus de Goalz !</p>`;
+    <p class="muted shop-note">Les cartes à l'unité ne sont en vente que dans ta boutique du jour. Complète une collection pour un gros bonus de Gold !</p>`;
 }
 
 // ─── Album ───────────────────────────────────────────────────────────────────

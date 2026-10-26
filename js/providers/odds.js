@@ -32,7 +32,7 @@ export function fractionalToDecimal(f) {
 }
 
 // ─── Mise en forme des cotes ─────────────────────────────────────────────────
-// Probabilités { 1, X?, 2 } (somme ≈ 1) → cotes décimales avec la marge Goalz.
+// Probabilités { 1, X?, 2 } (somme ≈ 1) → cotes décimales avec la marge Gold.
 export function fromProbabilities(probs, margin = MARGIN) {
   const total = Object.values(probs).reduce((a, b) => a + b, 0);
   const odds = {};
@@ -56,7 +56,7 @@ export function devig(decimalOdds) {
   return inv;
 }
 
-// Cotes bookmaker → cotes Goalz (même marge pour toutes les sources). null si incomplet.
+// Cotes bookmaker → cotes BeltChase (même marge pour toutes les sources). null si incomplet.
 export function fromBookmaker(decimalOdds, margin = MARGIN) {
   const probs = devig(decimalOdds);
   return probs ? fromProbabilities(probs, margin) : null;

@@ -1,4 +1,4 @@
-// Pub récompensée : le joueur regarde une pub entière et reçoit des Goalz, quelques fois par jour
+// Pub récompensée : le joueur regarde une pub entière et reçoit des Gold, quelques fois par jour
 // (compteur remis à zéro à minuit). L'affichage de la pub elle-même est dans ui/rewardAd.js.
 import { CONFIG } from '../config.js';
 import { getState, update } from '../store.js';
@@ -32,7 +32,7 @@ export function rewardAdWatched() {
     const left = adsLeft(me);
     me.inbox.push({
       type: 'reward', amount,
-      text: `Bonus vidéo : +${amount.toLocaleString('fr-FR')} Goalz · ${left ? `encore ${left} aujourd'hui` : 'reviens demain pour les suivantes'}`,
+      text: `Bonus vidéo : +${amount.toLocaleString('fr-FR')} Gold · ${left ? `encore ${left} aujourd'hui` : 'reviens demain pour les suivantes'}`,
     });
   });
 }

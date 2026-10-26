@@ -237,7 +237,7 @@ async function push() {
   lastPushAt = Date.now();
   const data = JSON.stringify(snapshot(getState()));
   if (data === lastPushed) return;
-  if (data.length > MAX_DOC_CHARS) { console.warn('Goalz : partie trop volumineuse pour la sauvegarde en ligne.'); return; }
+  if (data.length > MAX_DOC_CHARS) { console.warn('Gold : partie trop volumineuse pour la sauvegarde en ligne.'); return; }
   lastPushed = data;
   try {
     // Un autre appareil a sauvegardé entre-temps : on fusionne d'abord, puis on sauvegarde.
@@ -251,7 +251,7 @@ async function push() {
     update((st) => { st.syncRev = nextRev; }, { silent: true });
   } catch (err) {
     lastPushed = '';
-    console.warn('Goalz : sauvegarde en ligne impossible', err);
+    console.warn('Gold : sauvegarde en ligne impossible', err);
   }
   await publishRank();
 }
@@ -313,7 +313,7 @@ async function publishRank() {
     return;
   }
   let mine = false;
-  try { mine = await claimPseudo(me.pseudo); } catch (err) { console.warn('Goalz : vérification du pseudo impossible', err); return; }
+  try { mine = await claimPseudo(me.pseudo); } catch (err) { console.warn('Gold : vérification du pseudo impossible', err); return; }
   const conflict = mine ? null : me.pseudo;
   if (conflict !== cloud.pseudoConflict || cloud.pseudoBanned) { cloud.pseudoConflict = conflict; cloud.pseudoBanned = false; emit(); }
   if (!mine) return;
@@ -332,7 +332,7 @@ async function publishRank() {
       .catch(() => fb.F.setDoc(ref, base));
   } catch (err) {
     lastBoard = '';
-    console.warn('Goalz : publication du rang impossible', err);
+    console.warn('Gold : publication du rang impossible', err);
   }
 }
 
@@ -358,7 +358,7 @@ export async function loadDivision(rr, { force = false } = {}) {
     const rows = snap.docs.map((doc) => ({ uid: doc.id, ...doc.data() }));
     cloud.division = { index, rows, radiant: new Set(top.docs.map((doc) => doc.id)), at: Date.now(), loading: false, error: null };
   } catch (err) {
-    console.warn('Goalz : classement de division indisponible', err);
+    console.warn('Gold : classement de division indisponible', err);
     cloud.division = { ...cloud.division, loading: false, error: 'Classement indisponible pour le moment.' };
   }
   emit();
@@ -381,7 +381,7 @@ export async function loadTop(rr, { force = false } = {}) {
     const rows = snap.docs.map((doc) => ({ uid: doc.id, ...doc.data() }));
     cloud.top = { rows, above: count ? count.data().count : null, at: Date.now(), loading: false, error: null };
   } catch (err) {
-    console.warn('Goalz : classement général indisponible', err);
+    console.warn('Gold : classement général indisponible', err);
     cloud.top = { ...cloud.top, loading: false, error: 'Classement indisponible pour le moment.' };
   }
   emit();
@@ -417,7 +417,7 @@ export async function loadSeason({ force = false } = {}) {
     const rows = snap.docs.map((doc) => ({ uid: doc.id, ...doc.data() })).filter((r) => r.season === key);
     cloud.season = { key, rows, at: Date.now(), loading: false, error: null };
   } catch (err) {
-    console.warn('Goalz : classement de la saison indisponible', err);
+    console.warn('Gold : classement de la saison indisponible', err);
     cloud.season = { ...cloud.season, loading: false, error: 'Classement de la saison indisponible pour le moment.' };
   }
   emit();
@@ -452,7 +452,7 @@ export async function loadHallOfFame() {
     const rows = [...score.values()].filter((r) => !isOffensivePseudo(r.pseudo)).sort((x, y) => y.score - x.score).slice(0, 3);
     cloud.hof = { key, rows, at: Date.now() };
   } catch (err) {
-    console.warn('Goalz : Hall of Fame indisponible', err);
+    console.warn('Gold : Hall of Fame indisponible', err);
   }
   emit();
 }
@@ -603,7 +603,7 @@ export async function loadMyLeagues({ force = false } = {}) {
     list.sort((a, b) => (a.createdAt?.seconds || 0) - (b.createdAt?.seconds || 0));
     cloud.leagues = { list, at: Date.now(), loading: false, error: null };
   } catch (err) {
-    console.warn('Goalz : ligues indisponibles', err);
+    console.warn('Gold : ligues indisponibles', err);
     cloud.leagues = { ...cloud.leagues, loading: false, error: 'Ligues indisponibles pour le moment.' };
   }
   emit();
@@ -722,7 +722,7 @@ export async function initCloud({ notify } = {}) {
   try {
     ({ auth, A } = await sdk());
   } catch (err) {
-    console.warn('Goalz : service de compte injoignable', err);
+    console.warn('Gold : service de compte injoignable', err);
     cloud.enabled = false; // l'appli reste jouable, sans compte
     emit();
     return;
@@ -756,7 +756,7 @@ export async function initCloud({ notify } = {}) {
     cloud.user = user ? { uid: user.uid, email: user.email } : null;
     cloud.ready = true;
     if (user) {
-      try { await pull(cloud.user); } catch (err) { console.warn('Goalz : récupération de la partie impossible', err); }
+      try { await pull(cloud.user); } catch (err) { console.warn('Gold : récupération de la partie impossible', err); }
     }
     emit();
   });

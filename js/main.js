@@ -69,7 +69,7 @@ subscribe(async () => {
         p.owned['frame-champion'] = Date.now();
         p.owned['title-champion'] = Date.now();
         p.balance += 1000;
-        p.inbox.push({ type: 'reward', amount: 1000, text: `Hall of Fame : ${place === 1 ? '1er' : `${place}e`} de la saison ! Cadre et titre Champion débloqués, +1 000 Goalz.` });
+        p.inbox.push({ type: 'reward', amount: 1000, text: `Hall of Fame : ${place === 1 ? '1er' : `${place}e`} de la saison ! Cadre et titre Champion débloqués, +1 000 Gold.` });
       });
     }
   }
@@ -86,7 +86,7 @@ document.addEventListener('visibilitychange', () => {
 
 // Application installable (écran d'accueil du téléphone) et utilisable hors ligne.
 window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); ui.installPrompt = e; render(); });
-window.addEventListener('appinstalled', () => { ui.installPrompt = null; toast('Goalzz est installé sur ton écran d\'accueil !', 'success'); });
+window.addEventListener('appinstalled', () => { ui.installPrompt = null; toast('BeltChase est installé sur ton écran d\'accueil !', 'success'); });
 if ('serviceWorker' in navigator && location.protocol === 'https:') {
   window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
 }

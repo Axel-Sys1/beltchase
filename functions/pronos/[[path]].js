@@ -3,7 +3,7 @@
 import { groups, html } from '../_seo.js';
 import { leagueBySlug, renderGone, renderHub, renderLeague, renderMatch, eventId } from '../../js/seo/pages.js';
 
-const SORRY = '<!doctype html><meta charset="utf-8"><title>Goalzz</title><p>Les pronostics sont momentanément indisponibles. <a href="/">Jouer sur Goalzz</a></p>';
+const SORRY = '<!doctype html><meta charset="utf-8"><title>BeltChase</title><p>Les pronostics sont momentanément indisponibles. <a href="/">Jouer sur BeltChase</a></p>';
 
 export async function onRequestGet({ params, waitUntil }) {
   const parts = [].concat(params.path || []).filter(Boolean);

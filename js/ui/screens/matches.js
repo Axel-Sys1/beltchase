@@ -161,7 +161,7 @@ export function matchCard(m, { slipPick = null, grouped = false, guest = false }
   if (status === 'void') right = '<span class="done-pill">Annulé</span>';
 
   const head = grouped
-    ? `${m.round ? escapeHtml(m.round) : ''}${m.oddsSource === 'model' ? `${m.round ? ' · ' : ''}<span class="est" title="Aucune cote bookmaker disponible : cote estimée par Goalzz">cotes estimées</span>` : ''}`
+    ? `${m.round ? escapeHtml(m.round) : ''}${m.oddsSource === 'model' ? `${m.round ? ' · ' : ''}<span class="est" title="Aucune cote bookmaker disponible : cote estimée par BeltChase">cotes estimées</span>` : ''}`
     : `${sport.icon} ${escapeHtml(m.competition)}${m.round ? ` · ${escapeHtml(m.round)}` : ''}`;
 
   let extra = '';
@@ -321,7 +321,7 @@ function renderReal(s, p, picks) {
       Données : ${escapeHtml(feed.sources.join(', ') || 'sources sportives publiques')}${feed.snapshotAt
         ? ` · instantané du ${new Date(feed.snapshotAt).toLocaleString('fr-FR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' })}. Les résultats arrivent à chaque mise à jour de l'instantané.`
         : `${feed.lastOk ? ` · mis à jour à ${new Date(feed.lastOk).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}` : ''}.`}
-      Les cotes viennent des bookmakers quand elles sont publiées, sinon Goalzz les estime.
+      Les cotes viennent des bookmakers quand elles sont publiées, sinon BeltChase les estime.
       ${feed.snapshotAt ? '' : '<button class="link-btn" data-action="refresh-real" type="button">Actualiser</button>'}
     </p>
   `;
@@ -397,7 +397,7 @@ function dayStrip(p) {
     </section>`;
 }
 
-// Pub récompensée : des Goalz contre une pub regardée jusqu'au bout, quelques fois par jour.
+// Pub récompensée : des Gold contre une pub regardée jusqu'au bout, quelques fois par jour.
 function adButton(p) {
   if (!rewardAdEnabled()) return '';
   const left = adsLeft(p);

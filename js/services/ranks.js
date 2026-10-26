@@ -25,7 +25,7 @@ export const LOSS_RR = 15;
 // RR gagnés pour une victoire. Ancien barème (paris réglés avant le 10 octobre 2026) : 12 à 40,
 // trop généreux pour les grosses cotes favorites (parier à 1,20 faisait monter presque à coup sûr).
 const winRRv1 = (odds) => Math.max(12, Math.min(40, Math.round(10 + 10 * (odds - 1))));
-// Barème actuel : réglé pour que parier au hasard aux cotes Goalz (marge comprise) rapporte 0 RR en
+// Barème actuel : réglé pour que parier au hasard aux cotes BeltChase (marge comprise) rapporte 0 RR en
 // moyenne. Seuls les bons pronostics font monter. Cote 1,25 → 5 · 2 → 17 · 3 → 33 (60 au plus).
 export const winRR = (odds) => Math.max(1, Math.min(60, Math.round(LOSS_RR * (odds * (1 + MARGIN) - 1))));
 export const RR_VERSION = 2;

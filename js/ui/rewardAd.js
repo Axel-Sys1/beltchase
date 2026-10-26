@@ -40,7 +40,7 @@ function simulatedAd() {
       <div class="dialog reward-ad" role="dialog" aria-modal="true" aria-labelledby="reward-ad-title">
         <span class="ad-label">Bonus vidéo</span>
         <div class="reward-ad-box">${coin('coin')}<strong>Ton bonus arrive</strong><small>Reste sur la page jusqu'à la fin</small></div>
-        <h2 id="reward-ad-title">+${fmt(settings().goalz || 0)} Goalz</h2>
+        <h2 id="reward-ad-title">+${fmt(settings().goalz || 0)} Gold</h2>
         <div class="reward-ad-bar"><span></span></div>
         <p class="muted" aria-live="polite">Récompense dans <b>${Math.ceil(total / 1000)}</b> s</p>
         <div class="dialog-actions">

@@ -33,7 +33,7 @@ export function createSnapshotProvider({ url = 'data/real-matches.json' } = {}) 
 
   return {
     id: 'snapshot',
-    label: 'Instantané Goalz',
+    label: 'Instantané Gold',
     real: true,
     snapshot: true,
     refresh: { upcomingMs: 10 * MIN, resultsMs: 2 * MIN },

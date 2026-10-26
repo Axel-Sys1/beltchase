@@ -1,4 +1,4 @@
-// Service worker : rend Goalzz installable et utilisable hors ligne (dernière version vue).
+// Service worker : rend BeltChase installable et utilisable hors ligne (dernière version vue).
 // Réseau d'abord, sans le cache du navigateur (cache: 'no-cache' : chaque fichier est revérifié
 // auprès du serveur), pour que chaque mise en ligne arrive tout de suite ; le cache ne sert que si le
 // réseau ne répond pas. Les données sportives et Firebase ne sont jamais mises en cache ici.

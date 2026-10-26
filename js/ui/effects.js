@@ -124,7 +124,7 @@ export function toast(message, type = 'info') {
 }
 
 // ---------- Confettis ----------
-export function confetti({ colors = ['#ff6b1a', '#ffffff', '#5aa8ff', '#ffc83d', '#1c335f'], count = 150, originY = 0.3 } = {}) {
+export function confetti({ colors = ['#f2b630', '#ffffff', '#5aa8ff', '#ffc83d', '#1c335f'], count = 150, originY = 0.3 } = {}) {
   if (reducedMotion()) return;
   const c = document.createElement('canvas');
   c.className = 'confetti';
@@ -187,7 +187,7 @@ function showNextBadge() {
   ov.querySelector('button').addEventListener('click', close);
   ov.addEventListener('click', (e) => { if (e.target === ov) close(); });
   ov.querySelector('button').focus();
-  confetti({ colors: ['#ff6b1a', '#ffffff', '#ffc83d', '#5aa8ff'], originY: 0.4 });
+  confetti({ colors: ['#f2b630', '#ffffff', '#ffc83d', '#5aa8ff'], originY: 0.4 });
 }
 
 function queueBadge(id) {
@@ -226,18 +226,18 @@ export function processInbox(player) {
   const losses = items.filter((i) => i.type === 'loss');
 
   for (const i of items.filter((x) => x.type === 'welcome')) {
-    toast(`Bienvenue ! ${fmt(i.amount)} Goalz offerts pour commencer.`, 'win');
+    toast(`Bienvenue ! ${fmt(i.amount)} Gold offerts pour commencer.`, 'win');
   }
   for (const i of items.filter((x) => x.type === 'bonus')) {
-    toast(`Bonus du jour : +${fmt(i.amount)} Goalz${i.day ? ` · série jour ${i.day}/7` : ''}`, 'win');
+    toast(`Bonus du jour : +${fmt(i.amount)} Gold${i.day ? ` · série jour ${i.day}/7` : ''}`, 'win');
     confetti({ colors: ['#ffc83d', '#e79a00', '#fff3c4'], count: 70, originY: 0.12 });
     play('bonus');
   }
   if (wins.length) {
     const total = wins.reduce((s, w) => s + w.amount, 0);
     toast(wins.length === 1
-      ? `Pari gagné : ${wins[0].label} · +${fmt(total)} Goalz`
-      : `${wins.length} paris gagnés · +${fmt(total)} Goalz`, 'win');
+      ? `Pari gagné : ${wins[0].label} · +${fmt(total)} Gold`
+      : `${wins.length} paris gagnés · +${fmt(total)} Gold`, 'win');
     confetti();
     play('win');
   }

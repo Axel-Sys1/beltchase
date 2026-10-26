@@ -1,6 +1,6 @@
 // Cartes à collectionner : joueurs de foot (clubs et sélections) et de NBA, rangés en collections.
 // Achat à l'unité dans la boutique du jour (sélection perso renouvelée à minuit) ou en pochettes de
-// 3 cartes au hasard. Une collection complète rapporte des Goalz. Rien qui aide à gagner ses paris.
+// 3 cartes au hasard. Une collection complète rapporte des Gold. Rien qui aide à gagner ses paris.
 import { getState, update } from '../store.js';
 import { currentPlayer } from './players.js';
 import { CARDS } from '../data/cards.js';
@@ -83,7 +83,7 @@ function giveCard(me, card) {
     const reward = setReward(card.sport);
     me.setRewards[card.sport] = Date.now();
     me.balance += reward;
-    me.inbox.push({ type: 'reward', amount: reward, text: `Collection ${setById(card.sport)?.name} complète ! +${reward.toLocaleString('fr-FR')} Goalz` });
+    me.inbox.push({ type: 'reward', amount: reward, text: `Collection ${setById(card.sport)?.name} complète ! +${reward.toLocaleString('fr-FR')} Gold` });
   }
 }
 
@@ -94,7 +94,7 @@ export function buyCard(id) {
   if (hasCard(p, id)) throw new Error('Tu l\'as déjà.');
   const price = cardPrice(id, p);
   if (price == null) throw new Error('Cette carte n\'est plus dans ta boutique du jour.');
-  if (p.balance < price) throw new Error(`Il te manque ${(price - p.balance).toLocaleString('fr-FR')} Goalz.`);
+  if (p.balance < price) throw new Error(`Il te manque ${(price - p.balance).toLocaleString('fr-FR')} Gold.`);
   update((s) => {
     const me = currentPlayer(s);
     me.balance -= price;
@@ -115,7 +115,7 @@ export function openPack(rand = Math.random) {
   const p = currentPlayer(getState());
   if (!p) throw new Error('Joueur introuvable.');
   if (!packsLeft(p)) throw new Error('Plus de pochette aujourd\'hui : prends une Recharge pochettes dans les Boosts, ou reviens demain !');
-  if (p.balance < PACK.price) throw new Error(`Il te manque ${(PACK.price - p.balance).toLocaleString('fr-FR')} Goalz.`);
+  if (p.balance < PACK.price) throw new Error(`Il te manque ${(PACK.price - p.balance).toLocaleString('fr-FR')} Gold.`);
   const picks = [];
   for (let i = 0; i < PACK.size; i++) {
     const list = CARDS.filter((c) => !picks.includes(c));

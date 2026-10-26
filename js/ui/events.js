@@ -35,7 +35,7 @@ const actions = {
     if (!adsLeft(currentPlayer())) throw new Error('Plus de bonus vidéo aujourd\'hui. Reviens demain !');
     const result = await watchRewardAd();
     if (result === 'viewed') rewardAdWatched();
-    else if (result === 'dismissed') toast('Vidéo fermée avant la fin : pas de Goalz cette fois.', 'info');
+    else if (result === 'dismissed') toast('Vidéo fermée avant la fin : pas de Gold cette fois.', 'info');
     else if (result === 'unavailable') toast('Aucune vidéo disponible pour le moment. Réessaie dans quelques minutes.', 'info');
   },
 
@@ -65,7 +65,7 @@ const actions = {
   'cloud-mode': (el) => { cloud.mode = el.dataset.mode === 'signup' ? 'signup' : 'login'; render(); },
   'cloud-google': () => signInWithGoogle(),
   'cookie-settings': () => {
-    if (!openCookieSettings()) toast('Aucun cookie publicitaire pour le moment : Goalzz garde seulement ta partie et ta connexion, indispensables au jeu.', 'info');
+    if (!openCookieSettings()) toast('Aucun cookie publicitaire pour le moment : BeltChase garde seulement ta partie et ta connexion, indispensables au jeu.', 'info');
   },
   'email-open': () => { ui.emailOpen = !ui.emailOpen; render(); if (ui.emailOpen) document.getElementById('email-input')?.focus(); },
   'cloud-reset': async () => {
@@ -171,9 +171,9 @@ const actions = {
   'share-referral': async () => {
     const p = currentPlayer();
     const url = referralLink(p.pseudo);
-    const text = `Rejoins-moi sur Goalzz, le jeu de pronos gratuit : on gagne ${REWARD} Goalz chacun avec mon lien !`;
+    const text = `Rejoins-moi sur BeltChase, le jeu de pronos gratuit : on gagne ${REWARD} Gold chacun avec mon lien !`;
     if (navigator.share) {
-      try { await navigator.share({ title: 'Goalzz', text, url }); return; } catch (err) { if (err?.name === 'AbortError') return; }
+      try { await navigator.share({ title: 'BeltChase', text, url }); return; } catch (err) { if (err?.name === 'AbortError') return; }
     }
     await navigator.clipboard.writeText(`${text} ${url}`);
     toast('Lien copié : colle-le à tes potes !', 'success');
@@ -224,7 +224,7 @@ const actions = {
 
   'reset-app': async () => {
     const ok = await confirmDialog({
-      title: 'Réinitialiser Goalzz ?',
+      title: 'Réinitialiser BeltChase ?',
       message: 'Tous les joueurs, paris et ligues de cet appareil seront effacés.',
       confirmLabel: 'Tout effacer',
       danger: true,
@@ -239,7 +239,7 @@ const actions = {
 const forms = {
   referral: async (data) => {
     const name = await applyReferral(data.get('pseudo'));
-    toast(`Parrain enregistré : ${name}. +${REWARD} Goalz !`, 'success');
+    toast(`Parrain enregistré : ${name}. +${REWARD} Gold !`, 'success');
   },
   register: async (data) => {
     await register(data.get('pseudo'));
@@ -253,7 +253,7 @@ const forms = {
     if (!free) {
       const ok = await confirmDialog({
         title: 'Changer de pseudo ?',
-        message: `Ton pseudo deviendra « ${pseudo} » pour ${CONFIG.RENAME_COST.toLocaleString('fr-FR')} Goalz.`,
+        message: `Ton pseudo deviendra « ${pseudo} » pour ${CONFIG.RENAME_COST.toLocaleString('fr-FR')} Gold.`,
         confirmLabel: 'Payer et changer',
       });
       if (!ok) return;
@@ -263,7 +263,7 @@ const forms = {
     cloud.pseudoBanned = false;
     form.reset();
     render();
-    toast(free ? 'Pseudo changé !' : `Pseudo changé (−${CONFIG.RENAME_COST.toLocaleString('fr-FR')} Goalz)`, 'success');
+    toast(free ? 'Pseudo changé !' : `Pseudo changé (−${CONFIG.RENAME_COST.toLocaleString('fr-FR')} Gold)`, 'success');
   },
   'cloud-auth': async (data, form) => {
     const btn = form.querySelector('button[type="submit"]');
@@ -303,7 +303,7 @@ const ACCOUNT_ONLY = new Set([
 function needsAccount(name) {
   if (!ACCOUNT_ONLY.has(name) || !isGuest()) return false;
   cloud.mode = 'signup';
-  toast('Crée ton compte gratuit pour débloquer ça. Tes paris et tes Goalz te suivent.', 'info');
+  toast('Crée ton compte gratuit pour débloquer ça. Tes paris et tes Gold te suivent.', 'info');
   go('profil');
   return true;
 }

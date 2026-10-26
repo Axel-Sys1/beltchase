@@ -1,4 +1,4 @@
-// Progression : niveau du joueur (XP), cosmétiques à débloquer par niveau ou à acheter en Goalz
+// Progression : niveau du joueur (XP), cosmétiques à débloquer par niveau ou à acheter en Gold
 // (couleur de pseudo, cadre d'avatar, titre) et boost d'XP. Les cartes sont dans services/cards.js. Rien qui aide à gagner : la boutique
 // ne vend que du style, et les objets de prestige (rang, saison) ne s'achètent pas.
 import { getState, update } from '../store.js';
@@ -33,7 +33,7 @@ export const XP = {
 // rarity : commun | rare | epique | legendaire | mythique | exclusif (couleur et lueur dans la boutique).
 export const ITEMS = [
   // Effets de pseudo
-  { id: 'color-orange', kind: 'color', rarity: 'commun', name: 'Orange Goalzz', level: 2 },
+  { id: 'color-orange', kind: 'color', rarity: 'commun', name: 'Orange BeltChase', level: 2 },
   { id: 'color-blue', kind: 'color', rarity: 'commun', name: 'Bleu électrique', level: 6 },
   { id: 'color-purple', kind: 'color', rarity: 'rare', name: 'Violet royal', level: 12 },
   { id: 'color-ice', kind: 'color', rarity: 'epique', name: 'Glace', level: 20 },
@@ -133,7 +133,7 @@ export function buyItem(id) {
   const p = currentPlayer(getState());
   if (!item || item.kind !== 'boost' || !p) throw new Error('Objet introuvable.');
   const price = priceOf(item);
-  if (p.balance < price) throw new Error(`Il te manque ${(price - p.balance).toLocaleString('fr-FR')} Goalz.`);
+  if (p.balance < price) throw new Error(`Il te manque ${(price - p.balance).toLocaleString('fr-FR')} Gold.`);
   update((s) => {
     const me = currentPlayer(s);
     ensureProgress(me);

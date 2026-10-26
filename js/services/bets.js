@@ -135,7 +135,7 @@ export function slipCheck(s = getState()) {
   else if (live.some((x) => !x.current)) error = 'Paris suspendus sur un match en direct : attends la reprise ou retire-le.';
   else if (oddsChanged) error = 'Une cote en direct a changé : accepte la nouvelle cote pour valider.';
   else if (combo && items.length > COMBO_MAX) error = `Un combiné peut contenir ${COMBO_MAX} matchs au maximum.`;
-  else if (stakes.some((x) => !Number.isInteger(x) || x < CONFIG.MIN_STAKE)) error = `Mise minimum : ${CONFIG.MIN_STAKE} Goalz par pari.`;
+  else if (stakes.some((x) => !Number.isInteger(x) || x < CONFIG.MIN_STAKE)) error = `Mise minimum : ${CONFIG.MIN_STAKE} Gold par pari.`;
   else if (total > p.balance) error = 'Solde insuffisant pour ces mises.';
   return { items, total, potential, error, combo, comboOdds, comboStake: p.comboStake ?? CONFIG.DEFAULT_STAKE, oddsChanged, hasLive: live.length > 0 };
 }

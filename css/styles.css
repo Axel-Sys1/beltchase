@@ -12,11 +12,11 @@
   --text: #edf2fb;
   --muted: #8a9abb;
   --placeholder: #5f7299;
-  --accent: #ff6b1a;
-  --accent-2: #e85a0c;
-  --accent-hover: #ff8746;
-  --accent-ink: #1a0800;
-  --accent-rgb: 255, 107, 26;
+  --accent: #f2b630;
+  --accent-2: #c48a12;
+  --accent-hover: #ffc94d;
+  --accent-ink: #08122a;
+  --accent-rgb: 242, 182, 48;
   --accent-soft: rgba(var(--accent-rgb), 0.14);
   --live: #ff3d5a;
   --live-soft: rgba(255, 61, 90, 0.13);
@@ -1628,3 +1628,7 @@ a.ad-ph:focus-visible { outline-offset: -2px; }
 :root[data-event="halloween"] .logo svg.pumpkin-logo { filter: drop-shadow(0 0 6px rgba(255, 122, 26, 0.75)); }
 .brand-big .pumpkin-logo { animation: pumpkin-in 0.9s cubic-bezier(0.2, 1.3, 0.4, 1); }
 @keyframes pumpkin-in { from { transform: scale(0.3) rotate(-20deg); opacity: 0; } }
+
+/* Logo BeltChase : ceinture un peu plus large que l'ancien ballon */
+.logo svg.belt-logo { width: 34px; height: 34px; margin: -4px 0; }
+.brand-big svg.belt-logo { width: 1.05em; height: 1.05em; }

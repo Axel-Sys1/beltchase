@@ -53,7 +53,7 @@ function layout({ title, description, path, body, jsonLd = null, noindex = false
   <meta name="description" content="${esc(description)}">
   ${noindex ? '<meta name="robots" content="noindex">' : `<link rel="canonical" href="${SITE}${path}">`}
   <meta property="og:type" content="website">
-  <meta property="og:site_name" content="Goalzz">
+  <meta property="og:site_name" content="BeltChase">
   <meta property="og:locale" content="fr_FR">
   <meta property="og:title" content="${esc(title)}">
   <meta property="og:description" content="${esc(description)}">
@@ -69,19 +69,19 @@ function layout({ title, description, path, body, jsonLd = null, noindex = false
 </head>
 <body>
   <header class="seo-top">
-    <a class="logo" href="/" aria-label="Goalzz, jouer"><span>GOAL<b>ZZ</b></span></a>
+    <a class="logo" href="/" aria-label="BeltChase, jouer"><span>BELT<b>CHASE</b></span></a>
     <a class="btn btn-primary" href="/">Jouer gratuitement</a>
   </header>
   <main class="seo-page">
 ${body}
     <section class="card seo-cta">
-      <strong>Pronostique gratuitement sur Goalzz</strong>
+      <strong>Pronostique gratuitement sur BeltChase</strong>
       <span class="muted">Le jeu de pronos sportifs avec une monnaie 100 % virtuelle : cotes en direct, rangs de Fer à Radiant, défis du jour et ligues entre potes. Gratuit, sans argent réel.</span>
       <a class="btn btn-primary btn-lg" href="/">Je joue maintenant</a>
     </section>
     <footer class="seo-foot">
       <a href="/pronos">Tous les pronostics</a> · <a href="/">Jouer</a> · <a href="/legal">Mentions légales</a>
-      <p class="muted">Jeu gratuit, sans argent réel. Les cotes sont indicatives (bookmakers via ESPN, ou estimées par Goalzz) et ne sont pas des conseils de pari.</p>
+      <p class="muted">Jeu gratuit, sans argent réel. Les cotes sont indicatives (bookmakers via ESPN, ou estimées par BeltChase) et ne sont pas des conseils de pari.</p>
     </footer>
   </main>
 </body>
@@ -110,7 +110,7 @@ function matchRow(league, m) {
 // /pronos : toutes les compétitions qui ont des matchs à venir.
 export function renderHub(groups) {
   const list = groups.filter((g) => g.matches.length);
-  const body = `${crumbs([['Goalzz', '/'], ['Pronostics', null]])}
+  const body = `${crumbs([['BeltChase', '/'], ['Pronostics', null]])}
     <h1 class="seo-h1">Pronostics et cotes des prochains matchs</h1>
     <p class="seo-lead">Les cotes et les favoris de tous les matchs à venir : football (Ligue 1, Premier League, Ligue des champions…), NBA, NHL, NFL et rugby. Choisis une compétition pour voir les affiches de la semaine.</p>
     <div class="seo-grid">
@@ -121,8 +121,8 @@ export function renderHub(groups) {
       </a>`).join('') || '<p class="muted">Aucun match à venir pour le moment.</p>'}
     </div>`;
   return layout({
-    title: 'Pronostics et cotes des prochains matchs · Goalzz',
-    description: 'Cotes, favoris et pronostics des prochains matchs de foot, NBA, NHL, NFL et rugby. Pronostique gratuitement avec une monnaie virtuelle sur Goalzz.',
+    title: 'Pronostics et cotes des prochains matchs · BeltChase',
+    description: 'Cotes, favoris et pronostics des prochains matchs de foot, NBA, NHL, NFL et rugby. Pronostique gratuitement avec une monnaie virtuelle sur BeltChase.',
     path: '/pronos', body,
   });
 }
@@ -136,15 +136,15 @@ export function renderLeague(league, matches) {
     days.get(k).push(m);
   }
   const name = league.name;
-  const body = `${crumbs([['Goalzz', '/'], ['Pronostics', '/pronos'], [name, null]])}
+  const body = `${crumbs([['BeltChase', '/'], ['Pronostics', '/pronos'], [name, null]])}
     <h1 class="seo-h1">Pronostics ${esc(name)} : cotes des prochains matchs</h1>
-    <p class="seo-lead">Toutes les affiches de ${esc(name)} des 7 prochains jours avec leurs cotes 1N2 et les chances de victoire de chaque équipe. Clique sur un match pour l'analyse, puis pronostique-le gratuitement sur Goalzz.</p>
+    <p class="seo-lead">Toutes les affiches de ${esc(name)} des 7 prochains jours avec leurs cotes 1N2 et les chances de victoire de chaque équipe. Clique sur un match pour l'analyse, puis pronostique-le gratuitement sur BeltChase.</p>
     ${[...days].map(([day, list]) => `
     <h2 class="seo-day">${esc(day.charAt(0).toUpperCase() + day.slice(1))}</h2>
     <ul class="seo-matches">${list.map((m) => matchRow(league, m)).join('')}</ul>`).join('') || '<p class="muted">Pas de match prévu dans les 7 prochains jours. Reviens bientôt !</p>'}`;
   return layout({
-    title: `Pronostics ${name} et cotes des prochains matchs · Goalzz`,
-    description: `Cotes et pronostics ${name} : ${matches.slice(0, 3).map((m) => `${m.home.name} – ${m.away.name}`).join(', ') || 'les prochaines affiches'}. Pronostique gratuitement sur Goalzz.`,
+    title: `Pronostics ${name} et cotes des prochains matchs · BeltChase`,
+    description: `Cotes et pronostics ${name} : ${matches.slice(0, 3).map((m) => `${m.home.name} – ${m.away.name}`).join(', ') || 'les prochaines affiches'}. Pronostique gratuitement sur BeltChase.`,
     path: `/pronos/${league.slug}`, body,
   });
 }
@@ -154,7 +154,7 @@ export function renderMatch(league, m, others = []) {
   const { outcomes, probs, verdict } = analysis(m);
   const title = `${m.home.name} – ${m.away.name} : cotes et pronostic (${league.name}, ${dateShort(m.startsAt)})`;
   const path = matchPath(league, m);
-  const body = `${crumbs([['Goalzz', '/'], ['Pronostics', '/pronos'], [league.name, `/pronos/${league.slug}`], [`${m.home.name} – ${m.away.name}`, null]])}
+  const body = `${crumbs([['BeltChase', '/'], ['Pronostics', '/pronos'], [league.name, `/pronos/${league.slug}`], [`${m.home.name} – ${m.away.name}`, null]])}
     <h1 class="seo-h1">${esc(m.home.name)} – ${esc(m.away.name)} : cotes et pronostic</h1>
     <p class="seo-lead">${esc(league.name)}${m.round ? ` · ${esc(m.round)}` : ''} · ${esc(dateLong(m.startsAt))} à ${esc(hour(m.startsAt))}</p>
     <section class="card seo-match-card">
@@ -164,7 +164,7 @@ export function renderMatch(league, m, others = []) {
         <div><small>${esc(LABEL(m, o))}</small><b>${odds2(m.odds[o])}</b><i>${probs[o] ? `${pct(probs[o])} de chances` : ''}</i></div>`).join('')}
       </div>
       <p class="seo-verdict">${esc(verdict)}</p>
-      <p class="muted">${m.oddsSource === 'bookmaker' ? 'Cotes des bookmakers (via ESPN), ramenées à la marge Goalzz.' : 'Cotes estimées par Goalzz à partir des classements et bilans.'} Sur Goalzz, tu peux aussi parier ce match en direct, avec des cotes qui bougent pendant le match.</p>
+      <p class="muted">${m.oddsSource === 'bookmaker' ? 'Cotes des bookmakers (via ESPN), ramenées à la marge BeltChase.' : 'Cotes estimées par BeltChase à partir des classements et bilans.'} Sur BeltChase, tu peux aussi parier ce match en direct, avec des cotes qui bougent pendant le match.</p>
       <a class="btn btn-primary btn-lg" href="/">Pronostiquer ${esc(m.home.name)} – ${esc(m.away.name)}</a>
     </section>
     ${others.length ? `
@@ -185,18 +185,18 @@ export function renderMatch(league, m, others = []) {
     url: `${SITE}${path}`,
   };
   return layout({
-    title: `${title} · Goalzz`,
-    description: `${verdict} Cotes ${outcomes.map((o) => `${o === 'X' ? 'nul' : LABEL(m, o)} ${odds2(m.odds[o])}`).join(', ')}. Pronostique gratuitement sur Goalzz.`,
+    title: `${title} · BeltChase`,
+    description: `${verdict} Cotes ${outcomes.map((o) => `${o === 'X' ? 'nul' : LABEL(m, o)} ${odds2(m.odds[o])}`).join(', ')}. Pronostique gratuitement sur BeltChase.`,
     path, body, jsonLd,
   });
 }
 
 export function renderGone(league) {
   return layout({
-    title: 'Match terminé ou introuvable · Goalzz',
+    title: 'Match terminé ou introuvable · BeltChase',
     description: 'Ce match n\'est plus à venir.',
     path: '/pronos', noindex: true,
-    body: `${crumbs([['Goalzz', '/'], ['Pronostics', '/pronos'], ...(league ? [[league.name, `/pronos/${league.slug}`]] : [])])}
+    body: `${crumbs([['BeltChase', '/'], ['Pronostics', '/pronos'], ...(league ? [[league.name, `/pronos/${league.slug}`]] : [])])}
     <h1 class="seo-h1">Ce match n'est plus à venir</h1>
     <p class="seo-lead">Il est terminé, reporté ou introuvable. ${league ? `<a href="/pronos/${league.slug}">Voir les prochains matchs de ${esc(league.name)}</a>.` : '<a href="/pronos">Voir tous les pronostics</a>.'}</p>`,
   });
