@@ -8,7 +8,7 @@ import { teamMark } from '../logos.js';
 import { ui } from '../uiState.js';
 
 const STATUS = {
-  pending: { label: 'En cours', empty: 'Aucun pari en cours. Va jeter un œil aux matchs !' },
+  pending: { label: 'En cours', empty: 'Aucun pari en cours. Va jeter un œil aux combats !' },
   won: { label: 'Gagnés', empty: 'Pas encore de pari gagné… ça va venir !' },
   lost: { label: 'Perdus', empty: 'Aucun pari perdu. Joli !' },
   void: { label: 'Remboursés', empty: 'Aucun pari remboursé.' },
@@ -22,7 +22,7 @@ function comboCard(b) {
   return `
   <article class="bet bet-${b.status} bet-combo">
     <header class="bet-head">
-      <span class="comp">Combiné · ${b.legs.length} matchs</span>
+      <span class="comp">Combiné · ${b.legs.length} combats</span>
       <span class="bet-right">${b.status === 'pending' ? `<span class="kick">${left} restant${left > 1 ? 's' : ''}</span>` : ''}<span class="status-pill">${pill}</span></span>
     </header>
     <ul class="combo-legs">
@@ -124,8 +124,8 @@ export function renderMyBets(s, p) {
     ${ui.betsTab === 'pending' && pendingFake ? `
       <div class="ff-card">
         <div class="grow">
-          <strong>Des matchs éclair sont en cours</strong>
-          <span class="muted">Avance l'horloge des matchs fictifs. Les vrais matchs, eux, suivent le temps réel.</span>
+          <strong>Des combats éclair sont en cours</strong>
+          <span class="muted">Avance l'horloge des combats fictifs. Les vrais combats, eux, suivent le temps réel.</span>
         </div>
         <button class="btn btn-ghost" data-action="fast-forward" type="button">${icons.forward} +${CONFIG.FAST_FORWARD_MIN} min</button>
       </div>` : ''}
@@ -133,6 +133,6 @@ export function renderMyBets(s, p) {
     ${list.length
       ? `<div class="bet-list">${list.map((b) => betCard(b)).join('')}</div>`
       : `<div class="empty"><p class="muted">${STATUS[ui.betsTab].empty}</p>
-          ${ui.betsTab === 'pending' ? `<button class="btn btn-ghost" data-action="go" data-route="matchs" type="button">Voir les matchs</button>` : ''}</div>`}
+          ${ui.betsTab === 'pending' ? `<button class="btn btn-ghost" data-action="go" data-route="matchs" type="button">Voir les combats</button>` : ''}</div>`}
   `;
 }

@@ -82,8 +82,8 @@ function statsView(p) {
       <h2>Jeu gratuit, sans argent réel</h2>
       <p class="muted">
         Le Gold est une monnaie 100 % virtuelle. Il ne peut pas être acheté, ni échangé
-        contre de l'argent, des lots ou quoi que ce soit d'autre. Les « matchs éclair » sont
-        fictifs ; les « vrais matchs » suivent les résultats officiels.
+        contre de l'argent, des lots ou quoi que ce soit d'autre. Les « combats éclair » sont
+        fictifs ; les « vrais combats » suivent les résultats officiels.
       </p>
     </section>`;
 }

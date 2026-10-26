@@ -25,7 +25,7 @@ import { isGuest } from '../services/cloud.js';
 import { renderLocked } from './screens/onboarding.js';
 
 const ROUTES = [
-  { id: 'matchs', label: 'Matchs', icon: 'ball', render: renderMatches },
+  { id: 'matchs', label: 'Combats', icon: 'ball', render: renderMatches },
   { id: 'panier', label: 'Panier', icon: 'ticket', render: renderSlip },
   { id: 'paris', label: 'Mes paris', icon: 'list', render: renderMyBets },
   { id: 'boutique', label: 'Boutique', icon: 'bag', render: renderShop, account: true },

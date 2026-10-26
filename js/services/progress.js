@@ -33,7 +33,7 @@ export const XP = {
 // rarity : commun | rare | epique | legendaire | mythique | exclusif (couleur et lueur dans la boutique).
 export const ITEMS = [
   // Effets de pseudo
-  { id: 'color-orange', kind: 'color', rarity: 'commun', name: 'Orange BeltChase', level: 2 },
+  { id: 'color-orange', kind: 'color', rarity: 'commun', name: 'Orange vif', level: 2 },
   { id: 'color-blue', kind: 'color', rarity: 'commun', name: 'Bleu électrique', level: 6 },
   { id: 'color-purple', kind: 'color', rarity: 'rare', name: 'Violet royal', level: 12 },
   { id: 'color-ice', kind: 'color', rarity: 'epique', name: 'Glace', level: 20 },

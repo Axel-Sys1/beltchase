@@ -132,10 +132,10 @@ export function slipCheck(s = getState()) {
   const oddsChanged = live.some((x) => x.current && x.current !== x.odds);
   let error = null;
   if (!items.length) error = 'Ton panier est vide.';
-  else if (items.some((x) => !x.live && matchStatus(x.match) !== 'upcoming')) error = 'Un match a déjà commencé : retire-le du panier.';
-  else if (live.some((x) => !x.current)) error = 'Paris suspendus sur un match en direct : attends la reprise ou retire-le.';
+  else if (items.some((x) => !x.live && matchStatus(x.match) !== 'upcoming')) error = 'Un combat a déjà commencé : retire-le du panier.';
+  else if (live.some((x) => !x.current)) error = 'Paris suspendus sur un combat en direct : attends la reprise ou retire-le.';
   else if (oddsChanged) error = 'Une cote en direct a changé : accepte la nouvelle cote pour valider.';
-  else if (combo && items.length > COMBO_MAX) error = `Un combiné peut contenir ${COMBO_MAX} matchs au maximum.`;
+  else if (combo && items.length > COMBO_MAX) error = `Un combiné peut contenir ${COMBO_MAX} combats au maximum.`;
   else if (stakes.some((x) => !Number.isInteger(x) || x < CONFIG.MIN_STAKE)) error = `Mise minimum : ${CONFIG.MIN_STAKE} Gold par pari.`;
   else if (total > p.balance) error = 'Solde insuffisant pour ces mises.';
   return { items, total, potential, error, combo, comboOdds, comboStake: p.comboStake ?? CONFIG.DEFAULT_STAKE, oddsChanged, hasLive: live.length > 0 };
@@ -165,7 +165,7 @@ export function placeSlip() {
       p.stats.maxStake = Math.max(p.stats.maxStake, stake);
       p.stats.sports[x.match.sport] = true;
       addXp(p, XP.place());
-      track(p, placeEvents([x.match], { live: !!x.live }));
+      track(p, placeEvents([x.match], { live: !!x.live, outcomes: [x.outcome] }));
     }
     p.slip = [];
     checkBadges(p);
@@ -189,7 +189,7 @@ function placeCombo(items, odds, stake) {
     p.stats.maxStake = Math.max(p.stats.maxStake, stake);
     for (const x of items) p.stats.sports[x.match.sport] = true;
     addXp(p, XP.place(items.length));
-    track(p, placeEvents(items.map((x) => x.match), { combo: true }));
+    track(p, placeEvents(items.map((x) => x.match), { combo: true, outcomes: items.map((x) => x.outcome) }));
     p.slip = [];
     checkBadges(p);
     return 1;
@@ -221,7 +221,7 @@ function settleCombos(s, m) {
     const leg = bet.legs.find((l) => l.matchId === m.id);
     if (leg.status !== 'pending') continue;
     leg.status = settleKey(leg.outcome, m);
-    const label = `Combiné ${bet.legs.length} matchs`;
+    const label = `Combiné ${bet.legs.length} combats`;
     if (leg.status === 'lost') {
       bet.status = 'lost';
       bet.rrv = RR_VERSION;

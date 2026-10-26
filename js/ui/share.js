@@ -71,14 +71,14 @@ async function drawBet(b) {
   }
   if (legs.length > shown.length) {
     ctx.fillStyle = C.muted; ctx.font = `600 32px ${BODY}`;
-    ctx.fillText(`+ ${legs.length - shown.length} autre${legs.length - shown.length > 1 ? 's' : ''} match${legs.length - shown.length > 1 ? 's' : ''}`, 112, y + 30);
+    ctx.fillText(`+ ${legs.length - shown.length} autre${legs.length - shown.length > 1 ? 's' : ''} combat${legs.length - shown.length > 1 ? 's' : ''}`, 112, y + 30);
   }
 
   // Chiffres en bas.
   const odds = b.finalOdds || b.odds;
   const gain = b.status === 'won' ? `+${fmt(b.payout)}` : fmt(b.potential);
   const cols = [
-    [b.legs ? `Combiné ${legs.length} matchs` : 'Cote', fmtOdds(odds), C.text],
+    [b.legs ? `Combiné ${legs.length} combats` : 'Cote', fmtOdds(odds), C.text],
     ['Mise', `${fmt(b.stake)} G`, C.text],
     [b.status === 'won' ? 'Gain' : 'Gain potentiel', `${gain} G`, b.status === 'won' ? C.green : C.accent],
   ];

@@ -28,25 +28,26 @@ function guestMatches(s) {
   if (!live.length && !soon.length) return '';
   const card = (m) => matchCard(m, { guest: true });
   return `
-    <section class="guest-matches" aria-label="Matchs du moment">
+    <section class="guest-matches" aria-label="Combats du moment">
       ${live.length ? `
         <h2 class="section-title"><span class="live-dot"></span>En direct <span class="muted section-note">paris en direct</span></h2>
         <div class="match-grid">${live.map(card).join('')}</div>` : ''}
       ${soon.length ? `
-        <h2 class="section-title">Les matchs à venir</h2>
+        <h2 class="section-title">Les combats à venir</h2>
         <div class="match-grid">${soon.map(card).join('')}</div>` : ''}
       <button class="btn btn-primary btn-lg guest-cta" data-action="guest-pick" type="button">
-        Voir les ${fmt(real.length)} matchs et parier
+        Voir les ${fmt(real.length)} combats et parier
       </button>
     </section>`;
 }
 
 const FEATURES = [
-  { icon: 'stadium', title: 'Les vrais matchs', text: 'Ligue 1, Premier League, Ligue des champions, NBA, tennis, UFC, rugby… résultats officiels en direct.' },
-  { icon: 'star', title: 'Collectionne les cartes', text: `${CARDS.length} cartes de stars à débloquer : Mbappé, Wembanyama, Sinner, Dupont… Pochettes surprises et boutique du jour.` },
-  { icon: 'trophy', title: 'Des rangs à grimper', text: 'De Fer à Radiant : chaque bon prono te fait monter, chaque raté te fait descendre.' },
+  { icon: 'stadium', title: 'Les vrais combats', text: 'UFC, PFL, boxe, et les grandes soirées de kick, JJB et lutte : résultats officiels.' },
+  { icon: 'bolt', title: 'KO, soumission ou décision ?', text: 'Pronostique le vainqueur, la méthode et le round. Plus ton prono est précis, plus la cote grimpe.' },
+  { icon: 'star', title: 'Collectionne les cartes', text: `${CARDS.length} cartes de combattants à débloquer. Pochettes surprises et boutique du jour.` },
+  { icon: 'trophy', title: 'Chasse la ceinture', text: 'De Fer à Radiant : chaque bon prono te fait monter, chaque raté te fait descendre.' },
   { icon: 'user', title: 'Ligues entre potes', text: 'Crée ta ligue, envoie le lien sur WhatsApp, et voyez qui est le vrai expert.' },
-  { icon: 'bolt', title: 'Matchs éclair', text: 'Envie de jouer tout de suite ? Des matchs fictifs de 2 minutes, à toute heure.' },
+  { icon: 'bolt', title: 'Combats éclair', text: 'Envie de jouer tout de suite ? Des combats fictifs de 2 minutes, à toute heure.' },
 ];
 
 function pseudoForm(title, note = '') {
@@ -106,7 +107,7 @@ const signupFirst = () => `${signupCard()}
 
 // Écrans réservés aux joueurs avec un compte (boutique, classement, profil), vus sans compte.
 const LOCKED = {
-  boutique: ['La boutique', 'les cartes de joueurs, les pochettes et les styles'],
+  boutique: ['La boutique', 'les cartes de combattants, les pochettes et les styles'],
   classement: ['Les rangs', 'le classement, ta division et les ligues entre potes'],
   profil: ['Ton profil', 'tes stats, ton niveau, le parrainage et les réglages'],
 };
@@ -135,12 +136,12 @@ export function renderOnboarding(s) {
     <div class="landing">
       <section class="landing-hero">
         <div class="brand-big">${eventLogo()}<span>BELT<b>CHASE</b></span></div>
-        <h1 class="landing-title">Pronostique.<br>Collectionne.<br><b>Domine tes potes.</b></h1>
-        <p class="tagline">Le jeu de pronos sportifs gratuit avec une monnaie 100 % virtuelle${eventTag({ short: true })}.</p>
+        <h1 class="landing-title">Pronostique.<br>Collectionne.<br><b>Chasse la ceinture.</b></h1>
+        <p class="tagline">Le jeu de pronos MMA, boxe et sports de combat, gratuit, avec une monnaie 100 % virtuelle${eventTag({ short: true })}.</p>
         ${showcase.length ? `
         <div class="landing-cards" aria-label="Exemples de cartes à collectionner">
           ${showcase.map((c, i) => `<div class="lc lc-${i}">${cardHtml(c)}</div>`).join('')}
-          <span class="lc-caption">${CARDS.length} cartes à collectionner · foot, NBA, tennis, UFC, rugby…</span>
+          <span class="lc-caption">${CARDS.length} cartes à collectionner · MMA, boxe, kick, JJB…</span>
         </div>` : ''}
         <div class="landing-ladder" aria-label="Les rangs, de Fer à Radiant">
           ${ladder.map((r, i) => `<span style="animation-delay:${0.15 + i * 0.07}s">${rankEmblem(r)}</span>`).join('')}

@@ -22,8 +22,8 @@ export function renderSlip(s, p, { context = 'page' } = {}) {
       <div class="empty slip-empty">
         <div class="empty-icon">${icons.ticket}</div>
         <p><strong>Ton panier est vide</strong></p>
-        <p class="muted">Touche une cote sur un match pour l'ajouter ici.</p>
-        ${context === 'page' ? `<button class="btn btn-ghost" data-action="go" data-route="matchs" type="button">Voir les matchs</button>` : ''}
+        <p class="muted">Touche une cote sur un combat pour l'ajouter ici.</p>
+        ${context === 'page' ? `<button class="btn btn-ghost" data-action="go" data-route="matchs" type="button">Voir les combats</button>` : ''}
       </div>
     </div>`;
   }
@@ -59,7 +59,7 @@ export function renderSlip(s, p, { context = 'page' } = {}) {
               : x.live && !x.current ? `<span class="muted slip-suspended">${icons.lock} Suspendu</span>` : fmtOdds(odds)}</div>
             <button class="icon-btn" data-action="slip-remove" data-match="${escapeHtml(m.id)}" type="button" aria-label="Retirer">${icons.close}</button>
           </div>
-          ${started ? '<p class="warn">Ce match a commencé.</p>' : combo ? '' : `
+          ${started ? '<p class="warn">Ce combat a commencé.</p>' : combo ? '' : `
           <div class="stake-row">
             <label class="stake-input" for="${inputId}">
               <span class="sr-only">Mise</span>
@@ -87,9 +87,9 @@ export function renderSlip(s, p, { context = 'page' } = {}) {
       ${oddsChanged ? `
       <button class="btn btn-primary btn-lg btn-block" data-action="slip-accept" type="button">Accepter les nouvelles cotes</button>` : `
       <button class="btn btn-primary btn-lg btn-block" data-action="slip-place" data-slip-submit type="button" ${error ? 'disabled' : ''}>
-        ${combo ? `Valider le combiné (${items.length} matchs)` : `Valider ${items.length > 1 ? `${items.length} paris` : 'le pari'}`}
+        ${combo ? `Valider le combiné (${items.length} combats)` : `Valider ${items.length > 1 ? `${items.length} paris` : 'le pari'}`}
       </button>`}
-      ${hasLive && items.some((x) => x.live && x.match.real) ? `<p class="muted slip-note">Pari en direct sur un vrai match : validé si le score ne bouge pas pendant ${Math.round(CONFIG.LIVE.CONFIRM_MS / 1000)} s, sinon remboursé.</p>` : ''}
+      ${hasLive && items.some((x) => x.live && x.match.real) ? `<p class="muted slip-note">Pari en direct sur un vrai combat : validé si le score ne bouge pas pendant ${Math.round(CONFIG.LIVE.CONFIRM_MS / 1000)} s, sinon remboursé.</p>` : ''}
     </div>
   </div>`;
 }
@@ -99,7 +99,7 @@ function comboBox(context, odds, stake) {
   return `
     <div class="combo-box">
       <div class="slip-sum"><span>Cote du combiné</span><strong class="combo-odds">${fmtOdds(odds)}</strong></div>
-      <p class="muted combo-rule">Tous tes pronostics doivent être bons. Un match remboursé compte pour une cote de 1.</p>
+      <p class="muted combo-rule">Tous tes pronostics doivent être bons. Un combat remboursé compte pour une cote de 1.</p>
       <div class="stake-row">
         <label class="stake-input" for="${inputId}">
           <span class="sr-only">Mise du combiné</span>

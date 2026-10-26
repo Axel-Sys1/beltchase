@@ -1,7 +1,7 @@
 {
-  "name": "BeltChase · Pronos sportifs entre potes",
+  "name": "BeltChase · Pronos MMA et boxe entre potes",
   "short_name": "BeltChase",
-  "description": "Pronostique les vrais matchs avec une monnaie 100 % virtuelle, grimpe les rangs et défie tes potes. Gratuit, sans argent réel.",
+  "description": "Pronostique les vrais combats avec une monnaie 100 % virtuelle, grimpe les rangs et défie tes potes. Gratuit, sans argent réel.",
   "lang": "fr",
   "start_url": "./?source=app",
   "scope": "./",

@@ -5,6 +5,7 @@ import { CONFIG } from '../config.js';
 import { todayKey } from '../util.js';
 import { addXp } from './progress.js';
 import { isGuest } from './cloud.js';
+import { marketOf } from './markets.js';
 
 // ─── Série de connexion ──────────────────────────────────────────────────────
 export const STREAK_DAYS = 7;
@@ -28,13 +29,14 @@ const POOL = [
   { id: 'win1', family: 'win', type: 'win', target: 1, text: 'Gagne un pari', goalz: 60, xp: 60 },
   { id: 'win3', family: 'win', type: 'win', target: 3, text: 'Gagne 3 paris', goalz: 150, xp: 120 },
   { id: 'odds2', family: 'odds', type: 'winOdds2', target: 1, text: 'Gagne un pari à une cote de 2,00 ou plus', goalz: 120, xp: 100 },
-  { id: 'combo3', family: 'combo', type: 'combo3', target: 1, text: 'Place un combiné d\'au moins 3 matchs', goalz: 80, xp: 70 },
-  { id: 'live', family: 'live', type: 'live', target: 1, text: 'Place un pari en direct', goalz: 80, xp: 70 },
-  { id: 'foot', family: 'sport', type: 'sport:football', target: 2, text: 'Parie sur 2 matchs de foot', goalz: 60, xp: 50 },
-  { id: 'basket', family: 'sport', type: 'sport:basketball', target: 1, text: 'Parie sur un match de basket', goalz: 60, xp: 50 },
-  { id: 'tennis', family: 'sport', type: 'sport:tennis', target: 1, text: 'Parie sur un match de tennis', goalz: 60, xp: 50 },
-  { id: 'real', family: 'real', type: 'real', target: 2, text: 'Parie sur 2 vrais matchs', goalz: 60, xp: 50 },
-  { id: 'flash', family: 'flash', type: 'flash', target: 3, text: 'Parie sur 3 matchs éclair', goalz: 60, xp: 50 },
+  { id: 'combo3', family: 'combo', type: 'combo3', target: 1, text: 'Place un combiné d\'au moins 3 combats', goalz: 80, xp: 70 },
+  { id: 'method', family: 'method', type: 'method', target: 1, text: 'Pronostique une méthode de victoire (KO, soumission, décision)', goalz: 80, xp: 70 },
+  { id: 'round', family: 'method', type: 'end', target: 1, text: 'Pronostique le round de fin d\'un combat', goalz: 80, xp: 70 },
+  { id: 'mma', family: 'sport', type: 'sport:mma', target: 2, text: 'Parie sur 2 combats de MMA', goalz: 60, xp: 50 },
+  { id: 'boxing', family: 'sport', type: 'sport:boxing', target: 1, text: 'Parie sur un combat de boxe', goalz: 60, xp: 50 },
+  { id: 'kick', family: 'sport', type: 'sport:kickboxing', target: 1, text: 'Parie sur un combat de kick ou de Muay Thaï', goalz: 60, xp: 50 },
+  { id: 'real', family: 'real', type: 'real', target: 2, text: 'Parie sur 2 vrais combats', goalz: 60, xp: 50 },
+  { id: 'flash', family: 'flash', type: 'flash', target: 3, text: 'Parie sur 3 combats éclair', goalz: 60, xp: 50 },
 ];
 
 // Tirage déterministe à partir de la date : même liste pour tout le monde ce jour-là.
@@ -85,8 +87,9 @@ export function track(p, events) {
   }
 }
 
-// Événements d'un pari placé : ['place', 'sport:…', 'real' | 'flash', 'live', 'combo3'].
-export function placeEvents(matches, { live = false, combo = false } = {}) {
+// Événements d'un pari placé : ['place', 'sport:…', 'real' | 'flash', 'live', 'combo3', 'method' | 'end'].
+// outcomes : paris placés (mêmes positions que matches), pour compter les paris méthode / round.
+export function placeEvents(matches, { live = false, combo = false, outcomes = [] } = {}) {
   const ev = [];
   if (combo) {
     ev.push('place');
@@ -95,6 +98,7 @@ export function placeEvents(matches, { live = false, combo = false } = {}) {
   for (const m of matches) {
     ev.push(`sport:${m.sport}`, m.real ? 'real' : 'flash');
   }
+  for (const o of outcomes) if (marketOf(o) !== 'winner') ev.push(marketOf(o));
   if (live) ev.push('live');
   return ev;
 }

@@ -25,7 +25,7 @@ const ORDER = { 1: 0, X: 1, 2: 2 };
 function analysisLink(m, status, t) {
   if (status !== 'upcoming' || m.meta?.adapter !== 'team' || m.startsAt - t > SEO_DAYS * 86_400_000) return '';
   const league = LEAGUE_PAGES.find((l) => l.sport === m.sport && l.league === m.meta.league);
-  return league ? `<a class="match-analysis" href="${matchPath(league, m)}">Analyse et cotes du match ›</a>` : '';
+  return league ? `<a class="match-analysis" href="${matchPath(league, m)}">Analyse et cotes du combat ›</a>` : '';
 }
 
 // Horaire court utilisé dans une liste déjà groupée par jour.
@@ -351,7 +351,7 @@ function renderReal(s, p, picks) {
           <div class="match-grid">${list.map(card).join('')}</div>
         </section>`;
       }).join('')}` : `
-      <div class="empty"><p class="muted">Aucun match à venir pour ce sport dans les ${CONFIG.REAL_DAYS_AHEAD} prochains jours.</p></div>`}
+      <div class="empty"><p class="muted">Aucun combat à venir pour ce sport dans les ${CONFIG.REAL_DAYS_AHEAD} prochains jours.</p></div>`}
 
     ${finished.length ? `
       <h2 class="section-title">Derniers résultats</h2>
@@ -391,7 +391,7 @@ function renderFake(s, p, picks) {
     </div>
     ${upcoming.length
       ? `<div class="match-grid">${upcoming.map(card).join('')}</div>`
-      : `<div class="empty"><p>Chargement des prochains matchs…</p></div>`}
+      : `<div class="empty"><p>Chargement des prochains combats…</p></div>`}
 
     ${finished.length ? `
       <h2 class="section-title">Derniers résultats</h2>
@@ -477,7 +477,7 @@ export function renderMatches(s, p) {
   return `
     <section class="greeting">
       <h1>Salut <b>${escapeHtml(p.pseudo)}</b></h1>
-      ${mode === 'fake' ? '<p class="muted">Des matchs fictifs de 2 minutes pour jouer tout de suite.</p>' : ''}
+      ${mode === 'fake' ? '<p class="muted">Des combats fictifs de 2 minutes pour jouer tout de suite.</p>' : ''}
     </section>
 
     ${cloud.user ? '' : inviteBanner({ inGame: true }) || (p.stats.betsPlaced > 0 ? accountNudge() : '')}

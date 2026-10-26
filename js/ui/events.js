@@ -117,7 +117,7 @@ const actions = {
   },
   'refresh-real': async () => {
     await refreshReal();
-    toast('Vrais matchs actualisés', 'info');
+    toast('Vrais combats actualisés', 'info');
   },
 
   'slip-remove': (el) => removeSelection(el.dataset.match),
@@ -187,7 +187,7 @@ const actions = {
   },
   'fast-forward': async () => {
     await fastForward();
-    toast(`+${CONFIG.FAST_FORWARD_MIN} minutes pour les matchs éclair`, 'info');
+    toast(`+${CONFIG.FAST_FORWARD_MIN} minutes pour les combats éclair`, 'info');
   },
 
   'rank-tab': (el) => { ui.rankTab = el.dataset.tab; render(); },
