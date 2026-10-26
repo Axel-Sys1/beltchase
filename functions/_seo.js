@@ -5,8 +5,8 @@ import { loadGroups, packGroups, unpackGroups } from '../js/seo/data.js';
 
 const FRESH_S = 15 * 60;
 const KEEP_S = 2 * 24 * 3600;
-const KEY_FRESH = 'https://goalzz.fr/__seo/groups-v1';
-const KEY_STALE = 'https://goalzz.fr/__seo/groups-v1-stale';
+const KEY_FRESH = 'https://goalzz.fr/__seo/groups-v2';
+const KEY_STALE = 'https://goalzz.fr/__seo/groups-v2-stale';
 
 async function getJson(url) {
   const res = await fetch(url, { headers: { Accept: 'application/json' }, cf: { cacheTtl: 300, cacheEverything: true } });
@@ -25,7 +25,7 @@ export async function groups(waitUntil) {
   try {
     const fresh = await loadGroups({ getJson, now: Date.now() });
     const total = fresh.reduce((n, g) => n + g.matches.length, 0);
-    if (!total) throw new Error('aucun match lu');
+    if (!total) throw new Error('aucun combat lu');
     const body = JSON.stringify(packGroups(fresh));
     waitUntil(Promise.all([store(cache, KEY_FRESH, body, FRESH_S), store(cache, KEY_STALE, body, KEEP_S)]));
     return fresh;

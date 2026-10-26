@@ -23,7 +23,7 @@ const ORDER = { 1: 0, X: 1, 2: 2 };
 
 // Lien vers la page publique du match (/pronos/…) : utile aux joueurs, et montre ces pages à Google.
 function analysisLink(m, status, t) {
-  if (status !== 'upcoming' || m.meta?.adapter !== 'team' || m.startsAt - t > SEO_DAYS * 86_400_000) return '';
+  if (status !== 'upcoming' || m.meta?.adapter !== 'mma' || m.startsAt - t > SEO_DAYS * 86_400_000) return '';
   const league = LEAGUE_PAGES.find((l) => l.sport === m.sport && l.league === m.meta.league);
   return league ? `<a class="match-analysis" href="${matchPath(league, m)}">Analyse et cotes du combat ›</a>` : '';
 }

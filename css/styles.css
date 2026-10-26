@@ -1676,3 +1676,7 @@ a.ad-ph:focus-visible { outline-offset: -2px; }
 .admin-result select { width: auto; flex: 1 1 120px; padding: 7px 8px; }
 .admin-row-actions { display: flex; gap: 4px; }
 .btn.btn-sm { padding: 7px 12px; font-size: 14px; }
+.seo-table { width: 100%; border-collapse: collapse; margin: 6px 0 4px; font-size: 14px; }
+.seo-table th, .seo-table td { padding: 7px 8px; border-bottom: 1px solid var(--line); text-align: center; }
+.seo-table tbody th { text-align: left; font-weight: 700; }
+.seo-table td { font: 800 17px/1 var(--display); }
