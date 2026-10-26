@@ -1,13 +1,28 @@
-# Goalz ⚽🏀🎾🥋
+# BeltChase 🥋🥊
 
-Paris sportifs **pour le fun**, avec une monnaie 100 % virtuelle : les Goalz.
-**Jeu gratuit, sans argent réel.** Les Goalz ne s'achètent pas et ne s'échangent
-pas contre de l'argent ou des lots.
+Pronos **MMA, boxe et sports de combat** pour le fun (ex-Goalzz), avec une monnaie 100 % virtuelle :
+le Gold. **Jeu gratuit, sans argent réel.** Le Gold ne s'achète pas et ne s'échange pas contre de
+l'argent ou des lots.
 
-- **Vrais matchs** : foot (Ligue 1, Premier League, LaLiga, Serie A, Bundesliga, Ligue des
-  champions, Ligue des nations…), basket (NBA, WNBA), tennis (ATP, WTA), MMA (UFC, PFL),
-  boxe, hockey (NHL), foot US (NFL), rugby (Top 14, Champions Cup, Six Nations…).
-- **Matchs éclair** : matchs fictifs de 2 minutes pour jouer tout de suite.
+- **Vrais combats** : MMA (UFC, PFL, via ESPN, avec les cotes des bookmakers la semaine du combat),
+  boxe (TheSportsDB), et les soirées saisies à la main sur la page admin (`#admin`, comptes
+  `CONFIG.ADMIN_EMAILS`) : JJB, lutte, kick, Muay Thaï, ONE, ARES, Hexagone… (Firestore `fights`,
+  `js/providers/beltchase.js`).
+- **Paris** : vainqueur, vainqueur + méthode (KO/TKO, soumission, décision…) et fin du combat
+  (round ou décision), voir `js/services/markets.js`. Méthode inconnue : paris méthode / round remboursés.
+- **Combats éclair** : combats fictifs de 2 minutes, simulés round par round.
+- **Cartes** : combattants par discipline (`tools/build_cards.py`) ; les anciennes cartes Goalzz restent
+  lisibles (`js/data/legacyCards.js`) mais ne sont plus vendues.
+
+Règles Firestore à ajouter pour la page admin (dans `match /databases/{database}/documents`) :
+
+```
+match /fights/{id} {
+  allow read: if true;
+  allow write: if request.auth != null && request.auth.token.email_verified == true
+    && request.auth.token.email in ['axel.sirieys@gmail.com', 'contact.goalzzbusiness@gmail.com'];
+}
+```
 
 ## Lancer l'appli en local
 
