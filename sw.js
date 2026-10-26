@@ -2,7 +2,7 @@
 // Réseau d'abord, sans le cache du navigateur (cache: 'no-cache' : chaque fichier est revérifié
 // auprès du serveur), pour que chaque mise en ligne arrive tout de suite ; le cache ne sert que si le
 // réseau ne répond pas. Les données sportives et Firebase ne sont jamais mises en cache ici.
-const CACHE = 'goalz-v2';
+const CACHE = 'beltchase-v1';
 const SHELL = ['./', 'index.html', 'css/styles.css', 'js/main.js', 'manifest.webmanifest', 'icons/icon-192.png'];
 
 self.addEventListener('install', (e) => {

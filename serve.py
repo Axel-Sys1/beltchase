@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Serveur de développement de Goalz.
+"""Serveur de développement de BeltChase.
 
 - Sert les fichiers de l'appli (sans cache, pour voir les modifications tout de suite).
 - POST /__snapshot (depuis cette machine uniquement) enregistre data/real-matches.json,
@@ -54,5 +54,5 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 
 if __name__ == '__main__':
     port = int(sys.argv[1]) if len(sys.argv) > 1 else 5173
-    print(f'Goalz sur http://localhost:{port}')
+    print(f'BeltChase sur http://localhost:{port}')
     http.server.ThreadingHTTPServer(('0.0.0.0', port), Handler).serve_forever()

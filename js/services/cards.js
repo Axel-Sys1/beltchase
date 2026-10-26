@@ -1,17 +1,19 @@
-// Cartes à collectionner : joueurs de foot (clubs et sélections) et de NBA, rangés en collections.
+// Cartes à collectionner : combattants (MMA, boxe, kick et Muay Thaï, JJB, lutte), une collection par sport.
 // Achat à l'unité dans la boutique du jour (sélection perso renouvelée à minuit) ou en pochettes de
 // 3 cartes au hasard. Une collection complète rapporte des Gold. Rien qui aide à gagner ses paris.
 import { getState, update } from '../store.js';
 import { currentPlayer } from './players.js';
 import { CARDS } from '../data/cards.js';
+import { LEGACY_CARDS } from '../data/legacyCards.js';
 import { nextMidnight, seeded, dayKey } from './progress.js';
 
 export { CARDS };
-export const cardById = (id) => CARDS.find((c) => c.id === id) || null;
+// Anciennes cartes (avant BeltChase) : plus vendues, mais toujours lisibles pour ceux qui les ont.
+export const cardById = (id) => CARDS.find((c) => c.id === id) || LEGACY_CARDS.find((c) => c.id === id) || null;
 
 // Collections : une par sport (clubs, sélections et féminines confondus).
 const SPORT_NAMES = {
-  football: 'Foot', basketball: 'Basket', tennis: 'Tennis', mma: 'UFC', boxing: 'Boxe', rugby: 'Rugby', hockey: 'NHL', americanfootball: 'NFL',
+  mma: 'MMA', boxing: 'Boxe', kickboxing: 'Kick & Muay Thaï', bjj: 'JJB & Grappling', wrestling: 'Lutte',
 };
 export const CARD_SETS = Object.entries(SPORT_NAMES)
   .filter(([id]) => CARDS.some((c) => c.sport === id))
@@ -21,7 +23,7 @@ export const RARITY_ORDER = ['mythique', 'legendaire', 'epique', 'rare', 'commun
 
 export const CARD_PRICE = { commun: 250, rare: 600, epique: 1500, legendaire: 3500, mythique: 8000 };
 export const PACK = { price: 800, size: 3, perDay: 3 }; // au-delà de 3 par jour : boost « Recharge pochettes »
-export const SET_REWARD_SHARE = 0.25; // collection complète : 25 % de sa valeur en boutique rendus (Foot ≈ 44 700, Boxe ≈ 6 700)
+export const SET_REWARD_SHARE = 0.25; // collection complète : 25 % de sa valeur en boutique rendus
 export const DUPLICATE_REFUND = 0.25; // un doublon tiré dans une pochette est repris à 25 % de son prix
 export const DAILY_CARDS = 3;
 const SHOP_WEIGHT = { commun: 30, rare: 30, epique: 22, legendaire: 13, mythique: 5 };

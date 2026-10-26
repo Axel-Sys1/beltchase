@@ -5,71 +5,45 @@
 import json, re, sys, time, unicodedata, urllib.parse, urllib.request, os
 
 SETS = [
-  ('ligue1', 'Ligue 1', 'football', '''
-    Ousmane Dembele L; Achraf Hakimi E; Khvicha Kvaratskhelia E; Vitinha E; Desire Doue E; Nuno Mendes E;
-    Marquinhos R; Joao Neves R; Bradley Barcola R; Warren Zaire-Emery R; Mason Greenwood E;
-    Pierre-Emerick Aubameyang R; Paul Pogba R; Goncalo Ramos R; Folarin Balogun R; Ansu Fati C;
-    Aleksandr Golovin C; Amine Gouiri C; Geronimo Rulli C; Leonardo Balerdi C; Lucas Hernandez C; Eliesse Ben Seghir C'''),
-  ('pl', 'Premier League', 'football', '''
-    Erling Haaland M; Mohamed Salah L; Bukayo Saka E; Cole Palmer E; Virgil van Dijk E; Alexander Isak E;
-    Florian Wirtz E; William Saliba E; Martin Odegaard R; Declan Rice R; Bruno Fernandes R; Phil Foden R;
-    Hugo Ekitike R; Alexis Mac Allister R; Gianluigi Donnarumma R; Enzo Fernandez R; Moises Caicedo R;
-    Bryan Mbeumo C; Matheus Cunha C; Dominik Szoboszlai C; Jeremy Doku C'''),
-  ('liga', 'LaLiga', 'football', '''
-    Kylian Mbappe M; Lamine Yamal M; Vinicius Junior L; Jude Bellingham L; Pedri E; Robert Lewandowski E;
-    Raphinha E; Julian Alvarez E; Thibaut Courtois R; Federico Valverde R; Antoine Griezmann R; Jan Oblak R;
-    Aurelien Tchouameni R; Arda Guler R; Nico Williams R; Eduardo Camavinga C; Frenkie de Jong C; Dani Olmo C;
-    Joan Garcia C; Alvaro Carreras C'''),
-  ('europe', 'Serie A & Bundesliga', 'football', '''
-    Harry Kane L; Jamal Musiala E; Michael Olise E; Lautaro Martinez E; Luka Modric E; Kevin De Bruyne E;
-    Rafael Leao R; Nicolo Barella R; Scott McTominay R; Kenan Yildiz R; Christian Pulisic R; Mike Maignan R;
-    Serhou Guirassy R; Joshua Kimmich R; Dusan Vlahovic C; Adrien Rabiot C; Marcus Thuram C; Luis Diaz C'''),
-  ('edf', 'Équipe de France', 'football', '''
-    Kylian Mbappe M @France; Ousmane Dembele L @France; William Saliba E @France; Michael Olise E @France;
-    Desire Doue E @France; Mike Maignan R @France; Aurelien Tchouameni R @France; Jules Kounde R @France;
-    Bradley Barcola R @France; Theo Hernandez R @France; Rayan Cherki R @France; Marcus Thuram R @France;
-    Hugo Ekitike R @France; Dayot Upamecano C @France; Eduardo Camavinga C @France; Ibrahima Konate C @France'''),
-  ('monde', 'Stars des nations', 'football', '''
-    Lionel Messi M @Argentine; Cristiano Ronaldo M @Portugal; Neymar L @Brésil; Lamine Yamal L @Espagne;
-    Erling Haaland L @Norvège; Harry Kane E @Angleterre; Achraf Hakimi E @Maroc; Mohamed Salah E @Égypte;
-    Vinicius Junior E @Brésil; Luka Modric R @Croatie; Kevin De Bruyne R @Belgique; Son Heung-min R @Corée du Sud'''),
-  ('nba', 'NBA', 'basketball', '''
-    Victor Wembanyama M; LeBron James L; Stephen Curry L; Nikola Jokic L; Giannis Antetokounmpo L; Luka Doncic L;
-    Shai Gilgeous-Alexander L; Jayson Tatum E; Kevin Durant E; Anthony Edwards E; Jalen Brunson E; Cooper Flagg E;
-    Joel Embiid R; Tyrese Haliburton R; Devin Booker R; Kyrie Irving R; Anthony Davis R; Paolo Banchero R;
-    Zaccharie Risacher C; Alexandre Sarr C; Rudy Gobert C; Jimmy Butler C; Bam Adebayo C'''),
-  ('feminin', 'Foot féminin', 'football', '''
-    Aitana Bonmati M; Alexia Putellas L; Kadidiatou Diani E; Wendie Renard E; Marie-Antoinette Katoto E; Sam Kerr E;
-    Caroline Graham Hansen E; Ada Hegerberg E; Sakina Karchaoui R; Grace Geyoro R; Alessia Russo R; Lauren James R;
-    Selma Bacha R; Delphine Cascarino R; Melchie Dumornay R; Trinity Rodman R; Mary Earps C; Sophia Smith C'''),
-  ('wnba', 'Basket féminin', 'basketball', '''
-    Caitlin Clark L; A'ja Wilson L; Breanna Stewart E; Sabrina Ionescu E; Paige Bueckers E; Napheesa Collier E;
-    Angel Reese R; Gabby Williams R; Marine Johannes R; Jewell Loyd C; Kelsey Plum C'''),
-  ('tennis', 'Tennis', 'tennis', '''
-    Jannik Sinner M; Carlos Alcaraz M; Novak Djokovic L; Aryna Sabalenka L; Iga Swiatek L; Coco Gauff E;
-    Alexander Zverev E; Elena Rybakina E; Mirra Andreeva E; Arthur Fils E; Taylor Fritz R; Daniil Medvedev R;
-    Jack Draper R; Holger Rune R; Ben Shelton R; Alex de Minaur R; Lorenzo Musetti R; Jessica Pegula R;
-    Jasmine Paolini R; Lois Boisson R; Ugo Humbert C; Gael Monfils C; Giovanni Mpetshi Perricard C; Arthur Rinderknech C'''),
-  ('mma', 'UFC', 'mma', '''
-    Islam Makhachev M; Ilia Topuria M; Jon Jones L; Alex Pereira L; Merab Dvalishvili L; Tom Aspinall E; Ciryl Gane E;
-    Benoit Saint-Denis E; Dricus du Plessis E; Khamzat Chimaev E; Conor McGregor E; Alexandre Pantoja R; Belal Muhammad R;
-    Max Holloway R; Sean O'Malley R; Manon Fiorot R; Nassourdine Imavov R; Charles Oliveira R; Justin Gaethje C; Dustin Poirier C'''),
+  # Ids de collection 'mma' et 'boxe' gardés : les cartes déjà gagnées gardent leur identifiant.
+  ('mma', 'MMA', 'mma', '''
+    Islam Makhachev M; Ilia Topuria M; Khabib Nurmagomedov M #Russie; Jon Jones L #États-Unis; Alex Pereira L; Merab Dvalishvili L;
+    Francis Ngannou L; Georges St-Pierre L; Amanda Nunes L; Tom Aspinall E; Ciryl Gane E; Benoit Saint-Denis E;
+    Dricus du Plessis E; Khamzat Chimaev E; Conor McGregor E; Kayla Harrison E; Valentina Shevchenko E; Zhang Weili E;
+    Israel Adesanya E; Alexander Volkanovski E; Usman Nurmagomedov E; Alexandre Pantoja R; Belal Muhammad R;
+    Max Holloway R; Sean O'Malley R; Manon Fiorot R; Nassourdine Imavov R; Charles Oliveira R; Cedric Doumbe R;
+    Salahdine Parnasse R; Morgan Charriere R; Leon Edwards R; Jack Della Maddalena R; Shavkat Rakhmonov R;
+    Arman Tsarukyan R; Paddy Pimblett R; Ian Machado Garry R; Diego Lopes R; Patricio Freire R; Justin Gaethje C;
+    Dustin Poirier C; Taylor Lapilus C; William Gomis C; Fares Ziam C; Nora Cornolle C; Oumar Sy C; Kevin Jousset C;
+    Bo Nickal C; Kevin Holland C; Johnny Eblen C'''),
   ('boxe', 'Boxe', 'boxing', '''
-    Oleksandr Usyk M; Canelo Alvarez L; Naoya Inoue L; Terence Crawford L; Tyson Fury E; Anthony Joshua E; Gervonta Davis E;
-    Shakur Stevenson R; Dmitry Bivol R; Artur Beterbiev R; Daniel Dubois R; David Benavidez R; Jake Paul C;
-    Devin Haney C; Ryan Garcia C'''),
-  ('rugby', 'Rugby', 'rugby', '''
-    Antoine Dupont M; Damian Penaud L; Thomas Ramos E; Romain Ntamack E; Louis Bielle-Biarrey E; Siya Kolisi E; Eben Etzebeth E;
-    Ardie Savea E; Cheslin Kolbe E; Charles Ollivon R; Matthieu Jalibert R; Thibaud Flament R; Gael Fickou R;
-    Finn Russell R; Marcus Smith R; Peato Mauvaka R; Uini Atonio C; Yoram Moefana C; Paul Boudehent C'''),
-  ('nhl', 'NHL', 'hockey', '''
-    Connor McDavid M; Nathan MacKinnon L; Auston Matthews L; Leon Draisaitl L; Nikita Kucherov E; Cale Makar E; Sidney Crosby E;
-    Alexander Ovechkin E; David Pastrnak R; Kirill Kaprizov R; Jack Hughes R; Connor Bedard R; Igor Shesterkin R; Mitch Marner R;
-    Matthew Tkachuk C; Alexandre Texier C'''),
-  ('nfl', 'NFL', 'americanfootball', '''
-    Patrick Mahomes M; Josh Allen L; Lamar Jackson L; Joe Burrow E; Jalen Hurts E; Saquon Barkley E; Justin Jefferson E;
-    Ja'Marr Chase E; Travis Kelce R; Tyreek Hill R; CeeDee Lamb R; Micah Parsons R; T.J. Watt R; Christian McCaffrey R;
-    Derrick Henry R; Aaron Rodgers C; Caleb Williams C; Brock Purdy C'''),
+    Oleksandr Usyk M; Muhammad Ali M; Canelo Alvarez L; Naoya Inoue L; Terence Crawford L; Mike Tyson L;
+    Floyd Mayweather L; Tyson Fury E; Anthony Joshua E; Gervonta Davis E; Manny Pacquiao E; Vasyl Lomachenko E;
+    Claressa Shields E; Katie Taylor E; Jesse Rodriguez E; Tony Yoka E #France; Shakur Stevenson R; Dmitry Bivol R;
+    Artur Beterbiev R; Daniel Dubois R; David Benavidez R; Moses Itauma R; Jai Opetaia R; Junto Nakatani R;
+    Souleymane Cissokho R #France; Estelle Mossely R #France; Christian M'Billi R #France; Jake Paul C; Devin Haney C;
+    Ryan Garcia C; Joseph Parker C; Zhilei Zhang C; Bakary Samake C #France; Milan Prat C #France'''),
+  ('kick', 'Kick & Muay Thaï', 'kickboxing', '''
+    Rico Verhoeven M #Pays-Bas; Rodtang Jitmuangnon M #Thaïlande; Superlek Kiatmoo9 L #Thaïlande;
+    Tawanchai PK Saenchai L #Thaïlande; Buakaw Banchamek L #Thaïlande; Giorgio Petrosyan L #Italie;
+    Takeru Segawa E #Japon; Jonathan Haggerty E #Royaume-Uni; Nadaka Yoshinari E #Japon; Chingiz Allazov E #Azerbaïdjan;
+    Tenshin Nasukawa E #Japon; Cedric Doumbe E #France; Sitthichai Sitsongpeenong R #Thaïlande; Marat Grigorian R #Arménie;
+    Tayfun Ozcan R #Pays-Bas; Levi Rigters R #Pays-Bas; Artem Vakhitov R #Russie; Yohan Lidon R #France;
+    Jimmy Vienot R #France; Ilias Bulaid R #Maroc; Nong-O Hama C #Thaïlande; Petchmorakot Petchyindee C #Thaïlande;
+    Abdellah Ezbiri C #France; Smokin Jo Nattawut C #Thaïlande'''),
+  ('grappling', 'JJB & Grappling', 'bjj', '''
+    Gordon Ryan M #États-Unis; Marcus Almeida L #Brésil; Mica Galvao L #Brésil; Ffion Davies L #Royaume-Uni;
+    Roger Gracie L #Brésil; Kaynan Duarte E #Brésil; Nicholas Meregali E #Brésil; Craig Jones E #Australie;
+    Mikey Musumeci E #États-Unis; Tainan Dalpra E #Brésil; Andre Galvao E #Brésil; Kade Ruotolo E #États-Unis;
+    Tye Ruotolo E #États-Unis; Felipe Pena R #Brésil; Pedro Marinho R #Brésil; Adele Fornarino R #Australie;
+    Gabi Garcia R #Brésil; Lachlan Giles R #Australie; Giancarlo Bodoni R #États-Unis; Cole Abate R #États-Unis;
+    Diogo Reis R #Brésil; Josh Hinger C #États-Unis; Victor Hugo C #Brésil; Kennedy Maciel C #Brésil'''),
+  ('lutte', 'Lutte', 'wrestling', '''
+    Aleksandr Karelin M #Russie; Kyle Snyder L #États-Unis; David Taylor L #États-Unis; Mijain Lopez L #Cuba;
+    Hassan Yazdani L #Iran; Abdulrashid Sadulaev E #Russie; Gable Steveson E #États-Unis; Zavur Uguev E #Russie;
+    Kaori Icho E #Japon; Yui Susaki E #Japon; Amit Elor E #États-Unis; Zelimkhan Khadjiev R #France;
+    Koumba Larroque R #France; Melonin Noumonvi R #France; Spencer Lee R #États-Unis; Aaron Brooks R #États-Unis;
+    Mamadassa Sylla C #France; Pauline Lecarpentier C #France; Kollin Moore C #États-Unis'''),
 ]
 RAR = {'M': 'mythique', 'L': 'legendaire', 'E': 'epique', 'R': 'rare', 'C': 'commun'}
 POS = [
@@ -78,16 +52,23 @@ POS = [
   (r'small forward', 'Ailier'), (r'center|centre', 'Pivot'),
 ]
 SPORT = {'football': 'Soccer', 'basketball': 'Basketball', 'tennis': 'Tennis', 'mma': 'Fighting', 'boxing': 'Fighting',
+         'kickboxing': 'Fighting', 'bjj': 'Fighting', 'wrestling': 'Fighting',
          'rugby': 'Rugby', 'hockey': 'Ice Hockey', 'americanfootball': 'American Football'}
 # Sports individuels : la carte montre le pays du joueur (et sa catégorie de poids), pas un club.
-SOLO = {'tennis', 'mma', 'boxing'}
+SOLO = {'tennis', 'mma', 'boxing', 'kickboxing', 'bjj', 'wrestling'}
+# Discipline affichée sur les cartes sans catégorie de poids connue.
+DISCIPLINE = {'kickboxing': 'Kick / Muay Thaï', 'bjj': 'JJB', 'wrestling': 'Lutte'}
 NAT_FR = {'Italy': 'Italie', 'Spain': 'Espagne', 'Serbia': 'Serbie', 'Belarus': 'Biélorussie', 'Poland': 'Pologne',
   'United States': 'États-Unis', 'USA': 'États-Unis', 'Germany': 'Allemagne', 'Russia': 'Russie', 'England': 'Angleterre',
   'Great Britain': 'Royaume-Uni', 'United Kingdom': 'Royaume-Uni', 'Denmark': 'Danemark', 'France': 'France', 'Kazakhstan': 'Kazakhstan',
   'Australia': 'Australie', 'Ukraine': 'Ukraine', 'Mexico': 'Mexique', 'Japan': 'Japon', 'Georgia': 'Géorgie', 'Brazil': 'Brésil',
   'South Africa': 'Afrique du Sud', 'New Zealand': 'Nouvelle-Zélande', 'Scotland': 'Écosse', 'Canada': 'Canada', 'Sweden': 'Suède',
   'Czech Republic': 'Tchéquie', 'Norway': 'Norvège', 'Netherlands': 'Pays-Bas', 'Haiti': 'Haïti', 'Switzerland': 'Suisse',
-  'Ireland': 'Irlande', 'Brazil ': 'Brésil', 'Cameroon': 'Cameroun', 'Samoa': 'Samoa', 'Tonga': 'Tonga', 'Fiji': 'Fidji'}
+  'Ireland': 'Irlande', 'Brazil ': 'Brésil', 'Cameroon': 'Cameroun', 'Samoa': 'Samoa', 'Tonga': 'Tonga', 'Fiji': 'Fidji',
+  'Thailand': 'Thaïlande', 'Cuba': 'Cuba', 'Iran': 'Iran', 'Armenia': 'Arménie', 'Azerbaijan': 'Azerbaïdjan', 'Nigeria': 'Nigeria',
+  'China': 'Chine', 'Kyrgyzstan': 'Kirghizistan', 'Uzbekistan': 'Ouzbékistan', 'Morocco': 'Maroc', 'Argentina': 'Argentine',
+  'Puerto Rico': 'Porto Rico', 'Dominican Republic': 'Rép. dominicaine', 'Wales': 'Pays de Galles', 'Philippines': 'Philippines',
+  'Lithuania': 'Lituanie', 'Dagestan': 'Russie', 'Chechnya': 'Russie', 'Peru': 'Pérou', 'Venezuela': 'Venezuela', 'Italy ': 'Italie'}
 WEIGHT_FR = [('light heavyweight', 'Mi-lourds'), ('super middleweight', 'Super-moyens'), ('cruiserweight', 'Lourds-légers'),
   ('heavyweight', 'Lourds'), ('super lightweight', 'Super-légers'), ('middleweight', 'Moyens'), ('welterweight', 'Mi-moyens'),
   ('lightweight', 'Légers'), ('featherweight', 'Plumes'), ('bantamweight', 'Coqs'), ('flyweight', 'Mouches'), ('strawweight', 'Pailles')]
@@ -118,6 +99,7 @@ def slug(s):
 
 def pos_fr(p, sport, team=''):
   if sport == 'tennis': return 'WTA' if 'women' in (team or '').lower() or 'wta' in (team or '').lower() else 'ATP'
+  if sport in DISCIPLINE: return DISCIPLINE[sport]
   if sport in ('mma', 'boxing'):
     t = (team or '').lower()
     fr = next((v for k, v in WEIGHT_FR if k in t), '')
@@ -138,14 +120,17 @@ cache = json.load(open(cache_file)) if os.path.exists(cache_file) else {}
 def search(name, sport):
   if name in cache: return cache[name]
   url = 'https://www.thesportsdb.com/api/v1/json/123/searchplayers.php?p=' + urllib.parse.quote(ALIASES.get(name, name))
-  for attempt in range(5):
+  for attempt in range(6):
     try:
       with urllib.request.urlopen(url, timeout=20) as r: d = json.load(r)
       break
     except Exception as e:
-      print('  retry', name, e, file=sys.stderr); time.sleep(10 * (attempt + 1))
-  else: return None
-  time.sleep(2.2)
+      print('  retry', name, e, file=sys.stderr); time.sleep(20 * (attempt + 1))
+  else:
+    # Réseau ou limite de débit : on s'arrête (le cache garde ce qui est déjà trouvé, relancer suffit)
+    # plutôt que de prendre un combattant introuvable pour une silhouette.
+    json.dump(cache, open(cache_file, 'w')); sys.exit(f'TheSportsDB ne répond pas ({name}) : relancer plus tard.')
+  time.sleep(4)
   cands = [p for p in (d.get('player') or []) if p.get('strSport') == SPORT[sport]]
   cands.sort(key=lambda p: ((p.get('strTeam') or '').startswith('_'), (p.get('strTeam') or '') in NATIONS, not p.get('strCutout')))
   hit = cands[0] if cands else None
@@ -156,10 +141,14 @@ def search(name, sport):
 cards, sets, missing = [], [], []
 for key, label, sport, spec in SETS:
   for entry in [e.strip() for e in spec.split(';') if e.strip()]:
-    m = re.match(r'(.+?)\s+([MLERC])(?:\s+@(.+))?$', entry)
-    name, r, nation = m.group(1), m.group(2), m.group(3)
+    m = re.match(r'(.+?)\s+([MLERC])(?:\s+@(.+?))?(?:\s+#(.+))?$', entry)
+    name, r, nation, country = m.group(1), m.group(2), m.group(3), m.group(4)
     p = search(name, sport)
+    if not p and sport in SOLO and country:
+      # Inconnu de TheSportsDB (grappleurs, lutteurs, kick…) : carte silhouette avec son pays.
+      p = {'strPlayer': name, 'strTeam': '', 'strNationality': country, 'strPosition': '', 'strNumber': None, 'strCutout': None, 'strThumb': None}
     if not p: missing.append(name); print('MISSING', name, file=sys.stderr); continue
+    if country and sport in SOLO: p = {**p, 'strNationality': country}
     if name in TEAM_FIX and not nation: p = {**p, 'strTeam': TEAM_FIX[name]}
     if (p.get('strTeam') or '').startswith('_Free'): p = {**p, 'strTeam': 'Agent libre'}
     setid = key

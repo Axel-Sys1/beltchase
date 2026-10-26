@@ -5,8 +5,8 @@ import { loadGroups, packGroups, unpackGroups } from '../js/seo/data.js';
 
 const FRESH_S = 15 * 60;
 const KEEP_S = 2 * 24 * 3600;
-const KEY_FRESH = 'https://goalzz.fr/__seo/groups-v2';
-const KEY_STALE = 'https://goalzz.fr/__seo/groups-v2-stale';
+const KEY_FRESH = 'https://beltchase.com/__seo/groups-v2';
+const KEY_STALE = 'https://beltchase.com/__seo/groups-v2-stale';
 
 async function getJson(url) {
   const res = await fetch(url, { headers: { Accept: 'application/json' }, cf: { cacheTtl: 300, cacheEverything: true } });

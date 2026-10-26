@@ -1,10 +1,10 @@
-// Invitations aux ligues : un lien https://goalzz.pages.dev/?ligue=CODE ouvre le site et fait
+// Invitations aux ligues : un lien https://beltchase.com/?ligue=CODE ouvre le site et fait
 // rejoindre la ligue dès que le joueur est connecté (tout de suite s'il l'est déjà).
 import { cloud, joinOnlineLeague } from './cloud.js';
 import { getState } from '../store.js';
 
 const KEY = 'goalz:invite';
-const SITE = 'https://goalzz.pages.dev/'; // redirigé vers goalzz.fr avec le code (js/move.js)
+const SITE = 'https://beltchase.com/';
 let joining = false;
 
 export const inviteLink = (code) => `${SITE}?ligue=${encodeURIComponent(code)}`;

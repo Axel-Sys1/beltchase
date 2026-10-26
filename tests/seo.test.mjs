@@ -50,7 +50,7 @@ await test('pages HTML', () => {
   const [mls] = groups;
   const m = mls.matches[0];
   const hub = renderHub(groups);
-  ok(hub.includes('href="/pronos/mls"') && hub.includes('<link rel="canonical" href="https://goalzz.fr/pronos">'), 'hub');
+  ok(hub.includes('href="/pronos/mls"') && hub.includes('<link rel="canonical" href="https://beltchase.com/pronos">'), 'hub');
   const league = renderLeague(mls.league, mls.matches);
   ok(league.includes(`href="${matchPath(mls.league, m)}"`), 'lien match');
   ok(league.includes('<h1 class="seo-h1">Pronostics MLS'), 'titre ligue');
@@ -67,7 +67,7 @@ await test('plan du site', () => {
   const xml = sitemapXml(groups, NOW);
   const n = groups.reduce((s, g) => s + g.matches.length, 0);
   eq((xml.match(/<url>/g) || []).length, 3 + groups.length + n, 'nombre d\'adresses');
-  ok(xml.includes('<loc>https://goalzz.fr/pronos/nhl</loc>'), 'ligue');
+  ok(xml.includes('<loc>https://beltchase.com/pronos/nhl</loc>'), 'ligue');
   ok(!/[<>&](?![a-z/!?#]|amp;)/.test(xml.replace(/<\/?[a-z?!][^>]*>/g, '')), 'XML propre');
 });
 

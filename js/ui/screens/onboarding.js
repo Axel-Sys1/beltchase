@@ -80,7 +80,7 @@ function signupCard({ title = null, note = null } = {}) {
           <h2>${title}</h2>
           ${login ? '<span class="muted">Connecte-toi pour retrouver ta partie.</span>' : note ? `<p class="saved-game">${note}</p>` : `
           <ul class="perks">${PERKS.map(([icon, text]) => `<li>${icons[icon]}<span>${text}</span></li>`).join('')}</ul>`}
-          ${inApp ? `<p class="in-app-hint">Dans cette appli, Google bloque sa connexion : inscris-toi avec ton email, ou ouvre goalzz.fr dans ton navigateur pour utiliser Google.</p>`
+          ${inApp ? `<p class="in-app-hint">Dans cette appli, Google bloque sa connexion : inscris-toi avec ton email, ou ouvre beltchase.com dans ton navigateur pour utiliser Google.</p>`
             : `<button class="btn btn-primary btn-lg" data-action="cloud-google" type="button"><span class="google-chip">${googleLogo}</span>Continuer avec Google</button>
           <button class="or or-toggle" data-action="email-open" type="button" aria-expanded="${emailOpen}"><span>ou avec un email ${emailOpen ? '▴' : '▾'}</span></button>`}
           ${emailOpen ? `
@@ -127,7 +127,7 @@ export function renderOnboarding(s) {
   const profiles = listProfiles(s);
   const ladder = [...TIERS.map((t, i) => ({ ...rankOf(i * 3 * RR_PER_DIVISION), division: null, label: t.name })), { ...RADIANT, division: null, label: RADIANT.name }];
   const bg = CONFIG.CARD_PHOTOS && CONFIG.LANDING_BG;
-  const showcase = ['liga-lamine-yamal', 'nba-victor-wembanyama', 'tennis-jannik-sinner'].map(cardById).filter(Boolean);
+  const showcase = ['mma-ciryl-gane', 'mma-ilia-topuria', 'boxe-oleksandr-usyk'].map(cardById).filter(Boolean);
   return `
   <div class="onboarding ${bg ? 'has-bg' : ''}">
     ${bg ? `<div class="landing-bg" style="background-image:url('${escapeHtml(bg)}')"></div>` : ''}

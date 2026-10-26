@@ -20,7 +20,7 @@ async function googleAd() {
     setTimeout(() => finish(viewed ? 'viewed' : 'unavailable'), 120_000);
     (window.adsbygoogle = window.adsbygoogle || []).push({
       type: 'reward',
-      name: 'goalz-reward',
+      name: 'beltchase-reward',
       beforeReward: (showAdFn) => showAdFn(), // le joueur vient de cliquer : on lance la pub tout de suite
       adViewed: () => { viewed = true; },
       adDismissed: () => { viewed = false; },

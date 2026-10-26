@@ -1,5 +1,5 @@
 // Parrainage : un joueur avec un compte donne le pseudo de son parrain (ou arrive par le lien
-// https://goalzz.fr/?parrain=PSEUDO) et chacun reçoit REWARD Gold.
+// https://beltchase.com/?parrain=PSEUDO) et chacun reçoit REWARD Gold.
 // En ligne : referrals/<uid du filleul> = { parrain: uid, pseudo, at, claimed } ; créé une seule fois
 // par le filleul (règles Firestore), puis « réclamé » par le parrain à sa prochaine visite.
 import { cloud, referralDb } from './cloud.js';
@@ -9,7 +9,7 @@ import { addXp, XP } from './progress.js';
 
 export const REWARD = 200;
 const KEY = 'goalz:parrain';
-const SITE = 'https://goalzz.fr/';
+const SITE = 'https://beltchase.com/';
 let busy = false;
 
 export const referralLink = (pseudo) => `${SITE}?parrain=${encodeURIComponent(pseudo)}`;

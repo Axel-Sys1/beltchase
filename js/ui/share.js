@@ -5,7 +5,7 @@ import { outcomeLabel } from '../services/matchInfo.js';
 import { getState } from '../store.js';
 import { fmt, fmtOdds } from '../util.js';
 
-const SITE = 'goalzz.fr';
+const SITE = 'beltchase.com';
 const C = { bg: '#08122a', bg2: '#0f1f40', line: '#20365f', text: '#edf2fb', muted: '#8a9abb', accent: '#f2b630', green: '#3ddc84', red: '#ff4d63' };
 const DISPLAY = '"Barlow Condensed", "Arial Narrow", sans-serif';
 const BODY = 'Barlow, system-ui, sans-serif';
@@ -100,7 +100,7 @@ export async function shareBet(id) {
   const b = betsOf(s.currentPlayerId, s).find((x) => x.id === id);
   if (!b) throw new Error('Pari introuvable.');
   const blob = await drawBet(b);
-  const file = new File([blob], 'mon-pari-goalzz.png', { type: 'image/png' });
+  const file = new File([blob], 'mon-pari-beltchase.png', { type: 'image/png' });
   const text = b.status === 'won'
     ? `Pari gagné sur BeltChase : +${fmt(b.payout)} Gold ! Viens me défier : https://${SITE}`
     : `Mon prono sur BeltChase, tu suis ? https://${SITE}`;

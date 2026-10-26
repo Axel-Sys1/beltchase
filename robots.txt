@@ -2,9 +2,8 @@ User-agent: *
 Allow: /
 Disallow: /tests/
 Disallow: /tools/
-Disallow: /publish/
 Disallow: /data/
 
 Allow: /legal
 
-Sitemap: https://goalzz.fr/sitemap.xml
+Sitemap: https://beltchase.com/sitemap.xml

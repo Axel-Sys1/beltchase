@@ -43,7 +43,7 @@ export const CONFIG = {
     enabled: true,                       // false : aucun emplacement
     client: 'ca-pub-2648122457549094',   // identifiant éditeur AdSense (vraies pubs dès que `slots` est rempli)
     slots: { top: '', side: '', bottom: '' }, // id des blocs d'annonces
-    hosts: ['goalzz.fr', 'www.goalzz.fr'], // vraies annonces seulement ici (ailleurs : encarts)
+    hosts: ['beltchase.com', 'www.beltchase.com'], // vraies annonces seulement ici (ailleurs : encarts)
     personalized: false,                 // public dès 15 ans : annonces non personnalisées
     // Message de consentement (cookies) de Google, créé dans AdSense → Confidentialité et messages.
     // true : la balise AdSense se charge dès l'ouverture sur `hosts`, pour que le message s'affiche.

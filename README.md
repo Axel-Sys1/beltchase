@@ -1,6 +1,6 @@
 # BeltChase 🥋🥊
 
-Pronos **MMA, boxe et sports de combat** pour le fun (ex-Goalzz), avec une monnaie 100 % virtuelle :
+Pronos **MMA, boxe et sports de combat** pour le fun avec une monnaie 100 % virtuelle :
 le Gold. **Jeu gratuit, sans argent réel.** Le Gold ne s'achète pas et ne s'échange pas contre de
 l'argent ou des lots.
 
@@ -11,7 +11,7 @@ l'argent ou des lots.
 - **Paris** : vainqueur, vainqueur + méthode (KO/TKO, soumission, décision…) et fin du combat
   (round ou décision), voir `js/services/markets.js`. Méthode inconnue : paris méthode / round remboursés.
 - **Combats éclair** : combats fictifs de 2 minutes, simulés round par round.
-- **Cartes** : combattants par discipline (`tools/build_cards.py`) ; les anciennes cartes Goalzz restent
+- **Cartes** : combattants par discipline (`tools/build_cards.py`) ; les anciennes cartes (avant BeltChase) restent
   lisibles (`js/data/legacyCards.js`) mais ne sont plus vendues.
 
 Règles Firestore à ajouter pour la page admin (dans `match /databases/{database}/documents`) :
@@ -37,13 +37,9 @@ Puis ouvrir <http://localhost:5173>. En local, les vrais matchs sont lus **en di
 
 ## Version en ligne
 
-<https://goalzz.fr> (domaine IONOS, DNS chez Cloudflare). L'ancienne adresse goalzz.pages.dev
-redirige vers goalzz.fr dès que celle-ci répond, en transférant la partie des joueurs sans compte
-(`js/move.js`).
+<https://beltchase.com> (domaine et DNS chez Cloudflare, Cloudflare Pages).
 
-<https://goalzz.pages.dev> (Cloudflare Pages), copie sur <https://axel-sys1.github.io/goalzz/>.
-
-- Le site est servi depuis le dépôt GitHub **Axel-Sys1/goalzz** (branche `main`, sans étape
+- Le site est servi depuis le dépôt GitHub du projet (branche `main`, sans étape
   de build) : chaque `git push` le remet en ligne en une minute environ.
 - Publier depuis ce Mac : `./tools/deploy.sh "message"` (commit + push en HTTPS ; l'accès
   GitHub est géré par GitHub CLI, `~/.local/bin/gh`, connecté au compte Axel-Sys1).
@@ -75,7 +71,7 @@ ainsi jamais rechargée toute seule. Sans régie, ils affichent un encart « Esp
 
 Passer à Google AdSense :
 
-1. Compte AdSense (titulaire majeur), site `goalzz.pages.dev`, vérifié par la balise
+1. Compte AdSense (titulaire majeur), site `beltchase.com`, vérifié par la balise
    `<meta name="google-adsense-account" content="ca-pub-…">` dans le `<head>` d'`index.html` (le
    script n'est chargé qu'après le choix d'un pseudo : le robot de Google ne le voit pas).
 2. Fichier `ads.txt` donné par AdSense à la racine du dépôt.
@@ -93,20 +89,17 @@ Passer à Google AdSense :
 
 Cookies (consentement) : message RGPD de Google, créé dans AdSense → Confidentialité et messages.
 Une fois publié, passer `CONFIG.ADS.consent: true` : la balise AdSense se charge dès l'ouverture sur
-goalzz.fr et le message s'affiche ; le lien « Cookies » du pied de page le rouvre (`openCookieSettings`).
+beltchase.com et le message s'affiche ; le lien « Cookies » du pied de page le rouvre (`openCookieSettings`).
 
 Pub récompensée (`CONFIG.ADS.rewarded`, `js/services/rewardAd.js`, `js/ui/rewardAd.js`) : bouton
-« Bonus vidéo » dans « Ta journée », `goalz` Goalz par pub vue jusqu'au bout, `perDay` fois par
+« Bonus vidéo » dans « Ta journée », `goalz` Gold par pub vue jusqu'au bout, `perDay` fois par
 jour. Avec `live: false`, c'est une pub simulée (encart + compte à rebours de `seconds` secondes).
 Pour de vraies pubs : demander « H5 Games Ads » (annonces pour jeux) dans AdSense, passer
 `test: true` pour vérifier avec les pubs de test de Google, puis `live: true` et `test: false`.
 
-### Ancienne version claude.ai
+### Instantané de secours
 
-<https://claude.ai/artifact/QF2GimwS3nT8S3PyJDRtDi> lit uniquement l'instantané (une page
-Claude ne peut pas contacter d'autres sites). Sa tâche planifiée de mise à jour est en pause ;
-pour la rafraîchir à la main : `python3 tools/update_snapshot.py`, puis republier la page.
-
+Pour rafraîchir `data/real-matches.json` à la main : `python3 tools/update_snapshot.py`.
 `tools/update_snapshot.py` n'a besoin de rien d'installer : il exécute les providers
 JavaScript avec le moteur de macOS (`jsc`) et se charge lui-même du réseau. Chaque résultat
 est lu deux fois, à 25 secondes d'écart, avant d'être validé.
@@ -115,7 +108,7 @@ est lu deux fois, à 25 secondes d'écart, avant d'être validé.
 
 - Les paris d'avant-match ferment au coup d'envoi (la sélection quitte le panier).
 - Paris en direct (foot, basket, hockey, foot US, rugby, tennis ; pas MMA ni boxe) : cotes recalculées
-  par Goalz selon le score et le temps restant (`js/providers/liveOdds.js`), à partir des cotes figées
+  par BeltChase selon le score et le temps restant (`js/providers/liveOdds.js`), à partir des cotes figées
   au coup d'envoi, avec la même marge de 7 %. En simple uniquement. Une cote qui bouge doit être
   acceptée. Issue sous 1,25 ou au-dessus de 15 non proposée ; marché suspendu juste après un but,
   si la source se tait, et en fin de match (foot dès 85', rugby dès 75', 2 dernières minutes au
@@ -129,15 +122,14 @@ est lu deux fois, à 25 secondes d'écart, avant d'être validé.
 - Match reporté, annulé ou abandonné, combat annulé ou « no contest », forfait au tennis :
   **remboursé**. Abandon en cours de match au tennis : réglé sur le vainqueur officiel.
 - Sans résultat 48 h après le début : remboursé.
-- Cotes : celles des bookmakers quand ESPN les publie (ramenées à la marge Goalz de 7 %),
-  sinon estimées par Goalz à partir des classements et bilans (« cotes estimées »).
+- Cotes : celles des bookmakers quand ESPN les publie (ramenées à la marge BeltChase de 7 %),
+  sinon estimées par BeltChase à partir des classements et bilans (« cotes estimées »).
 
 ## Architecture
 
 ```
 serve.py                   serveur local (sans cache) + enregistrement de l'instantané
 tools/update_snapshot.py   mise à jour de l'instantané sans navigateur
-publish/artifact.html      page publiée sur claude.ai
 data/real-matches.json     instantané des vrais matchs
 tests/                     tests des providers (jsc), avec de vraies réponses ESPN
 js/

@@ -7,7 +7,7 @@ import { sportMeta } from '../sports.js';
 import { devig } from '../providers/odds.js';
 import { METHOD_LABEL, marketOf } from '../services/markets.js';
 
-export const SITE = 'https://goalzz.fr';
+export const SITE = 'https://beltchase.com';
 
 export const slugify = (s) => String(s).normalize('NFD').replace(/[\u0300-\u036f]/g, '')
   .toLowerCase().replace(/&/g, 'et').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');

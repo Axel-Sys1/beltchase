@@ -33,7 +33,7 @@ export function starOf(team, sport) {
   if (!index) build();
   const slug = slugify(team.name);
   const key = ALIAS[slug] || slug;
-  const solo = ['tennis', 'mma', 'boxing'].includes(sport);
+  const solo = ['tennis', 'mma', 'boxing', 'kickboxing', 'bjj', 'wrestling'].includes(sport);
   const c = solo ? index.get(`${sport}|p|${slug}`) : index.get(`${sport}|c|${key}`) || index.get(`${sport}|n|${key}`);
   return c ? { name: c.name, img: `${c.img}/medium` } : null;
 }
