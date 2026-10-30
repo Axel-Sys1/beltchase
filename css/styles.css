@@ -1680,3 +1680,14 @@ a.ad-ph:focus-visible { outline-offset: -2px; }
 .seo-table th, .seo-table td { padding: 7px 8px; border-bottom: 1px solid var(--line); text-align: center; }
 .seo-table tbody th { text-align: left; font-weight: 700; }
 .seo-table td { font: 800 17px/1 var(--display); }
+
+/* Accueil : combattants détourés côte à côte, façon affiche de combat (CONFIG.LANDING_FIGHTERS) */
+.landing-bg.landing-trio {
+  display: flex; align-items: flex-end; justify-content: center; height: min(74vh, 600px); opacity: 0.7;
+  background: radial-gradient(55% 60% at 50% 100%, rgba(var(--accent-rgb), 0.35), transparent 70%);
+}
+.landing-trio img { height: 84%; max-width: 46%; margin: 0 -7%; object-fit: contain; object-position: bottom; filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.6)); }
+.landing-trio img:nth-child(2) { height: 100%; position: relative; z-index: 1; }
+@media (min-width: 900px) {
+  .landing-bg.landing-trio { height: min(88vh, 760px); opacity: 0.9; }
+}
