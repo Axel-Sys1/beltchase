@@ -126,12 +126,16 @@ export function renderLocked(routeId) {
 export function renderOnboarding(s) {
   const profiles = listProfiles(s);
   const ladder = [...TIERS.map((t, i) => ({ ...rankOf(i * 3 * RR_PER_DIVISION), division: null, label: t.name })), { ...RADIANT, division: null, label: RADIANT.name }];
-  const trio = CONFIG.CARD_PHOTOS ? (CONFIG.LANDING_FIGHTERS || []).map(cardById).filter((c) => c?.img && c.cutout) : [];
+  const trio = CONFIG.CARD_PHOTOS ? (CONFIG.LANDING_FIGHTERS || []).map((f) => {
+    const { id, img, crop = false } = typeof f === 'string' ? { id: f } : f;
+    const card = cardById(id);
+    return { src: img || (card?.cutout ? card.img : null), crop };
+  }).filter((f) => f.src) : [];
   const bg = trio.length > 0;
   const showcase = ['mma-ciryl-gane', 'mma-ilia-topuria', 'boxe-oleksandr-usyk'].map(cardById).filter(Boolean);
   return `
   <div class="onboarding ${bg ? 'has-bg' : ''}">
-    ${bg ? `<div class="landing-bg landing-trio" aria-hidden="true">${trio.map((c) => `<img src="${escapeHtml(c.img)}" alt="" referrerpolicy="no-referrer" onerror="this.remove()">`).join('')}</div>` : ''}
+    ${bg ? `<div class="landing-bg landing-trio" aria-hidden="true">${trio.map((f) => `<img${f.crop ? ' class="is-crop"' : ''} src="${escapeHtml(f.src)}" alt="" referrerpolicy="no-referrer" onerror="this.remove()">`).join('')}</div>` : ''}
     <div class="hero-glow"></div>
     ${eventDecor({ landing: true })}
     <div class="landing">

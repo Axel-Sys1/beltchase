@@ -16,9 +16,13 @@ export const CONFIG = {
     { id: 'noel', name: 'Noël', emoji: '🎄', from: '2026-12-01', until: '2027-01-02' },
   ],
   CARD_PHOTOS: true,       // photos des combattants sur les cartes (TheSportsDB) ; false : silhouettes, sans redéploiement des cartes
-  // Fond de l'accueil des nouveaux visiteurs : combattants détourés (cartes), façon affiche de combat ;
-  // celui du milieu est mis en avant. Masqué avec CARD_PHOTOS: false.
-  LANDING_FIGHTERS: ['mma-islam-makhachev', 'mma-ciryl-gane', 'boxe-canelo-alvarez'],
+  // Fond de l'accueil des nouveaux visiteurs : combattants détourés (photo de leur carte, ou `img`),
+  // façon affiche de combat. crop : photo en pied recadrée au buste. Masqué avec CARD_PHOTOS: false.
+  LANDING_FIGHTERS: [
+    'mma-islam-makhachev',
+    'mma-ciryl-gane',
+    { id: 'boxe-canelo-alvarez', img: 'https://r2.thesportsdb.com/images/media/player/render/e159ab1594285192.png', crop: true },
+  ],
   RENAME_COST: 1000,       // prix d'un changement de pseudo (gratuit si le pseudo est déjà pris)
   UPCOMING_TARGET: 18,   // matchs fictifs "à venir" maintenus dans la liste
   TICK_MS: 3000,         // fréquence à laquelle on vérifie si un provider doit être rappelé
