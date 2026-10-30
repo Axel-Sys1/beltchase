@@ -1730,3 +1730,23 @@ a.ad-ph:focus-visible { outline-offset: -2px; }
   .landing-bg.landing-solo { opacity: 0.8; background: radial-gradient(30% 50% at calc(50% + 520px) 60%, rgba(var(--accent-rgb), 0.3), transparent 70%); }
   .landing-solo img:nth-child(1) { left: calc(50% + 240px); height: 92%; }
 }
+
+/* Deux combattants face à face (CONFIG.LANDING_FIGHTERS) : le 1er à gauche, le 2e à droite, lueurs dorées. */
+.landing-bg.landing-duo { justify-content: space-between; opacity: 0.85;
+  background: radial-gradient(40% 45% at 18% 62%, rgba(var(--accent-rgb), 0.3), transparent 70%), radial-gradient(40% 45% at 82% 62%, rgba(var(--accent-rgb), 0.3), transparent 70%); }
+.landing-duo img, .landing-duo img:nth-child(2) { height: 86%; max-width: 80%; position: static; }
+.landing-duo img:nth-child(1) { margin: 0 0 0 -30%; }
+.landing-duo img:nth-child(2) { margin: 0 -30% 0 0; }
+@media (min-width: 900px) {
+  .landing-bg.landing-duo { opacity: 1;
+    background: radial-gradient(26% 50% at calc(50% - 640px) 60%, rgba(var(--accent-rgb), 0.3), transparent 70%), radial-gradient(26% 50% at calc(50% + 640px) 60%, rgba(var(--accent-rgb), 0.3), transparent 70%); }
+  .landing-duo img, .landing-duo img:nth-child(2) { position: absolute; margin: 0; max-width: none;
+    filter: drop-shadow(0 0 40px rgba(var(--accent-rgb), 0.3)) drop-shadow(0 12px 30px rgba(0, 0, 0, 0.7)); }
+  .landing-duo img:nth-child(1) { right: calc(50% + 400px); height: 92%; }
+  .landing-duo img:nth-child(2) { left: calc(50% + 300px); right: auto; height: 96%; }
+}
+@media (min-width: 900px) and (max-width: 1700px) {
+  .landing-bg.landing-duo { opacity: 0.8; }
+  .landing-duo img:nth-child(1) { right: calc(50% + 270px); height: 86%; }
+  .landing-duo img:nth-child(2) { left: calc(50% + 240px); height: 92%; }
+}

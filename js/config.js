@@ -18,8 +18,8 @@ export const CONFIG = {
   CARD_PHOTOS: true,       // photos des combattants sur les cartes (TheSportsDB) ; false : silhouettes, sans redéploiement des cartes
   // Fond de l'accueil des nouveaux visiteurs : combattants détourés (photo de leur carte, ou `img`),
   // façon affiche de combat. crop : photo en pied recadrée au buste. Masqué avec CARD_PHOTOS: false.
-  // Un seul combattant : mis en avant seul, en grand (voir .landing-solo dans styles.css).
-  LANDING_FIGHTERS: ['mma-ciryl-gane'],
+  // 1 combattant : seul, en grand (.landing-solo) ; 2 : face à face, à gauche et à droite (.landing-duo).
+  LANDING_FIGHTERS: ['boxe-ryan-garcia', 'mma-ciryl-gane'],
   RENAME_COST: 1000,       // prix d'un changement de pseudo (gratuit si le pseudo est déjà pris)
   UPCOMING_TARGET: 18,   // matchs fictifs "à venir" maintenus dans la liste
   TICK_MS: 3000,         // fréquence à laquelle on vérifie si un provider doit être rappelé
