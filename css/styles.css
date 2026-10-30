@@ -1682,12 +1682,20 @@ a.ad-ph:focus-visible { outline-offset: -2px; }
 .seo-table td { font: 800 17px/1 var(--display); }
 
 /* Accueil : combattants détourés côte à côte, façon affiche de combat (CONFIG.LANDING_FIGHTERS) */
+/* Téléphone : derrière le titre, au-dessus de l'éventail de cartes. */
 .landing-bg.landing-trio {
-  display: flex; align-items: flex-end; justify-content: center; height: min(74vh, 600px); opacity: 0.7;
-  background: radial-gradient(55% 60% at 50% 100%, rgba(var(--accent-rgb), 0.35), transparent 70%);
+  display: flex; align-items: flex-end; justify-content: center; height: 500px; opacity: 0.5; overflow: hidden;
+  background: radial-gradient(60% 55% at 50% 100%, rgba(var(--accent-rgb), 0.3), transparent 70%);
 }
-.landing-trio img { height: 84%; max-width: 46%; margin: 0 -7%; object-fit: contain; object-position: bottom; filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.6)); }
-.landing-trio img:nth-child(2) { height: 100%; position: relative; z-index: 1; }
+.landing-trio img { height: 82%; max-width: 58%; margin: 0 -12%; object-fit: contain; object-position: bottom; filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.6)); }
+.landing-trio img:nth-child(2) { height: 100%; max-width: 70%; position: relative; z-index: 1; }
+/* Ordinateur : l'inscription occupe le centre droit ; les combattants se placent autour pour rester visibles
+   (le 2e, mis en avant, entre l'accroche et l'inscription ; le 3e tout à droite). */
 @media (min-width: 900px) {
-  .landing-bg.landing-trio { height: min(88vh, 760px); opacity: 0.9; }
+  .landing-bg.landing-trio { inset: 0 0 auto 0; height: min(88vh, 760px); opacity: 0.9; display: block;
+    -webkit-mask-image: linear-gradient(to bottom, #000 60%, transparent); mask-image: linear-gradient(to bottom, #000 60%, transparent); }
+  .landing-trio img { position: absolute; bottom: 0; margin: 0; max-width: none; height: 74%; }
+  .landing-trio img:nth-child(1) { left: 24%; opacity: 0.55; }
+  .landing-trio img:nth-child(2) { left: 33%; height: 96%; }
+  .landing-trio img:nth-child(3) { right: -2%; height: 82%; }
 }

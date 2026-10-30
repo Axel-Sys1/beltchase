@@ -18,7 +18,7 @@ export const CONFIG = {
   CARD_PHOTOS: true,       // photos des combattants sur les cartes (TheSportsDB) ; false : silhouettes, sans redéploiement des cartes
   // Fond de l'accueil des nouveaux visiteurs : combattants détourés (cartes), façon affiche de combat ;
   // celui du milieu est mis en avant. Masqué avec CARD_PHOTOS: false.
-  LANDING_FIGHTERS: ['mma-islam-makhachev', 'mma-ilia-topuria', 'boxe-canelo-alvarez'],
+  LANDING_FIGHTERS: ['mma-islam-makhachev', 'mma-ciryl-gane', 'boxe-canelo-alvarez'],
   RENAME_COST: 1000,       // prix d'un changement de pseudo (gratuit si le pseudo est déjà pris)
   UPCOMING_TARGET: 18,   // matchs fictifs "à venir" maintenus dans la liste
   TICK_MS: 3000,         // fréquence à laquelle on vérifie si un provider doit être rappelé
