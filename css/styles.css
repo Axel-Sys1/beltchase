@@ -1689,13 +1689,21 @@ a.ad-ph:focus-visible { outline-offset: -2px; }
 }
 .landing-trio img { height: 82%; max-width: 58%; margin: 0 -12%; object-fit: contain; object-position: bottom; filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.6)); }
 .landing-trio img:nth-child(2) { height: 100%; max-width: 70%; position: relative; z-index: 1; }
-/* Ordinateur : l'inscription occupe le centre droit ; les combattants se placent autour pour rester visibles
-   (le 2e, mis en avant, entre l'accroche et l'inscription ; le 3e tout à droite). */
+/* Ordinateur : le contenu (accroche + inscription, ~1030 px) reste au centre ; les combattants se placent
+   dans les marges, à partir du centre de l'écran (même rendu sur tous les grands écrans) : Makhachev à
+   gauche de l'accroche avec Canelo derrière lui, Gane en grand à droite de l'inscription. */
 @media (min-width: 900px) {
-  .landing-bg.landing-trio { inset: 0 0 auto 0; height: min(88vh, 760px); opacity: 0.9; display: block;
-    -webkit-mask-image: linear-gradient(to bottom, #000 60%, transparent); mask-image: linear-gradient(to bottom, #000 60%, transparent); }
-  .landing-trio img { position: absolute; bottom: 0; margin: 0; max-width: none; height: 74%; }
-  .landing-trio img:nth-child(1) { left: 24%; opacity: 0.55; }
-  .landing-trio img:nth-child(2) { left: 33%; height: 96%; }
-  .landing-trio img:nth-child(3) { right: -2%; height: 82%; }
+  .landing-bg.landing-trio { inset: 0 0 auto 0; height: min(92vh, 820px); opacity: 0.85; display: block; background: none;
+    -webkit-mask-image: linear-gradient(to bottom, #000 65%, transparent); mask-image: linear-gradient(to bottom, #000 65%, transparent); }
+  .landing-trio img { position: absolute; bottom: 0; margin: 0; max-width: none; }
+  .landing-trio img:nth-child(1) { right: calc(50% + 430px); height: 76%; z-index: 1; }
+  .landing-trio img:nth-child(2) { left: calc(50% + 360px); height: 92%; z-index: 1; }
+  .landing-trio img:nth-child(3) { right: calc(50% + 650px); height: 66%; opacity: 0.7; }
+}
+/* Écrans d'ordinateur moyens : marges étroites, les combattants se rapprochent du contenu (plus discrets). */
+@media (min-width: 900px) and (max-width: 1700px) {
+  .landing-bg.landing-trio { opacity: 0.6; }
+  .landing-trio img:nth-child(1) { right: calc(50% + 300px); height: 72%; }
+  .landing-trio img:nth-child(2) { left: calc(50% + 300px); height: 88%; }
+  .landing-trio img:nth-child(3) { right: calc(50% + 480px); height: 62%; }
 }
