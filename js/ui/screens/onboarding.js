@@ -135,7 +135,7 @@ export function renderOnboarding(s) {
   const showcase = ['mma-ciryl-gane', 'mma-ilia-topuria', 'boxe-oleksandr-usyk'].map(cardById).filter(Boolean);
   return `
   <div class="onboarding ${bg ? 'has-bg' : ''}">
-    ${bg ? `<div class="landing-bg landing-trio" aria-hidden="true">${trio.map((f) => `<img${f.crop ? ' class="is-crop"' : ''} src="${escapeHtml(f.src)}" alt="" referrerpolicy="no-referrer" onerror="this.remove()">`).join('')}</div>` : ''}
+    ${bg ? `<div class="landing-bg landing-trio${trio.length === 1 ? ' landing-solo' : ''}" aria-hidden="true">${trio.map((f) => `<img${f.crop ? ' class="is-crop"' : ''} src="${escapeHtml(f.src)}" alt="" referrerpolicy="no-referrer" onerror="this.remove()">`).join('')}</div>` : ''}
     <div class="hero-glow"></div>
     ${eventDecor({ landing: true })}
     <div class="landing">

@@ -1716,3 +1716,17 @@ a.ad-ph:focus-visible { outline-offset: -2px; }
 @media (min-width: 900px) and (max-width: 1700px) {
   .landing-trio img.is-crop:nth-child(3) { height: 64%; }
 }
+
+/* Un seul combattant (CONFIG.LANDING_FIGHTERS) : en grand, avec une lueur dorée derrière lui.
+   Téléphone : au centre, derrière le titre. Ordinateur : à droite, à côté de l'inscription. */
+.landing-bg.landing-solo { justify-content: flex-end; opacity: 0.85; background: radial-gradient(45% 50% at 78% 60%, rgba(var(--accent-rgb), 0.4), transparent 70%); }
+.landing-solo img, .landing-solo img:nth-child(1) { height: 92%; max-width: 100%; margin: 0 -22% 0 0; }
+@media (min-width: 900px) {
+  .landing-bg.landing-solo { opacity: 1; background: radial-gradient(28% 50% at calc(50% + 640px) 60%, rgba(var(--accent-rgb), 0.35), transparent 70%); }
+  .landing-solo img:nth-child(1) { right: auto; left: calc(50% + 300px); height: 96%; z-index: 1;
+    filter: drop-shadow(0 0 40px rgba(var(--accent-rgb), 0.35)) drop-shadow(0 12px 30px rgba(0, 0, 0, 0.7)); }
+}
+@media (min-width: 900px) and (max-width: 1700px) {
+  .landing-bg.landing-solo { opacity: 0.8; background: radial-gradient(30% 50% at calc(50% + 520px) 60%, rgba(var(--accent-rgb), 0.3), transparent 70%); }
+  .landing-solo img:nth-child(1) { left: calc(50% + 240px); height: 92%; }
+}
