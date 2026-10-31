@@ -26,6 +26,10 @@
 //   sans cela, les mises resteraient bloquées. (L'instantané, lui, rembourse dès 48 h.)
 // - strPostponed 'yes' ou strStatus reporté / annulé / abandonné → remboursé (suspendu : non).
 // - Aucune cote ni bilan exploitable : cotes 50/50.
+// - Images : strThumb = affiche du combat (face-à-face, 16:9), presque toujours là. Photo d'un boxeur :
+//   searchplayers.php?p=Prenom_Nom → strCutout (détourée) ou strThumb ; une partie seulement des
+//   boxeurs en a une (Canelo, Itauma oui ; Mbilli non, relevé du 31/10/2026). Recherches limitées
+//   (PHOTO_LOOKUPS par liste) et mémorisées (PHOTO_TTL, NO_PHOTO_TTL) à cause du plafond de requêtes.
 import { MIN } from '../../util.js';
 import { defaultGetJson } from '../espn/common.js';
 import { fromProbabilities, neutralProbs } from '../odds.js';
@@ -45,10 +49,14 @@ const RECHECK_LATE = HOUR;        // …moins souvent passé 12 h
 const LATE_AFTER = 12 * HOUR;
 const VOID_AFTER = 4 * DAY;       // toujours rien de publié (TheSportsDB joignable) : remboursé
 const MAX_CHECKS = 6;             // combats vérifiés par appel (2 requêtes chacun)
+const PHOTO_LOOKUPS = 4;          // recherches de photo de boxeur par liste
+const PHOTO_TTL = 30 * DAY;       // photo trouvée : gardée 30 jours
+const NO_PHOTO_TTL = 7 * DAY;     // aucune photo : on recherche de nouveau dans une semaine
 
 export const dayUrl = (day) => `${BASE}/eventsday.php?d=${day}&l=${BOXING_LEAGUE}`;
 export const lookupUrl = (id) => `${BASE}/lookupevent.php?id=${id}`;
 export const resultsUrl = (id) => `${BASE}/eventresults.php?id=${id}`;
+export const searchUrl = (name) => `${BASE}/searchplayers.php?p=${encodeURIComponent(clean(name).replace(/ /g, '_'))}`;
 const PROBE_URL = `${BASE}/eventsnextleague.php?id=${BOXING_LEAGUE}`; // 1 événement, 1,5 Ko
 
 // ─── File d'attente ──────────────────────────────────────────────────────────
@@ -293,6 +301,7 @@ function toMatch(ev, now, known = new Set()) {
     meta: { event: String(ev.idEvent) },
   };
   if (ev.strLeagueBadge) m.competitionLogo = ev.strLeagueBadge;
+  if (clean(ev.strThumb)) m.poster = clean(ev.strThumb);
   const result = isPostponed(ev) ? { status: 'void' }
     : now >= startsAt && !known.has(m.id) ? readResult(ev, [home, away]) : null;
   if (result) Object.assign(m, result);
@@ -309,10 +318,56 @@ export function withoutResult(m, ev, answered, now) {
   return answered && now - at >= VOID_AFTER ? { status: 'void' } : null;
 }
 
-export function createBoxingProvider({ getJson = defaultGetJson, throttle = createThrottle() } = {}) {
+// ─── Photos des boxeurs ──────────────────────────────────────────────────────
+// Réponse searchplayers → photo du boxeur cherché (même nom, sport de combat), détourée d'abord ; ou null.
+export function photoFrom(data, name) {
+  const want = nameKeys(name).full;
+  const p = (data?.player || []).find((x) => nameKeys(x?.strPlayer).full === want && /fight|box/i.test(x?.strSport || ''));
+  return clean(p?.strCutout) || clean(p?.strThumb) || null;
+}
+
+// Mémoire des recherches : localStorage dans le navigateur (gardée d'une visite à l'autre), sinon en mémoire.
+// nom normalisé → { url: string | null, at }.
+export function createPhotoCache(key = 'beltchase:photos-boxe') {
+  let map = {};
+  let persist = false;
+  try { map = JSON.parse(localStorage.getItem(key)) || {}; persist = true; } catch { /* serveur, ou stockage bloqué */ }
+  return {
+    get: (name) => map[name],
+    set(name, entry) {
+      map[name] = entry;
+      if (persist) { try { localStorage.setItem(key, JSON.stringify(map)); } catch { /* plein */ } }
+    },
+  };
+}
+
+export function createBoxingProvider({ getJson = defaultGetJson, throttle = createThrottle(), photoLookups = PHOTO_LOOKUPS, photoCache = createPhotoCache() } = {}) {
   const dayCache = new Map();    // 'AAAA-MM-JJ' → { at, events }
   const nextCheck = new Map();   // matchId → instant de la prochaine vérification
   const get = (url, opts) => throttle.run(() => getJson(url, opts));
+
+  // Photos connues posées sur les boxeurs ; quelques recherches pour les autres, combats les plus proches
+  // d'abord. Un échec arrête les recherches (le throttle se met en pause), la liste n'en dépend pas.
+  async function addPhotos(matches, now) {
+    const fresh = (e) => e && now - e.at < (e.url ? PHOTO_TTL : NO_PHOTO_TTL);
+    let left = photoLookups;
+    for (const m of [...matches].sort((a, b) => Math.abs(a.startsAt - now) - Math.abs(b.startsAt - now))) {
+      for (const side of ['home', 'away']) {
+        const key = nameKeys(m[side].name).full;
+        let entry = photoCache.get(key);
+        if (!fresh(entry) && left > 0 && !throttle.paused()) {
+          left -= 1;
+          try {
+            entry = { url: photoFrom(await get(searchUrl(m[side].name)), m[side].name), at: now };
+            photoCache.set(key, entry);
+          } catch {
+            left = 0;
+          }
+        }
+        if (entry?.url) m[side].photo = entry.url;
+      }
+    }
+  }
 
   return {
     id: 'tsdb',
@@ -361,8 +416,10 @@ export function createBoxingProvider({ getJson = defaultGetJson, throttle = crea
       }
       if (firstErr) console.warn('[tsdb] liste de boxe incomplète', firstErr);
       if (!got && firstErr) throw firstErr;
-      return [...events.values()].map((ev) => toMatch(ev, now, known))
+      const list = [...events.values()].map((ev) => toMatch(ev, now, known))
         .filter((m) => m && m.startsAt >= from && m.startsAt <= to);
+      await addPhotos(list, now);
+      return list;
     },
 
     async fetchResults({ now, matches }) {

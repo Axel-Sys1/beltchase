@@ -13,14 +13,5 @@ export const SPORTS = {
 export const SPORT_ORDER = Object.keys(SPORTS);
 export const isCombat = (key) => key in SPORTS;
 
-// Anciens sports (avant BeltChase) : seulement pour afficher l'historique des paris.
-const LEGACY = {
-  football: { label: 'Football', icon: '⚽', hasDraw: true },
-  basketball: { label: 'Basket', icon: '🏀', hasDraw: false },
-  tennis: { label: 'Tennis', icon: '🎾', hasDraw: false },
-  rugby: { label: 'Rugby', icon: '🏉', hasDraw: true },
-  hockey: { label: 'Hockey', icon: '🏒', hasDraw: false },
-  americanfootball: { label: 'Foot US', icon: '🏈', hasDraw: false },
-};
 
-export const sportMeta = (key) => SPORTS[key] || LEGACY[key] || { label: key, icon: '🏅', hasDraw: false };
+export const sportMeta = (key) => SPORTS[key] || { label: key, icon: '🏅', hasDraw: false };

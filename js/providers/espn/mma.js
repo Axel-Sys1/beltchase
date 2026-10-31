@@ -78,12 +78,16 @@ export function fightersOf(bout) {
   return [...list].sort((a, b) => (a.order ?? 9) - (b.order ?? 9));
 }
 
+// Photo officielle ESPN (détourée, fond transparent), à partir de l'id du combattant.
+export const headshotUrl = (athleteId) => `https://a.espncdn.com/i/headshots/mma/players/full/${athleteId}.png`;
+
 const recordOf = (c) => (c.records || []).find((r) => r.type === 'total')?.summary || c.records?.[0]?.summary || null;
 
 function fighterInfo(c) {
   const name = c.athlete.displayName.trim();
   const out = { name, short: fighterShort(name) };
   if (c.athlete.flag?.href) out.logo = c.athlete.flag.href;
+  if (/^\d+$/.test(String(c.id ?? ''))) out.photo = headshotUrl(c.id);
   const record = recordOf(c);
   if (record) out.record = record;
   return out;

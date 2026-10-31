@@ -11,8 +11,7 @@ l'argent ou des lots.
 - **Paris** : vainqueur, vainqueur + méthode (KO/TKO, soumission, décision…) et fin du combat
   (round ou décision), voir `js/services/markets.js`. Méthode inconnue : paris méthode / round remboursés.
 - **Combats éclair** : combats fictifs de 2 minutes, simulés round par round.
-- **Cartes** : combattants par discipline (`tools/build_cards.py`) ; les anciennes cartes (avant BeltChase) restent
-  lisibles (`js/data/legacyCards.js`) mais ne sont plus vendues.
+- **Cartes** : combattants par discipline (`tools/build_cards.py`).
 
 Règles Firestore à ajouter pour la page admin (dans `match /databases/{database}/documents`) :
 
@@ -29,7 +28,7 @@ match /fights/{id} {
 Aucune installation : HTML, CSS et JavaScript (modules ES), sans dépendance.
 
 ```bash
-cd goalz
+cd beltchase
 python3 serve.py
 ```
 

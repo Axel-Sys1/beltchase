@@ -20,7 +20,7 @@
 // ces données : ce sont des copies d'événements réels dont on change un champ.
 import {
   createBoxingProvider, createThrottle, parseEventName, parseTimestamp, norm, outcomeFromText, outcomeFromRows, readResult,
-  withoutResult, dayUrl, lookupUrl, resultsUrl,
+  withoutResult, dayUrl, lookupUrl, resultsUrl, searchUrl, photoFrom,
 } from '../js/providers/thesportsdb/boxing.js';
 
 globalThis.console ??= { warn() {}, log: print }; // jsc n'a pas de console
@@ -56,7 +56,7 @@ function fakeNet(routes = {}) {
 }
 
 const fast = () => createThrottle({ perMinute: 10_000 });
-const provider = (net) => createBoxingProvider({ getJson: net.getJson, throttle: fast() });
+const provider = (net) => createBoxingProvider({ getJson: net.getJson, throttle: fast(), photoLookups: 0 });
 const byId = (list) => Object.fromEntries(list.map((m) => [m.id ?? m.matchId, m]));
 const eventOf = (file, id) => fixture(file).events.find((e) => e.idEvent === id) || fail(`événement ${id} absent`);
 const keys = (a, b) => [a, b].map((n) => {
@@ -409,6 +409,34 @@ test('provider : forme, rythme, test d\'accès', async () => {
   eq(await p.probe(), true, 'probe joignable');
   eq(await provider(fakeNet({})).probe(), false, 'probe en échec');
   eq(await p.fetchResults({ now: NOW, matches: [] }), [], 'rien à suivre');
+});
+
+test('photos : affiche du combat, photo du boxeur cherchée une fois puis mémorisée', async () => {
+  const CANELO = { player: [
+    { strPlayer: 'Canelo Álvarez', strSport: 'Fighting', strCutout: 'https://r2.thesportsdb.com/images/media/player/cutout/awqckc1555409653.png', strThumb: 'x' },
+    { strPlayer: 'Canelo Alvarez Jr', strSport: 'Soccer', strCutout: 'faux' },
+  ] };
+  eq(photoFrom(CANELO, 'Canelo Alvarez'), CANELO.player[0].strCutout, 'même nom sans accent, sport de combat, détourée d\'abord');
+  eq(photoFrom(CANELO, 'Saul Alvarez'), null, 'autre nom');
+  eq(photoFrom({ player: null }, 'X'), null, 'aucun résultat');
+
+  const list0 = await provider(fakeNet(LIVE_DAYS)).fetchUpcoming({ now: NOW, days: 7 });
+  ok(list0.length > 0 && list0.every((m) => m.poster?.startsWith('https://www.thesportsdb.com/images/media/event/thumb/')), 'affiche sur chaque combat');
+
+  const store = new Map();
+  const photoCache = { get: (k) => store.get(k), set: (k, v) => store.set(k, v) };
+  const routes = { ...LIVE_DAYS };
+  for (const m of list0) for (const f of [m.home, m.away]) routes[searchUrl(f.name)] = { player: [{ strPlayer: f.name, strSport: 'Fighting', strThumb: `https://www.thesportsdb.com/images/media/player/thumb/${norm(f.name).replace(/ /g, '')}.jpg` }] };
+  const net = fakeNet(routes);
+  const p = createBoxingProvider({ getJson: net.getJson, throttle: fast(), photoLookups: 3, photoCache });
+  const list = await p.fetchUpcoming({ now: NOW, days: 7 });
+  const searched = net.calls.filter((u) => u.includes('searchplayers'));
+  eq(searched.length, Math.min(3, list.length * 2), 'au plus 3 recherches');
+  eq(list.flatMap((m) => [m.home, m.away]).filter((f) => f.photo).length, searched.length, 'photo posée sur les boxeurs trouvés');
+  const n = net.calls.length;
+  await p.fetchUpcoming({ now: NOW + 10 * MIN, days: 7 });
+  const again = net.calls.slice(n).filter((u) => u.includes('searchplayers'));
+  ok(again.every((u) => !searched.includes(u)), 'boxeurs déjà cherchés : pas de nouvelle recherche');
 });
 
 // ─── Exécution ───────────────────────────────────────────────────────────────

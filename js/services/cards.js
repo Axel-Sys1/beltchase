@@ -4,12 +4,11 @@
 import { getState, update } from '../store.js';
 import { currentPlayer } from './players.js';
 import { CARDS } from '../data/cards.js';
-import { LEGACY_CARDS } from '../data/legacyCards.js';
 import { nextMidnight, seeded, dayKey } from './progress.js';
 
 export { CARDS };
 // Anciennes cartes (avant BeltChase) : plus vendues, mais toujours lisibles pour ceux qui les ont.
-export const cardById = (id) => CARDS.find((c) => c.id === id) || LEGACY_CARDS.find((c) => c.id === id) || null;
+export const cardById = (id) => CARDS.find((c) => c.id === id) || null;
 
 // Collections : une par sport (clubs, sélections et féminines confondus).
 const SPORT_NAMES = {

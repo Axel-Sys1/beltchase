@@ -4,7 +4,7 @@ import { clockFor, realNow } from '../../store.js';
 import { escapeHtml, fmt, fmtOdds, formatKickoff, todayKey } from '../../util.js';
 import { SPORT_ORDER, sportMeta } from '../../sports.js';
 import { canClaimBonus } from '../../services/players.js';
-import { isAwaitingKickoff, matchStatus, outcomeLabel, outcomeShort } from '../../services/matchInfo.js';
+import { isAwaitingKickoff, matchStatus, matchTitle, outcomeLabel, outcomeShort } from '../../services/matchInfo.js';
 import { realFeedState } from '../../services/matches.js';
 import { LIVE_SPORTS, liveMarket } from '../../providers/liveOdds.js';
 import { spotlight } from '../../services/spotlight.js';
@@ -16,7 +16,8 @@ import { accountNudge, inviteBanner } from './account.js';
 import { cloud, isGuest } from '../../services/cloud.js';
 import { LEAGUE_PAGES, matchPath } from '../../seo/pages.js';
 import { DAYS as SEO_DAYS } from '../../seo/data.js';
-import { starOf } from '../stars.js';
+import { fighterPhoto, portrait, starOf } from '../stars.js';
+import { sizedPhoto, withFallback } from '../../providers/photos.js';
 import { METHOD_LABEL, marketOf, settleKey } from '../../services/markets.js';
 
 const ORDER = { 1: 0, X: 1, 2: 2 };
@@ -44,9 +45,21 @@ function dayLabel(key) {
   return new Date(y, mo - 1, d).toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric', month: 'short' });
 }
 
-const teamRow = (t, winner) => `
+const initials = (name) => String(name).split(/\s+/).filter(Boolean).map((w) => w[0]).slice(0, 2).join('').toUpperCase();
+
+// Photo ronde du combattant, drapeau en médaillon ; initiales si la photo manque ou ne charge pas.
+function fighterAvatar(t, sport) {
+  const ph = fighterPhoto(t, sport);
+  if (!ph) return teamMark(t);
+  return `<span class="fighter-ava" data-ini="${escapeHtml(initials(t.name))}">
+      <img src="${escapeHtml(ph.img)}" alt="${escapeHtml(t.name)}" loading="lazy" referrerpolicy="no-referrer" ${withFallback(ph.full)}>
+      ${t.logo ? teamMark(t, 'fighter-flag') : ''}
+    </span>`;
+}
+
+const teamRow = (t, winner, sport) => `
   <div class="team ${winner ? 'is-winner' : ''}">
-    ${teamMark(t)}
+    ${fighterAvatar(t, sport)}
     <span>${escapeHtml(t.name)}</span>
     ${t.record ? `<small class="record">${escapeHtml(t.record)}</small>` : ''}
   </div>`;
@@ -158,16 +171,26 @@ const displayName = (team) => SHORT_NAMES[team.name] || (team.name.length > 20 &
 // « À l'affiche » : carrousel des matchs les plus intéressants (derbys, gros clubs, chocs…).
 function spotlightCard({ m, tag }, slipPick, first) {
   const t = clockFor(m);
+  // Photo du combattant en grand (drapeau en médaillon), sinon le drapeau.
+  const mark = (team) => {
+    const face = portrait(team, 300);
+    return face ? `<span class="ft-face ${face.cutout ? 'is-cutout' : ''}">
+        <img src="${escapeHtml(face.img)}" alt="${escapeHtml(team.name)}" loading="lazy" referrerpolicy="no-referrer" ${withFallback(face.full)}>
+        ${team.logo ? teamMark(team, 'ft-flag') : ''}
+      </span>` : teamMark(team, `logo-img ${first ? 'logo-xl' : 'logo-lg'}`);
+  };
   const side = (team) => `
     <div class="ft-team">
-      ${teamMark(team, `logo-img ${first ? 'logo-xl' : 'logo-lg'}`)}
+      ${mark(team)}
       <strong>${escapeHtml(displayName(team))}</strong>
     </div>`;
-  // Joueurs vedettes des deux équipes en fond (s'ils sont dans le catalogue des cartes).
-  const stars = [starOf(m.home, m.sport), starOf(m.away, m.sport)];
-  const photo = (st, cls) => (st ? `<img class="spot-star ${cls}" src="${escapeHtml(st.img)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">` : '');
+  // Fond : l'affiche du combat (boxe), sinon la photo en pied de la carte de chaque combattant sans photo.
+  const poster = CONFIG.CARD_PHOTOS && m.poster ? sizedPhoto(m.poster, 800) : null;
+  const stars = poster ? [null, null] : [m.home, m.away].map((t) => (portrait(t) ? null : starOf(t, m.sport)));
+  const photo = (st, cls) => (st ? `<img class="spot-star ${cls}" src="${escapeHtml(st.img)}" alt="${escapeHtml(st.name)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">` : '');
   return `
-  <article class="featured spot-card ${first ? 'spot-first' : ''} ${stars.some(Boolean) ? 'has-stars' : ''}">
+  <article class="featured spot-card ${first ? 'spot-first' : ''} ${poster || stars.some(Boolean) ? 'has-stars' : ''}">
+    ${poster ? `<img class="spot-poster" src="${escapeHtml(poster)}" alt="" loading="lazy" referrerpolicy="no-referrer" ${withFallback(m.poster)}>` : ''}
     ${photo(stars[0], 'spot-star-home')}${photo(stars[1], 'spot-star-away')}
     <header class="featured-head">
       <span class="featured-tag">${escapeHtml(first && tag === m.competition ? 'Combat à la une' : tag)}</span>
@@ -225,14 +248,15 @@ export function matchCard(m, { slipPick = null, grouped = false, guest = false }
 
   return `
   <article class="match match-${status}${market?.open ? ' match-bettable' : ''}${slipPick ? ' has-pick' : ''}">
+    ${CONFIG.CARD_PHOTOS && m.poster ? `<div class="match-poster"><img src="${escapeHtml(sizedPhoto(m.poster, 400))}" alt="Affiche ${escapeHtml(matchTitle(m))}" loading="lazy" referrerpolicy="no-referrer" ${withFallback(m.poster, 'this.parentNode.remove()')}></div>` : ''}
     <header class="match-head">
       <span class="comp">${head}</span>
       ${right}
     </header>
     <div class="match-body">
       <div class="teams">
-        ${teamRow(m.home, status === 'finished' && m.outcome === '1')}
-        ${teamRow(m.away, status === 'finished' && m.outcome === '2')}
+        ${teamRow(m.home, status === 'finished' && m.outcome === '1', m.sport)}
+        ${teamRow(m.away, status === 'finished' && m.outcome === '2', m.sport)}
       </div>
       ${extra}
     </div>
