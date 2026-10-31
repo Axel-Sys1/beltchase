@@ -44,6 +44,7 @@ function fightForm(events) {
         <label>Étiquette
           <select name="label">${LABELS.map((l) => `<option value="${v(l)}" ${l === (e?.label || '') ? 'selected' : ''}>${l || '—'}</option>`).join('')}</select>
         </label>
+        <label class="admin-check"><input name="amateur" type="checkbox" ${(e ? e.amateur : d.amateur) ? 'checked' : ''}> Combat amateur (gala, championnat amateur)</label>
       </div>
       <p class="muted admin-hint">Les cotes se calculent toutes seules : 50 % = combat serré, 70 % = favori net. Méthode et round sont proposés automatiquement.</p>
       <div class="admin-actions">

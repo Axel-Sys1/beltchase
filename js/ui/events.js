@@ -299,10 +299,11 @@ const forms = {
       startsAt,
       rounds: Math.max(0, Math.min(12, Number(data.get('rounds')) || 0)),
       p1: Math.max(0.05, Math.min(0.95, (Number(data.get('p1')) || 50) / 100)),
+      amateur: data.get('amateur') === 'on' || undefined,
       status: prev?.status || 'scheduled',
     };
     await saveFight(f);
-    ui.adminDraft = { event: f.event, sport: f.sport, startsAt: String(data.get('startsAt')), rounds: f.rounds };
+    ui.adminDraft = { event: f.event, sport: f.sport, startsAt: String(data.get('startsAt')), rounds: f.rounds, amateur: !!f.amateur };
     ui.adminEdit = null;
     form.reset();
     toast(prev ? 'Combat modifié.' : `Combat ajouté : ${f.home.name} vs ${f.away.name}.`, 'success');

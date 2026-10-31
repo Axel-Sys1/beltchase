@@ -75,7 +75,8 @@ export function fightToMatch(f) {
     score: null,
     meta: { adapter: 'bc', fightId: f.id, rounds },
   };
-  const label = [f.label, rounds ? `${rounds} rounds` : null].filter(Boolean).join(' · ');
+  if (f.amateur) m.amateur = true; // filtre « Amateurs » de l'écran Combats
+  const label = [f.amateur ? 'Amateur' : null, f.label, rounds ? `${rounds} rounds` : null].filter(Boolean).join(' · ');
   if (label) m.round = label;
   if (f.status === 'void') Object.assign(m, { status: 'void', score: 'Annulé' });
   if (f.status === 'finished' && f.outcome) {

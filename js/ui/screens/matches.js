@@ -276,15 +276,20 @@ export function matchCard(m, { slipPick = null, grouped = false, guest = false, 
   </article>`;
 }
 
+// Filtre de discipline : « amateur » regroupe les combats amateurs saisis (toutes disciplines).
+export const inSportFilter = (m, sport = ui.sport) => sport === 'all' || (sport === 'amateur' ? !!m.amateur : m.sport === sport);
+
 function sportChips(list, countOf) {
-  const counts = { all: 0 };
+  const counts = { all: 0, amateur: 0 };
   for (const m of list) {
     if (!countOf(m)) continue;
     counts.all += 1;
     counts[m.sport] = (counts[m.sport] || 0) + 1;
+    if (m.amateur) counts.amateur += 1;
   }
   const present = SPORT_ORDER.filter((k) => list.some((m) => m.sport === k));
-  if (ui.sport !== 'all' && !present.includes(ui.sport)) ui.sport = 'all';
+  const amateurs = list.some((m) => m.amateur);
+  if (ui.sport !== 'all' && !present.includes(ui.sport) && !(ui.sport === 'amateur' && amateurs)) ui.sport = 'all';
   const tile = (key, icon, label) => `
     <button class="sport-tile ${ui.sport === key ? 'active' : ''}" data-action="filter-sport" data-sport="${key}" type="button"
       aria-pressed="${ui.sport === key}">
@@ -296,6 +301,7 @@ function sportChips(list, countOf) {
     <nav class="sports-bar" aria-label="Choisir un sport">
       ${tile('all', '🏆', 'Tout')}
       ${present.map((k) => tile(k, sportMeta(k).icon, sportMeta(k).label)).join('')}
+      ${amateurs ? tile('amateur', '⭐', 'Amateurs') : ''}
     </nav>`;
 }
 
@@ -379,7 +385,7 @@ function resultLinks(m) {
 // Résultats : soirées terminées, la plus récente d'abord, vainqueur et méthode de chaque combat.
 function resultsView(local, sport) {
   loadResults(); // ESPN relu toutes les 30 min (l'écran se redessine à l'arrivée)
-  const list = mergeResults(results.items, local).filter((m) => sport === 'all' || m.sport === sport);
+  const list = mergeResults(results.items, local).filter((m) => inSportFilter(m, sport));
   if (!list.length) {
     return results.loading || !results.at
       ? '<div class="skeletons" aria-busy="true">' + '<div class="skeleton"></div>'.repeat(3) + '</div>'
@@ -405,7 +411,7 @@ function renderReal(s, p, picks) {
   const feed = realFeedState();
   const t = realNow();
   const all = Object.values(s.matches).filter((m) => m.real);
-  const inSport = all.filter((m) => ui.sport === 'all' || m.sport === ui.sport);
+  const inSport = all.filter((m) => inSportFilter(m));
   const card = (m, poster = true) => matchCard(m, { slipPick: picks.get(m.id), grouped: true, poster });
 
   if (!feed.configured) {
