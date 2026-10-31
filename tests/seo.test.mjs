@@ -22,10 +22,11 @@ const getJson = async (url) => {
   const past = /dates=202607/.test(url); // requête des résultats (60 jours en arrière)
   if (url.includes('/mma/ufc/scoreboard')) return load(past ? 'mma/ufc_scoreboard_20260925-20261005_final.json' : 'mma/ufc_scoreboard_20260926-20261025_upcoming.json');
   if (url.includes('/mma/pfl/scoreboard')) return load(past ? 'mma/pfl_scoreboard_20260701-20261231.json' : 'mma/pfl_scoreboard_20260925-20261005_empty.json');
-  if (url.includes('thesportsdb.com')) {
+  if (url.includes('thesportsdb.com') && url.includes('l=4445')) {
     const day = BOX_DAYS.find((d) => url.includes(`d=${d}`));
     return load(day ? `boxing/eventsday_${day}.json` : 'boxing/eventsday_empty.json');
   }
+  if (url.includes('thesportsdb.com')) return { events: null }; // affiches UFC / PFL : aucune
   throw new Error(`HTTP 404 pour ${url}`); // cotes et méthode : facultatives
 };
 const KICK = {

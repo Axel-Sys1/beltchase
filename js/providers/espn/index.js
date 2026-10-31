@@ -4,6 +4,7 @@
 import { MIN } from '../../util.js';
 import { defaultGetJson, settleAll } from './common.js';
 import { createMmaAdapter } from './mma.js';
+import { createPosterFinder } from '../thesportsdb/posters.js';
 
 // Réponses gardées 15 s et requêtes en cours partagées : la liste et les résultats d'une même
 // synchronisation lisent souvent le même flux. (Plus court que l'écart de 20 s exigé entre
@@ -22,7 +23,7 @@ function memoize(getJson, ttlMs = 15_000) {
   };
 }
 
-export function createEspnProvider({ getJson: rawGetJson = defaultGetJson, adapters = null } = {}) {
+export function createEspnProvider({ getJson: rawGetJson = defaultGetJson, adapters = null, addPosters = createPosterFinder() } = {}) {
   const getJson = memoize(rawGetJson);
   // BeltChase : sports de combat seulement (ESPN n'a pas de boxe ; elle vient de TheSportsDB).
   const list = adapters || [createMmaAdapter({ getJson })];
@@ -50,7 +51,10 @@ export function createEspnProvider({ getJson: rawGetJson = defaultGetJson, adapt
       const { ok, failed } = await settleAll(list.map((a) => () => a.upcoming({ now, days })), list.length);
       failed.forEach((err) => console.warn('[espn] liste incomplète', err));
       if (!ok.length && failed.length) throw failed[0];
-      return ok.flat();
+      const all = ok.flat();
+      // Affiches des soirées UFC / PFL (TheSportsDB) : facultatives, jamais bloquantes.
+      if (addPosters) await addPosters(all, now).catch((err) => console.warn('[affiches]', err));
+      return all;
     },
 
     async fetchResults({ now, matches }) {

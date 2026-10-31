@@ -5,6 +5,7 @@
 // réponses enregistrées dans les tests).
 import { createMmaAdapter } from '../providers/espn/mma.js';
 import { createBoxingProvider } from '../providers/thesportsdb/boxing.js';
+import { createPosterFinder } from '../providers/thesportsdb/posters.js';
 import { fightToMatch, readFights } from '../providers/beltchase.js';
 import { LEAGUE_PAGES } from './pages.js';
 
@@ -23,6 +24,8 @@ export const SOURCES = {
     // Les combats terminés de la liste à venir ont leur méthode : ils passent devant.
     const byId = new Map(past.map((m) => [m.id, m]));
     for (const m of upcoming) byId.set(m.id, m);
+    // Affiches des prochaines soirées (TheSportsDB) : facultatives.
+    await createPosterFinder({ getJson, lookups: 4 })(upcoming.filter((m) => m.startsAt > now), now).catch(() => {});
     return [...byId.values()];
   },
   async tsdb({ getJson, now }) {

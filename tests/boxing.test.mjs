@@ -22,6 +22,7 @@ import {
   createBoxingProvider, createThrottle, parseEventName, parseTimestamp, norm, outcomeFromText, outcomeFromRows, readResult,
   withoutResult, dayUrl, lookupUrl, resultsUrl, searchUrl, photoFrom,
 } from '../js/providers/thesportsdb/boxing.js';
+import { createPosterFinder, posterDayUrl, posterFrom } from '../js/providers/thesportsdb/posters.js';
 
 globalThis.console ??= { warn() {}, log: print }; // jsc n'a pas de console
 
@@ -56,7 +57,7 @@ function fakeNet(routes = {}) {
 }
 
 const fast = () => createThrottle({ perMinute: 10_000 });
-const provider = (net) => createBoxingProvider({ getJson: net.getJson, throttle: fast(), photoLookups: 0 });
+const provider = (net) => createBoxingProvider({ getJson: net.getJson, throttle: fast(), photoLookups: 0, daysPerCall: 99 });
 const byId = (list) => Object.fromEntries(list.map((m) => [m.id ?? m.matchId, m]));
 const eventOf = (file, id) => fixture(file).events.find((e) => e.idEvent === id) || fail(`événement ${id} absent`);
 const keys = (a, b) => [a, b].map((n) => {
@@ -437,6 +438,50 @@ test('photos : affiche du combat, photo du boxeur cherchée une fois puis mémor
   await p.fetchUpcoming({ now: NOW + 10 * MIN, days: 7 });
   const again = net.calls.slice(n).filter((u) => u.includes('searchplayers'));
   ok(again.every((u) => !searched.includes(u)), 'boxeurs déjà cherchés : pas de nouvelle recherche');
+});
+
+test('affiches UFC / PFL : soirée retrouvée par le combat principal, une recherche par soirée, mémorisée', async () => {
+  const day = { events: [
+    { strEvent: 'UFC Fight Night 292 Moicano vs Nolan', strThumb: 'https://www.thesportsdb.com/images/media/event/thumb/oomwrs1793447408.jpg' },
+    { strEvent: 'UFC Fight Night Prelims', strThumb: 'https://x/autre.jpg' },
+  ] };
+  eq(posterFrom(day, ['Renato Moicano', 'Tom Nolan']), day.events[0].strThumb, 'nom du combat principal');
+  eq(posterFrom(day, ['Inconnu Total', 'Autre Nom']), null, 'deux affiches, aucune ne correspond');
+  eq(posterFrom({ events: [day.events[0]] }, []), day.events[0].strThumb, 'seul événement du jour');
+  eq(posterFrom({ events: [{ strEvent: 'UFC 334 Gane vs Hokit', strThumb: '' }] }, ['Ciryl Gane', 'Josh Hokit']), null, 'pas encore d\'affiche');
+
+  const bout = (id, round, home, away) => ({ id, round, home: { name: home }, away: { name: away }, startsAt: NOW + 24 * HOUR, meta: { league: 'ufc', eventId: '600061420', day: '20261031' } });
+  const card = [bout('a', 'Combat principal · Poids légers', 'Renato Moicano', 'Tom Nolan'), bout('b', 'Poids mouches', 'Lucia Szabova', 'Tainara Lisboa')];
+  const other = { id: 'c', home: { name: 'X' }, away: { name: 'Y' }, startsAt: NOW, meta: { league: 'xyz', eventId: '1', day: '20261031' } };
+  const store = new Map();
+  const net = fakeNet({ [posterDayUrl('2026-10-31', '4443')]: day });
+  const add = createPosterFinder({ getJson: net.getJson, throttle: fast(), cache: { get: (k) => store.get(k), set: (k, v) => store.set(k, v) } });
+  await add([...card, other], NOW);
+  eq(card.map((m) => m.poster), [day.events[0].strThumb, day.events[0].strThumb], 'affiche sur tous les combats de la soirée');
+  ok(!other.poster, 'organisation sans affiche');
+  eq(net.calls, [posterDayUrl('2026-10-31', '4443')], 'une seule requête');
+  const again = card.map((m) => ({ ...m, poster: undefined }));
+  await add(again, NOW + HOUR);
+  eq(net.calls.length, 1, 'mémorisée');
+  eq(again[0].poster, day.events[0].strThumb, 'reposée depuis la mémoire');
+});
+
+test('file d\'attente : priorités, et la liste ne lit que quelques jours par rafraîchissement', async () => {
+  let t = 0;
+  const q = createThrottle({ perMinute: 2, clock: () => t, sleep: async (ms) => { t += ms; } });
+  const order = [];
+  const jobs = [q.run(async () => order.push('jour1')), q.run(async () => order.push('jour2')), q.run(async () => order.push('jour3'))];
+  jobs.push(q.run(async () => order.push('affiche'), 2));
+  await Promise.all(jobs);
+  eq(order, ['jour1', 'affiche', 'jour2', 'jour3'], 'l\'affiche passe devant les jours en attente');
+
+  const net = fakeNet(LIVE_DAYS);
+  const p = createBoxingProvider({ getJson: net.getJson, throttle: fast(), photoLookups: 0, daysPerCall: 3 });
+  await p.fetchUpcoming({ now: NOW, days: 7 });
+  eq(net.calls.length, 3, '3 jours au premier rafraîchissement');
+  eq(net.calls[0], dayUrl('2026-09-27'), 'aujourd\'hui d\'abord');
+  await p.fetchUpcoming({ now: NOW + MIN, days: 7 });
+  eq(net.calls.length, 6, '3 de plus au suivant (les autres viennent du cache)');
 });
 
 // ─── Exécution ───────────────────────────────────────────────────────────────

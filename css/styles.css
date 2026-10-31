@@ -1507,10 +1507,18 @@ h1.tagline { font: inherit; font-size: 16px; letter-spacing: normal; margin: 1em
 .ft-face .dot { position: absolute; right: 6px; bottom: 2px; width: 14px; height: 14px; }
 .ft-face.is-cutout img:not(.ft-flag) { object-fit: cover; object-position: 50% 6%; }
 /* Affiche du combat (boxe) : fond de la carte « À l'affiche », bandeau en haut d'une carte de la liste. */
-.spot-poster { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; opacity: 0.6; pointer-events: none; }
-.match-poster { margin: -14px -14px 12px; aspect-ratio: 16 / 7; max-height: 190px; overflow: hidden; border-radius: var(--radius) var(--radius) 0 0; background: var(--surface-2); }
-.match-poster img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 20%; }
+/* Affiches (16:9, entières, d'un bord à l'autre) : haut de la carte « À l'affiche » (étiquette et heure
+   par-dessus), tête d'une carte de la liste (boxe), tête du groupe d'une soirée (UFC, PFL). */
+.spot-poster, .match-poster, .comp-poster { aspect-ratio: 16 / 9; overflow: hidden; background: var(--surface-2); }
+.spot-poster img, .match-poster img, .comp-poster img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.spot-poster { margin: -16px -16px 12px; }
+.spot-card.has-poster .featured-head { position: absolute; top: 12px; left: 16px; right: 12px; z-index: 1; }
+.spot-card.has-poster .featured-head .kick { padding: 4px 9px; border-radius: 999px; background: rgba(0, 0, 0, 0.65); color: #fff; }
+.spot-card.has-poster .ft-teams { display: none; }
+.spot-card.has-poster .ft-comp { margin-top: 0; }
+.match-poster { margin: -14px -14px 12px; border-radius: var(--radius) var(--radius) 0 0; }
 .match-finished .match-poster img { filter: grayscale(0.7); opacity: 0.7; }
+.comp-poster { margin: 0 0 12px; border-radius: var(--radius); border: 1px solid var(--line); }
 .spot-star { position: absolute; z-index: -1; bottom: 64px; width: 56%; height: auto; max-height: 82%; object-fit: contain; object-position: bottom; pointer-events: none;
   -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent 96%); mask-image: linear-gradient(to bottom, #000 55%, transparent 96%); filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.6)); opacity: 0.95; }
 .spot-star-home { left: -17%; }

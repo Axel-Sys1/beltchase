@@ -7,9 +7,11 @@
 //   strHomeTeam / strAwayTeam sont vides : les boxeurs se lisent dans strEvent (« A vs B »).
 // - Plafonds de la clé gratuite : eventsday → 3 événements par jour, eventsnextleague → 1,
 //   eventsseason → les 15 premiers. La liste interroge donc eventsday jour par jour, avec un cache.
-// - 30 requêtes / minute ; au-delà, un 429 SANS en-tête CORS : le navigateur ne voit qu'une TypeError.
-//   D'où une file d'attente (une requête à la fois, 20 par minute au plus) et une pause de 2 min
-//   dès le premier échec, pendant laquelle on sert le cache.
+// - « 30 requêtes / minute » annoncées, mais refus dès la 11e requête en rafale (relevé du 31/10/2026) ;
+//   au-delà, un 429 SANS en-tête CORS : le navigateur ne voit qu'une TypeError. D'où une file d'attente
+//   commune (une requête à la fois, 9 par minute au plus, priorités) et une pause de 2 min dès le
+//   premier échec, pendant laquelle on sert le cache. La liste lit au plus DAYS_PER_CALL jours
+//   par rafraîchissement (les plus proches d'abord), le reste aux rafraîchissements suivants.
 // - Horaires : strTimestamp en UTC sans 'Z' ('2026-09-26T22:00:00') ; dateEvent = jour UTC.
 //   Heure inconnue (strTimeLocal vide) : 00:00 UTC du jour, les paris ferment donc en avance.
 // - Ni direct, ni score. Les résultats sont saisis à la main, souvent le lendemain ou plus tard :
@@ -49,6 +51,7 @@ const RECHECK_LATE = HOUR;        // …moins souvent passé 12 h
 const LATE_AFTER = 12 * HOUR;
 const VOID_AFTER = 4 * DAY;       // toujours rien de publié (TheSportsDB joignable) : remboursé
 const MAX_CHECKS = 6;             // combats vérifiés par appel (2 requêtes chacun)
+const DAYS_PER_CALL = 6;          // jours lus (hors cache) par rafraîchissement de la liste
 const PHOTO_LOOKUPS = 4;          // recherches de photo de boxeur par liste
 const PHOTO_TTL = 30 * DAY;       // photo trouvée : gardée 30 jours
 const NO_PHOTO_TTL = 7 * DAY;     // aucune photo : on recherche de nouveau dans une semaine
@@ -63,31 +66,44 @@ const PROBE_URL = `${BASE}/eventsnextleague.php?id=${BOXING_LEAGUE}`; // 1 évé
 const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 // Une requête à la fois, au plus `perMinute` sur 60 s glissantes, et plus aucune pendant `pauseMs`
-// après un échec (sans doute un 429, que le CORS rend indiscernable d'une panne).
-export function createThrottle({ perMinute = 20, pauseMs = 2 * MIN, clock = () => Date.now(), sleep = wait } = {}) {
+// après un échec (sans doute un 429, que le CORS rend indiscernable d'une panne). run(task, priority) :
+// la plus haute priorité en attente passe d'abord (affiches et photos, une requête par soirée, avant
+// le balayage des jours de boxe) ; ordre d'arrivée à priorité égale.
+export function createThrottle({ perMinute = 9, pauseMs = 2 * MIN, clock = () => Date.now(), sleep = wait } = {}) {
   const stamps = [];
+  const queue = [];
   let pausedUntil = 0;
-  let chain = Promise.resolve();
-  const run = (task) => {
-    const job = chain.then(async () => {
-      if (clock() < pausedUntil) throw new Error('TheSportsDB : en pause après un refus');
+  let busy = false;
+  let seq = 0;
+
+  async function pump() {
+    if (busy) return;
+    busy = true;
+    while (queue.length) {
       for (;;) {
         const t = clock();
         while (stamps.length && stamps[0] <= t - 60_000) stamps.shift();
         if (stamps.length < perMinute) break;
         await sleep(stamps[0] + 60_000 - t);
       }
+      queue.sort((a, b) => b.priority - a.priority || a.seq - b.seq);
+      const job = queue.shift();
+      if (clock() < pausedUntil) { job.reject(new Error('TheSportsDB : en pause après un refus')); continue; }
       stamps.push(clock());
       try {
-        return await task();
+        job.resolve(await job.task());
       } catch (err) {
         pausedUntil = clock() + pauseMs;
-        throw err;
+        job.reject(err);
       }
-    });
-    chain = job.catch(() => {});
-    return job;
-  };
+    }
+    busy = false;
+  }
+
+  const run = (task, priority = 0) => new Promise((resolve, reject) => {
+    queue.push({ task, priority, resolve, reject, seq: seq += 1 });
+    pump();
+  });
   return { run, paused: () => clock() < pausedUntil };
 }
 
@@ -100,7 +116,7 @@ export function norm(s) {
 }
 
 const SUFFIX = /^(jr|sr|ii|iii|iv)\.?$/;
-const nameKeys = (name) => {
+export const nameKeys = (name) => {
   const words = norm(name).split(' ').filter((w) => w && !SUFFIX.test(w));
   return { full: words.join(' '), last: words[words.length - 1] || '' };
 };
@@ -341,10 +357,14 @@ export function createPhotoCache(key = 'beltchase:photos-boxe') {
   };
 }
 
-export function createBoxingProvider({ getJson = defaultGetJson, throttle = createThrottle(), photoLookups = PHOTO_LOOKUPS, photoCache = createPhotoCache() } = {}) {
+// File d'attente commune à toutes les lectures TheSportsDB de l'appli (boxe, affiches UFC / PFL) : le
+// plafond de 30 requêtes par minute vaut pour l'adresse IP, pas pour chaque usage.
+export const tsdbThrottle = createThrottle();
+
+export function createBoxingProvider({ getJson = defaultGetJson, throttle = tsdbThrottle, photoLookups = PHOTO_LOOKUPS, photoCache = createPhotoCache(), daysPerCall = DAYS_PER_CALL } = {}) {
   const dayCache = new Map();    // 'AAAA-MM-JJ' → { at, events }
   const nextCheck = new Map();   // matchId → instant de la prochaine vérification
-  const get = (url, opts) => throttle.run(() => getJson(url, opts));
+  const get = (url, opts, priority = 0) => throttle.run(() => getJson(url, opts), priority);
 
   // Photos connues posées sur les boxeurs ; quelques recherches pour les autres, combats les plus proches
   // d'abord. Un échec arrête les recherches (le throttle se met en pause), la liste n'en dépend pas.
@@ -358,7 +378,7 @@ export function createBoxingProvider({ getJson = defaultGetJson, throttle = crea
         if (!fresh(entry) && left > 0 && !throttle.paused()) {
           left -= 1;
           try {
-            entry = { url: photoFrom(await get(searchUrl(m[side].name)), m[side].name), at: now };
+            entry = { url: photoFrom(await get(searchUrl(m[side].name), undefined, 1), m[side].name), at: now };
             photoCache.set(key, entry);
           } catch {
             left = 0;
@@ -395,12 +415,14 @@ export function createBoxingProvider({ getJson = defaultGetJson, throttle = crea
       const order = [...all.filter((d) => d >= today), ...all.filter((d) => d < today).reverse()];
       const events = new Map();
       let got = 0;
+      let budget = daysPerCall;
       let firstErr = null;
       for (const day of order) {
         const hit = dayCache.get(day);
         const near = Math.abs(Date.parse(`${day}T12:00:00Z`) - now) <= LOOKBACK;
         let list = hit && now - hit.at < (near ? NEAR_TTL : FAR_TTL) ? hit.events : null;
-        if (!list && !firstErr) {
+        if (!list && !firstErr && budget > 0) {
+          budget -= 1;
           try {
             const data = await get(dayUrl(day));
             list = (data?.events || []).filter((e) => String(e?.idLeague) === BOXING_LEAGUE);

@@ -184,13 +184,13 @@ function spotlightCard({ m, tag }, slipPick, first) {
       ${mark(team)}
       <strong>${escapeHtml(displayName(team))}</strong>
     </div>`;
-  // Fond : l'affiche du combat (boxe), sinon la photo en pied de la carte de chaque combattant sans photo.
+  // Affiche de la soirée en plein cadre ; sinon les combattants (photo, ou carte du catalogue en fond).
   const poster = CONFIG.CARD_PHOTOS && m.poster ? sizedPhoto(m.poster, 800) : null;
   const stars = poster ? [null, null] : [m.home, m.away].map((t) => (portrait(t) ? null : starOf(t, m.sport)));
   const photo = (st, cls) => (st ? `<img class="spot-star ${cls}" src="${escapeHtml(st.img)}" alt="${escapeHtml(st.name)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">` : '');
   return `
-  <article class="featured spot-card ${first ? 'spot-first' : ''} ${poster || stars.some(Boolean) ? 'has-stars' : ''}">
-    ${poster ? `<img class="spot-poster" src="${escapeHtml(poster)}" alt="" loading="lazy" referrerpolicy="no-referrer" ${withFallback(m.poster)}>` : ''}
+  <article class="featured spot-card ${first ? 'spot-first' : ''} ${poster ? 'has-poster' : stars.some(Boolean) ? 'has-stars' : ''}">
+    ${poster ? `<div class="spot-poster"><img src="${escapeHtml(poster)}" alt="Affiche ${escapeHtml(matchTitle(m))}" loading="lazy" referrerpolicy="no-referrer" ${withFallback(m.poster, "this.closest('.spot-card').classList.remove('has-poster');this.parentNode.remove()")}></div>` : ''}
     ${photo(stars[0], 'spot-star-home')}${photo(stars[1], 'spot-star-away')}
     <header class="featured-head">
       <span class="featured-tag">${escapeHtml(first && tag === m.competition ? 'Combat à la une' : tag)}</span>
@@ -218,7 +218,8 @@ function spotlightSection(list, picks) {
 
 
 // guest : visiteur sans pseudo, une cote l'invite à s'inscrire (puis l'ajoute au panier).
-export function matchCard(m, { slipPick = null, grouped = false, guest = false } = {}) {
+// poster : affiche du combat en tête de carte (false quand le groupe de la soirée l'affiche déjà).
+export function matchCard(m, { slipPick = null, grouped = false, guest = false, poster = true } = {}) {
   const t = clockFor(m);
   const status = matchStatus(m, t);
   const sport = sportMeta(m.sport);
@@ -248,7 +249,7 @@ export function matchCard(m, { slipPick = null, grouped = false, guest = false }
 
   return `
   <article class="match match-${status}${market?.open ? ' match-bettable' : ''}${slipPick ? ' has-pick' : ''}">
-    ${CONFIG.CARD_PHOTOS && m.poster ? `<div class="match-poster"><img src="${escapeHtml(sizedPhoto(m.poster, 400))}" alt="Affiche ${escapeHtml(matchTitle(m))}" loading="lazy" referrerpolicy="no-referrer" ${withFallback(m.poster, 'this.parentNode.remove()')}></div>` : ''}
+    ${poster && CONFIG.CARD_PHOTOS && m.poster ? `<div class="match-poster"><img src="${escapeHtml(sizedPhoto(m.poster, 400))}" alt="Affiche ${escapeHtml(matchTitle(m))}" loading="lazy" referrerpolicy="no-referrer" ${withFallback(m.poster, 'this.parentNode.remove()')}></div>` : ''}
     <header class="match-head">
       <span class="comp">${head}</span>
       ${right}
@@ -307,7 +308,7 @@ function renderReal(s, p, picks) {
   const t = realNow();
   const all = Object.values(s.matches).filter((m) => m.real);
   const inSport = all.filter((m) => ui.sport === 'all' || m.sport === ui.sport);
-  const card = (m) => matchCard(m, { slipPick: picks.get(m.id), grouped: true });
+  const card = (m, poster = true) => matchCard(m, { slipPick: picks.get(m.id), grouped: true, poster });
 
   if (!feed.configured) {
     return `<div class="empty"><p><strong>Aucune source de vrais combats n'est configurée.</strong></p></div>`;
@@ -363,6 +364,8 @@ function renderReal(s, p, picks) {
       </div>
       ${[...groups.values()].map((list, i, arr) => {
         const first = list[0];
+        // Même affiche pour toute la soirée (UFC, PFL) : une seule fois, en tête du groupe.
+        const shared = CONFIG.CARD_PHOTOS && first.poster && list.every((m) => m.poster === first.poster) ? first.poster : null;
         const newSport = ui.sport === 'all' && (i === 0 || arr[i - 1][0].sport !== first.sport);
         return `
         ${newSport ? `<h2 class="sport-heading">${sportMeta(first.sport).icon} ${escapeHtml(sportMeta(first.sport).label)}</h2>` : ''}
@@ -372,7 +375,8 @@ function renderReal(s, p, picks) {
             <span>${escapeHtml(first.competition)}</span>
             <span class="comp-count">${list.length}</span>
           </h3>
-          <div class="match-grid">${list.map(card).join('')}</div>
+          ${shared ? `<div class="comp-poster"><img src="${escapeHtml(sizedPhoto(shared, 800))}" alt="Affiche ${escapeHtml(first.competition)}" loading="lazy" referrerpolicy="no-referrer" ${withFallback(shared, 'this.parentNode.remove()')}></div>` : ''}
+          <div class="match-grid">${list.map((m) => card(m, !shared)).join('')}</div>
         </section>`;
       }).join('')}` : `
       <div class="empty"><p class="muted">Aucun combat à venir pour ce sport dans les ${CONFIG.REAL_DAYS_AHEAD} prochains jours.</p></div>`}
