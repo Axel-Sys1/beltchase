@@ -1,9 +1,9 @@
 // Réglages du jeu. Tout ce qui touche à l'équilibrage est ici.
 export const CONFIG = {
   STORAGE_KEY: 'beltchase:v1',
-  CONTACT_EMAIL: 'contact.goalzzbusiness@gmail.com', // pied de page et mentions légales
+  CONTACT_EMAIL: 'contact@beltchase.com', // pied de page et mentions légales (redirection e-mail Cloudflare)
   // Comptes admin (page #admin : combats saisis à la main). Doit correspondre aux règles Firestore.
-  ADMIN_EMAILS: ['axel.sirieys@gmail.com', 'contact.goalzzbusiness@gmail.com'],
+  ADMIN_EMAILS: ['axel.sirieys@gmail.com'],
   STARTING_BALANCE: 100,  // monnaie rare : on démarre petit et on gagne en pariant juste
   DAILY_BONUS: 50,
   MIN_STAKE: 1,
@@ -43,7 +43,7 @@ export const CONFIG = {
   // « Espace publicitaire » à sa taille. Passer à Google AdSense : voir README.md, « Publicité ».
   ADS: {
     enabled: true,                       // false : aucun emplacement
-    client: 'ca-pub-2648122457549094',   // identifiant éditeur AdSense (vraies pubs dès que `slots` est rempli)
+    client: '',                          // identifiant éditeur AdSense « ca-pub-… » (vide : encarts seulement, rien chez Google)
     slots: { top: '', side: '', bottom: '' }, // id des blocs d'annonces
     hosts: ['beltchase.com', 'www.beltchase.com'], // vraies annonces seulement ici (ailleurs : encarts)
     personalized: false,                 // public dès 15 ans : annonces non personnalisées

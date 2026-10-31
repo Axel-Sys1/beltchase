@@ -19,7 +19,7 @@ Règles Firestore à ajouter pour la page admin (dans `match /databases/{databas
 match /fights/{id} {
   allow read: if true;
   allow write: if request.auth != null && request.auth.token.email_verified == true
-    && request.auth.token.email in ['axel.sirieys@gmail.com', 'contact.goalzzbusiness@gmail.com'];
+    && request.auth.token.email in ['axel.sirieys@gmail.com'];
 }
 ```
 
