@@ -294,7 +294,7 @@ await test('liveState : tous les formats d\'horloge ESPN', async () => {
 const { MIN_ODDS, MAX_ODDS, SUSPEND_MS, STALE_MS } = CONFIG.LIVE;
 const FOOT_ODDS = fromProbabilities({ 1: 0.45, X: 0.27, 2: 0.28 });
 
-await test('liveMarket : ouvert, cotes = probabilités en direct avec la marge Goalz', async () => {
+await test('liveMarket : ouvert, cotes = probabilités en direct avec la marge BeltChase', async () => {
   const m = at(live('football', FOOT_ODDS), "30'", '1 - 0');
   const mk = liveMarket(m, T);
   eq([mk.open, mk.reason], [true, null], 'ouvert');

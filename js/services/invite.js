@@ -3,7 +3,7 @@
 import { cloud, joinOnlineLeague } from './cloud.js';
 import { getState } from '../store.js';
 
-const KEY = 'goalz:invite';
+const KEY = 'beltchase:invite';
 const SITE = 'https://beltchase.com/';
 let joining = false;
 

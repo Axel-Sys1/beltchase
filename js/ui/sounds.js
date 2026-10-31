@@ -1,6 +1,6 @@
 // Sons de l'appli, synthétisés avec Web Audio (aucun fichier à télécharger) : cote choisie, pari
 // validé, pari gagné ou perdu, bonus. Coupables dans Profil → Réglages (préférence de l'appareil).
-const PREF = 'goalz:sound';
+const PREF = 'beltchase:sound';
 let ctx = null;
 
 const read = () => { try { return localStorage.getItem(PREF); } catch { return null; } };

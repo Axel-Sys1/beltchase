@@ -141,8 +141,8 @@ export function renderOnboarding(s) {
     <div class="landing">
       <section class="landing-hero">
         <div class="brand-big">${eventLogo()}<span>BELT<b>CHASE</b></span></div>
-        <h1 class="landing-title">Pronostique.<br>Collectionne.<br><b>Chasse la ceinture.</b></h1>
-        <p class="tagline">Le jeu de pronos MMA, boxe et sports de combat, gratuit, avec une monnaie 100 % virtuelle${eventTag({ short: true })}.</p>
+        <p class="landing-title">Pronostique. <br>Collectionne. <br><b>Chasse la ceinture.</b></p>
+        <h1 class="tagline">Le jeu de pronos MMA, UFC, boxe et sports de combat, gratuit, avec une monnaie 100 % virtuelle${eventTag({ short: true })}.</h1>
         ${showcase.length ? `
         <div class="landing-cards" aria-label="Exemples de cartes à collectionner">
           ${showcase.map((c, i) => `<div class="lc lc-${i}">${cardHtml(c)}</div>`).join('')}

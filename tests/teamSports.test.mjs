@@ -81,7 +81,7 @@ await test('liste football (en-tête MLS) : ids, domicile/extérieur, heures, co
   eq([m.away.name, m.away.short], ['New York City FC', 'NYC'], 'extérieur');
   eq(m.home.logo, 'https://a.espncdn.com/i/teamlogos/soccer/500/18418.png', 'logo domicile');
   eq(m.startsAt, at('2026-09-26T23:30:00Z'), 'heure (date ISO, pas le texte du statut)');
-  // DraftKings +150 / +250 / +155 → décimal → marge Goalz.
+  // DraftKings +150 / +250 / +155 → décimal → marge BeltChase.
   eq(m.oddsSource, 'bookmaker', 'source des cotes');
   eq(m.odds, fromBookmaker({ 1: 2.5, X: 3.5, 2: 2.55 }), 'cotes bookmaker');
   eq(m.meta, { adapter: 'team', league: 'usa.1', eventId: '761830', day: '20260926' }, 'meta');
@@ -175,7 +175,7 @@ await test('liste foot US NFL : cotes 1/2, semaine', async () => {
   ok(ms.every((m) => m.oddsSource === 'bookmaker' && m.odds.X === undefined), 'toutes cotées, sans X');
   const m = byEvent(ms, '401872953');
   eq([m.sport, m.home.short, m.away.short, m.round], ['americanfootball', 'BUF', 'LAC', 'Semaine 3'], 'match');
-  eq(m.id, 'espn:americanfootball:nfl:401872953', 'id avec la clé Goalz du sport');
+  eq(m.id, 'espn:americanfootball:nfl:401872953', 'id avec la clé BeltChase du sport');
   eq(byEvent(ms, '401872960').round, 'Semaine 3', 'note « NFL Rio Game » ignorée');
 });
 

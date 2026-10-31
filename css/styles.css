@@ -628,6 +628,7 @@ a.ad-ph:focus-visible { outline-offset: -2px; }
 .brand-big b { color: var(--accent); }
 @keyframes spin-in { from { transform: rotate(-200deg) scale(0.4); opacity: 0; } }
 .tagline { color: var(--muted); font-size: 16px; }
+h1.tagline { font: inherit; font-size: 16px; letter-spacing: normal; margin: 1em 0; } /* titre principal de l'accueil (mots-clés), présenté comme un sous-titre */
 .free-pill { justify-self: center; padding: 6px 12px; border-radius: 5px; font-weight: 700; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--line-2); }
 .register { display: grid; gap: 10px; text-align: left; background: var(--surface); border: 1px solid var(--line); border-top: 3px solid var(--accent); border-radius: 10px; padding: 18px; }
 .register label { font-weight: 700; }

@@ -24,19 +24,19 @@ export function nextStreakDay(p) {
 // ─── Défis du jour ───────────────────────────────────────────────────────────
 // type : événement compté. target : nombre à atteindre. Un défi par « famille » au plus chaque jour.
 const POOL = [
-  { id: 'place3', family: 'place', type: 'place', target: 3, text: 'Place 3 paris', goalz: 60, xp: 50 },
-  { id: 'place5', family: 'place', type: 'place', target: 5, text: 'Place 5 paris', goalz: 100, xp: 80 },
-  { id: 'win1', family: 'win', type: 'win', target: 1, text: 'Gagne un pari', goalz: 60, xp: 60 },
-  { id: 'win3', family: 'win', type: 'win', target: 3, text: 'Gagne 3 paris', goalz: 150, xp: 120 },
-  { id: 'odds2', family: 'odds', type: 'winOdds2', target: 1, text: 'Gagne un pari à une cote de 2,00 ou plus', goalz: 120, xp: 100 },
-  { id: 'combo3', family: 'combo', type: 'combo3', target: 1, text: 'Place un combiné d\'au moins 3 combats', goalz: 80, xp: 70 },
-  { id: 'method', family: 'method', type: 'method', target: 1, text: 'Pronostique une méthode de victoire (KO, soumission, décision)', goalz: 80, xp: 70 },
-  { id: 'round', family: 'method', type: 'end', target: 1, text: 'Pronostique le round de fin d\'un combat', goalz: 80, xp: 70 },
-  { id: 'mma', family: 'sport', type: 'sport:mma', target: 2, text: 'Parie sur 2 combats de MMA', goalz: 60, xp: 50 },
-  { id: 'boxing', family: 'sport', type: 'sport:boxing', target: 1, text: 'Parie sur un combat de boxe', goalz: 60, xp: 50 },
-  { id: 'kick', family: 'sport', type: 'sport:kickboxing', target: 1, text: 'Parie sur un combat de kick ou de Muay Thaï', goalz: 60, xp: 50 },
-  { id: 'real', family: 'real', type: 'real', target: 2, text: 'Parie sur 2 vrais combats', goalz: 60, xp: 50 },
-  { id: 'flash', family: 'flash', type: 'flash', target: 3, text: 'Parie sur 3 combats éclair', goalz: 60, xp: 50 },
+  { id: 'place3', family: 'place', type: 'place', target: 3, text: 'Place 3 paris', gold: 60, xp: 50 },
+  { id: 'place5', family: 'place', type: 'place', target: 5, text: 'Place 5 paris', gold: 100, xp: 80 },
+  { id: 'win1', family: 'win', type: 'win', target: 1, text: 'Gagne un pari', gold: 60, xp: 60 },
+  { id: 'win3', family: 'win', type: 'win', target: 3, text: 'Gagne 3 paris', gold: 150, xp: 120 },
+  { id: 'odds2', family: 'odds', type: 'winOdds2', target: 1, text: 'Gagne un pari à une cote de 2,00 ou plus', gold: 120, xp: 100 },
+  { id: 'combo3', family: 'combo', type: 'combo3', target: 1, text: 'Place un combiné d\'au moins 3 combats', gold: 80, xp: 70 },
+  { id: 'method', family: 'method', type: 'method', target: 1, text: 'Pronostique une méthode de victoire (KO, soumission, décision)', gold: 80, xp: 70 },
+  { id: 'round', family: 'method', type: 'end', target: 1, text: 'Pronostique le round de fin d\'un combat', gold: 80, xp: 70 },
+  { id: 'mma', family: 'sport', type: 'sport:mma', target: 2, text: 'Parie sur 2 combats de MMA', gold: 60, xp: 50 },
+  { id: 'boxing', family: 'sport', type: 'sport:boxing', target: 1, text: 'Parie sur un combat de boxe', gold: 60, xp: 50 },
+  { id: 'kick', family: 'sport', type: 'sport:kickboxing', target: 1, text: 'Parie sur un combat de kick ou de Muay Thaï', gold: 60, xp: 50 },
+  { id: 'real', family: 'real', type: 'real', target: 2, text: 'Parie sur 2 vrais combats', gold: 60, xp: 50 },
+  { id: 'flash', family: 'flash', type: 'flash', target: 3, text: 'Parie sur 3 combats éclair', gold: 60, xp: 50 },
 ];
 
 // Tirage déterministe à partir de la date : même liste pour tout le monde ce jour-là.
@@ -47,7 +47,7 @@ function seeded(key) {
 }
 
 export function todaysChallenges(date = todayKey()) {
-  const rand = seeded(`goalzz-${date}`);
+  const rand = seeded(`beltchase-${date}`);
   const pool = [...POOL];
   const picked = [];
   while (picked.length < 3 && pool.length) {
@@ -80,9 +80,9 @@ export function track(p, events) {
     d.progress[c.id] = (d.progress[c.id] || 0) + n;
     if (d.progress[c.id] >= c.target) {
       d.done[c.id] = true;
-      p.balance += c.goalz;
+      p.balance += c.gold;
       addXp(p, c.xp, { boostable: false });
-      p.inbox.push({ type: 'reward', amount: c.goalz, text: `Défi réussi : ${c.text} · +${c.goalz} Gold, +${c.xp} XP` });
+      p.inbox.push({ type: 'reward', amount: c.gold, text: `Défi réussi : ${c.text} · +${c.gold} Gold, +${c.xp} XP` });
     }
   }
 }

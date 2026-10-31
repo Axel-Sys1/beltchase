@@ -92,7 +92,7 @@ Une fois publié, passer `CONFIG.ADS.consent: true` : la balise AdSense se charg
 beltchase.com et le message s'affiche ; le lien « Cookies » du pied de page le rouvre (`openCookieSettings`).
 
 Pub récompensée (`CONFIG.ADS.rewarded`, `js/services/rewardAd.js`, `js/ui/rewardAd.js`) : bouton
-« Bonus vidéo » dans « Ta journée », `goalz` Gold par pub vue jusqu'au bout, `perDay` fois par
+« Bonus vidéo » dans « Ta journée », `gold` Gold par pub vue jusqu'au bout, `perDay` fois par
 jour. Avec `live: false`, c'est une pub simulée (encart + compte à rebours de `seconds` secondes).
 Pour de vraies pubs : demander « H5 Games Ads » (annonces pour jeux) dans AdSense, passer
 `test: true` pour vérifier avec les pubs de test de Google, puis `live: true` et `test: false`.

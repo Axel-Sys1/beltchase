@@ -172,6 +172,16 @@ function roundLabel(e, bout, pair) {
 
 const leagueLogo = (data) => data?.leagues?.[0]?.logos?.[0]?.href || null;
 
+// Salle du combat : { name, city?, country? }, ou null (pages publiques : lieu de l'événement).
+export function venueOf(v) {
+  const name = String(v?.fullName ?? '').trim();
+  if (!name) return null;
+  const out = { name };
+  if (v.address?.city) out.city = String(v.address.city);
+  if (v.address?.country) out.country = String(v.address.country);
+  return out;
+}
+
 // ─── Statuts et résultats ────────────────────────────────────────────────────
 // 'scheduled' | 'live' | 'final' | 'void' | 'wait' (suspendu / retardé : on attend, jamais remboursé pour ça).
 function phaseOf(type) {
@@ -372,6 +382,8 @@ export function createMmaAdapter({ getJson = defaultGetJson, leagues = MMA_LEAGU
       meta: { adapter: SPORT, league, eventId: String(e.id), day: etDay(startsAt), rounds },
     };
     if (row.logo) m.competitionLogo = row.logo;
+    const venue = venueOf(bout.venue || e.venues?.[0]);
+    if (venue) m.meta.venue = venue;
     const round = roundLabel(e, bout, pair);
     if (round) m.round = round;
 
@@ -450,6 +462,27 @@ export function createMmaAdapter({ getJson = defaultGetJson, leagues = MMA_LEAGU
       }
       await settleAll(extra, CORE_CONCURRENCY);
       return rows.map(toMatch).filter(Boolean);
+    },
+
+    // Combats terminés des `days` derniers jours, sans la méthode (une seule requête par organisation) :
+    // pages publiques des combats passés.
+    async past({ now, days = 60 }) {
+      const { ok, failed } = await settleAll(
+        leagues.map(({ slug }) => async () => ({ slug, data: await getJson(scoreboardUrl(slug, etRange(now - days * DAY, now))) })),
+        leagues.length,
+      );
+      if (!ok.length && failed.length) throw failed[0];
+      const rows = [];
+      for (const { slug, data } of ok) {
+        const logo = leagueLogo(data);
+        for (const e of data?.events || []) {
+          for (const bout of e.competitions || []) {
+            const row = rowOf(slug, logo, e, bout);
+            if (row?.phase === 'final' && row.startsAt <= now) rows.push(row);
+          }
+        }
+      }
+      return rows.map(toMatch).filter((m) => m?.status === 'finished');
     },
 
     async results({ now, matches }) {

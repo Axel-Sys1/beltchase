@@ -194,9 +194,9 @@ test('liste : cotes modèle (classement ATP/WTA, 1/2 seulement)', async () => {
     eq(Object.keys(m.odds).sort(), ['1', '2'], `${m.id} : issues 1 et 2 uniquement`);
     eq(m.oddsSource, 'model', `${m.id} : source des cotes`);
     ok(m.odds[1] >= 1.05 && m.odds[1] <= 15 && m.odds[2] >= 1.05 && m.odds[2] <= 15, `${m.id} : cotes bornées`);
-    // Marge Goalz de 7 % (un peu moins quand la cote du favori est ramenée au plancher de 1.05).
+    // Marge BeltChase de 7 % (un peu moins quand la cote du favori est ramenée au plancher de 1.05).
     const book = 1 / m.odds[1] + 1 / m.odds[2];
-    ok(book > 1.03 && book < 1.1, `${m.id} : marge Goalz (${book.toFixed(3)})`);
+    ok(book > 1.03 && book < 1.1, `${m.id} : marge BeltChase (${book.toFixed(3)})`);
   }
   eq(byId['espn:tennis:atp:183414'].odds, fromProbabilities(tennisProbs(745, 1065)), 'Mannarino 745 pts - Shapovalov 1065 pts');
   ok(byId['espn:tennis:atp:183414'].odds[2] < byId['espn:tennis:atp:183414'].odds[1], 'le mieux classé est favori');

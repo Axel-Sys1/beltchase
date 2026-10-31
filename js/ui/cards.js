@@ -18,7 +18,7 @@ const initials = (name) => name.split(/\s+/).map((w) => w[0]).slice(0, 2).join('
 // owned : carte possédée ; sinon grisée (album). size : '' | 'sm' | 'lg'.
 export function cardHtml(card, { owned = true, size = '', count = 0, favorite = false } = {}) {
   const photo = CONFIG.CARD_PHOTOS && card.img
-    ? `<img class="pc-photo ${card.cutout ? '' : 'pc-thumb'}" src="${escapeHtml(card.img)}${card.cutout ? '/preview' : ''}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">`
+    ? `<img class="pc-photo ${card.cutout ? '' : 'pc-thumb'}" src="${escapeHtml(card.img)}${card.cutout ? '/preview' : ''}" alt="${escapeHtml(card.name)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">`
     : '';
   const team = card.national ? `${FLAGS[card.team] || ''} ${card.team}` : card.team;
   return `

@@ -191,7 +191,7 @@ def run_cli(work, now, out):
 
 def main():
     now = int(time.time() * 1000)
-    work = tempfile.mkdtemp(prefix='goalz-snapshot-')
+    work = tempfile.mkdtemp(prefix='beltchase-snapshot-')
     out = os.path.join(work, 'snapshot.json')
     waited = False
     try:

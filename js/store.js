@@ -43,7 +43,20 @@ function migrate(s) {
   return s;
 }
 
+// Clés d'avant BeltChase (« goalz:… ») : recopiées une fois sous « beltchase:… », puis effacées.
+function renameOldKeys() {
+  try {
+    for (const k of Object.keys(localStorage)) {
+      if (!k.startsWith('goalz:')) continue;
+      const to = `beltchase:${k.slice('goalz:'.length)}`;
+      if (localStorage.getItem(to) === null) localStorage.setItem(to, localStorage.getItem(k));
+      localStorage.removeItem(k);
+    }
+  } catch { /* stockage indisponible */ }
+}
+
 function load() {
+  renameOldKeys();
   try {
     const raw = localStorage.getItem(CONFIG.STORAGE_KEY);
     if (raw) return migrate({ ...initialState(), ...JSON.parse(raw) });

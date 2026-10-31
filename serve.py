@@ -21,6 +21,13 @@ class Handler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=ROOT, **kwargs)
 
+    def translate_path(self, path):
+        # Comme Cloudflare Pages : /legal sert legal.html.
+        local = super().translate_path(path)
+        if not os.path.exists(local) and os.path.exists(local + '.html'):
+            return local + '.html'
+        return local
+
     def end_headers(self):
         self.send_header('Cache-Control', 'no-store')
         super().end_headers()

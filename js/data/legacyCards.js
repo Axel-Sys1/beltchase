@@ -1,4 +1,4 @@
-// Cartes de l'époque Goalzz (foot, NBA, tennis, rugby, NHL, NFL) : plus vendues, mais gardées pour
+// Cartes d'avant BeltChase (foot, NBA, tennis, rugby, NHL, NFL) : plus vendues, mais gardées pour
 // les joueurs qui les possèdent (profil, carte favorite).
 export const LEGACY_CARDS = [
 {"id": "ligue1-ousmane-dembele", "set": "ligue1", "sport": "football", "name": "Ousmane Dembélé", "rarity": "legendaire", "team": "Paris SG", "national": false, "pos": "Attaquant", "num": null, "img": "https://r2.thesportsdb.com/images/media/player/cutout/pstgy21766335175.png", "cutout": true},

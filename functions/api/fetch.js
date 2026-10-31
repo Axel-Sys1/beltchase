@@ -31,7 +31,7 @@ export async function onRequestGet({ request, waitUntil }) {
   const hit = await cache.match(key);
   if (hit) {
     const res = new Response(hit.body, hit);
-    res.headers.set('X-Goalz-Cache', 'HIT');
+    res.headers.set('X-BeltChase-Cache', 'HIT');
     return res;
   }
 
@@ -45,9 +45,9 @@ export async function onRequestGet({ request, waitUntil }) {
     return json('{"error":"upstream unreachable"}', 502, { 'Cache-Control': 'no-store' });
   }
   const body = await upstream.arrayBuffer();
-  if (!upstream.ok) return json(body, upstream.status, { 'Cache-Control': 'no-store', 'X-Goalz-Cache': 'BYPASS' });
+  if (!upstream.ok) return json(body, upstream.status, { 'Cache-Control': 'no-store', 'X-BeltChase-Cache': 'BYPASS' });
 
-  const res = json(body, 200, { 'Cache-Control': `public, max-age=${ttl}`, 'X-Goalz-Cache': 'MISS' });
+  const res = json(body, 200, { 'Cache-Control': `public, max-age=${ttl}`, 'X-BeltChase-Cache': 'MISS' });
   waitUntil(cache.put(key, res.clone()));
   return res;
 }

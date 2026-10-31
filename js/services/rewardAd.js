@@ -8,7 +8,7 @@ import { dayKey } from './progress.js';
 const settings = () => CONFIG.ADS?.rewarded || {};
 
 export const rewardAdEnabled = () => Boolean(CONFIG.ADS?.enabled && settings().enabled);
-export const AD_GOALZ = () => settings().goalz || 0;
+export const AD_GOLD = () => settings().gold || 0;
 export const AD_PER_DAY = () => settings().perDay || 0;
 
 // Pubs qu'il reste à regarder aujourd'hui.
@@ -22,7 +22,7 @@ export function rewardAdWatched() {
   const p = currentPlayer(getState());
   if (!p) throw new Error('Choisis d\'abord ton pseudo.');
   if (!adsLeft(p)) throw new Error('Plus de bonus vidéo aujourd\'hui. Reviens demain !');
-  const amount = AD_GOALZ();
+  const amount = AD_GOLD();
   update((s) => {
     const me = s.players[p.id];
     const day = dayKey(Date.now());

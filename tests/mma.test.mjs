@@ -151,7 +151,7 @@ test('methodLabel / liveClock / finalState', () => {
   eq(finalState(bout, 'no-contest'), { status: 'void', score: 'No contest' }, 'no contest → remboursé');
   eq(finalState(bout, null), null, 'aucun vainqueur, méthode inconnue → on attend');
   bout.competitors[0].winner = true;
-  eq(finalState(bout, 'decision---unanimous'), { status: 'finished', outcome: '2', score: 'Décision unanime' }, 'vainqueur order 2 listé en premier');
+  eq(finalState(bout, 'decision---unanimous'), { status: 'finished', outcome: '2', score: 'Décision unanime', result: { method: 'DEC', round: 3 } }, 'vainqueur order 2 listé en premier');
   eq(finalState(bout, null), { status: 'finished', outcome: '2', score: 'Victoire · R3' }, 'méthode inconnue');
 });
 
@@ -176,11 +176,11 @@ test('liste avant la soirée : combats, ordre des combattants, cotes DraftKings'
   eq(main.competitionLogo, 'https://a.espncdn.com/i/teamlogos/leagues/500/ufc.png', 'logo UFC');
   eq(main.round, 'Combat principal · Poids coqs', 'combat principal + catégorie');
   eq(main.startsAt, Date.parse('2026-09-27T00:00Z'), 'début de la carte principale');
-  eq(main.meta, { adapter: 'mma', league: 'ufc', eventId: '600061266', day: '20260926' }, 'meta (jour ESPN de New York)');
+  eq(main.meta, { adapter: 'mma', league: 'ufc', eventId: '600061266', day: '20260926', rounds: 5, venue: { name: 'Meta APEX', city: 'Las Vegas', country: 'USA' } }, 'meta (jour ESPN de New York, salle)');
   eq(main.status, 'scheduled', 'à venir');
   // DraftKings : Rosas -142, Barcelos +120 (API core, home = Rosas).
   eq(main.oddsSource, 'bookmaker', 'cotes bookmaker');
-  eq(main.odds, fromBookmaker({ 1: americanToDecimal(-142), 2: americanToDecimal(120) }), 'cotes -142 / +120 avec marge Goalz');
+  eq({ 1: main.odds['1'], 2: main.odds['2'] }, fromBookmaker({ 1: americanToDecimal(-142), 2: americanToDecimal(120) }), 'cotes -142 / +120 avec marge BeltChase');
   eq(main.odds, { 1: 1.65, 2: 2.14 }, 'valeurs');
 
   const silva = m['espn:mma:ufc:401912278'];

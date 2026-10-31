@@ -9,7 +9,7 @@ import { realFeedState } from '../../services/matches.js';
 import { LIVE_SPORTS, liveMarket } from '../../providers/liveOdds.js';
 import { spotlight } from '../../services/spotlight.js';
 import { bonusFor, challengeStatus, nextStreakDay, STREAK_DAYS } from '../../services/daily.js';
-import { AD_GOALZ, AD_PER_DAY, adsLeft, rewardAdEnabled } from '../../services/rewardAd.js';
+import { AD_GOLD, AD_PER_DAY, adsLeft, rewardAdEnabled } from '../../services/rewardAd.js';
 import { coin, icons } from '../icons.js';
 import { ui } from '../uiState.js';
 import { accountNudge, inviteBanner } from './account.js';
@@ -445,7 +445,7 @@ function adButton(p) {
   return left ? `
       <button class="day-ad" data-action="watch-ad" type="button">
         <span class="day-ico">${icons.play}</span>
-        <span class="grow"><strong>Bonus vidéo · +${fmt(AD_GOALZ())}</strong><small>${watched}/${AD_PER_DAY()} aujourd'hui</small></span>
+        <span class="grow"><strong>Bonus vidéo · +${fmt(AD_GOLD())}</strong><small>${watched}/${AD_PER_DAY()} aujourd'hui</small></span>
         <span class="day-ad-coin">${coin('coin coin-sm')}</span>
       </button>` : `
       <div class="day-ad is-done">
@@ -464,7 +464,7 @@ function challengesList(list) {
               <span class="challenge-text">${escapeHtml(c.text)}</span>
               <span class="challenge-bar"><span style="width:${Math.round((c.count / c.target) * 100)}%"></span></span>
             </span>
-            <span class="challenge-reward">${c.done ? 'Réussi' : `${c.count}/${c.target}`}<small>+${c.goalz} ${coin('coin coin-xs')} · +${c.xp} XP</small></span>
+            <span class="challenge-reward">${c.done ? 'Réussi' : `${c.count}/${c.target}`}<small>+${c.gold} ${coin('coin coin-xs')} · +${c.xp} XP</small></span>
           </li>`).join('')}
       </ul>`;
 }

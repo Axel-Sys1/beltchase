@@ -18,7 +18,7 @@ import { isOffensivePseudo } from './moderation.js';
 import { levelOf } from './progress.js';
 
 const SDK = 'https://www.gstatic.com/firebasejs/10.12.2';
-const EMAIL_KEY = 'goalz:emailForSignIn';
+const EMAIL_KEY = 'beltchase:emailForSignIn';
 // Au plus une sauvegarde en ligne toutes les 30 s (et à la fermeture de la page) : le plan
 // gratuit de Firebase autorise 20 000 écritures par jour pour tout le site.
 const PUSH_INTERVAL_MS = 30_000;

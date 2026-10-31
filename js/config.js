@@ -1,6 +1,6 @@
 // Réglages du jeu. Tout ce qui touche à l'équilibrage est ici.
 export const CONFIG = {
-  STORAGE_KEY: 'goalz:v1',
+  STORAGE_KEY: 'beltchase:v1',
   CONTACT_EMAIL: 'contact.goalzzbusiness@gmail.com', // pied de page et mentions légales
   // Comptes admin (page #admin : combats saisis à la main). Doit correspondre aux règles Firestore.
   ADMIN_EMAILS: ['axel.sirieys@gmail.com', 'contact.goalzzbusiness@gmail.com'],
@@ -54,7 +54,7 @@ export const CONFIG = {
     // Pub récompensée : le joueur regarde une pub et gagne des Gold, quelques fois par jour.
     // live: false → pub simulée (encart + compte à rebours), partout. live: true → vraie pub Google
     // (« H5 Games Ads », à demander dans AdSense) sur `hosts`. test: true → pubs de test de Google.
-    rewarded: { enabled: true, goalz: 500, perDay: 5, seconds: 15, live: false, test: false },
+    rewarded: { enabled: true, gold: 500, perDay: 5, seconds: 15, live: false, test: false },
   },
 
   // Compte en ligne (connexion par email + sauvegarde de la partie). Coller ici la config

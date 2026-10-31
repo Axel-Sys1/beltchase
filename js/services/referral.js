@@ -8,7 +8,7 @@ import { currentPlayer } from './players.js';
 import { addXp, XP } from './progress.js';
 
 export const REWARD = 200;
-const KEY = 'goalz:parrain';
+const KEY = 'beltchase:parrain';
 const SITE = 'https://beltchase.com/';
 let busy = false;
 
