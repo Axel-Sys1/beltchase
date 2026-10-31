@@ -1962,3 +1962,37 @@ h1.tagline { font: inherit; font-size: 16px; letter-spacing: normal; margin: 1em
 .une-banner strong { font: italic 800 18px/1.05 var(--display); text-transform: uppercase; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8); }
 .une-more { display: block; margin: 6px 2px 14px; text-align: right; font-size: 13px; font-weight: 700; color: var(--accent); text-decoration: none; }
 @media (min-width: 900px) { .une-banner { min-height: 110px; } .une-banner strong { font-size: 24px; } }
+
+/* ---------- Bandeau défilant « Dernière minute » (js/ui/ticker.js) ---------- */
+.ticker { position: relative; z-index: 5; display: flex; align-items: stretch; height: 36px; overflow: hidden; background: #070d1f; border-bottom: 1px solid var(--line); }
+.ticker[hidden] { display: none; }
+.tk-flag { flex-shrink: 0; display: flex; align-items: center; padding: 0 12px 0 14px; background: #e8262b; color: #fff; font: italic 800 14px/1 var(--display); letter-spacing: 0.06em; text-transform: uppercase;
+  clip-path: polygon(0 0, 100% 0, calc(100% - 10px) 100%, 0 100%); padding-right: 22px; }
+.tk-window { position: relative; flex: 1; overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 24px, #000 calc(100% - 24px), transparent); mask-image: linear-gradient(90deg, transparent, #000 24px, #000 calc(100% - 24px), transparent); }
+.tk-track { display: inline-flex; align-items: center; height: 100%; white-space: nowrap; animation: tk-scroll var(--tk-dur, 60s) linear infinite; will-change: transform; }
+.ticker:hover .tk-track { animation-play-state: paused; }
+.tk-copy { display: inline-flex; align-items: center; }
+@keyframes tk-scroll { to { transform: translateX(-50%); } }
+.tk-item { display: inline-flex; align-items: center; gap: 8px; padding: 0 14px; color: var(--text); text-decoration: none; font-size: 13px; font-weight: 600; }
+.tk-item:hover span { color: var(--accent); }
+.tk-item b { font: italic 800 12px/1 var(--display); letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); }
+.tk-live b { color: #ff4d4f; }
+.tk-live b::before { content: ''; display: inline-block; width: 8px; height: 8px; margin-right: 6px; border-radius: 50%; background: #ff4d4f; vertical-align: 1px; animation: live-blink 1s ease-in-out infinite; }
+@keyframes live-blink { 50% { opacity: 0.25; } }
+.tk-result b { color: #4be08a; }
+.tk-sep { font-style: normal; font-size: 9px; color: var(--accent); opacity: 0.7; }
+@media (prefers-reduced-motion: reduce) { .tk-track { animation-duration: calc(var(--tk-dur, 60s) * 3); } }
+
+/* ---------- Combat en cours : round, chrono, barre de progression ---------- */
+.match-live { animation: live-glow 2.2s ease-in-out infinite; }
+@keyframes live-glow { 50% { box-shadow: 0 0 0 1px rgba(255, 61, 90, 0.55), 0 0 26px -6px rgba(255, 61, 90, 0.55); } }
+.fight-progress { display: grid; gap: 6px; min-width: 132px; justify-items: end; }
+.fp-label { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; color: var(--live); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.fp-label b { font-size: 16px; }
+.fp-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--live); animation: live-blink 1s ease-in-out infinite; }
+.fp-bar { position: relative; display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 3px; width: 132px; height: 6px; }
+.fp-bar i { border-radius: 3px; background: rgba(255, 255, 255, 0.12); }
+.fp-bar i.done { background: rgba(255, 61, 90, 0.55); }
+.fp-bar i.now { background: rgba(255, 61, 90, 0.25); }
+.fp-bar em { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 3px; background: linear-gradient(90deg, rgba(255, 61, 90, 0.2), var(--live)); box-shadow: 0 0 10px rgba(255, 61, 90, 0.7); transition: width 1s linear; pointer-events: none; mix-blend-mode: screen; }
+@media (prefers-reduced-motion: reduce) { .match-live, .fp-dot { animation: none; } }

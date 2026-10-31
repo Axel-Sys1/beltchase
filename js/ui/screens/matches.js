@@ -225,6 +225,23 @@ function spotlightSection(list, picks) {
 }
 
 
+// Combat en cours (ESPN : « R2 3:12 ») : round sur le total, chrono qui avance chaque seconde entre deux
+// mises à jour (app.js, updateClocks) et barre de progression du combat. null si le round est inconnu.
+const ROUND_S = 300;
+export function fightProgress(m) {
+  const r = /^R(\d+)(?:\s+(\d+):(\d\d))?/.exec(m.clock || '');
+  if (!r) return null;
+  const rounds = Number(m.meta?.rounds) || 3;
+  const round = Math.min(Number(r[1]), rounds);
+  const secs = r[2] ? Number(r[2]) * 60 + Number(r[3]) : 0;
+  const pct = Math.min(100, (((round - 1) * ROUND_S + secs) / (rounds * ROUND_S)) * 100);
+  return `
+    <div class="fight-progress" data-live-round="${round}" data-live-secs="${secs}" data-live-since="${Date.now()}" data-live-rounds="${rounds}">
+      <span class="fp-label"><span class="fp-dot"></span>Round <b>${round}</b>/${rounds} · <span class="fp-time">${Math.floor(secs / 60)}:${String(secs % 60).padStart(2, '0')}</span></span>
+      <span class="fp-bar">${Array.from({ length: rounds }, (_, i) => `<i class="${i < round - 1 ? 'done' : i === round - 1 ? 'now' : ''}"></i>`).join('')}<em style="width:${pct.toFixed(1)}%"></em></span>
+    </div>`;
+}
+
 // guest : visiteur sans pseudo, une cote l'invite à s'inscrire (puis l'ajoute au panier).
 // poster : affiche en tête de carte (false quand le groupe de la soirée l'affiche déjà) : l'officielle,
 // ou une affiche composée pour la boxe (un combat = une soirée).
@@ -248,6 +265,7 @@ export function matchCard(m, { slipPick = null, grouped = false, guest = false, 
 
   let extra = '';
   if (status === 'finished' || status === 'void') extra = scoreBlock(m, m.score);
+  else if (status === 'live' && fightProgress(m)) extra = fightProgress(m);
   else if (status === 'live' && (m.real || m.liveScore)) extra = `${scoreBlock(m, m.liveScore)}${m.clock ? `<div class="live-clock">${escapeHtml(m.clock)}</div>` : ''}`;
   else if (status === 'live') extra = `<div class="live-clock" data-ends="${m.endsAt}"></div>`;
 

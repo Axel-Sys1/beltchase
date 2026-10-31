@@ -15,6 +15,7 @@ import { slipCheck } from '../services/bets.js';
 import { renderMyBets } from './screens/myBets.js';
 import { renderNews } from './screens/news.js';
 import { renderFighter } from './screens/fighter.js';
+import { tickerHtml } from './ticker.js';
 import { renderRanking } from './screens/ranking.js';
 import { renderProfile } from './screens/profile.js';
 import { renderShop } from './screens/shop.js';
@@ -70,6 +71,7 @@ const shellHtml = () => `
       </div>
     </div>
     <div class="freebar">${eventTag()}Jeu gratuit, sans argent réel<span class="hide-sm"> · Le Gold n'a aucune valeur monétaire</span></div>
+    <div class="ticker" id="ticker" aria-label="Dernière minute"></div>
   </header>
   ${eventDecor()}
   ${adSlot('top') ? `<div class="ad-band">${adSlot('top')}</div>` : ''}
@@ -112,6 +114,17 @@ function renderHeader(p) {
   chip.querySelector('i span').style.width = `${Math.round(lv.progress * 100)}%`;
   chip.title = `Niveau ${lv.level}${lv.need ? ` · ${lv.into} / ${lv.need} XP` : ''}`;
   chip.classList.toggle('boosted', boostActive(p));
+}
+
+// Bandeau défilant : remplacé seulement s'il change (sinon le défilement repartirait du début).
+let tickerSig = null;
+function renderTicker(s) {
+  const el = root.querySelector('#ticker');
+  const html = tickerHtml(s);
+  if (html === tickerSig) return;
+  tickerSig = html;
+  el.innerHTML = html;
+  el.hidden = !html;
 }
 
 let lastPotential = null;
@@ -192,6 +205,7 @@ export function render() {
   const route = currentRoute();
 
   renderHeader(p);
+  renderTicker(s);
   root.querySelector('#nav-top').innerHTML = navHtml(route, p);
   root.querySelector('#nav-bottom').innerHTML = navHtml(route, p);
   const content = root.querySelector('#content');
@@ -231,6 +245,16 @@ export function updateClocks() {
   });
   document.querySelectorAll('[data-kickoff-short]').forEach((el) => {
     el.textContent = kickoffShort(Number(el.dataset.kickoffShort), clock(el));
+  });
+  // Combats en cours : le chrono du round avance chaque seconde jusqu'à la prochaine mise à jour d'ESPN.
+  document.querySelectorAll('[data-live-round]').forEach((el) => {
+    const rounds = Number(el.dataset.liveRounds);
+    const round = Number(el.dataset.liveRound);
+    const secs = Math.min(300, Number(el.dataset.liveSecs) + Math.floor((Date.now() - Number(el.dataset.liveSince)) / 1000));
+    const time = el.querySelector('.fp-time');
+    if (time) time.textContent = `${Math.floor(secs / 60)}:${String(secs % 60).padStart(2, '0')}`;
+    const bar = el.querySelector('.fp-bar em');
+    if (bar) bar.style.width = `${Math.min(100, (((round - 1) * 300 + secs) / (rounds * 300)) * 100).toFixed(1)}%`;
   });
   document.querySelectorAll('[data-ends]').forEach((el) => {
     const ms = Number(el.dataset.ends) - game;
