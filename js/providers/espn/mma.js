@@ -87,7 +87,10 @@ function fighterInfo(c) {
   const name = c.athlete.displayName.trim();
   const out = { name, short: fighterShort(name) };
   if (c.athlete.flag?.href) out.logo = c.athlete.flag.href;
-  if (/^\d+$/.test(String(c.id ?? ''))) out.photo = headshotUrl(c.id);
+  if (/^\d+$/.test(String(c.id ?? ''))) {
+    out.photo = headshotUrl(c.id);
+    out.espnId = String(c.id); // fiche du combattant (services/fighters.js)
+  }
   const record = recordOf(c);
   if (record) out.record = record;
   return out;

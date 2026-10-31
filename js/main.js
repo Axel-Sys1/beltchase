@@ -13,6 +13,7 @@ import { activeEvent } from './ui/season.js';
 import { startAdsTag } from './ui/ads.js';
 import { subscribeNews } from './services/news.js';
 import { subscribeResults } from './services/results.js';
+import { subscribeFighters } from './services/fighters.js';
 import { applyPendingReferral, claimReferralRewards, readReferralFromUrl } from './services/referral.js';
 
 // Habillage saisonnier (Halloween, Noël…) : celui dont la période contient aujourd'hui.
@@ -27,6 +28,7 @@ bindEvents();
 subscribe(render);
 subscribeNews(() => { if (location.hash === '#actus') render(); }); // actus arrivées : écran Actus redessiné
 subscribeResults(render); // résultats ESPN arrivés (vue Résultats de l'écran Combats)
+subscribeFighters(() => { if (location.hash.startsWith('#combattant/')) render(); }); // fiche arrivée
 window.addEventListener('hashchange', render);
 render();
 

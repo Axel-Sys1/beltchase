@@ -59,10 +59,15 @@ function fighterAvatar(t, sport) {
     </span>`;
 }
 
+// Nom d'un combattant : lien vers sa fiche quand ESPN la fournit (UFC, PFL).
+const fighterName = (t, label = t.name) => (t.espnId
+  ? `<a class="fighter-link" href="#combattant/${escapeHtml(t.espnId)}">${escapeHtml(label)}</a>`
+  : escapeHtml(label));
+
 const teamRow = (t, winner, sport) => `
   <div class="team ${winner ? 'is-winner' : ''}">
     ${fighterAvatar(t, sport)}
-    <span>${escapeHtml(t.name)}</span>
+    <span>${fighterName(t)}</span>
     ${t.record ? `<small class="record">${escapeHtml(t.record)}</small>` : ''}
   </div>`;
 
@@ -184,7 +189,7 @@ function spotlightCard({ m, tag }, slipPick, first) {
   const side = (team) => `
     <div class="ft-team">
       ${mark(team)}
-      <strong>${escapeHtml(displayName(team))}</strong>
+      <strong>${fighterName(team, displayName(team))}</strong>
     </div>`;
   // Affiche en plein cadre : l'officielle, sinon une affiche composée (posters.js).
   const poster = posterHtml(m, { width: 800, fail: "this.closest('.spot-card').classList.remove('has-poster');this.parentNode.remove()" });
@@ -364,6 +369,13 @@ function calendarView(upcoming) {
     </div>`).join('');
 }
 
+// Phrase de résultat, noms des combattants cliquables (fiche).
+function resultLinks(m) {
+  let html = escapeHtml(resultSentence(m));
+  for (const t of [m.home, m.away]) if (t.espnId) html = html.replace(escapeHtml(t.name), fighterName(t));
+  return html;
+}
+
 // Résultats : soirées terminées, la plus récente d'abord, vainqueur et méthode de chaque combat.
 function resultsView(local, sport) {
   loadResults(); // ESPN relu toutes les 30 min (l'écran se redessine à l'arrivée)
@@ -383,7 +395,7 @@ function resultsView(local, sport) {
         ${[...e.fights].reverse().map((m) => `
         <li class="result-row">
           <span class="result-ava">${fighterAvatar(m.outcome === '2' ? m.away : m.home, m.sport)}</span>
-          <span>${escapeHtml(resultSentence(m))}</span>
+          <span>${resultLinks(m)}</span>
         </li>`).join('')}
       </ul>
     </section>`).join('')}`;

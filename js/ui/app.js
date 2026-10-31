@@ -14,6 +14,7 @@ import { renderSlip } from './screens/slip.js';
 import { slipCheck } from '../services/bets.js';
 import { renderMyBets } from './screens/myBets.js';
 import { renderNews } from './screens/news.js';
+import { renderFighter } from './screens/fighter.js';
 import { renderRanking } from './screens/ranking.js';
 import { renderProfile } from './screens/profile.js';
 import { renderShop } from './screens/shop.js';
@@ -36,12 +37,13 @@ const ROUTES = [
   { id: 'classement', label: 'Rangs', icon: 'trophy', render: renderRanking, account: true },
   { id: 'profil', label: 'Profil', icon: 'user', render: renderProfile, account: true },
   { id: 'admin', label: 'Admin', icon: 'crown', render: renderAdmin, hidden: true },
+  { id: 'combattant', label: 'Combattant', icon: 'user', render: renderFighter, hidden: true }, // #combattant/<id ESPN>
 ];
 
 const isBetsRoute = (route) => route.id === 'paris' || route.id === 'panier';
 
 export function currentRoute() {
-  const id = location.hash.replace(/^#\/?/, '');
+  const id = location.hash.replace(/^#\/?/, '').split('/')[0]; // #combattant/123 : route « combattant »
   return ROUTES.find((r) => r.id === id) || ROUTES[0];
 }
 
