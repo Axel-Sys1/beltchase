@@ -2,7 +2,7 @@
 // Lancer : /System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc -m tests/news.test.mjs
 globalThis.console ??= { warn: () => {}, log: print, error: print };
 
-import { FEEDS, decode, loadNews, mergeFeeds, news, parseFeed, parseWp, sportOfArticle } from '../js/services/news.js';
+import { FEEDS, decode, headlines, loadNews, mergeFeeds, news, parseFeed, parseWp, sportOfArticle } from '../js/services/news.js';
 
 const DIR = decodeURIComponent(import.meta.url.replace(/^file:\/\//, '').replace(/[^/]*$/, ''));
 const load = (name) => readFile(`${DIR}fixtures/news/${name}`);
@@ -55,6 +55,15 @@ await test('fusion : récents d\'abord, sans doublon', () => {
   const all = mergeFeeds([rmc, sueur, rmc.slice(0, 3)]);
   eq(all.length, rmc.length + sueur.length, 'doublons retirés');
   ok(all.every((a, i) => !i || all[i - 1].date >= a.date), 'triés par date');
+});
+
+await test('à la une : grosses actus, sujets différents', () => {
+  const all = mergeFeeds([rmc, sueur]);
+  const top = headlines(all, 3, Date.parse('2026-11-01T00:30:00Z'));
+  eq(top.length, 3, '3 actus');
+  ok(/Canelo/.test(top[0].title) && /ceinture/i.test(top[0].title), 'n°1 : Canelo récupère la ceinture');
+  ok(top.every((a) => a.image), 'toutes avec photo');
+  ok(top.filter((a) => /Canelo|Mbilli/.test(a.title)).length === 1, 'un seul sujet Canelo-Mbilli');
 });
 
 await test('chargement : un flux en panne n\'empêche pas l\'autre', async () => {

@@ -94,6 +94,43 @@ export function mergeFeeds(lists) {
   });
 }
 
+// ─── À la une ────────────────────────────────────────────────────────────────
+// Les grosses actus : récentes, avec image, sur un résultat ou un fait marquant (ceinture, KO, retraite…),
+// avec un grand nom, et surtout reprises par les deux sources (même sujet = au moins 2 noms en commun).
+const STRONG = /ceinture|titre|champion|\bk\.?o\b|chaos|retraite|officiel|annonce|bless|forfait|historique|revanche|domine|surclasse|renverse|bat\b|battu|record|choc|légende/i;
+const STARS = /canelo|usyk|topuria|makhachev|gane|doumb[eè]|imavov|saint-denis|aspinall|pereira|volkanovski|jones|fury|joshua|inoue|crawford|mbilli|yoka|dubois|bivol|beterbiev|holloway|poirier|chimaev|adesanya|ngannou|merab|o'malley|boughanem|verhoeven/i;
+const HOUR = 3600 * 1000;
+
+// Noms propres d'un titre (mots en majuscule, hors premier mot et rubriques) : pour repérer un même sujet.
+const NAME_STOP = /^(Boxe|MMA|UFC|PFL|Kick|Le|La|Les|Un|Une|Des|Du|De|Ce|Cette|Il|Elle|Qui|Quand|Pourquoi|Comment|Après|Avant|Avec|Pour|Dans|Sur|Tous|Toute|Fight|Night|Big|News)$/;
+const namesOf = (title) => new Set((title.replace(/[-–]/g, ' ').match(/\b[A-ZÀ-Ý][a-zà-ÿ'’-]{2,}\b/g) || []).filter((w) => !NAME_STOP.test(w)).map((w) => w.toLowerCase()));
+
+export function headlineScore(a, all, now = Date.now()) {
+  const hours = Math.max(0, (now - a.date) / HOUR);
+  let score = 10 - Math.min(10, hours / 3);   // fraîcheur : 0 au bout de 30 h
+  if (hours > 48) score -= 20;
+  if (STRONG.test(a.title)) score += 3;
+  if (STARS.test(a.title)) score += 3;
+  if (a.image) score += 2;
+  const mine = namesOf(a.title);
+  const echoed = all.some((b) => b.source !== a.source && [...namesOf(b.title)].filter((n) => mine.has(n)).length >= 2);
+  if (echoed) score += 4;
+  return score;
+}
+
+// Les n grosses actus (avec image, sujets différents), la plus forte d'abord.
+export function headlines(items, n = 3, now = Date.now()) {
+  const ranked = items.filter((a) => a.image).map((a) => ({ a, score: headlineScore(a, items, now) })).sort((x, y) => y.score - x.score);
+  const picked = [];
+  for (const { a } of ranked) {
+    const names = namesOf(a.title);
+    if (picked.some((p) => [...namesOf(p.title)].some((x) => names.has(x)))) continue; // même sujet (un nom commun)
+    picked.push(a);
+    if (picked.length === n) break;
+  }
+  return picked;
+}
+
 // ─── Chargement dans l'appli ────────────────────────────────────────────────
 export const news = { items: [], loading: false, error: null, at: 0 };
 const listeners = new Set();

@@ -20,6 +20,7 @@ import { DAYS as SEO_DAYS } from '../../seo/data.js';
 import { fighterPhoto, portrait, starOf } from '../stars.js';
 import { withFallback } from '../../providers/photos.js';
 import { posterHtml } from '../posters.js';
+import { uneBanner } from './news.js';
 import { METHOD_LABEL, marketOf, settleKey } from '../../services/markets.js';
 
 const ORDER = { 1: 0, X: 1, 2: 2 };
@@ -461,6 +462,7 @@ function renderReal(s, p, picks) {
   }
 
   return `
+    ${uneBanner()}
     ${viewTabs()}
     ${spotlightSection(spot, picks)}
 

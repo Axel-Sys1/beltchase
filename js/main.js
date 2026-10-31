@@ -26,7 +26,7 @@ update((s) => { ensureBots(s); Object.values(s.players).forEach(ensureProgress);
 
 bindEvents();
 subscribe(render);
-subscribeNews(() => { if (location.hash === '#actus') render(); }); // actus arrivées : écran Actus redessiné
+subscribeNews(render); // actus arrivées : écran Actus et bandeau « À la une » des Combats redessinés
 subscribeResults(render); // résultats ESPN arrivés (vue Résultats de l'écran Combats)
 subscribeFighters(() => { if (location.hash.startsWith('#combattant/')) render(); }); // fiche arrivée
 window.addEventListener('hashchange', render);
