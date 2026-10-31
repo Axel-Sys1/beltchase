@@ -2,3 +2,4 @@
 __pycache__/
 *.pyc
 tools/.cards_cache.json
+_maquettes/

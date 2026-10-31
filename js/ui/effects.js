@@ -61,8 +61,8 @@ function slipTarget() {
   const candidates = [
     document.querySelector('#aside .slip-head h2'),
     document.querySelector('.slipbar .slipbar-count'),
-    document.querySelector('#nav-bottom a[href="#panier"] .nav-icon'),
-    document.querySelector('#nav-top a[href="#panier"] .nav-icon'),
+    document.querySelector('#nav-bottom a[href="#paris"] .nav-icon'),
+    document.querySelector('#nav-top a[href="#paris"] .nav-icon'),
   ];
   return candidates.find((el) => el && el.getClientRects().length && el.getBoundingClientRect().width > 0) || null;
 }

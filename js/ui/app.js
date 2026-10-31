@@ -13,6 +13,7 @@ import { LIVE_SPORTS, liveMarket } from '../providers/liveOdds.js';
 import { renderSlip } from './screens/slip.js';
 import { slipCheck } from '../services/bets.js';
 import { renderMyBets } from './screens/myBets.js';
+import { renderNews } from './screens/news.js';
 import { renderRanking } from './screens/ranking.js';
 import { renderProfile } from './screens/profile.js';
 import { renderShop } from './screens/shop.js';
@@ -27,13 +28,17 @@ import { renderAdmin } from './screens/admin.js';
 
 const ROUTES = [
   { id: 'matchs', label: 'Combats', icon: 'ball', render: renderMatches },
-  { id: 'panier', label: 'Panier', icon: 'ticket', render: renderSlip },
-  { id: 'paris', label: 'Mes paris', icon: 'list', render: renderMyBets },
+  { id: 'actus', label: 'Actus', icon: 'news', render: renderNews },
+  // Le panier est en haut de « Mes paris » ; #panier (anciens liens) y mène aussi.
+  { id: 'paris', label: 'Mes paris', icon: 'ticket', render: renderMyBets },
+  { id: 'panier', label: 'Mes paris', icon: 'ticket', render: renderMyBets, hidden: true },
   { id: 'boutique', label: 'Boutique', icon: 'bag', render: renderShop, account: true },
   { id: 'classement', label: 'Rangs', icon: 'trophy', render: renderRanking, account: true },
   { id: 'profil', label: 'Profil', icon: 'user', render: renderProfile, account: true },
   { id: 'admin', label: 'Admin', icon: 'crown', render: renderAdmin, hidden: true },
 ];
+
+const isBetsRoute = (route) => route.id === 'paris' || route.id === 'panier';
 
 export function currentRoute() {
   const id = location.hash.replace(/^#\/?/, '');
@@ -87,7 +92,7 @@ function navHtml(route, p) {
   const guest = isGuest();
   return ROUTES.filter((r) => !r.hidden).map((r) => `
     <a href="#${r.id}" class="nav-item ${r.id === route.id ? 'active' : ''}" ${r.id === route.id ? 'aria-current="page"' : ''}>
-      <span class="nav-icon">${icons[r.icon]}${r.id === 'panier' && p.slip.length ? `<span class="nav-badge">${p.slip.length}</span>` : ''}${r.account && guest ? `<span class="nav-lock">${icons.lock}</span>` : ''}</span>
+      <span class="nav-icon">${icons[r.icon]}${r.id === 'paris' && p.slip.length ? `<span class="nav-badge">${p.slip.length}</span>` : ''}${r.account && guest ? `<span class="nav-lock">${icons.lock}</span>` : ''}</span>
       <span>${r.label}</span>
     </a>`).join('');
 }
@@ -111,13 +116,13 @@ let lastPotential = null;
 
 function renderSlipBar(route, p) {
   const bar = root.querySelector('#slipbar');
-  if (!p.slip.length || route.id === 'panier') { bar.innerHTML = ''; lastPotential = null; return; }
+  if (!p.slip.length || isBetsRoute(route)) { bar.innerHTML = ''; lastPotential = null; return; }
   const { potential, combo } = slipCheck(getState());
   const changed = lastPotential !== null && lastPotential !== potential;
   const appeared = !bar.querySelector('.slipbar');
   lastPotential = potential;
   bar.innerHTML = `
-    <a class="slipbar" href="#panier">
+    <a class="slipbar" href="#paris">
       <span class="slipbar-count">${p.slip.length}</span>
       <span class="grow">${combo ? 'matchs en combiné' : p.slip.length > 1 ? 'sélections' : 'sélection'} dans le panier</span>
       <span class="slipbar-gain${changed ? ' roll' : ''}"><span>${fmt(potential)}</span> ${coin('coin coin-sm')}</span>
@@ -191,10 +196,11 @@ export function render() {
   content.innerHTML = route.account && isGuest(s) ? renderLocked(route.id) : route.render(s, p, { context: 'page' });
   content.classList.toggle('enter', route.id !== lastRouteId);
 
-  const showAside = route.id !== 'panier';
+  // « Mes paris » montre déjà le panier en haut : pas de panneau de droite en double.
+  const showAside = !isBetsRoute(route);
   root.querySelector('.layout').classList.toggle('no-aside', !showAside);
-  // Pas de pub sur le panier : écran de validation, une pub sous « Valider » attirerait les clics.
-  root.classList.toggle('ads-off', route.id === 'panier');
+  // Pas de pub avec le panier à l'écran : une pub sous « Valider » attirerait les clics.
+  root.classList.toggle('ads-off', isBetsRoute(route) && p.slip.length > 0);
   root.querySelector('#aside').innerHTML = showAside ? renderSlip(s, p, { context: 'aside' }) : '';
   renderSlipBar(route, p);
   const step = tutorialStep(p);

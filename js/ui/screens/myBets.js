@@ -6,6 +6,7 @@ import { isAwaitingKickoff, matchStatus, outcomeLabel, sportOf } from '../../ser
 import { coin, icons } from '../icons.js';
 import { teamMark } from '../logos.js';
 import { ui } from '../uiState.js';
+import { renderSlip } from './slip.js';
 
 const STATUS = {
   pending: { label: 'En cours', empty: 'Aucun pari en cours. Va jeter un œil aux combats !' },
@@ -104,8 +105,10 @@ export function renderMyBets(s, p) {
   const net = groups.won.reduce((x, b) => x + b.payout - b.stake, 0) - groups.lost.reduce((x, b) => x + b.stake, 0);
   const list = groups[ui.betsTab];
 
+  // Panier en haut (sélections en attente de validation), puis les paris placés.
   return `
     <h1 class="page-title">Mes paris</h1>
+    ${p.slip.length ? renderSlip(s, p, { context: 'page' }) : ''}
 
     <div class="stat-row">
       <div class="stat"><span class="muted">Paris placés</span><strong>${bets.length}</strong></div>

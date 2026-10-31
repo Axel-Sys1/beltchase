@@ -35,6 +35,7 @@ export const icons = {
   globe: svg('<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/>'),
   glove: svg('<path d="M7 11V7a3 3 0 0 1 3-3h4a4 4 0 0 1 4 4v5a6 6 0 0 1-6 6h-1a5 5 0 0 1-5-5v-1a2 2 0 0 1 2-2h3"/><path d="M8 21h8"/>'),
   chart: svg('<path d="M4 20V4M4 20h16"/><path d="M7 15l4-4 3 3 5-6"/>'),
+  news: svg('<path d="M5 4h11v15a2 2 0 0 0 2 2H6a2 2 0 0 1-2-2V5a1 1 0 0 1 1-1z"/><path d="M16 8h3v11a2 2 0 0 1-2 2"/><path d="M8 8h5M8 12h5M8 16h3"/>'),
   calendar: svg('<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/>'),
   crown: svg('<path d="M4 18h16M4 18L3 7l5 4 4-6 4 6 5-4-1 11"/>'),
   coins: svg('<ellipse cx="9" cy="7" rx="5" ry="2.5"/><path d="M4 7v4c0 1.4 2.2 2.5 5 2.5s5-1.1 5-2.5V7"/><path d="M10 15.4c.8 1.2 2.8 2.1 5 2.1 2.8 0 5-1.1 5-2.5v-4c0-1.4-2.2-2.5-5-2.5"/>'),

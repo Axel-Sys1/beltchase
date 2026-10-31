@@ -1809,3 +1809,62 @@ h1.tagline { font: inherit; font-size: 16px; letter-spacing: normal; margin: 1em
   .landing-duo img:nth-child(1) { right: calc(50% + 270px); height: 86%; }
   .landing-duo img:nth-child(2) { left: calc(50% + 240px); height: 92%; }
 }
+
+/* Accueil sur ordinateur (≥ 1000 px), façon affiche de combat, en deux temps :
+   1) en haut, l'accroche au centre et les deux combattants face à face sur les bords de l'écran
+      (jamais sous le texte) ;
+   2) en dessous, les atouts du jeu (deux colonnes) à gauche, l'inscription à droite. */
+@media (min-width: 1000px) {
+  .onboarding { place-items: start center; padding: 28px 32px 48px; }
+  .landing { max-width: 1120px; grid-template-columns: minmax(0, 1fr) 420px; gap: 36px 48px;
+    grid-template-areas: "hero hero" "features card"; align-items: start; }
+  .landing-hero { justify-self: center; justify-items: center; max-width: 620px; min-height: 500px; align-content: center; text-align: center; padding-bottom: 0; }
+  .landing-hero .brand-big, .landing-ladder { justify-content: center; }
+  .landing-title { font-size: 68px; }
+  .landing-cards { justify-content: center; padding-left: 0; }
+  .lc-caption { text-align: center; }
+  .landing .features { grid-template-columns: 1fr 1fr; }
+  .landing .onboarding-card { justify-self: stretch; max-width: none; position: sticky; top: 24px; }
+
+  .onboarding.has-bg::before { height: 620px; }
+  .landing-bg.landing-duo, .landing-bg.landing-solo, .landing-bg.landing-trio { height: 600px; opacity: 1;
+    background: radial-gradient(22% 55% at 12% 70%, rgba(var(--accent-rgb), 0.28), transparent 70%),
+      radial-gradient(22% 55% at 88% 70%, rgba(var(--accent-rgb), 0.28), transparent 70%);
+    -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent); mask-image: linear-gradient(to bottom, #000 70%, transparent); }
+  .landing-duo img:nth-child(1), .landing-duo img:nth-child(2), .landing-solo img:nth-child(1) {
+    height: 100%; max-width: min(34vw, 560px); margin: 0; object-fit: contain; }
+  .landing-duo img:nth-child(1) { left: max(-40px, calc(50% - 800px)); right: auto; object-position: left bottom; }
+  .landing-duo img:nth-child(2), .landing-solo img:nth-child(1) { left: auto; right: max(-40px, calc(50% - 800px)); object-position: right bottom; }
+}
+/* Écran d'ordinateur étroit : les combattants restent sur les bords, plus discrets derrière l'accroche. */
+@media (min-width: 1000px) and (max-width: 1350px) {
+  .landing-duo img:nth-child(1), .landing-duo img:nth-child(2), .landing-solo img:nth-child(1) { max-width: 30vw; opacity: 0.75; }
+}
+
+/* ---------- Actus (js/ui/screens/news.js) ---------- */
+.news-chips { margin: 4px 0 14px; }
+.news-card { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 12px; padding: 10px; border-radius: var(--radius); background: var(--surface); border: 1px solid var(--line); color: var(--text); text-decoration: none; transition: border-color 0.2s, transform 0.2s var(--ease-out); }
+.news-card:hover { border-color: rgba(var(--accent-rgb), 0.55); transform: translateY(-2px); }
+.news-thumb { display: block; aspect-ratio: 16 / 10; border-radius: 8px; overflow: hidden; background: var(--surface-2); align-self: start; }
+.news-thumb img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.news-ph { display: grid; place-items: center; width: 100%; height: 100%; font-size: 30px;
+  background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.35), var(--surface-2) 70%); }
+.news-body { display: grid; gap: 4px; align-content: start; min-width: 0; }
+.news-body strong { font-size: 15px; line-height: 1.3; }
+.news-body small { color: var(--muted); font-size: 12px; }
+.news-tag { justify-self: start; padding: 2px 8px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-size: 11px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; }
+.news-excerpt { color: var(--muted); font-size: 14px; line-height: 1.45; }
+.news-big { grid-template-columns: 1fr; margin-bottom: 14px; padding: 0; overflow: hidden; }
+.news-big .news-thumb { aspect-ratio: 16 / 9; border-radius: 0; }
+.news-big .news-ph { font-size: 64px; }
+.news-big .news-body { padding: 4px 14px 14px; gap: 6px; }
+.news-big .news-body strong { font: italic 800 26px/1.05 var(--display); text-transform: uppercase; }
+.news-grid { display: grid; gap: 10px; }
+@media (min-width: 700px) {
+  .news-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .news-big { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); align-items: center; }
+  .news-big .news-thumb { height: 100%; }
+  .news-big .news-body { padding: 18px; }
+  .news-big .news-body strong { font-size: 32px; }
+}
+@media (min-width: 1200px) { .news-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }

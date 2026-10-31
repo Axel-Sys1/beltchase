@@ -100,7 +100,7 @@ function signupCard({ title = null, note = null } = {}) {
 
 // Écran d'accueil : l'inscription, et « jouer sans compte » (parier seulement) en option.
 const signupFirst = () => `${signupCard()}
-        <details class="guest-play">
+        <details class="guest-play" ${ui.guestOpen ? 'open' : ''}>
           <summary>Jouer sans compte</summary>
           ${pseudoForm('Choisis ton pseudo', 'Sans compte, tu peux parier sur tous les matchs. Boutique, cartes, classement et bonus demandent un compte.')}
         </details>`;

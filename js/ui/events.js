@@ -27,6 +27,7 @@ import { openCookieSettings } from './ads.js';
 import { readFights } from '../providers/beltchase.js';
 import { saveFight, deleteFight } from '../services/cloud.js';
 import { uid } from '../util.js';
+import { loadNews } from '../services/news.js';
 
 // ─── Page admin : combats saisis à la main ───────────────────────────────────
 async function loadAdminFights() {
@@ -150,6 +151,8 @@ const actions = {
   'filter-sport': (el) => { ui.sport = el.dataset.sport; ui.gender = 'all'; render(); window.scrollTo({ top: 0 }); },
   'toggle-markets': (el) => { const id = el.dataset.match; if (ui.openMarkets.has(id)) ui.openMarkets.delete(id); else ui.openMarkets.add(id); render(); },
   'filter-day': (el) => { ui.day = el.dataset.day; render(); },
+  'news-filter': (el) => { ui.newsSport = el.dataset.sport; render(); },
+  'news-reload': () => { loadNews({ force: true }); },
   'set-mode': (el) => {
     ui.sport = 'all';
     update((s) => { s.prefs.mode = el.dataset.mode === 'fake' ? 'fake' : 'real'; });
@@ -394,6 +397,11 @@ async function safely(fn) {
 }
 
 export function bindEvents() {
+  // Blocs dépliants redessinés toutes les quelques secondes (cotes, scores) : on retient s'ils sont ouverts.
+  // « toggle » ne remonte pas : écouté en phase de capture.
+  document.addEventListener('toggle', (e) => {
+    if (e.target.matches?.('details.guest-play')) ui.guestOpen = e.target.open;
+  }, true);
   document.addEventListener('click', (e) => {
     const el = e.target.closest('[data-action]');
     if (!el || el.disabled) return;

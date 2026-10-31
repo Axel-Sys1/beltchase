@@ -11,6 +11,7 @@ import { joinPendingInvite, readInviteFromUrl } from './services/invite.js';
 import { ui } from './ui/uiState.js';
 import { activeEvent } from './ui/season.js';
 import { startAdsTag } from './ui/ads.js';
+import { subscribeNews } from './services/news.js';
 import { applyPendingReferral, claimReferralRewards, readReferralFromUrl } from './services/referral.js';
 
 // Habillage saisonnier (Halloween, Noël…) : celui dont la période contient aujourd'hui.
@@ -23,6 +24,7 @@ update((s) => { ensureBots(s); Object.values(s.players).forEach(ensureProgress);
 
 bindEvents();
 subscribe(render);
+subscribeNews(() => { if (location.hash === '#actus') render(); }); // actus arrivées : écran Actus redessiné
 window.addEventListener('hashchange', render);
 render();
 

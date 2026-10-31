@@ -11,8 +11,15 @@ import http.server
 import json
 import os
 import sys
+import urllib.parse
+import urllib.request
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
+# Flux d'actus relayés (même liste que functions/api/rss.js, qui fait ce travail en ligne).
+RSS_ALLOWED = {
+    'https://rmcsport.bfmtv.com/rss/sports-de-combat/',
+    'https://lasueur.com/wp-json/wp/v2/posts?per_page=20&_fields=link,title,date_gmt,excerpt,jetpack_featured_media_url,class_list',
+}
 SNAPSHOT = os.path.join(ROOT, 'data', 'real-matches.json')
 MAX_BYTES = 15_000_000
 
@@ -27,6 +34,28 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         if not os.path.exists(local) and os.path.exists(local + '.html'):
             return local + '.html'
         return local
+
+    def do_GET(self):
+        # /api/rss?u=<flux> : comme la Pages Function en ligne.
+        if self.path.startswith('/api/rss?'):
+            target = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query).get('u', [''])[0]
+            if target not in RSS_ALLOWED:
+                self.send_error(403, 'Flux non autorisé')
+                return
+            try:
+                req = urllib.request.Request(target, headers={'User-Agent': 'Mozilla/5.0 (BeltChase)'})
+                with urllib.request.urlopen(req, timeout=15) as res:
+                    body = res.read()
+            except Exception as err:  # flux injoignable
+                self.send_error(502, str(err))
+                return
+            self.send_response(200)
+            self.send_header('Content-Type', 'application/xml; charset=utf-8')
+            self.send_header('Content-Length', str(len(body)))
+            self.end_headers()
+            self.wfile.write(body)
+            return
+        super().do_GET()
 
     def end_headers(self):
         self.send_header('Cache-Control', 'no-store')

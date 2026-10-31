@@ -44,7 +44,7 @@ export function highlight(step, routeId) {
     el = document.querySelector('.spot-card .odds, .match-upcoming .odds');
   } else if (step === 2) {
     const wide = window.matchMedia('(min-width: 1000px)').matches;
-    el = routeId === 'panier' || wide ? document.querySelector('[data-slip-submit]') : document.querySelector('.slipbar');
+    el = routeId === 'paris' || routeId === 'panier' || wide ? document.querySelector('[data-slip-submit]') : document.querySelector('.slipbar');
   }
   el?.classList.add('coach-target');
 }
