@@ -11,7 +11,7 @@ import { joinPendingInvite, readInviteFromUrl } from './services/invite.js';
 import { ui } from './ui/uiState.js';
 import { activeEvent } from './ui/season.js';
 import { startAdsTag } from './ui/ads.js';
-import { subscribeNews } from './services/news.js';
+import { loadNews, subscribeNews } from './services/news.js';
 import { subscribeResults } from './services/results.js';
 import { subscribeFighters } from './services/fighters.js';
 import { applyPendingReferral, claimReferralRewards, readReferralFromUrl } from './services/referral.js';
@@ -86,6 +86,8 @@ subscribe(async () => {
 startSync();
 setInterval(syncAll, CONFIG.TICK_MS);
 setInterval(tick, 1000);
+// Actus relues toutes les 10 min, même si rien d'autre ne bouge (onglet visible seulement).
+setInterval(() => { if (!document.hidden) loadNews(); }, 10 * 60 * 1000);
 document.addEventListener('visibilitychange', () => {
   if (document.visibilityState === 'visible') syncAll();
 });
