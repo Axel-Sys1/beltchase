@@ -1996,3 +1996,20 @@ h1.tagline { font: inherit; font-size: 16px; letter-spacing: normal; margin: 1em
 .fp-bar i.now { background: rgba(255, 61, 90, 0.25); }
 .fp-bar em { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 3px; background: linear-gradient(90deg, rgba(255, 61, 90, 0.2), var(--live)); box-shadow: 0 0 10px rgba(255, 61, 90, 0.7); transition: width 1s linear; pointer-events: none; mix-blend-mode: screen; }
 @media (prefers-reduced-motion: reduce) { .match-live, .fp-dot { animation: none; } }
+
+/* ---------- Fin d'un combat : « KO ! » (effects.js, fightFlash) ---------- */
+.fight-flash { position: fixed; z-index: 90; left: 50%; top: 18%; transform: translateX(-50%); display: grid; justify-items: center; gap: 6px; width: min(92vw, 560px);
+  padding: 18px 20px 16px; border-radius: 16px; background: rgba(6, 10, 24, 0.94); border: 2px solid var(--accent); text-align: center; pointer-events: none;
+  box-shadow: 0 30px 80px -10px rgba(0, 0, 0, 0.8), 0 0 50px -10px rgba(var(--accent-rgb), 0.6); animation: ff-in 0.55s cubic-bezier(0.2, 1.6, 0.4, 1) both; }
+.fight-flash.out { animation: ff-out 0.4s ease-in both; }
+.ff-word { font: italic 800 74px/0.9 var(--display); text-transform: uppercase; letter-spacing: 0.01em; color: var(--accent);
+  text-shadow: 0 0 30px rgba(var(--accent-rgb), 0.7), 0 6px 0 rgba(0, 0, 0, 0.5); animation: ff-shake 0.5s 0.2s both; }
+.ff-ko { border-color: #e8262b; box-shadow: 0 30px 80px -10px rgba(0, 0, 0, 0.8), 0 0 60px -6px rgba(232, 38, 43, 0.75); }
+.ff-ko .ff-word { color: #ff3b3f; text-shadow: 0 0 34px rgba(232, 38, 43, 0.85), 0 6px 0 rgba(0, 0, 0, 0.5); font-size: 96px; }
+.ff-sub .ff-word { color: #6fd3ff; text-shadow: 0 0 30px rgba(111, 211, 255, 0.7), 0 6px 0 rgba(0, 0, 0, 0.5); }
+.ff-line { font-size: 17px; font-weight: 700; color: #fff; }
+.ff-event { font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.ff-still, .ff-still .ff-word { animation: none; }
+@keyframes ff-in { from { opacity: 0; transform: translateX(-50%) scale(0.4) rotate(-6deg); } }
+@keyframes ff-out { to { opacity: 0; transform: translateX(-50%) translateY(-30px) scale(0.9); } }
+@keyframes ff-shake { 15%, 45%, 75% { transform: translateX(-7px) rotate(-2deg); } 30%, 60%, 90% { transform: translateX(7px) rotate(2deg); } }

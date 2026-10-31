@@ -12,6 +12,9 @@ import { ui } from './ui/uiState.js';
 import { activeEvent } from './ui/season.js';
 import { startAdsTag } from './ui/ads.js';
 import { loadNews, subscribeNews } from './services/news.js';
+import { fightFlash, flashFor } from './ui/effects.js';
+import { resultSentence } from './seo/pages.js';
+import { realNow } from './store.js';
 import { subscribeResults } from './services/results.js';
 import { subscribeFighters } from './services/fighters.js';
 import { applyPendingReferral, claimReferralRewards, readReferralFromUrl } from './services/referral.js';
@@ -27,6 +30,21 @@ update((s) => { ensureBots(s); Object.values(s.players).forEach(ensureProgress);
 bindEvents();
 subscribe(render);
 subscribeNews(render); // actus arrivées : écran Actus et bandeau « À la une » des Combats redessinés
+// Fin d'un vrai combat pendant la visite : « KO ! », « Soumission ! »… (pas pour ceux déjà finis à l'ouverture).
+const seenStatus = new Map();
+let statusReady = false;
+subscribe(() => {
+  const t = realNow();
+  for (const m of Object.values(getState().matches)) {
+    if (!m.real) continue;
+    const prev = seenStatus.get(m.id);
+    seenStatus.set(m.id, m.status);
+    if (statusReady && prev && prev !== 'finished' && m.status === 'finished' && m.outcome && t - m.startsAt < 12 * 3600 * 1000) {
+      fightFlash(flashFor(m, resultSentence(m)));
+    }
+  }
+  statusReady = true;
+});
 subscribeResults(render); // résultats ESPN arrivés (vue Résultats de l'écran Combats)
 subscribeFighters(() => { if (location.hash.startsWith('#combattant/')) render(); }); // fiche arrivée
 window.addEventListener('hashchange', render);

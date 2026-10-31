@@ -74,6 +74,8 @@ const SOUNDS = {
     tone(a, { f: 330, at: 0.18, d: 0.2, type: 'triangle', v: 0.12 });
     tone(a, { f: 262, at: 0.36, d: 0.35, type: 'triangle', v: 0.12, to: 247 });
   },
+  // Cloche de fin de combat : deux coups.
+  bell: (a) => [0, 0.32].forEach((at) => { tone(a, { f: 1320, at, d: 0.5, type: 'sine', v: 0.12 }); tone(a, { f: 1980, at, d: 0.35, type: 'sine', v: 0.05 }); }),
   bonus: (a) => [880, 1175, 1480].forEach((f, i) => tone(a, { f, at: i * 0.07, d: 0.18, type: 'sine', v: 0.13 })),
   level: (a) => {
     [392, 523, 659, 784].forEach((f, i) => tone(a, { f, at: i * 0.11, d: 0.3, type: 'sawtooth', v: 0.06 }));

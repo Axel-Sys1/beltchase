@@ -106,6 +106,33 @@ export function betStamp({ count = 1, combo = false } = {}) {
   setTimeout(() => el.remove(), 1700);
 }
 
+// ---------- Fin d'un combat : « KO ! », « SOUMISSION ! »… ----------
+// Un à la fois : les combats d'une même soirée se terminent souvent à quelques secondes d'écart.
+const flashQueue = [];
+let flashing = false;
+const FLASH_WORD = [[/KO/i, 'KO !', 'ko'], [/soumission/i, 'Soumission !', 'sub'], [/décision/i, 'Décision !', 'dec'], [/nul/i, 'Match nul !', 'dec']];
+export function fightFlash({ word, kind, line, event }) {
+  flashQueue.push({ word, kind, line, event });
+  if (!flashing) nextFlash();
+}
+function nextFlash() {
+  const f = flashQueue.shift();
+  if (!f) { flashing = false; return; }
+  flashing = true;
+  play('bell');
+  const el = document.createElement('div');
+  el.className = `fight-flash ff-${f.kind}${reducedMotion() ? ' ff-still' : ''}`;
+  el.setAttribute('role', 'status');
+  el.innerHTML = `<span class="ff-word">${escapeHtml(f.word)}</span><span class="ff-line">${escapeHtml(f.line)}</span>${f.event ? `<span class="ff-event">${escapeHtml(f.event)}</span>` : ''}`;
+  document.body.appendChild(el);
+  setTimeout(() => { el.classList.add('out'); setTimeout(() => { el.remove(); nextFlash(); }, 400); }, 4200);
+}
+// Match terminé → contenu du flash (mot fort selon la méthode).
+export function flashFor(m, sentence) {
+  const hit = FLASH_WORD.find(([re]) => re.test(m.score || '')) || [null, m.outcome === 'X' ? 'Match nul !' : 'Victoire !', 'dec'];
+  return { word: hit[1], kind: hit[2], line: sentence, event: m.competition };
+}
+
 // ---------- Toasts ----------
 export function toast(message, type = 'info') {
   let wrap = document.getElementById('toasts');
