@@ -14,7 +14,8 @@ import { coin, icons } from '../icons.js';
 import { ui } from '../uiState.js';
 import { accountNudge, inviteBanner } from './account.js';
 import { cloud, isGuest } from '../../services/cloud.js';
-import { LEAGUE_PAGES, matchPath } from '../../seo/pages.js';
+import { LEAGUE_PAGES, matchPath, resultSentence } from '../../seo/pages.js';
+import { loadResults, mergeResults, results, RESULTS_DAYS } from '../../services/results.js';
 import { DAYS as SEO_DAYS } from '../../seo/data.js';
 import { fighterPhoto, portrait, starOf } from '../stars.js';
 import { withFallback } from '../../providers/photos.js';
@@ -305,6 +306,89 @@ function modeSwitch(mode) {
     </div>`;
 }
 
+// Vues de l'écran des vrais combats : parier (par jour), calendrier des soirées, résultats récents.
+const REAL_VIEWS = [['paris', 'Parier'], ['calendrier', 'Calendrier'], ['resultats', 'Résultats']];
+function viewTabs() {
+  return `
+    <div class="tabs real-views" role="tablist">
+      ${REAL_VIEWS.map(([id, label]) => `<button class="tab ${ui.realView === id ? 'active' : ''}" role="tab" aria-selected="${ui.realView === id}" data-action="real-view" data-view="${id}" type="button">${label}</button>`).join('')}
+    </div>`;
+}
+
+const dateLong = (t) => new Date(t).toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
+const hourOf = (t) => new Date(t).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
+
+// Soirées : combats d'une même compétition le même jour (la boxe sans nom de soirée : un combat = une soirée).
+function eventsOf(list) {
+  const events = new Map();
+  for (const m of list) {
+    const key = `${m.sport}|${m.competition === 'Boxe' ? m.id : m.competition}|${todayKey(new Date(m.startsAt))}`;
+    if (!events.has(key)) events.set(key, []);
+    events.get(key).push(m);
+  }
+  return [...events.values()].map((fights) => {
+    const sorted = fights.sort((a, b) => a.startsAt - b.startsAt);
+    const main = sorted.find((m) => /combat principal/i.test(m.round || '')) || sorted[sorted.length - 1];
+    return { fights: sorted, main, startsAt: sorted[0].startsAt };
+  });
+}
+
+// Calendrier : une ligne par soirée à venir ; la toucher ouvre ses combats (vue Parier, ce jour-là).
+function calendarView(upcoming) {
+  const events = eventsOf(upcoming).sort((a, b) => a.startsAt - b.startsAt);
+  if (!events.length) return '<div class="empty"><p class="muted">Aucune soirée prévue pour le moment.</p></div>';
+  const byDay = new Map();
+  for (const e of events) {
+    const k = todayKey(new Date(e.startsAt));
+    if (!byDay.has(k)) byDay.set(k, []);
+    byDay.get(k).push(e);
+  }
+  return [...byDay].map(([day, list]) => `
+    <h2 class="cal-day">${escapeHtml(cap(dateLong(list[0].startsAt)))}</h2>
+    <div class="cal-list">
+      ${list.map((e) => {
+    const m = e.main;
+    const title = m.competition === 'Boxe' ? `Boxe · ${m.home.name} – ${m.away.name}` : m.competition;
+    return `
+      <button class="cal-event" data-action="cal-open" data-day="${day}" type="button">
+        <span class="cal-poster">${posterHtml(m, { width: 400 })}</span>
+        <span class="cal-body">
+          <span class="cal-sport">${sportMeta(m.sport).icon} ${escapeHtml(sportMeta(m.sport).label)} · ${escapeHtml(hourOf(e.startsAt))}</span>
+          <strong>${escapeHtml(title)}</strong>
+          <span class="muted">${e.fights.length > 1 ? `${e.fights.length} combats · ` : ''}${escapeHtml(m.home.name)} – ${escapeHtml(m.away.name)}</span>
+        </span>
+        ${icons.arrow}
+      </button>`;
+  }).join('')}
+    </div>`).join('');
+}
+
+// Résultats : soirées terminées, la plus récente d'abord, vainqueur et méthode de chaque combat.
+function resultsView(local, sport) {
+  loadResults(); // ESPN relu toutes les 30 min (l'écran se redessine à l'arrivée)
+  const list = mergeResults(results.items, local).filter((m) => sport === 'all' || m.sport === sport);
+  if (!list.length) {
+    return results.loading || !results.at
+      ? '<div class="skeletons" aria-busy="true">' + '<div class="skeleton"></div>'.repeat(3) + '</div>'
+      : `<div class="empty"><p class="muted">${escapeHtml(results.error || 'Aucun résultat récent.')}</p></div>`;
+  }
+  const events = eventsOf(list).sort((a, b) => b.startsAt - a.startsAt);
+  return `
+    <p class="muted results-note">Combats terminés des ${RESULTS_DAYS} derniers jours.</p>
+    ${events.map((e) => `
+    <section class="result-event">
+      <h2 class="cal-day">${escapeHtml(e.main.competition === 'Boxe' ? 'Boxe' : e.main.competition)} <small>${escapeHtml(cap(dateLong(e.startsAt)))}</small></h2>
+      <ul class="result-list">
+        ${[...e.fights].reverse().map((m) => `
+        <li class="result-row">
+          <span class="result-ava">${fighterAvatar(m.outcome === '2' ? m.away : m.home, m.sport)}</span>
+          <span>${escapeHtml(resultSentence(m))}</span>
+        </li>`).join('')}
+      </ul>
+    </section>`).join('')}`;
+}
+
 function renderReal(s, p, picks) {
   const feed = realFeedState();
   const t = realNow();
@@ -350,7 +434,16 @@ function renderReal(s, p, picks) {
     .sort((a, b) => (b.finishedAt || b.startsAt) - (a.finishedAt || a.startsAt))
     .slice(0, 8);
 
+  if (ui.realView === 'calendrier') {
+    return `${viewTabs()}${sportChips(all, (m) => matchStatus(m, t) === 'upcoming')}${calendarView(upcoming)}`;
+  }
+  if (ui.realView === 'resultats') {
+    const local = all.filter((m) => m.status === 'finished');
+    return `${viewTabs()}${sportChips(all, () => true)}${resultsView(local, ui.sport)}`;
+  }
+
   return `
+    ${viewTabs()}
     ${spotlightSection(spot, picks)}
 
     ${sportChips(all, (m) => matchStatus(m, t) === 'upcoming')}

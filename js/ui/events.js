@@ -151,6 +151,8 @@ const actions = {
   'filter-sport': (el) => { ui.sport = el.dataset.sport; ui.gender = 'all'; render(); window.scrollTo({ top: 0 }); },
   'toggle-markets': (el) => { const id = el.dataset.match; if (ui.openMarkets.has(id)) ui.openMarkets.delete(id); else ui.openMarkets.add(id); render(); },
   'filter-day': (el) => { ui.day = el.dataset.day; render(); },
+  'real-view': (el) => { ui.realView = el.dataset.view; render(); window.scrollTo({ top: 0 }); },
+  'cal-open': (el) => { ui.realView = 'paris'; ui.day = el.dataset.day; render(); document.querySelector('.day-chips')?.scrollIntoView({ block: 'start' }); },
   'news-filter': (el) => { ui.newsSport = el.dataset.sport; render(); },
   'news-reload': () => { loadNews({ force: true }); },
   'set-mode': (el) => {

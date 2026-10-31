@@ -3,6 +3,7 @@ export const ui = {
   sport: 'all',          // filtre de sport de la liste des combats
   gender: 'all',         // foot : all | men | women
   day: null,             // jour sélectionné (YYYY-MM-DD) pour les vrais combats
+  realView: 'paris',     // vrais combats : paris | calendrier | resultats
   betsTab: 'pending',    // pending | won | lost | void
   newsSport: 'all',      // filtre de l'écran Actus (services/news.js : NEWS_SPORTS)
   installPrompt: null,   // proposition d'installation du navigateur (Android, ordinateur)
