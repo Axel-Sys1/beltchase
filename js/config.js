@@ -64,6 +64,6 @@ export const CONFIG = {
     apiKey: 'AIzaSyA8NTHTF1M42L6p9mbzwrj0e8XEglFtufM',
     authDomain: 'goalzz-5354f.firebaseapp.com',
     projectId: 'goalzz-5354f',
-    appId: '1:666078573502:web:f2e1b35f49ed08b4987fef',
+    appId: '1:666078573502:web:58e89339040b15bf987fef', // application web « BeltChase » (créée le 31/10/2026)
   },
 };
