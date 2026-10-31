@@ -406,7 +406,7 @@ test('résultats : reporté → void, nul → X, reprogrammé, trop tôt, résea
 test('provider : forme, rythme, test d\'accès', async () => {
   const p = provider(fakeNet({ 'https://www.thesportsdb.com/api/v1/json/123/eventsnextleague.php?id=4445': 'eventsnextleague_4445.json' }));
   eq([p.id, p.label, p.real], ['tsdb', 'TheSportsDB', true], 'identité');
-  eq(p.refresh, { upcomingMs: 60 * MIN, resultsMs: 10 * MIN }, 'rythme');
+  eq(p.refresh, { upcomingMs: 20 * MIN, resultsMs: 10 * MIN }, 'rythme (affiches officielles vite reprises)');
   eq(await p.probe(), true, 'probe joignable');
   eq(await provider(fakeNet({})).probe(), false, 'probe en échec');
   eq(await p.fetchResults({ now: NOW, matches: [] }), [], 'rien à suivre');
@@ -464,6 +464,17 @@ test('affiches UFC / PFL : soirée retrouvée par le combat principal, une reche
   await add(again, NOW + HOUR);
   eq(net.calls.length, 1, 'mémorisée');
   eq(again[0].poster, day.events[0].strThumb, 'reposée depuis la mémoire');
+
+  // Pas encore d'affiche : soirée proche revérifiée à la liste suivante (15 min), lointaine bien plus tard.
+  const later = (d) => [{ ...bout('n', 'Combat principal', 'Ciryl Gane', 'Josh Hokit'), startsAt: NOW + d, meta: { league: 'ufc', eventId: String(d), day: '20261114' } }];
+  const none = fakeNet({ [posterDayUrl('2026-11-14', '4443')]: { events: [{ strEvent: 'UFC 334 Gane vs Hokit', strThumb: '' }] } });
+  const add2 = createPosterFinder({ getJson: none.getJson, throttle: fast(), cache: { get: (k) => store.get(k), set: (k, v) => store.set(k, v) } });
+  await add2(later(3 * 24 * HOUR), NOW);
+  await add2(later(3 * 24 * HOUR), NOW + 15 * MIN);
+  eq(none.calls.length, 2, 'soirée dans 3 jours : revérifiée 15 min après');
+  await add2(later(20 * 24 * HOUR), NOW);
+  await add2(later(20 * 24 * HOUR), NOW + 15 * MIN);
+  eq(none.calls.length, 3, 'soirée dans 20 jours : pas revérifiée si vite');
 });
 
 test('file d\'attente : priorités, et la liste ne lit que quelques jours par rafraîchissement', async () => {

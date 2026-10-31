@@ -4,7 +4,7 @@ import { clockFor, realNow } from '../../store.js';
 import { escapeHtml, fmt, fmtOdds, formatKickoff, todayKey } from '../../util.js';
 import { SPORT_ORDER, sportMeta } from '../../sports.js';
 import { canClaimBonus } from '../../services/players.js';
-import { isAwaitingKickoff, matchStatus, matchTitle, outcomeLabel, outcomeShort } from '../../services/matchInfo.js';
+import { isAwaitingKickoff, matchStatus, outcomeLabel, outcomeShort } from '../../services/matchInfo.js';
 import { realFeedState } from '../../services/matches.js';
 import { LIVE_SPORTS, liveMarket } from '../../providers/liveOdds.js';
 import { spotlight } from '../../services/spotlight.js';
@@ -17,7 +17,8 @@ import { cloud, isGuest } from '../../services/cloud.js';
 import { LEAGUE_PAGES, matchPath } from '../../seo/pages.js';
 import { DAYS as SEO_DAYS } from '../../seo/data.js';
 import { fighterPhoto, portrait, starOf } from '../stars.js';
-import { sizedPhoto, withFallback } from '../../providers/photos.js';
+import { withFallback } from '../../providers/photos.js';
+import { posterHtml } from '../posters.js';
 import { METHOD_LABEL, marketOf, settleKey } from '../../services/markets.js';
 
 const ORDER = { 1: 0, X: 1, 2: 2 };
@@ -184,13 +185,13 @@ function spotlightCard({ m, tag }, slipPick, first) {
       ${mark(team)}
       <strong>${escapeHtml(displayName(team))}</strong>
     </div>`;
-  // Affiche de la soirée en plein cadre ; sinon les combattants (photo, ou carte du catalogue en fond).
-  const poster = CONFIG.CARD_PHOTOS && m.poster ? sizedPhoto(m.poster, 800) : null;
+  // Affiche en plein cadre : l'officielle, sinon une affiche composée (posters.js).
+  const poster = posterHtml(m, { width: 800, fail: "this.closest('.spot-card').classList.remove('has-poster');this.parentNode.remove()" });
   const stars = poster ? [null, null] : [m.home, m.away].map((t) => (portrait(t) ? null : starOf(t, m.sport)));
   const photo = (st, cls) => (st ? `<img class="spot-star ${cls}" src="${escapeHtml(st.img)}" alt="${escapeHtml(st.name)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">` : '');
   return `
   <article class="featured spot-card ${first ? 'spot-first' : ''} ${poster ? 'has-poster' : stars.some(Boolean) ? 'has-stars' : ''}">
-    ${poster ? `<div class="spot-poster"><img src="${escapeHtml(poster)}" alt="Affiche ${escapeHtml(matchTitle(m))}" loading="lazy" referrerpolicy="no-referrer" ${withFallback(m.poster, "this.closest('.spot-card').classList.remove('has-poster');this.parentNode.remove()")}></div>` : ''}
+    ${poster ? `<div class="spot-poster">${poster}</div>` : ''}
     ${photo(stars[0], 'spot-star-home')}${photo(stars[1], 'spot-star-away')}
     <header class="featured-head">
       <span class="featured-tag">${escapeHtml(first && tag === m.competition ? 'Combat à la une' : tag)}</span>
@@ -218,7 +219,8 @@ function spotlightSection(list, picks) {
 
 
 // guest : visiteur sans pseudo, une cote l'invite à s'inscrire (puis l'ajoute au panier).
-// poster : affiche du combat en tête de carte (false quand le groupe de la soirée l'affiche déjà).
+// poster : affiche en tête de carte (false quand le groupe de la soirée l'affiche déjà) : l'officielle,
+// ou une affiche composée pour la boxe (un combat = une soirée).
 export function matchCard(m, { slipPick = null, grouped = false, guest = false, poster = true } = {}) {
   const t = clockFor(m);
   const status = matchStatus(m, t);
@@ -249,7 +251,7 @@ export function matchCard(m, { slipPick = null, grouped = false, guest = false, 
 
   return `
   <article class="match match-${status}${market?.open ? ' match-bettable' : ''}${slipPick ? ' has-pick' : ''}">
-    ${poster && CONFIG.CARD_PHOTOS && m.poster ? `<div class="match-poster"><img src="${escapeHtml(sizedPhoto(m.poster, 400))}" alt="Affiche ${escapeHtml(matchTitle(m))}" loading="lazy" referrerpolicy="no-referrer" ${withFallback(m.poster, 'this.parentNode.remove()')}></div>` : ''}
+    ${poster && (m.poster || m.source === 'tsdb') ? `<div class="match-poster">${posterHtml(m)}</div>` : ''}
     <header class="match-head">
       <span class="comp">${head}</span>
       ${right}
@@ -364,8 +366,13 @@ function renderReal(s, p, picks) {
       </div>
       ${[...groups.values()].map((list, i, arr) => {
         const first = list[0];
-        // Même affiche pour toute la soirée (UFC, PFL) : une seule fois, en tête du groupe.
-        const shared = CONFIG.CARD_PHOTOS && first.poster && list.every((m) => m.poster === first.poster) ? first.poster : null;
+        // Soirée (UFC, PFL, combats saisis) : une affiche en tête du groupe, l'officielle si toute la soirée
+        // la partage, sinon composée sur le combat principal. Boxe : une affiche par combat (matchCard).
+        // Le combat principal peut tomber le jour suivant (carte principale après minuit) : cherché dans toute la soirée.
+        const isMain = (m) => m.competition === first.competition && /combat principal/i.test(m.round || '');
+        const head = first.source === 'tsdb' ? null : list.find(isMain) || upcoming.find(isMain) || list[0];
+        const shared = head && first.poster && list.every((m) => m.poster === first.poster) ? first : head;
+        const headPoster = shared ? posterHtml(shared, { width: 800 }) : '';
         const newSport = ui.sport === 'all' && (i === 0 || arr[i - 1][0].sport !== first.sport);
         return `
         ${newSport ? `<h2 class="sport-heading">${sportMeta(first.sport).icon} ${escapeHtml(sportMeta(first.sport).label)}</h2>` : ''}
@@ -375,8 +382,8 @@ function renderReal(s, p, picks) {
             <span>${escapeHtml(first.competition)}</span>
             <span class="comp-count">${list.length}</span>
           </h3>
-          ${shared ? `<div class="comp-poster"><img src="${escapeHtml(sizedPhoto(shared, 800))}" alt="Affiche ${escapeHtml(first.competition)}" loading="lazy" referrerpolicy="no-referrer" ${withFallback(shared, 'this.parentNode.remove()')}></div>` : ''}
-          <div class="match-grid">${list.map((m) => card(m, !shared)).join('')}</div>
+          ${headPoster ? `<div class="comp-poster">${headPoster}</div>` : ''}
+          <div class="match-grid">${list.map((m) => card(m, !headPoster || (m.poster && m.poster !== shared.poster))).join('')}</div>
         </section>`;
       }).join('')}` : `
       <div class="empty"><p class="muted">Aucun combat à venir pour ce sport dans les ${CONFIG.REAL_DAYS_AHEAD} prochains jours.</p></div>`}

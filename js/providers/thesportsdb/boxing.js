@@ -43,8 +43,8 @@ const HOUR = 60 * MIN;
 const DAY = 24 * HOUR;
 
 const LOOKBACK = 36 * HOUR;       // combats récents encore listés
-const NEAR_TTL = 30 * MIN;        // jours à ±36 h : relus à chaque rafraîchissement (toutes les heures)
-const FAR_TTL = 6 * HOUR;         // jours plus lointains
+const NEAR_TTL = 30 * MIN;        // jours à ±36 h : relus toutes les 30 min
+const FAR_TTL = 2 * HOUR;         // jours plus lointains (une affiche officielle y apparaît sous 2 h)
 const RESULT_DELAY = 90 * MIN;    // aucun résultat possible avant la fin de la soirée
 const RECHECK_SOON = 10 * MIN;    // résultat introuvable : on repasse…
 const RECHECK_LATE = HOUR;        // …moins souvent passé 12 h
@@ -393,7 +393,7 @@ export function createBoxingProvider({ getJson = defaultGetJson, throttle = tsdb
     id: 'tsdb',
     label: 'TheSportsDB',
     real: true,
-    refresh: { upcomingMs: 60 * MIN, resultsMs: 10 * MIN },
+    refresh: { upcomingMs: 20 * MIN, resultsMs: 10 * MIN },
 
     async probe() {
       try {

@@ -1510,15 +1510,43 @@ h1.tagline { font: inherit; font-size: 16px; letter-spacing: normal; margin: 1em
 /* Affiches (16:9, entières, d'un bord à l'autre) : haut de la carte « À l'affiche » (étiquette et heure
    par-dessus), tête d'une carte de la liste (boxe), tête du groupe d'une soirée (UFC, PFL). */
 .spot-poster, .match-poster, .comp-poster { aspect-ratio: 16 / 9; overflow: hidden; background: var(--surface-2); }
-.spot-poster img, .match-poster img, .comp-poster img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.spot-poster > img, .match-poster > img, .comp-poster > img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .spot-poster { margin: -16px -16px 12px; }
 .spot-card.has-poster .featured-head { position: absolute; top: 12px; left: 16px; right: 12px; z-index: 1; }
 .spot-card.has-poster .featured-head .kick { padding: 4px 9px; border-radius: 999px; background: rgba(0, 0, 0, 0.65); color: #fff; }
 .spot-card.has-poster .ft-teams { display: none; }
 .spot-card.has-poster .ft-comp { margin-top: 0; }
 .match-poster { margin: -14px -14px 12px; border-radius: var(--radius) var(--radius) 0 0; }
-.match-finished .match-poster img { filter: grayscale(0.7); opacity: 0.7; }
+.match-finished .match-poster > img, .match-finished .made-poster { filter: grayscale(0.7); opacity: 0.7; }
 .comp-poster { margin: 0 0 12px; border-radius: var(--radius); border: 1px solid var(--line); }
+
+/* Affiche composée (posters.js) : deux coins de couleur, les combattants face à face, noms au centre. */
+.made-poster { position: relative; isolation: isolate; width: 100%; height: 100%; overflow: hidden; container-type: inline-size;
+  background:
+    radial-gradient(ellipse 55% 70% at 50% 42%, rgba(255, 255, 255, 0.16), transparent 70%),
+    repeating-linear-gradient(115deg, rgba(255, 255, 255, 0.035) 0 2px, transparent 2px 9px),
+    linear-gradient(105deg, var(--c1) 0 48%, var(--c2) 52% 100%);
+  color: #fff; font-family: var(--display); text-transform: uppercase; }
+.made-poster::after { content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.75), transparent 38%), linear-gradient(to bottom, rgba(0, 0, 0, 0.45), transparent 22%); }
+.mp-f { position: absolute; bottom: 0; z-index: 0; width: 58%; height: 92%; object-fit: contain; object-position: 50% 100%;
+  filter: drop-shadow(0 0 18px rgba(0, 0, 0, 0.55)) saturate(1.08); }
+.mp-f[src*="thesportsdb"] { object-fit: cover; object-position: 50% 4%; }
+.mp-f1 { left: -9%; }
+.mp-f2 { right: -9%; }
+.mp-event { position: absolute; z-index: 2; top: 5%; left: 0; right: 0; display: flex; justify-content: center; align-items: center; gap: 1.6cqi;
+  padding: 0 18%; font: italic 800 3.6cqi/1.1 var(--display); letter-spacing: 0.06em; text-align: center; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8); }
+.mp-event img { height: 6cqi; width: auto; flex-shrink: 0; }
+.mp-names { position: absolute; z-index: 2; left: 0; right: 0; bottom: 15%; display: grid; grid-template-columns: 1fr auto 1fr; align-items: end; gap: 2cqi; padding: 0 3cqi; }
+.mp-n { display: grid; font: italic 800 7.4cqi/0.92 var(--display); letter-spacing: 0.01em; text-shadow: 0 3px 12px rgba(0, 0, 0, 0.85); overflow-wrap: anywhere; }
+.mp-n small { font-size: 0.48em; line-height: 1.1; letter-spacing: 0.04em; opacity: 0.92; }
+.mp-n1 { text-align: left; }
+.mp-n2 { text-align: right; }
+.mp-flag { display: inline-block; width: 4.6cqi; height: 4.6cqi; margin-top: 0.8cqi; object-fit: contain; filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.8)); }
+.mp-n2 .mp-flag { justify-self: end; }
+.mp-n .dot { display: none; }
+.mp-vs { align-self: center; font: italic 800 9cqi/1 var(--display); color: var(--accent); text-shadow: 0 0 18px rgba(var(--accent-rgb), 0.55), 0 3px 10px rgba(0, 0, 0, 0.8); }
+.mp-date { position: absolute; z-index: 2; left: 0; right: 0; bottom: 4.5%; text-align: center; font: 700 3.2cqi/1 var(--display); letter-spacing: 0.12em; color: var(--accent); }
 .spot-star { position: absolute; z-index: -1; bottom: 64px; width: 56%; height: auto; max-height: 82%; object-fit: contain; object-position: bottom; pointer-events: none;
   -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent 96%); mask-image: linear-gradient(to bottom, #000 55%, transparent 96%); filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.6)); opacity: 0.95; }
 .spot-star-home { left: -17%; }

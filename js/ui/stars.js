@@ -3,7 +3,7 @@
 import { CONFIG } from '../config.js';
 import { CARDS } from '../services/cards.js';
 import { slugify } from '../seo/pages.js';
-import { isCutout, sizedPhoto } from '../providers/photos.js';
+import { isCutout, photoOf, sizedPhoto } from '../providers/photos.js';
 
 const RANK = { mythique: 5, legendaire: 4, epique: 3, rare: 2, commun: 1 };
 // Noms ESPN → noms du catalogue (TheSportsDB), une fois passés en slug.
@@ -31,8 +31,8 @@ function build() {
 // Photo fournie avec le match (ESPN pour l'UFC et le PFL, TheSportsDB pour la boxe), récente.
 // → { name, img, cutout } | null ; cutout : photo détourée à recadrer sur le haut du corps.
 export function portrait(team, width = 200) {
-  if (!CONFIG.CARD_PHOTOS || !team?.photo) return null;
-  return { name: team.name, img: sizedPhoto(team.photo, width), full: team.photo, cutout: isCutout(team.photo) };
+  const url = CONFIG.CARD_PHOTOS ? photoOf(team) : null;
+  return url ? { name: team.name, img: sizedPhoto(url, width), full: url, cutout: isCutout(url) } : null;
 }
 
 // Photo d'un combattant : celle du match d'abord, sinon sa carte du catalogue. → { name, img } | null.

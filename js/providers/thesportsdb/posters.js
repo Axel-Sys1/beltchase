@@ -4,7 +4,8 @@
 // Vérifié le 31/10/2026 : eventsday.php?d=AAAA-MM-JJ&l=<ligue> (UFC 4443, PFL 5430) renvoie la soirée
 // du jour (dateEvent = jour de la soirée aux États-Unis, comme meta.day d'ESPN), avec strThumb (affiche
 // 16:9) ajoutée quelques jours avant (« UFC Fight Night 292 Moicano vs Nolan » oui, « UFC 334 Gane vs
-// Hokit » à deux semaines : pas encore). D'où une mémoire courte quand l'affiche manque.
+// Hokit » à deux semaines : pas encore). Tant qu'elle manque, la soirée est revérifiée à chaque liste
+// (toutes les 15 min) si elle a lieu dans les 10 jours : l'officielle remplace vite l'affiche composée.
 import { MIN } from '../../util.js';
 import { defaultGetJson } from '../espn/common.js';
 import { createPhotoCache, nameKeys, norm, tsdbThrottle } from './boxing.js';
@@ -13,8 +14,10 @@ const BASE = 'https://www.thesportsdb.com/api/v1/json/123';
 export const POSTER_LEAGUES = { ufc: '4443', pfl: '5430' };
 const HOUR = 60 * MIN;
 const FOUND_TTL = 30 * 24 * HOUR;   // affiche trouvée : elle ne change plus
-const MISSING_TTL = 6 * HOUR;       // pas encore d'affiche : on repasse plus tard
-const LOOKUPS = 2;                  // soirées cherchées par liste (le plafond est partagé avec la boxe)
+const SOON = 10 * 24 * HOUR;        // soirée proche : son affiche peut sortir d'un jour à l'autre
+const MISSING_SOON_TTL = 14 * MIN;  // pas encore d'affiche, soirée proche : revérifiée à chaque liste
+const MISSING_TTL = 3 * HOUR;       // pas encore d'affiche, soirée lointaine
+const LOOKUPS = 3;                  // soirées cherchées par liste (le plafond est partagé avec la boxe)
 
 export const posterDayUrl = (day, league) => `${BASE}/eventsday.php?d=${day}&l=${league}`;
 
@@ -47,10 +50,10 @@ export function createPosterFinder({ getJson = defaultGetJson, throttle = tsdbTh
       if (/combat principal/i.test(m.round || '')) c.names.push(m.home.name, m.away.name);
     }
     let left = lookups;
-    const fresh = (e) => e && now - e.at < (e.url ? FOUND_TTL : MISSING_TTL);
+    const fresh = (e, c) => e && now - e.at < (e.url ? FOUND_TTL : c.startsAt - now < SOON ? MISSING_SOON_TTL : MISSING_TTL);
     for (const [key, c] of [...cards].sort((a, b) => Math.abs(a[1].startsAt - now) - Math.abs(b[1].startsAt - now))) {
       let entry = cache.get(key);
-      if (!fresh(entry) && left > 0 && !throttle.paused()) {
+      if (!fresh(entry, c) && left > 0 && !throttle.paused()) {
         left -= 1;
         try {
           entry = { url: posterFrom(await throttle.run(() => getJson(posterDayUrl(c.day, c.league)), 2), c.names), at: now };

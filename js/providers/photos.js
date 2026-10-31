@@ -3,6 +3,16 @@
 // - TheSportsDB : variantes /small (≈ 250 px pour une photo, 444 px pour une affiche) et /medium (le
 //   double), servies seulement par r2.thesportsdb.com (www.thesportsdb.com répond 404).
 
+// Photos choisies à la main (hébergées avec le site, icons/fighters/), prioritaires sur celles des
+// sources quand elles sont trop vieilles ou ratées. Clé : nom sans accents, en minuscules.
+const OVERRIDES = {
+  'canelo alvarez': '/icons/fighters/canelo-alvarez.png', // TheSportsDB : photo de 2010 ; ici 2020, recadrée au buste
+};
+const plainName = (name) => String(name ?? '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/\s+/g, ' ').trim();
+
+// Photo d'un combattant : celle choisie à la main, sinon celle de la source (team.photo), sinon null.
+export const photoOf = (team) => OVERRIDES[plainName(team?.name)] || team?.photo || null;
+
 // Image adaptée à une largeur d'affichage (px CSS) ; adresse inchangée si la source est inconnue.
 export function sizedPhoto(url, width) {
   const espn = /^https:\/\/a\.espncdn\.com(\/i\/headshots\/[^?]+\.png)$/.exec(url || '')?.[1];

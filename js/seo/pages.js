@@ -3,7 +3,7 @@
 // soirées, cotes et derniers résultats), /pronos/<page>/<combattants>-<id> (un combat, à venir ou
 // terminé). Fonctions pures : données en entrée, HTML en sortie ; le chargement est dans seo/data.js.
 import { MMA_LEAGUES } from '../providers/espn/mma.js';
-import { sizedPhoto, withFallback } from '../providers/photos.js';
+import { photoOf, sizedPhoto, withFallback } from '../providers/photos.js';
 import { sportMeta } from '../sports.js';
 import { devig } from '../providers/odds.js';
 import { METHOD_LABEL, marketOf } from '../services/markets.js';
@@ -261,7 +261,7 @@ export function renderMatch(league, m, others = []) {
   const items = [['BeltChase', '/'], ['Pronostics', '/pronos'], [league.name, `/pronos/${league.slug}`], [versus(m), null]];
   const where = m.meta?.venue ? ` · ${[m.meta.venue.name, m.meta.venue.city].filter(Boolean).join(', ')}` : '';
   const lead = `${esc(m.competition)}${m.round ? ` · ${esc(m.round)}` : ''} · ${esc(dateLong(m.startsAt))}${done ? '' : ` à ${esc(hour(m.startsAt))}`}${m.meta?.rounds ? ` · ${m.meta.rounds} rounds` : ''}${esc(where)}`;
-  const face = (f) => (f.photo ? `<img class="seo-face" src="${esc(sizedPhoto(f.photo, 200))}" alt="${esc(f.name)}" width="200" height="145" loading="lazy" referrerpolicy="no-referrer" ${withFallback(f.photo)}>` : '');
+  const face = (f) => (photoOf(f) ? `<img class="seo-face" src="${esc(sizedPhoto(photoOf(f), 200))}" alt="${esc(f.name)}" width="200" height="145" loading="lazy" referrerpolicy="no-referrer" ${withFallback(photoOf(f))}>` : '');
   const vs = `<div class="seo-vs"><b>${face(m.home)}${esc(m.home.name)}</b><span>VS</span><b>${face(m.away)}${esc(m.away.name)}</b></div>
       ${m.home.record || m.away.record ? `<p class="muted seo-records">Bilans : ${esc(m.home.name)} ${esc(m.home.record || '–')} · ${esc(m.away.name)} ${esc(m.away.record || '–')}</p>` : ''}`;
   const poster = m.poster ? `<img class="seo-poster" src="${esc(sizedPhoto(m.poster, 800))}" alt="Affiche ${esc(versus(m))}" width="889" height="500" referrerpolicy="no-referrer" ${withFallback(m.poster)}>` : '';
