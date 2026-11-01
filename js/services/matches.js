@@ -142,6 +142,13 @@ function upsertMatch(s, incoming, p) {
   // Match en cours : score et horloge ne viennent que de fetchResults (applyUpdate date leurs changements).
   if (cur.status === 'live') { delete m.liveScore; delete m.clock; delete m.status; }
   const next = { ...cur, ...m, meta: { ...cur.meta, ...m.meta } };
+  // Cote du vainqueur qui bouge avant le combat (bookmakers relus toutes les 30 min) : l'ancienne est
+  // gardée pour afficher la tendance (▲▼ et cote barrée, écran Combats).
+  const WIN = ['1', 'X', '2'];
+  if (cur.status === 'scheduled' && WIN.some((k) => cur.odds?.[k] && m.odds?.[k] && Math.abs(cur.odds[k] - m.odds[k]) >= 0.02)) {
+    next.prevOdds = Object.fromEntries(WIN.filter((k) => cur.odds?.[k]).map((k) => [k, cur.odds[k]]));
+    next.oddsMovedAt = Date.now();
+  }
   if (JSON.stringify(next) === JSON.stringify(cur)) return false;
   s.matches[m.id] = next;
   return true;

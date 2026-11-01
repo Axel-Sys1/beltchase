@@ -105,14 +105,17 @@ function oddsButtons(m, status, slipPick, market = null, guest = false) {
         const v = market ? market.odds[o] : m.odds[o];
         const open = market ? market.open && !!v : status === 'upcoming';
         const move = market && v ? moveOf(`${m.id}|${o}`, v) : null;
+        // Avant le combat : tendance de la cote pendant 6 h après un changement des bookmakers.
+        const was = !market && open && m.prevOdds?.[o] && Date.now() - (m.oddsMovedAt || 0) < 6 * 3600 * 1000 && Math.abs(m.prevOdds[o] - v) >= 0.02 ? m.prevOdds[o] : null;
+        const trend = was ? (v > was ? 'up' : 'down') : null;
         const label = outcomeShort(m, o);
         return `
-        <button class="odd ${selected ? 'selected' : ''} ${won ? 'won' : ''} ${move ? `odd-${move}` : ''}" type="button"
+        <button class="odd ${selected ? 'selected' : ''} ${won ? 'won' : ''} ${move ? `odd-${move}` : ''} ${trend ? `odd-trend-${trend}` : ''}" type="button"
           data-action="${guest ? 'guest-pick' : 'pick'}" data-match="${escapeHtml(m.id)}" data-outcome="${o}"
           ${open ? '' : 'disabled'}
           aria-pressed="${selected}" aria-label="${escapeHtml(label)} ${v ? `à ${fmtOdds(v)}` : ': non proposé'}">
           <span class="odd-label">${escapeHtml(label)}</span>
-          <span class="odd-val">${v ? fmtOdds(v) : icons.lock}${move ? `<i class="odd-move" aria-hidden="true">${move === 'up' ? '▲' : '▼'}</i>` : ''}</span>
+          <span class="odd-val">${was ? `<s class="odd-was" title="Cote précédente">${fmtOdds(was)}</s>` : ''}${v ? fmtOdds(v) : icons.lock}${move || trend ? `<i class="odd-move" aria-hidden="true">${(move || trend) === 'up' ? '▲' : '▼'}</i>` : ''}</span>
         </button>`;
       }).join('')}
     </div>`;

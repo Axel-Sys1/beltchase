@@ -2013,3 +2013,11 @@ h1.tagline { font: inherit; font-size: 16px; letter-spacing: normal; margin: 1em
 @keyframes ff-in { from { opacity: 0; transform: translateX(-50%) scale(0.4) rotate(-6deg); } }
 @keyframes ff-out { to { opacity: 0; transform: translateX(-50%) translateY(-30px) scale(0.9); } }
 @keyframes ff-shake { 15%, 45%, 75% { transform: translateX(-7px) rotate(-2deg); } 30%, 60%, 90% { transform: translateX(7px) rotate(2deg); } }
+
+/* Cote qui a bougé avant le combat (bookmakers) : ancienne cote barrée, flèche, liseré (pas de clignotement). */
+.odd-was { margin-right: 5px; font-size: 0.72em; font-weight: 600; color: var(--muted); text-decoration-thickness: 1.5px; }
+.odd-trend-up { border-color: rgba(61, 220, 132, 0.5); }
+.odd-trend-up .odd-move { color: var(--green); }
+.odd-trend-down { border-color: rgba(255, 77, 99, 0.5); }
+.odd-trend-down .odd-move { color: var(--red); }
+.odd.selected .odd-was { color: var(--accent-ink); opacity: 0.7; }
