@@ -13,7 +13,8 @@ export const ui = {
   guestOpen: false,      // accueil : « Jouer sans compte » déplié (gardé quand l'écran se redessine)
   emailOpen: false,      // inscription : formulaire email déplié (Google en avant)
   shopTab: 'daily',      // boutique : daily (cartes du jour) | album | boost | style
-  albumSet: null,        // sport affiché dans l'album (null : le premier, Foot)
+  albumSet: 'all',       // discipline affichée dans l'album ('all' : toutes)
+  albumRarity: 'all',    // rareté affichée dans l'album ('all' : toutes, rangées de Mythique à Commun)
   topScope: 'season',     // classement : season (mois en cours) | all (tous les temps)
   rankTab: 'top',        // top (classement général) | division | leagues
 };

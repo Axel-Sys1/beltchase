@@ -206,6 +206,7 @@ const actions = {
   },
   'card-fav': (el) => favoriteCard(el.dataset.id),
   'album-set': (el) => { ui.albumSet = el.dataset.set; render(); },
+  'album-rarity': (el) => { ui.albumRarity = el.dataset.rarity; render(); },
   'open-album': () => { ui.shopTab = 'album'; go('boutique'); },
   'shop-tab': (el) => { ui.shopTab = el.dataset.tab; render(); },
   'coach-done': () => update((s) => { const p = s.players[s.currentPlayerId]; if (p) p.tutorialDone = true; }),

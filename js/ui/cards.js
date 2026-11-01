@@ -1,5 +1,6 @@
 // Rendu des cartes joueurs (boutique, album, profil) et ouverture d'une pochette.
 import { CONFIG } from '../config.js';
+import { fightCardHtml } from './fightCard.js';
 import { escapeHtml } from '../util.js';
 import { icons } from './icons.js';
 import { RARITY } from '../services/progress.js';
@@ -15,8 +16,13 @@ const FLAGS = {
 };
 const initials = (name) => name.split(/\s+/).map((w) => w[0]).slice(0, 2).join('').toUpperCase();
 
-// owned : carte possédée ; sinon grisée (album). size : '' | 'sm' | 'lg'.
+// owned : carte possédée ; sinon grisée (album). size : '' | 'sm' | 'lg'. Nouveau design : fightCard.js.
 export function cardHtml(card, { owned = true, size = '', count = 0, favorite = false } = {}) {
+  return fightCardHtml(card, { owned, size, count, favorite, flag: card.national ? FLAGS[card.team] || '' : '' });
+}
+
+// Ancien design (avant le 01/11/2026), gardé pour revenir en arrière si besoin.
+export function cardHtmlClassic(card, { owned = true, size = '', count = 0, favorite = false } = {}) {
   const photo = CONFIG.CARD_PHOTOS && card.img
     ? `<img class="pc-photo ${card.cutout ? '' : 'pc-thumb'}" src="${escapeHtml(card.img)}${card.cutout ? '/preview' : ''}" alt="${escapeHtml(card.name)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">`
     : '';
