@@ -62,7 +62,9 @@ export const CONFIG = {
   // Ces valeurs sont publiques par nature : la protection vient des règles Firestore.
   FIREBASE: {
     apiKey: 'AIzaSyA8NTHTF1M42L6p9mbzwrj0e8XEglFtufM',
-    authDomain: 'goalzz-5354f.firebaseapp.com',
+    // Sur beltchase.com, la connexion passe par le site lui-même (relais functions/__/auth) : la fenêtre
+    // Google affiche « beltchase.com » et non l'identifiant technique du projet Firebase.
+    authDomain: typeof location !== 'undefined' && /(^|\.)beltchase\.com$/.test(location.hostname) ? location.hostname : 'goalzz-5354f.firebaseapp.com',
     projectId: 'goalzz-5354f',
     appId: '1:666078573502:web:58e89339040b15bf987fef', // application web « BeltChase » (créée le 31/10/2026)
   },

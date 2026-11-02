@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "description": "Fonctions seulement sur le relais de connexion, l'API, les pages de pronos, le sitemap et les fichiers internes à cacher (le reste est servi directement, sans entamer le quota gratuit).",
+  "include": [
+    "/__/auth/*",
+    "/api/*",
+    "/pronos",
+    "/pronos/*",
+    "/sitemap.xml",
+    "/tests/*",
+    "/tools/*",
+    "/js/tools/*",
+    "/functions/*",
+    "/serve.py",
+    "/README.md",
+    "/.gitignore"
+  ],
+  "exclude": []
+}
