@@ -435,23 +435,36 @@ export function seasonRows() {
 
 // Hall of Fame : le top 3 de la saison terminée (mois précédent). Les joueurs revenus ce mois-ci
 // ont reporté leur score dans prevSeason / prevSeasonRR, les autres l'ont encore dans season / seasonRR.
+// Le résultat ne bouge presque plus une fois le mois fini : gardé 6 h sur l'appareil (lectures Firestore
+// épargnées à chaque visite), 10 + 10 lignes suffisent pour un top 3.
+const HOF_KEY = 'beltchase:hof';
+const HOF_TTL_MS = 6 * 3600_000;
+const HOF_SCAN = 10;
+
 export async function loadHallOfFame() {
   if (!cloud.user || !fb) return;
   const key = prevSeasonKey();
-  if (cloud.hof?.key === key && Date.now() - cloud.hof.at < 30 * 60_000) return;
+  if (!cloud.hof) {
+    try {
+      const saved = JSON.parse(localStorage.getItem(HOF_KEY) || 'null');
+      if (saved?.key === key && Date.now() - saved.at < HOF_TTL_MS) cloud.hof = saved;
+    } catch { /* stockage indisponible : on relit */ }
+  }
+  if (cloud.hof?.key === key && Date.now() - cloud.hof.at < HOF_TTL_MS) return;
   cloud.hof = { key, rows: cloud.hof?.key === key ? cloud.hof.rows : [], at: Date.now() };
   const { F, db } = fb;
   const col = F.collection(db, 'leaderboard');
   try {
     const [a, b] = await Promise.all([
-      F.getDocs(F.query(col, F.orderBy('prevSeasonRR', 'desc'), F.limit(30))),
-      F.getDocs(F.query(col, F.orderBy('seasonRR', 'desc'), F.limit(30))),
+      F.getDocs(F.query(col, F.orderBy('prevSeasonRR', 'desc'), F.limit(HOF_SCAN))),
+      F.getDocs(F.query(col, F.orderBy('seasonRR', 'desc'), F.limit(HOF_SCAN))),
     ]);
     const score = new Map();
     for (const doc of a.docs) { const d = doc.data(); if (d.prevSeason === key && d.prevSeasonRR > 0) score.set(doc.id, { uid: doc.id, ...d, score: d.prevSeasonRR }); }
     for (const doc of b.docs) { const d = doc.data(); if (d.season === key && d.seasonRR > 0 && !score.has(doc.id)) score.set(doc.id, { uid: doc.id, ...d, score: d.seasonRR }); }
     const rows = [...score.values()].filter((r) => !isOffensivePseudo(r.pseudo)).sort((x, y) => y.score - x.score).slice(0, 3);
     cloud.hof = { key, rows, at: Date.now() };
+    try { localStorage.setItem(HOF_KEY, JSON.stringify(cloud.hof)); } catch { /* sans stockage : relu à la prochaine visite */ }
   } catch (err) {
     console.warn('Gold : Hall of Fame indisponible', err);
   }
