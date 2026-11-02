@@ -9,6 +9,7 @@
     "/sitemap.xml",
     "/tests/*",
     "/tools/*",
+    "/marketing/*",
     "/js/tools/*",
     "/functions/*",
     "/serve.py",

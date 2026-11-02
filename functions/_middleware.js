@@ -1,6 +1,6 @@
 // Fichiers du dépôt qui ne doivent pas être servis sur le site (outils, tests, notes) : « page introuvable ».
 // Cloudflare Pages publie tout le dossier ; robots.txt ne fait que demander aux moteurs de ne pas les lire.
-const PRIVATE = /^\/(tests|tools|js\/tools|functions)(\/|$)|^\/(serve\.py|README\.md|\.gitignore)$/i;
+const PRIVATE = /^\/(tests|tools|js\/tools|functions|marketing)(\/|$)|^\/(serve\.py|README\.md|\.gitignore)$/i;
 
 export async function onRequest({ request, next, env }) {
   const { pathname } = new URL(request.url);
