@@ -21,6 +21,21 @@ export function cardPhoto(card) {
   return null;
 }
 
+// Combattant sans photo libre : silhouette en garde (buste, poings levés) aux couleurs de la rareté.
+const GHOST = `<svg class="fc-ghost" viewBox="0 0 200 220" aria-hidden="true">
+  <g fill="var(--c1)" opacity=".5">
+    <ellipse cx="100" cy="60" rx="27" ry="33"/>
+    <path d="M88 88h24l3 16H85z"/>
+    <path d="M14 220c3-56 24-92 62-104l24 8 24-8c38 12 59 48 62 104z"/>
+  </g>
+  <g fill="var(--c1)" opacity=".75">
+    <path d="M52 150l14-46 22 4-10 50z"/>
+    <path d="M148 150l-14-46-22 4 10 50z"/>
+    <rect x="58" y="74" width="34" height="40" rx="14"/>
+    <rect x="108" y="74" width="34" height="40" rx="14"/>
+  </g>
+</svg>`;
+
 const splitName = (name) => {
   const w = String(name).trim().split(/\s+/);
   return w.length > 1 ? [w.slice(0, -1).join(' '), w[w.length - 1]] : ['', w[0]];
@@ -38,7 +53,7 @@ export function fightCardHtml(card, { owned = true, size = '', count = 0, favori
         <div class="fc-art">
           <span class="fc-bigname" aria-hidden="true">${escapeHtml(last)}</span>
           ${ph ? `<img class="fc-photo ${ph.cut ? 'is-cut' : 'is-full'}" src="${escapeHtml(ph.src)}" alt="${escapeHtml(card.name)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">`
-    : `<span class="fc-silhouette" aria-hidden="true">${owned ? escapeHtml(card.name.split(/\s+/).map((x) => x[0]).slice(0, 2).join('')) : '?'}</span>`}
+    : owned ? GHOST : '<span class="fc-silhouette" aria-hidden="true">?</span>'}
           <span class="fc-shine" aria-hidden="true"></span>
         </div>
         <div class="fc-top">

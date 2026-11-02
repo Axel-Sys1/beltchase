@@ -6,7 +6,7 @@ Pour chaque carte de js/data/cards.js :
 2. sinon : photo de la page Wikipédia (français puis anglais), seulement si la page parle bien d'un
    combattant ; auteur et licence lus sur Wikimedia Commons (crédits affichés dans les mentions légales).
 
-Usage : python3 tools/card_photos.py   (≈ 2 min, relancer quand des cartes sont ajoutées)
+Usage : python3 tools/card_photos.py [--manquantes]   (≈ 2 min ; --manquantes : seulement les cartes sans photo)
 """
 import json
 import os
@@ -22,6 +22,11 @@ CARDS = os.path.join(ROOT, 'js', 'data', 'cards.js')
 OUT = os.path.join(ROOT, 'js', 'data', 'cardPhotos.js')
 UA = {'User-Agent': 'BeltChase/1.0 (https://beltchase.com; contact@beltchase.com)'}
 FIGHTER = re.compile(r'box|mma|arts? martiaux|mixed martial|kick|muay|judo|lutt|wrestl|jiu|grappl|combat|fighter|ufc|k-1|glory|savate|karat|sambo', re.I)
+# Plus strict (mots entiers) pour Commons, où les fichiers parlent de tout.
+COMBAT = re.compile(r'\b(box(e|er|ers|eur|ing)|mma|mixed martial|kick-?box\w*|muay thai|wrestl\w*|lutte|jiu-?jitsu|bjj|grappl\w*|ufc|glory|one championship)\b', re.I)
+
+# Photos trouvées mais refusées à l'œil (combattant minuscule au loin, etc.) : carte avec silhouette.
+REJECT = {'lutte-melonin-noumonvi'}
 
 
 def get_json(url):
@@ -69,14 +74,41 @@ def commons_credit(file_title):
     return '', ''
 
 
-def wiki_photo(name):
+SPORT_WORDS = {'mma': 'MMA', 'boxing': 'boxer', 'kickboxing': 'kickboxer', 'bjj': 'jiu-jitsu', 'wrestling': 'wrestler'}
+
+
+def wiki_titles(name, sport):
+    """Titres de pages candidats : le nom exact, puis la recherche Wikipédia « nom + discipline »
+    (accents et homonymes : « Mica Galvão », « David Taylor (wrestler) »)."""
     for lang in ('fr', 'en'):
-        title = urllib.parse.quote(name.replace(' ', '_'))
+        yield lang, name
+    for lang in ('en', 'fr'):
+        q = urllib.parse.quote(f'{name} {SPORT_WORDS.get(sport, "")}')
+        try:
+            hits = get_json(f'https://{lang}.wikipedia.org/w/api.php?action=query&list=search&srsearch={q}&srlimit=3&format=json')
+        except Exception:
+            continue
+        # Tous les mots du nom dans le titre (sinon le frère, Karol Itauma pour Moses, passe).
+        words = [w for w in plain(name).split() if len(w) >= 3]
+        for h in hits.get('query', {}).get('search', []):
+            if all(w in plain(h['title']) for w in words):
+                yield lang, h['title']
+
+
+def wiki_photo(name, sport=''):
+    seen = set()
+    for lang, page in wiki_titles(name, sport):
+        if (lang, page) in seen:
+            continue
+        seen.add((lang, page))
+        title = urllib.parse.quote(page.replace(' ', '_'))
         try:
             d = get_json(f'https://{lang}.wikipedia.org/api/rest_v1/page/summary/{title}')
         except Exception:
             continue
         thumb = (d.get('thumbnail') or {}).get('source')
+        if re.search(r'\bvs\.?\b|academy|gym\b|\bteam\b', d.get('title', ''), re.I):  # combat ou club : pas un portrait
+            continue
         text = f"{d.get('description', '')} {d.get('extract', '')}"
         if not thumb or not FIGHTER.search(text):
             continue
@@ -91,7 +123,31 @@ def wiki_photo(name):
             continue
         file_title = urllib.parse.unquote(thumb.split('/thumb/')[-1].split('/')[2]) if '/thumb/' in thumb else urllib.parse.unquote(thumb.rsplit('/', 1)[-1])
         artist, lic = commons_credit(file_title)
+        if not lic:  # image non libre (affiche hébergée sur Wikipédia seulement) : interdite
+            continue
         return {'src': src, 'kind': 'wiki', 'credit': artist or 'Wikimedia Commons', 'license': lic, 'page': d.get('content_urls', {}).get('desktop', {}).get('page', '')}
+    return None
+
+
+def commons_photo(name):
+    """Dernier recours : une photo sur Wikimedia Commons dont le nom de fichier contient le prénom et le nom."""
+    q = urllib.parse.quote(f'"{name}" filetype:bitmap')
+    hits = get_json(f'https://commons.wikimedia.org/w/api.php?action=query&list=search&srsearch={q}&srnamespace=6&srlimit=10&format=json')
+    words = plain(name).split()
+    for h in hits.get('query', {}).get('search', []):
+        title = h['title'][5:]  # sans « File: »
+        if not all(w in plain(title) for w in words) or not re.search(r'\.(jpe?g|png|webp)$', title, re.I):
+            continue
+        info = get_json('https://commons.wikimedia.org/w/api.php?action=query&prop=imageinfo&iiprop=url|extmetadata&iiurlwidth=500&format=json&titles=File:' + urllib.parse.quote(title))
+        ii = (next(iter(info['query']['pages'].values())).get('imageinfo') or [{}])[0]
+        meta = ii.get('extmetadata', {})
+        about = f"{title} {meta.get('Categories', {}).get('value', '')} {meta.get('ImageDescription', {}).get('value', '')}"
+        src = ii.get('thumburl') or ii.get('url')
+        # Homonymes (Victor Hugo l'écrivain, Craig Jones de Slipknot) : la photo doit parler de sport de combat.
+        if not src or not COMBAT.search(about) or not exists(src):
+            continue
+        artist, lic = commons_credit(title)
+        return {'src': src, 'kind': 'wiki', 'credit': artist or 'Wikimedia Commons', 'license': lic, 'page': ii.get('descriptionurl', '')}
     return None
 
 
@@ -116,13 +172,20 @@ def write_credits(photos, names):
 def main():
     text = open(CARDS, encoding='utf-8').read()
     cards = [json.loads(l.rstrip(',')) for l in text.splitlines() if l.startswith('{"id"')]
+    # --manquantes : garde les photos déjà trouvées, ne cherche que pour les cartes sans photo.
+    old = {}
+    if '--manquantes' in sys.argv:
+        t = open(OUT, encoding='utf-8').read()
+        old = json.loads(t[t.index('{'):t.rindex('}') + 1])
     photos = {}
     for i, c in enumerate(cards, 1):
-        found = None
+        found = old.get(c['id'])
         try:
-            if c['sport'] == 'mma':
+            if found or c['id'] in REJECT:
+                pass
+            elif c['sport'] == 'mma':
                 found = espn_photo(c['name'])
-            found = found or wiki_photo(c['name'])
+            found = found or wiki_photo(c['name'], c['sport']) or commons_photo(c['name'])
         except Exception as err:  # une carte en erreur n'arrête pas les autres
             print(f'  ! {c["name"]} : {err}', file=sys.stderr)
         if found:

@@ -542,6 +542,13 @@ export const CARD_PHOTOS = {
   "license": "CC BY 3.0",
   "page": "https://fr.wikipedia.org/wiki/Gordon_Ryan"
  },
+ "grappling-mica-galvao": {
+  "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Vlog-6_FINALIZOU_EM_1_MINUTO%21%21%21_Veja_s%C3%B3%21_-_YouTube_-_13-49_%28cropped%29.jpg/500px-Vlog-6_FINALIZOU_EM_1_MINUTO%21%21%21_Veja_s%C3%B3%21_-_YouTube_-_13-49_%28cropped%29.jpg",
+  "kind": "wiki",
+  "credit": "Micael Galvão",
+  "license": "CC BY 3.0",
+  "page": "https://en.wikipedia.org/wiki/Micael_Galv%C3%A3o"
+ },
  "grappling-ffion-davies": {
   "src": "https://upload.wikimedia.org/wikipedia/commons/1/18/Ffion_Davies_OF_02.jpg",
   "kind": "wiki",
@@ -597,6 +604,13 @@ export const CARD_PHOTOS = {
   "credit": "Ilgar Jafarov",
   "license": "CC BY-SA 4.0",
   "page": "https://fr.wikipedia.org/wiki/Kyle_Snyder"
+ },
+ "lutte-david-taylor": {
+  "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/David_Taylor_%2852791819473%29.jpg/500px-David_Taylor_%2852791819473%29.jpg",
+  "kind": "wiki",
+  "credit": "Noah Riffe",
+  "license": "Public domain",
+  "page": "https://en.wikipedia.org/wiki/David_Taylor_(wrestler%2C_born_1990)"
  },
  "lutte-mijain-lopez": {
   "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/US_Army_51859_Championship_match.jpg/500px-US_Army_51859_Championship_match.jpg",
@@ -667,6 +681,13 @@ export const CARD_PHOTOS = {
   "credit": "National Olympic Committee of the Republic of Uzbekistan",
   "license": "CC BY 4.0",
   "page": "https://fr.wikipedia.org/wiki/Spencer_Lee"
+ },
+ "lutte-aaron-brooks": {
+  "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/AaronBrooks2017.jpg/500px-AaronBrooks2017.jpg",
+  "kind": "wiki",
+  "credit": "Takedown Wrestling",
+  "license": "CC BY 3.0",
+  "page": "https://en.wikipedia.org/wiki/Aaron_Brooks_(wrestler)"
  },
  "lutte-mamadassa-sylla": {
   "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Mamadassa_Sylla.JPG/500px-Mamadassa_Sylla.JPG",
