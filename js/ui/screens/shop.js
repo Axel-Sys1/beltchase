@@ -165,6 +165,8 @@ function boostView(p) {
     <div class="shop-cards">${ITEMS.filter((i) => i.kind === 'boost').map((i) => itemCard(p, i)).join('')}</div>`;
 }
 
+const STYLE_RARITY = ['exclusif', ...RARITY_ORDER];
+
 function styleView(p) {
   const lv = levelOf(p.xp).level;
   const kinds = [['color', 'Effets de pseudo'], ['frame', 'Cadres'], ['title', 'Titres']];
@@ -174,7 +176,8 @@ function styleView(p) {
     ${kinds.map(([k, label]) => `
       <h2 class="section-title">${label}</h2>
       <div class="shop-cards">${ITEMS.filter((i) => i.kind === k && (!i.retired || owns(p, i)))
-        .sort((a, b) => Number(owns(p, b)) - Number(owns(p, a)) || (a.level ?? 999) - (b.level ?? 999))
+        // Rangés par rareté comme l'album (exclusifs, puis Mythique → Commun), puis par niveau.
+        .sort((a, b) => STYLE_RARITY.indexOf(a.rarity) - STYLE_RARITY.indexOf(b.rarity) || (a.level ?? 999) - (b.level ?? 999))
         .map((i) => itemCard(p, i)).join('')}</div>`).join('')}`;
 }
 

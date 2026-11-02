@@ -42,7 +42,7 @@ export const ITEMS = [
   { id: 'color-neon', kind: 'color', rarity: 'mythique', name: 'Néon arc-en-ciel', level: 70 },
   // Cadres d'avatar
   { id: 'frame-bronze', kind: 'frame', rarity: 'commun', name: 'Bronze', level: 5 },
-  { id: 'frame-pitch', kind: 'frame', rarity: 'rare', name: 'Pelouse', level: 10 },
+  { id: 'frame-pitch', kind: 'frame', rarity: 'rare', name: 'Octogone', level: 10 },
   { id: 'frame-silver', kind: 'frame', rarity: 'rare', name: 'Argent', level: 18 },
   { id: 'frame-gold', kind: 'frame', rarity: 'epique', name: 'Or', level: 28 },
   { id: 'frame-diamond', kind: 'frame', rarity: 'legendaire', name: 'Diamant', level: 50 },

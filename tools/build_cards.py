@@ -3,6 +3,8 @@
 # M = mythique, L = légendaire, E = épique, R = rare, C = commun. Un nom de pays après « @ » fait
 # une carte de sélection nationale (même joueur, maillot de son pays).
 import json, re, sys, time, unicodedata, urllib.parse, urllib.request, os
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from card_fixes import apply_fixes
 
 SETS = [
   # Ids de collection 'mma' et 'boxe' gardés : les cartes déjà gagnées gardent leur identifiant.
@@ -172,5 +174,6 @@ sets = [st for st in sets if any(c['set'] == st['id'] for c in cards)]
 with open(out, 'w') as f:
   f.write('// Généré par tools/build_cards.py (photos : TheSportsDB). Ne pas modifier à la main.\n')
   f.write('export const CARD_SETS = ' + json.dumps(sets, ensure_ascii=False, indent=1) + ';\n')
+  cards = [apply_fixes(c) for c in cards]  # pays et catégories vérifiés (tools/card_fixes.py)
   f.write('export const CARDS = [\n' + ',\n'.join(json.dumps(c, ensure_ascii=False) for c in cards) + ',\n];\n')
 print(len(cards), 'cartes;', 'introuvables:', missing)
