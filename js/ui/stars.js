@@ -20,7 +20,7 @@ function build() {
   index = new Map();
   for (const c of CARDS) {
     if (!c.img || !c.cutout) continue;
-    // Sports individuels (tennis, UFC, boxe) : l'« équipe » d'un match est le joueur lui-même.
+    // Sports de combat : l'« équipe » d'un match est le joueur lui-même.
     index.set(`${c.sport}|p|${slugify(c.name)}`, c);
     const key = `${c.sport}|${c.national ? 'n' : 'c'}|${slugify(c.team)}`;
     const cur = index.get(key);
@@ -46,7 +46,7 @@ export function starOf(team, sport) {
   if (!index) build();
   const slug = slugify(team.name);
   const key = ALIAS[slug] || slug;
-  const solo = ['tennis', 'mma', 'boxing', 'kickboxing', 'bjj', 'wrestling'].includes(sport);
+  const solo = ['mma', 'boxing', 'kickboxing', 'bjj', 'wrestling'].includes(sport);
   const c = solo ? index.get(`${sport}|p|${slug}`) : index.get(`${sport}|c|${key}`) || index.get(`${sport}|n|${key}`);
   return c ? { name: c.name, img: `${c.img}/medium` } : null;
 }

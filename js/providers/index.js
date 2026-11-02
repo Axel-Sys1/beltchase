@@ -30,7 +30,7 @@
 // {
 //   id: '<provider>:<sport>:<ligue>:<idSource>',  unique et stable
 //   source, real, sport (clé de sports.js), competition, competitionLogo?, round?,
-//   home: { name, short, color?, logo?, record? },  away: { … }   (combattants/joueurs pour MMA, boxe, tennis)
+//   home: { name, short, color?, logo?, record? },  away: { … }   (les deux combattants)
 //   startsAt (ms), endsAt? (ms, estimation), odds: { 1, X?, 2 } en cotes décimales,
 //   oddsSource: 'bookmaker' | 'model' | 'fake',
 //   status: 'scheduled' | 'live' | 'finished' | 'void',

@@ -258,13 +258,8 @@ function refund(p, bet, t, label) {
   p.inbox.push({ type: 'void', amount: bet.stake, label });
 }
 
-// Basket : des paniers toutes les 30 s ; seul un écart qui bouge de 3 points ou plus compte.
 function scoreMoved(m, before) {
-  if (m.liveScore === before) return false;
-  if (m.sport !== 'basketball') return true;
-  const gap = (x) => { const [h, a] = String(x ?? '').split(' - ').map(Number); return h - a; };
-  const d = gap(m.liveScore) - gap(before);
-  return !(Math.abs(d) < 3);
+  return m.liveScore !== before;
 }
 
 // Vrais matchs, dans un update() à chaque lecture du score : un pari en direct est refusé (mise rendue)

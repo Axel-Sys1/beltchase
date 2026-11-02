@@ -3,7 +3,7 @@ import { clockFor } from '../store.js';
 import { sportMeta } from '../sports.js';
 import { METHOD_LABEL, marketLabel, marketOf } from './markets.js';
 
-const PERSON_SPORTS = new Set(['tennis', 'mma', 'boxing', 'kickboxing', 'bjj', 'wrestling']);
+const PERSON_SPORTS = new Set(['mma', 'boxing', 'kickboxing', 'bjj', 'wrestling']);
 
 // upcoming : on peut parier · live : commencé (paris fermés) · finished / void : réglé.
 export function matchStatus(m, t = clockFor(m)) {

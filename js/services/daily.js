@@ -69,7 +69,7 @@ export function challengeStatus(p) {
   return todaysChallenges().map((c) => ({ ...c, count: Math.min(c.target, d.progress[c.id] || 0), done: !!d.done[c.id] }));
 }
 
-// Compte un événement (dans un update()). events : liste de types ('place', 'win', 'sport:football'…).
+// Compte un événement (dans un update()). events : liste de types ('place', 'win', 'sport:mma'…).
 export function track(p, events) {
   if (isGuest()) return; // défis réservés aux joueurs avec un compte
   const d = dailyOf(p);

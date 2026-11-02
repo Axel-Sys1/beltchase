@@ -75,7 +75,7 @@ const teamRow = (t, winner, sport) => `
 function scoreBlock(m, text) {
   if (!text) return '';
   const parts = String(text).split(' - ');
-  if (m.sport !== 'tennis' && parts.length === 2 && parts.every((x) => x.trim().length <= 4)) {
+  if (parts.length === 2 && parts.every((x) => x.trim().length <= 4)) {
     return `<div class="score"><b>${escapeHtml(parts[0])}</b><b>${escapeHtml(parts[1])}</b></div>`;
   }
   return `<div class="score score-text">${escapeHtml(text)}</div>`;

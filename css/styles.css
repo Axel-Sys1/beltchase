@@ -346,7 +346,6 @@ a.ad-ph:focus-visible { outline-offset: -2px; }
 .match-finished .team { color: var(--muted); }
 .match-finished .team.is-winner { color: var(--text); }
 .score { display: grid; gap: 7px; font: 800 20px/1 var(--display); text-align: right; font-variant-numeric: tabular-nums; }
-.score-tennis { font: 700 15px/1.2 var(--display); color: var(--text); max-width: 45%; white-space: pre-wrap; text-align: right; }
 .live-clock { font-size: 12px; font-weight: 700; color: var(--live); font-variant-numeric: tabular-nums; white-space: nowrap; }
 
 .odds { display: grid; gap: 8px; }
@@ -1338,7 +1337,6 @@ h1.tagline { font: inherit; font-size: 16px; letter-spacing: normal; margin: 1em
   content: ''; position: absolute; inset: 0; z-index: -1; opacity: 0.18;
   background: repeating-linear-gradient(115deg, transparent 0 14px, rgba(255, 255, 255, 0.25) 14px 15px);
 }
-.pcard-x[data-sport="basketball"]::before { background: radial-gradient(circle at 50% 120%, transparent 38%, rgba(255, 255, 255, 0.3) 38.5% 39.5%, transparent 40%); }
 .pcard-x.pc-national { background:
     radial-gradient(120% 70% at 50% 0%, color-mix(in srgb, var(--rar) 55%, transparent), transparent 70%),
     linear-gradient(160deg, color-mix(in srgb, var(--rar) 35%, #0b1d4a), #070d1f 75%); }

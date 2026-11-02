@@ -36,6 +36,8 @@ const ok = (cond, msg) => { if (!cond) fail(msg); };
 const eq = (got, want, msg) => {
   if (JSON.stringify(got) !== JSON.stringify(want)) fail(`${msg} : attendu ${JSON.stringify(want)}, obtenu ${JSON.stringify(got)}`);
 };
+// Cotes vainqueur seules (les marchés méthode/round s'ajoutent à côté).
+const win = (o) => ({ 1: o[1], 2: o[2] });
 
 const EMPTY_ODDS = { count: 0, pageIndex: 1, pageSize: 25, pageCount: 0, items: [] };
 const ODDS = {
@@ -181,7 +183,8 @@ test('liste avant la soirée : combats, ordre des combattants, cotes DraftKings'
   // DraftKings : Rosas -142, Barcelos +120 (API core, home = Rosas).
   eq(main.oddsSource, 'bookmaker', 'cotes bookmaker');
   eq({ 1: main.odds['1'], 2: main.odds['2'] }, fromBookmaker({ 1: americanToDecimal(-142), 2: americanToDecimal(120) }), 'cotes -142 / +120 avec marge BeltChase');
-  eq(main.odds, { 1: 1.65, 2: 2.14 }, 'valeurs');
+  eq(win(main.odds), { 1: 1.65, 2: 2.14 }, 'valeurs');
+  ok(['1-KO', '2-SUB', 'DEC', 'R1', 'R5'].every((k) => main.odds[k] > 1), 'marchés méthode et round (5 rounds)');
 
   const silva = m['espn:mma:ufc:401912278'];
   eq(silva.round, 'Combat principal · Poids mouches (F)', 'combat principal de l\'UFC 332');
@@ -190,7 +193,7 @@ test('liste avant la soirée : combats, ordre des combattants, cotes DraftKings'
 
   const mcgee = m['espn:mma:ufc:401907089'];
   eq(mcgee.home.name, 'Court McGee', 'McGee order 1');
-  eq(mcgee.odds, fromBookmaker({ 1: americanToDecimal(205), 2: americanToDecimal(-250) }), 'McGee +205 / Nolan -250');
+  eq(win(mcgee.odds), fromBookmaker({ 1: americanToDecimal(205), 2: americanToDecimal(-250) }), 'McGee +205 / Nolan -250');
   ok(mcgee.odds[1] > mcgee.odds[2], 'outsider à domicile');
 
   const pinas = m['espn:mma:ufc:401912277'];
@@ -200,7 +203,7 @@ test('liste avant la soirée : combats, ordre des combattants, cotes DraftKings'
   eq(m['espn:mma:ufc:401914472'].round, 'Poids pailles (F)', 'catégorie seule hors combat principal');
 
   for (const x of list) {
-    eq(Object.keys(x.odds).sort(), ['1', '2'], `${x.id} : marché 1/2 sans nul`);
+    ok(!('X' in x.odds) && 'DEC' in x.odds && 'R3' in x.odds, `${x.id} : vainqueur sans nul, méthode et round`);
     ok(x.odds[1] >= MIN_ODDS && x.odds[1] <= MAX_ODDS && x.odds[2] >= MIN_ODDS && x.odds[2] <= MAX_ODDS, `${x.id} : cotes bornées`);
     ok(1 / x.odds[1] + 1 / x.odds[2] > 1, `${x.id} : marge positive`);
     ok(x.source === 'espn' && x.real === true && x.sport === 'mma' && x.status === 'scheduled', `${x.id} : champs fixes`);
@@ -212,7 +215,7 @@ test('liste avant la soirée : combats, ordre des combattants, cotes DraftKings'
   // Modèle : bilans V-D-N. Abushaar (order 1, 7-1-0) contre Staines (0-0-0).
   const dwcs = m['espn:mma:ufc:401891663'];
   eq([dwcs.home.name, dwcs.home.record, dwcs.away.record], ['Loai Abushaar', '7-1-0', '0-0-0'], 'Contender Series : bilans');
-  eq(dwcs.odds, fromProbabilities(combatProbs(parseRecord('7-1-0'), parseRecord('0-0-0'))), 'cotes modèle tirées des bilans');
+  eq(win(dwcs.odds), fromProbabilities(combatProbs(parseRecord('7-1-0'), parseRecord('0-0-0'))), 'cotes modèle tirées des bilans');
   ok(dwcs.odds[1] < dwcs.odds[2], 'meilleur bilan favori');
   ok(!net.calls.some((u) => u.endsWith('/status')), 'aucun statut détaillé demandé avant les combats');
   eq(net.calls.filter((u) => u.endsWith('/odds')).length, 30, 'une requête de cotes par combat de la semaine');
@@ -306,8 +309,8 @@ test('résultats : victoires domicile / extérieur, combat retiré, requêtes', 
     stored('ufc', '600061266', '401999999', '2026-09-27T00:00Z'), // n'existe plus sur la carte terminée
   ];
   const u = byId(await createMmaAdapter({ getJson: net.getJson }).results({ now: NOW_POST, matches }));
-  eq(u['espn:mma:ufc:401914472'], { matchId: 'espn:mma:ufc:401914472', status: 'finished', outcome: '2', score: 'KO/TKO · R1' }, 'victoire extérieur');
-  eq(u['espn:mma:ufc:401914470'], { matchId: 'espn:mma:ufc:401914470', status: 'finished', outcome: '1', score: 'KO/TKO · R1' }, 'victoire domicile');
+  eq(u['espn:mma:ufc:401914472'], { matchId: 'espn:mma:ufc:401914472', status: 'finished', outcome: '2', score: 'KO/TKO · R1', result: { method: 'KO', round: 1 } }, 'victoire extérieur');
+  eq(u['espn:mma:ufc:401914470'], { matchId: 'espn:mma:ufc:401914470', status: 'finished', outcome: '1', score: 'KO/TKO · R1', result: { method: 'KO', round: 1 } }, 'victoire domicile');
   eq(u['espn:mma:ufc:401911630'].outcome, '1', 'combat principal');
   eq(u['espn:mma:ufc:401999999'], { matchId: 'espn:mma:ufc:401999999', status: 'void' }, 'combat retiré d\'une soirée terminée → remboursé');
   eq(net.calls.filter((c) => c.includes('/scoreboard')).length, 1, 'un seul scoreboard pour la soirée');
@@ -326,7 +329,7 @@ test('résultats : nul → X, no contest → remboursé (UFC 312 / UFC 321)', as
   }).getJson }).results({ now, matches }));
   eq(u['espn:mma:ufc:401745828'], { matchId: 'espn:mma:ufc:401745828', status: 'finished', outcome: 'X', score: 'Nul' }, 'nul');
   eq(u['espn:mma:ufc:401800640'], { matchId: 'espn:mma:ufc:401800640', status: 'void', score: 'No contest' }, 'no contest');
-  eq(u['espn:mma:ufc:401817813'], { matchId: 'espn:mma:ufc:401817813', status: 'finished', outcome: '2', score: 'Décision unanime' }, 'Dern (order 2) gagne');
+  eq(u['espn:mma:ufc:401817813'], { matchId: 'espn:mma:ufc:401817813', status: 'finished', outcome: '2', score: 'Décision unanime', result: { method: 'DEC', round: 5 } }, 'Dern (order 2) gagne');
 
   // API core injoignable : sans vainqueur, impossible de distinguer nul et no contest → on attend.
   const down = fakeNet(sb, { status: { 401745828: new TypeError('Failed to fetch'), 401800640: new Error('HTTP 503') } });
@@ -388,7 +391,7 @@ test('liste : en direct (cote d\'avant-combat gardée), annulé → void, horair
   const m = byId(await a.upcoming({ now: NOW_PRE + 4 * HOUR, days: 7 }));
   const main = m['espn:mma:ufc:401911630'];
   eq([main.status, main.clock], ['live', 'R3 1:05'], 'en direct');
-  eq([main.oddsSource, main.odds], ['bookmaker', { 1: 1.65, 2: 2.14 }], 'en direct : cote d\'avant-combat gardée (cache)');
+  eq([main.oddsSource, win(main.odds)], ['bookmaker', { 1: 1.65, 2: 2.14 }], 'en direct : cote d\'avant-combat gardée (cache)');
   eq(m['espn:mma:ufc:401914472'].status, 'void', 'combat annulé listé en void');
   ok(!m['espn:mma:ufc:401914469'], 'timeValid false exclu');
   ok(!m['espn:mma:ufc:401914466'], 'combattant d\'id négatif exclu');
