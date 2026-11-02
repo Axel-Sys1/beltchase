@@ -47,8 +47,19 @@ const pseudoKey = (pseudo) => String(pseudo).trim().toLowerCase();
 const ownedPseudos = new Set(); // pseudos (clés) déjà vérifiés comme appartenant à ce compte
 
 const DIVISION_TTL_MS = 5 * 60_000; // classements rechargés au plus toutes les 5 min (quota de lectures)
+
+// Classements gardés sur l'appareil le temps de leur validité : recharger ou rouvrir la page dans les
+// 5 minutes ne relit pas Firestore.
+const BOARD_KEY = 'beltchase:board:';
+const boardKey = (name) => `${BOARD_KEY}${cloud.user?.uid || ''}:${name}`;
+function saveBoard(name, value) {
+  try { localStorage.setItem(boardKey(name), JSON.stringify(value, (k, v) => (v instanceof Set ? { __set: [...v] } : v))); } catch { /* stockage indisponible */ }
+}
+function restoreBoard(name) {
+  try { return JSON.parse(localStorage.getItem(boardKey(name)) || 'null', (k, v) => (v && Array.isArray(v.__set) ? new Set(v.__set) : v)); } catch { return null; }
+}
 const DIVISION_LIMIT = 50;
-const TOP_LIMIT = 100;
+const TOP_LIMIT = 50; // classement général et saison : 50 lignes (lectures Firestore comptées une par ligne)
 const LAST_DIVISION = TIERS.length * 3 - 1;
 export const divisionIndex = (rr) => Math.min(LAST_DIVISION, Math.floor(rr / RR_PER_DIVISION));
 let lastBoard = '';
@@ -342,6 +353,7 @@ async function publishRank() {
 export async function loadDivision(rr, { force = false } = {}) {
   if (!cloud.user || !fb) return;
   const index = divisionIndex(rr);
+  cloud.division ??= restoreBoard('division');
   const d = cloud.division;
   if (d && d.index === index && !force && (d.loading || Date.now() - d.at < DIVISION_TTL_MS)) return;
   cloud.division = { index, rows: d?.index === index ? d.rows : [], radiant: d?.radiant || new Set(), at: Date.now(), loading: true, error: null };
@@ -358,6 +370,7 @@ export async function loadDivision(rr, { force = false } = {}) {
     ]);
     const rows = snap.docs.map((doc) => ({ uid: doc.id, ...doc.data() }));
     cloud.division = { index, rows, radiant: new Set(top.docs.map((doc) => doc.id)), at: Date.now(), loading: false, error: null };
+    saveBoard('division', cloud.division);
   } catch (err) {
     console.warn('Gold : classement de division indisponible', err);
     cloud.division = { ...cloud.division, loading: false, error: 'Classement indisponible pour le moment.' };
@@ -369,6 +382,7 @@ export async function loadDivision(rr, { force = false } = {}) {
 // (pour ma place quand je suis plus bas). Rechargé au plus toutes les 5 minutes, sauf `force`.
 export async function loadTop(rr, { force = false } = {}) {
   if (!cloud.user || !fb) return;
+  cloud.top ??= restoreBoard('top');
   const t = cloud.top;
   if (t && !force && (t.loading || Date.now() - t.at < DIVISION_TTL_MS)) return;
   cloud.top = { rows: t?.rows || [], above: t?.above ?? null, at: Date.now(), loading: true, error: null };
@@ -381,6 +395,7 @@ export async function loadTop(rr, { force = false } = {}) {
     ]);
     const rows = snap.docs.map((doc) => ({ uid: doc.id, ...doc.data() }));
     cloud.top = { rows, above: count ? count.data().count : null, at: Date.now(), loading: false, error: null };
+    saveBoard('top', cloud.top);
   } catch (err) {
     console.warn('Gold : classement général indisponible', err);
     cloud.top = { ...cloud.top, loading: false, error: 'Classement indisponible pour le moment.' };
@@ -409,6 +424,7 @@ export function topRows() {
 export async function loadSeason({ force = false } = {}) {
   if (!cloud.user || !fb) return;
   const key = seasonKey();
+  cloud.season ??= restoreBoard('season');
   const c = cloud.season;
   if (c && c.key === key && !force && (c.loading || Date.now() - c.at < DIVISION_TTL_MS)) return;
   cloud.season = { key, rows: c?.key === key ? c.rows : [], at: Date.now(), loading: true, error: null };
@@ -417,6 +433,7 @@ export async function loadSeason({ force = false } = {}) {
     const snap = await F.getDocs(F.query(F.collection(db, 'leaderboard'), F.orderBy('seasonRR', 'desc'), F.limit(TOP_LIMIT)));
     const rows = snap.docs.map((doc) => ({ uid: doc.id, ...doc.data() })).filter((r) => r.season === key);
     cloud.season = { key, rows, at: Date.now(), loading: false, error: null };
+    saveBoard('season', cloud.season);
   } catch (err) {
     console.warn('Gold : classement de la saison indisponible', err);
     cloud.season = { ...cloud.season, loading: false, error: 'Classement de la saison indisponible pour le moment.' };
