@@ -125,6 +125,15 @@ input::placeholder { color: var(--placeholder); }
   padding: 5px 12px 5px 7px; font: 700 20px/1 var(--display); letter-spacing: 0.02em;
   font-variant-numeric: tabular-nums;
 }
+/* Petits écrans : l'en-tête doit tenir même avec un gros solde (ex. 1 250 000 Gold sur 320 px). */
+@media (max-width: 420px) {
+  .topbar-inner { gap: 8px; padding: 10px 12px; }
+  .logo { font-size: 22px; letter-spacing: 0.01em; min-width: 0; }
+  .logo svg { width: 22px; height: 22px; }
+  .top-right { gap: 6px; }
+  .balance { font-size: 17px; padding: 5px 8px 5px 5px; gap: 5px; }
+}
+@media (max-width: 360px) { .logo > span { display: none; } .logo svg { width: 28px; height: 28px; } } /* icône seule */
 .balance.up { animation: pulse-up 0.9s ease; }
 .balance.down { animation: pulse-down 0.6s ease; }
 @keyframes pulse-up {

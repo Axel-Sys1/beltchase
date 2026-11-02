@@ -23,25 +23,22 @@ async function getJsonDirect(url, { timeoutMs = 15_000 } = {}) {
   }
 }
 
-// Sur le site en ligne, les requêtes ESPN passent par le relais Cloudflare (functions/api/fetch.js),
-// qui partage un cache entre tous les joueurs. Si le relais refuse une requête (ESPN bloque parfois
-// ses serveurs), on la refait en direct ; après 3 pannes réseau, on ne l'utilise plus de la visite.
+// ESPN autorise la lecture directe depuis le navigateur (CORS) : chaque visiteur l'interroge lui-même,
+// sans limite de notre côté. Le relais Cloudflare (functions/api/fetch.js, cache partagé) ne sert que de
+// secours sur le site en ligne si la lecture directe échoue (réseau qui bloque ESPN, limite d'ESPN) :
+// il compte dans le quota gratuit des Pages Functions (100 000 appels par jour pour tout le site).
 // TheSportsDB (boxe) est toujours interrogé en direct : sa limite par adresse IP pénaliserait le relais.
 const SITE_HOSTS = ['beltchase.com', 'www.beltchase.com'];
 const PROXY = typeof location !== 'undefined' && SITE_HOSTS.includes(location.hostname) ? '/api/fetch?u=' : null;
-const viaProxy = (url) => PROXY && proxyFailures < 3 && /^https?:\/\/[^/]*espn\.com\//.test(url);
-let proxyFailures = 0;
+const canProxy = (url) => PROXY && /^https?:\/\/[^/]*espn\.com\//.test(url);
 
 export async function defaultGetJson(url, opts = {}) {
-  if (viaProxy(url)) {
-    try {
-      return await getJsonDirect(PROXY + encodeURIComponent(url), opts);
-    } catch (err) {
-      if (err instanceof HttpError && err.status === 404) throw new HttpError(404, url); // absent chez ESPN aussi
-      if (!(err instanceof HttpError)) proxyFailures += 1;
-    }
+  try {
+    return await getJsonDirect(url, opts);
+  } catch (err) {
+    if (!canProxy(url) || (err instanceof HttpError && err.status === 404)) throw err; // absent chez ESPN : inutile de relayer
+    return getJsonDirect(PROXY + encodeURIComponent(url), opts);
   }
-  return getJsonDirect(url, opts);
 }
 
 export class HttpError extends Error {

@@ -1,0 +1,13 @@
+# En-têtes Cloudflare Pages (fichiers statiques). Pas de Content-Security-Policy : Firebase, Google,
+# ESPN, TheSportsDB et les pubs chargent des ressources de nombreux domaines, une liste trop stricte
+# casserait la connexion ou les photos.
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
+  X-Frame-Options: SAMEORIGIN
+  Strict-Transport-Security: max-age=31536000
+
+# Icônes et images de partage : changent rarement.
+/icons/*
+  Cache-Control: public, max-age=604800

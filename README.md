@@ -42,10 +42,10 @@ Puis ouvrir <http://localhost:5173>. En local, les vrais matchs sont lus **en di
   de build) : chaque `git push` le remet en ligne en une minute environ.
 - Publier depuis ce Mac : `./tools/deploy.sh "message"` (commit + push en HTTPS ; l'accès
   GitHub est géré par GitHub CLI, `~/.local/bin/gh`, connecté au compte Axel-Sys1).
-- En ligne, les vrais matchs sont lus **en direct** : ESPN via le relais `functions/api/fetch.js`
-  (Cloudflare Pages Function) qui met les réponses en cache 1 à 5 min pour tous les joueurs
-  (requête refusée ou relais en panne : l'appli interroge ESPN directement) ; TheSportsDB (boxe)
-  en direct. L'instantané
+- En ligne, les vrais matchs sont lus **en direct** depuis le navigateur de chaque visiteur (ESPN et
+  TheSportsDB autorisent la lecture directe). Le relais `functions/api/fetch.js` (Pages Function,
+  cache partagé) ne sert que de secours si ESPN ne répond pas : chaque appel compte dans le quota
+  gratuit de 100 000 appels de Functions par jour. L'instantané
   `data/real-matches.json` ne sert que de secours si ces sources ne répondent pas.
 
 ### Comptes (Firebase, projet `goalzz-5354f`)
