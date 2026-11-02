@@ -17,6 +17,7 @@ import { leagueCode } from '../util.js';
 import { isOffensivePseudo } from './moderation.js';
 import { levelOf } from './progress.js';
 
+import { DEMO } from './demo.js';
 const SDK = 'https://www.gstatic.com/firebasejs/10.12.2';
 const EMAIL_KEY = 'beltchase:emailForSignIn';
 // Au plus une sauvegarde en ligne toutes les 30 s (et à la fermeture de la page) : le plan
@@ -26,7 +27,7 @@ const KEEP_SETTLED_BETS = 200; // paris réglés gardés dans la sauvegarde en l
 const MAX_DOC_CHARS = 900_000; // un document Firestore est limité à 1 Mo
 
 export const cloud = {
-  enabled: !!CONFIG.FIREBASE?.apiKey,
+  enabled: !!CONFIG.FIREBASE?.apiKey && !DEMO, // mode démo (localhost) : sans compte en ligne
   ready: false,       // l'état de connexion est connu
   user: null,         // { uid, email } une fois connecté
   mode: 'signup',     // formulaire : 'signup' (créer un compte) ou 'login' (se connecter)

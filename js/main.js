@@ -17,6 +17,9 @@ import { resultSentence } from './seo/pages.js';
 import { realNow } from './store.js';
 import { subscribeResults } from './services/results.js';
 import { subscribeFighters } from './services/fighters.js';
+import { DEMO, seedDemo } from './services/demo.js';
+import { CARDS } from './services/cards.js';
+import { levelOf } from './services/progress.js';
 import { applyPendingReferral, claimReferralRewards, readReferralFromUrl } from './services/referral.js';
 
 // Habillage saisonnier (Halloween, Noël…) : celui dont la période contient aujourd'hui.
@@ -52,6 +55,17 @@ render();
 
 // Compte en ligne (facultatif) : connexion par email et sauvegarde de la partie.
 initCloud({ notify: toast });
+
+// Mode démo (localhost/?demo) : cadeau de départ dès qu'un profil existe.
+if (DEMO) {
+  const seed = () => {
+    const s = getState();
+    const p = s.players[s.currentPlayerId];
+    if (p && !p.demoSeeded) update((st) => { const q = st.players[st.currentPlayerId]; ensureProgress(q); seedDemo(q, { cards: CARDS, levelOf }); });
+  };
+  subscribe(seed);
+  seed();
+}
 
 // Pubs : message de consentement de Google (cookies) dès l'ouverture, sur le site validé.
 startAdsTag();
