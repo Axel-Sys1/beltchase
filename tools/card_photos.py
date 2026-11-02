@@ -160,7 +160,7 @@ def write_credits(photos, names):
         f'        <li>{html.escape(n)} : <a href="{html.escape(v.get("page", ""))}" rel="noopener">photo</a> de {html.escape(v["credit"])}'
         f'{", " + html.escape(v["license"]) if v.get("license") else ""}</li>' for n, v in wiki)
     block = ('    <section id="credits" class="card">\n      <h2>Crédits photos</h2>\n'
-             '      <p>Portraits des combattants de MMA : ESPN. Logos et affiches des soirées : TheSportsDB et les organisateurs.\n'
+             '      <p>Portraits des combattants de MMA : ESPN. Logos et affiches des soirées : TheSportsDB et les organisateurs. Drapeaux : flagcdn.com (domaine public).\n'
              '        Les photos suivantes viennent de Wikimedia Commons, sous licence libre (auteur et licence indiqués) :</p>\n'
              f'      <ul class="credits-list">\n{items}\n      </ul>\n    </section>\n')
     text = open(path, encoding='utf-8').read()

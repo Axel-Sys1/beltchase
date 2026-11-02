@@ -36,6 +36,17 @@ const GHOST = `<svg class="fc-ghost" viewBox="0 0 200 220" aria-hidden="true">
   </g>
 </svg>`;
 
+// Code pays d'un émoji drapeau (🇫🇷 → fr, 🏴 Angleterre → gb-eng) pour l'image flagcdn.com (domaine public).
+export function flagCode(emoji) {
+  const cps = [...String(emoji)].map((c) => c.codePointAt(0));
+  if (cps[0] === 0x1f3f4) { // drapeaux de sous-division (Angleterre, Écosse) : lettres « tag »
+    const tag = cps.slice(1).filter((c) => c >= 0xe0061 && c <= 0xe007a).map((c) => String.fromCharCode(c - 0xe0000)).join('');
+    return tag.length > 2 ? `${tag.slice(0, 2)}-${tag.slice(2)}` : '';
+  }
+  const ri = cps.filter((c) => c >= 0x1f1e6 && c <= 0x1f1ff);
+  return ri.length === 2 ? ri.map((c) => String.fromCharCode(c - 0x1f1e6 + 97)).join('') : '';
+}
+
 const splitName = (name) => {
   const w = String(name).trim().split(/\s+/);
   return w.length > 1 ? [w.slice(0, -1).join(' '), w[w.length - 1]] : ['', w[0]];
@@ -53,7 +64,8 @@ export function fightCardHtml(card, { owned = true, size = '', count = 0, favori
         <div class="fc-art">
           <span class="fc-bigname" aria-hidden="true">${escapeHtml(last)}</span>
           ${ph ? `<img class="fc-photo ${ph.cut ? 'is-cut' : 'is-full'}" src="${escapeHtml(ph.src)}" alt="${escapeHtml(card.name)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">`
-    : owned ? GHOST : '<span class="fc-silhouette" aria-hidden="true">?</span>'}
+    : owned ? `${flagCode(flag) ? `<img class="fc-flagbg" src="https://flagcdn.com/w640/${flagCode(flag)}.png" alt="" loading="lazy" onerror="this.remove()">` : ''}${GHOST}`
+      : '<span class="fc-silhouette" aria-hidden="true">?</span>'}
           <span class="fc-shine" aria-hidden="true"></span>
         </div>
         <div class="fc-top">
