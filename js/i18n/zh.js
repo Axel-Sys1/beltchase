@@ -821,5 +821,8 @@ export default {
 "Le n°1 le {d} à minuit gagne <b>des gants dédicacés par Axel Sola</b>, combattant de l'UFC, livrés chez lui !": "{d}零点排名第一的人将获得<b>UFC 选手 Axel Sola 亲笔签名的拳套</b>，送货上门！",
 "Règlement": "活动规则",
 "Sois le premier à te pré-inscrire !": "成为第一个预约的人！",
-"<b>{n}</b> fan déjà pré-inscrit": "已有 <b>{n}</b> 位粉丝预约"
+"<b>{n}</b> fan déjà pré-inscrit": "已有 <b>{n}</b> 位粉丝预约",
+"Les actus sont momentanément indisponibles.": "新闻暂时无法显示。",
+"L'actu MMA et boxe": "MMA 与拳击新闻",
+"Les dernières infos, mises à jour en continu. Le jeu ouvre le {d}.": "最新消息，持续更新。游戏将于{d}开放。"
 };

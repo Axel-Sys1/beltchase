@@ -194,3 +194,22 @@ a { color: var(--accent); }
 .pre-prize { margin: 10px 0 4px; padding: 12px 14px; border-radius: 10px; background: linear-gradient(90deg, rgba(242, 182, 48, 0.2), rgba(242, 182, 48, 0.05)); border: 1px solid rgba(242, 182, 48, 0.5); font-size: 15px; }
 .pre-prize b { color: var(--accent); }
 .pre-prize a { margin-inline-start: 4px; color: var(--muted); font-size: 13px; }
+
+/* Actus (titres + lien vers l'article d'origine) */
+.pre-news { margin: 36px auto 0; max-width: 980px; }
+.pre-news h2 { margin: 0; font: italic 800 30px/1 var(--display); text-transform: uppercase; text-align: center; }
+.pre-news-sub { margin: 6px 0 16px; text-align: center; color: var(--muted); font-size: 14px; }
+.pn-top { display: grid; gap: 12px; }
+@media (min-width: 720px) { .pn-top { grid-template-columns: repeat(3, 1fr); } }
+.pn-card { position: relative; display: flex; flex-direction: column; justify-content: flex-end; gap: 6px; min-height: 210px; padding: 14px; border-radius: 12px; overflow: hidden;
+  color: var(--text); text-decoration: none; background: var(--surface); border: 1px solid var(--line-2); isolation: isolate; }
+.pn-card img { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s var(--ease-out); }
+.pn-card::after { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(to top, rgba(4, 8, 20, 0.96) 15%, rgba(4, 8, 20, 0.55) 55%, rgba(4, 8, 20, 0.1)); }
+.pn-card:hover img { transform: scale(1.05); }
+.pn-card strong { font: 700 17px/1.25 var(--body); }
+.pn-meta { color: var(--accent); font: 700 12px/1 var(--display); text-transform: uppercase; letter-spacing: 0.08em; }
+.pn-list { margin: 12px 0 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+@media (min-width: 720px) { .pn-list { grid-template-columns: 1fr 1fr; } }
+.pn-item { display: grid; gap: 4px; padding: 12px 14px; border-radius: 10px; background: rgba(15, 31, 64, 0.85); border: 1px solid var(--line); color: var(--text); text-decoration: none; }
+.pn-item:hover { border-color: var(--accent); }
+.pn-item strong { font-weight: 600; font-size: 15px; line-height: 1.3; }

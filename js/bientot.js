@@ -19,6 +19,7 @@ import { isOffensivePseudo } from './services/moderation.js';
 import { startSparks } from './ui/backdrop.js';
 import { fightCardHtml } from './ui/fightCard.js';
 import { CARDS } from './data/cards.js';
+import { headlines, loadNews, news } from './services/news.js';
 
 const SDK = 'https://www.gstatic.com/firebasejs/10.12.2';
 const LAUNCH = new Date(CONFIG.LAUNCH_AT).getTime();
@@ -213,6 +214,32 @@ const formHtml = () => (done ? `
   </form>
   <p class="pre-msg" role="alert" hidden></p>`);
 
+// Actus (js/services/news.js, comme l'écran Actus du jeu) : 3 « à la une » avec image, puis la suite.
+// Seulement le titre, la source et un lien vers l'article d'origine.
+const ago = (ts) => {
+  const m = Math.max(1, Math.round((Date.now() - ts) / 60000));
+  try {
+    const rtf = new Intl.RelativeTimeFormat(locale, { numeric: 'auto' });
+    return m < 60 ? rtf.format(-m, 'minute') : m < 1440 ? rtf.format(-Math.round(m / 60), 'hour') : rtf.format(-Math.round(m / 1440), 'day');
+  } catch { return ''; }
+};
+function newsHtml() {
+  if (!news.items.length) return `<p class="pre-board-empty">${news.error ? t('Les actus sont momentanément indisponibles.') : t('Chargement…')}</p>`;
+  const top = headlines(news.items, 3);
+  const rest = news.items.filter((a) => !top.includes(a)).slice(0, 8);
+  const link = (a, inner, cls) => `<a class="${cls}" href="${escapeHtml(a.link)}" target="_blank" rel="noopener">${inner}</a>`;
+  return `
+    <div class="pn-top">${top.map((a) => link(a, `
+      <img src="${escapeHtml(a.image)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">
+      <span class="pn-meta">${escapeHtml(a.source)} · ${ago(a.date)}</span>
+      <strong>${escapeHtml(a.title)}</strong>`, 'pn-card')).join('')}</div>
+    <ul class="pn-list">${rest.map((a) => `<li>${link(a, `<strong>${escapeHtml(a.title)}</strong><span class="pn-meta">${escapeHtml(a.source)} · ${ago(a.date)}</span>`, 'pn-item')}</li>`).join('')}</ul>`;
+}
+function renderNews() {
+  const el = root.querySelector('.pre-news-body');
+  if (el) el.innerHTML = newsHtml();
+}
+
 function boardHtml() {
   if (!board) return `<p class="pre-board-empty">${t('Chargement…')}</p>`;
   const rows = board.map((r, i) => ({ ...r, rank: i + 1 }));
@@ -260,6 +287,12 @@ function render() {
         <p class="pre-gift"><span aria-hidden="true">🎁</span> ${t('Pré-inscris-toi : ton <b>pseudo réservé</b>, <b>{n} Gold</b>, le cadre et le titre exclusifs <b>OG</b> au lancement.', { n: fmt(CONFIG.PRELAUNCH_BONUS) })}</p>
         <div class="pre-form-slot">${formHtml()}</div>
       </div>
+    </section>
+
+    <section class="pre-news" aria-labelledby="pre-news-title">
+      <h2 id="pre-news-title">${t('L\'actu MMA et boxe')}</h2>
+      <p class="pre-news-sub">${t('Les dernières infos, mises à jour en continu. Le jeu ouvre le {d}.', { d: launchDay })}</p>
+      <div class="pre-news-body">${newsHtml()}</div>
     </section>
 
     <section class="pre-board" aria-labelledby="pre-board-title">
@@ -366,3 +399,5 @@ setInterval(tick, 1000);
 loadCount();
 loadBoard();
 loadReferrer();
+loadNews().then(renderNews);
+setInterval(() => { if (!document.hidden) loadNews().then(renderNews); }, 10 * 60_000);

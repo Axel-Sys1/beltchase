@@ -821,5 +821,8 @@ export default {
 "Le n°1 le {d} à minuit gagne <b>des gants dédicacés par Axel Sola</b>, combattant de l'UFC, livrés chez lui !": "{d} کو آدھی رات تک نمبر 1 رہنے والا جیتے گا <b>UFC فائٹر Axel Sola کے دستخط شدہ دستانے</b>، گھر پر ڈیلیوری!",
 "Règlement": "قواعد",
 "Sois le premier à te pré-inscrire !": "سب سے پہلے پری رجسٹر کریں!",
-"<b>{n}</b> fan déjà pré-inscrit": "<b>{n}</b> فین پری رجسٹر کر چکا ہے"
+"<b>{n}</b> fan déjà pré-inscrit": "<b>{n}</b> فین پری رجسٹر کر چکا ہے",
+"Les actus sont momentanément indisponibles.": "خبریں فی الحال دستیاب نہیں۔",
+"L'actu MMA et boxe": "MMA اور باکسنگ کی خبریں",
+"Les dernières infos, mises à jour en continu. Le jeu ouvre le {d}.": "تازہ ترین خبریں، مسلسل اپ ڈیٹ۔ گیم {d} کو کھلے گا۔"
 };

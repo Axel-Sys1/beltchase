@@ -821,5 +821,8 @@ export default {
 "Le n°1 le {d} à minuit gagne <b>des gants dédicacés par Axel Sola</b>, combattant de l'UFC, livrés chez lui !": "The #1 on {d} at midnight wins <b>gloves signed by Axel Sola</b>, UFC fighter, delivered to their door!",
 "Règlement": "Rules",
 "Sois le premier à te pré-inscrire !": "Be the first to pre-register!",
-"<b>{n}</b> fan déjà pré-inscrit": "<b>{n}</b> fan already pre-registered"
+"<b>{n}</b> fan déjà pré-inscrit": "<b>{n}</b> fan already pre-registered",
+"Les actus sont momentanément indisponibles.": "News is temporarily unavailable.",
+"L'actu MMA et boxe": "MMA and boxing news",
+"Les dernières infos, mises à jour en continu. Le jeu ouvre le {d}.": "The latest news, updated continuously. The game opens on {d}."
 };
