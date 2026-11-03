@@ -236,6 +236,13 @@ function newsHtml() {
 function renderNews() {
   const el = root.querySelector('.pre-news-body');
   if (el) el.innerHTML = newsHtml();
+  // Bandeau « En direct » sous le compte à rebours : la plus grosse actu, renvoie vers la section.
+  const flash = root.querySelector('.pre-flash');
+  const top = headlines(news.items, 1)[0] || news.items[0];
+  if (flash && top) {
+    flash.innerHTML = `<span class="pre-live">${t('En direct')}</span><span class="pre-flash-t">${escapeHtml(top.title)}</span>`;
+    flash.hidden = false;
+  }
 }
 
 function boardHtml() {
@@ -267,7 +274,8 @@ function render() {
 
     <section class="pre-hero">
       <p class="pre-kicker">${t('Lancement officiel')}</p>
-      <h1 class="pre-title">${t('Le jeu de pronos <b>des fans de combat</b>')}</h1>
+      <h1 class="pre-title">${t('L\'actu et les pronos <b>des fans de combat</b>')}</h1>
+      <p class="pre-tagline">${t('Toute l\'actu MMA, UFC et boxe en direct, et le jeu de pronos pour la vivre à fond.')}</p>
       <p class="pre-date">${escapeHtml(launchDay).replace(/^1er /, '1<sup>er</sup> ')}</p>
 
       <div class="pre-cards" aria-label="${t('Exemples de cartes à collectionner')}">
@@ -280,6 +288,7 @@ function render() {
       </div>
 
       <p class="pre-count" role="status" hidden></p>
+      <a class="pre-flash" href="#pre-news" hidden></a>
 
       <div class="pre-card">
         <p class="pre-gift"><span aria-hidden="true">🎁</span> ${t('Pré-inscris-toi : ton <b>pseudo réservé</b>, <b>{n} Gold</b>, le cadre et le titre exclusifs <b>OG</b> au lancement.', { n: fmt(CONFIG.PRELAUNCH_BONUS) })}</p>
@@ -287,8 +296,9 @@ function render() {
       </div>
     </section>
 
-    <section class="pre-news" aria-labelledby="pre-news-title">
-      <h2 id="pre-news-title">${t('L\'actu du moment')}</h2>
+    <section class="pre-news" id="pre-news" aria-labelledby="pre-news-title">
+      <h2 id="pre-news-title"><span class="pre-live">${t('En direct')}</span>${t('L\'actu du moment')}</h2>
+      <p class="pre-news-sub">${t('L\'actu est déjà là : reviens quand tu veux. Le {d}, le jeu ouvre avec le calendrier et les résultats.', { d: launchDay })}</p>
       <div class="pre-news-body">${newsHtml()}</div>
     </section>
 
@@ -301,6 +311,7 @@ function render() {
 
     <section class="pre-feats">
       ${[
+    ['📰', t('Suis l\'actu'), t('MMA, UFC, boxe, kick : les infos qui comptent, en continu, au même endroit.')],
     ['🎯', t('Pronostique'), t('Vainqueur, méthode, round : sur les vrais combats de MMA, boxe, kick et JJB.')],
     ['🃏', t('Collectionne'), t('151 cartes de combattants, de commune à légendaire.')],
     ['🏆', t('Chasse la ceinture'), t('Grimpe les rangs et décroche la ceinture du mois.')],

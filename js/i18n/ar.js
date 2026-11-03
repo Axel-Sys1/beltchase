@@ -825,5 +825,10 @@ export default {
 "Les actus sont momentanément indisponibles.": "الأخبار غير متاحة مؤقتًا.",
 "L'actu MMA et boxe": "أخبار MMA والملاكمة",
 "Les dernières infos, mises à jour en continu. Le jeu ouvre le {d}.": "آخر الأخبار، تُحدَّث باستمرار. تنطلق اللعبة في {d}.",
-"L'actu du moment": "أبرز الأخبار الآن"
+"L'actu du moment": "أبرز الأخبار الآن",
+"L'actu et les pronos <b>des fans de combat</b>": "الأخبار والتوقعات <b>لعشّاق النزالات</b>",
+"Toute l'actu MMA, UFC et boxe en direct, et le jeu de pronos pour la vivre à fond.": "كل أخبار MMA وUFC والملاكمة مباشرة، ولعبة التوقعات لتعيشها بالكامل.",
+"L'actu est déjà là : reviens quand tu veux. Le {d}, le jeu ouvre avec le calendrier et les résultats.": "الأخبار هنا بالفعل: عد متى شئت. في {d} تنطلق اللعبة مع الجدول والنتائج.",
+"Suis l'actu": "تابع الأخبار",
+"MMA, UFC, boxe, kick : les infos qui comptent, en continu, au même endroit.": "MMA وUFC والملاكمة والكيك: الأخبار المهمة دون توقف، في مكان واحد."
 };

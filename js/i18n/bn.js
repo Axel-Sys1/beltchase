@@ -825,5 +825,10 @@ export default {
 "Les actus sont momentanément indisponibles.": "খবর এখন পাওয়া যাচ্ছে না।",
 "L'actu MMA et boxe": "MMA আর বক্সিংয়ের খবর",
 "Les dernières infos, mises à jour en continu. Le jeu ouvre le {d}.": "সর্বশেষ খবর, সবসময় আপডেট। গেম চালু হবে {d}।",
-"L'actu du moment": "এই মুহূর্তের খবর"
+"L'actu du moment": "এই মুহূর্তের খবর",
+"L'actu et les pronos <b>des fans de combat</b>": "<b>ফাইট ফ্যানদের</b> খবর আর প্রেডিকশন",
+"Toute l'actu MMA, UFC et boxe en direct, et le jeu de pronos pour la vivre à fond.": "MMA, UFC আর বক্সিংয়ের সব খবর লাইভ, আর পুরোপুরি উপভোগ করতে প্রেডিকশন গেম।",
+"L'actu est déjà là : reviens quand tu veux. Le {d}, le jeu ouvre avec le calendrier et les résultats.": "খবর এখনই এখানে: যখন খুশি ফিরে এসো। {d} গেম চালু হবে সূচি আর ফলাফল নিয়ে।",
+"Suis l'actu": "খবর ফলো করো",
+"MMA, UFC, boxe, kick : les infos qui comptent, en continu, au même endroit.": "MMA, UFC, বক্সিং, কিকবক্সিং: দরকারি খবর, অবিরাম, এক জায়গায়।"
 };

@@ -825,5 +825,10 @@ export default {
 "Les actus sont momentanément indisponibles.": "Новости временно недоступны.",
 "L'actu MMA et boxe": "Новости MMA и бокса",
 "Les dernières infos, mises à jour en continu. Le jeu ouvre le {d}.": "Свежие новости, обновляются постоянно. Игра откроется {d}.",
-"L'actu du moment": "Главное сейчас"
+"L'actu du moment": "Главное сейчас",
+"L'actu et les pronos <b>des fans de combat</b>": "Новости и прогнозы <b>для фанатов единоборств</b>",
+"Toute l'actu MMA, UFC et boxe en direct, et le jeu de pronos pour la vivre à fond.": "Все новости MMA, UFC и бокса в прямом эфире и игра прогнозов, чтобы прожить их на полную.",
+"L'actu est déjà là : reviens quand tu veux. Le {d}, le jeu ouvre avec le calendrier et les résultats.": "Новости уже здесь: заходи когда угодно. {d} откроется игра с календарём и результатами.",
+"Suis l'actu": "Следи за новостями",
+"MMA, UFC, boxe, kick : les infos qui comptent, en continu, au même endroit.": "MMA, UFC, бокс, кикбоксинг: главные новости без остановки, в одном месте."
 };

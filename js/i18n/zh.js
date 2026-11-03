@@ -825,5 +825,10 @@ export default {
 "Les actus sont momentanément indisponibles.": "新闻暂时无法显示。",
 "L'actu MMA et boxe": "MMA 与拳击新闻",
 "Les dernières infos, mises à jour en continu. Le jeu ouvre le {d}.": "最新消息，持续更新。游戏将于{d}开放。",
-"L'actu du moment": "当下热点"
+"L'actu du moment": "当下热点",
+"L'actu et les pronos <b>des fans de combat</b>": "<b>格斗迷的</b>新闻与竞猜",
+"Toute l'actu MMA, UFC et boxe en direct, et le jeu de pronos pour la vivre à fond.": "MMA、UFC 与拳击的全部新闻实时更新，再加上竞猜游戏，让你尽情投入。",
+"L'actu est déjà là : reviens quand tu veux. Le {d}, le jeu ouvre avec le calendrier et les résultats.": "新闻已经上线：随时回来看看。{d}，游戏将随赛程和结果一起开放。",
+"Suis l'actu": "关注新闻",
+"MMA, UFC, boxe, kick : les infos qui comptent, en continu, au même endroit.": "MMA、UFC、拳击、踢拳：重要消息不间断，一站看全。"
 };

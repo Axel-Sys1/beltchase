@@ -825,5 +825,10 @@ export default {
 "Les actus sont momentanément indisponibles.": "خبریں فی الحال دستیاب نہیں۔",
 "L'actu MMA et boxe": "MMA اور باکسنگ کی خبریں",
 "Les dernières infos, mises à jour en continu. Le jeu ouvre le {d}.": "تازہ ترین خبریں، مسلسل اپ ڈیٹ۔ گیم {d} کو کھلے گا۔",
-"L'actu du moment": "اس وقت کی بڑی خبریں"
+"L'actu du moment": "اس وقت کی بڑی خبریں",
+"L'actu et les pronos <b>des fans de combat</b>": "<b>فائٹ فینز کی</b> خبریں اور پیشگوئیاں",
+"Toute l'actu MMA, UFC et boxe en direct, et le jeu de pronos pour la vivre à fond.": "MMA، UFC اور باکسنگ کی تمام خبریں براہ راست، اور انہیں بھرپور جینے کے لیے پیشگوئی گیم۔",
+"L'actu est déjà là : reviens quand tu veux. Le {d}, le jeu ouvre avec le calendrier et les résultats.": "خبریں ابھی سے یہاں ہیں: جب چاہیں واپس آئیں۔ {d} کو گیم شیڈول اور نتائج کے ساتھ کھلے گا۔",
+"Suis l'actu": "خبریں فالو کریں",
+"MMA, UFC, boxe, kick : les infos qui comptent, en continu, au même endroit.": "MMA، UFC، باکسنگ، کک باکسنگ: اہم خبریں، مسلسل، ایک ہی جگہ۔"
 };

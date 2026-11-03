@@ -207,3 +207,18 @@ a { color: var(--accent); }
 .pn-card:hover img { transform: scale(1.05); }
 .pn-card strong { font: 700 17px/1.25 var(--body); }
 .pn-meta { color: var(--accent); font: 700 12px/1 var(--display); text-transform: uppercase; letter-spacing: 0.08em; }
+
+/* Actu mise en avant : sous-titre du héros, bandeau « En direct », badge rouge */
+.pre-tagline { max-width: 560px; margin: 14px auto 0; color: #c9d4ea; font-size: 17px; line-height: 1.4; }
+.pre-live { display: inline-flex; align-items: center; gap: 6px; padding: 4px 9px; border-radius: 6px; background: #e8283f; color: #fff;
+  font: 800 12px/1 var(--display); text-transform: uppercase; letter-spacing: 0.1em; vertical-align: middle; }
+.pre-live::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: #fff; animation: live-blink 1.2s infinite; }
+@keyframes live-blink { 50% { opacity: 0.25; } }
+.pre-flash { display: flex; align-items: center; gap: 10px; max-width: 620px; margin: 14px auto 0; padding: 10px 14px; border-radius: 10px;
+  background: rgba(15, 31, 64, 0.9); border: 1px solid rgba(232, 40, 63, 0.55); color: var(--text); text-decoration: none; text-align: start; }
+.pre-flash:hover { border-color: #e8283f; }
+.pre-flash[hidden] { display: none; }
+.pre-flash-t { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 600; font-size: 15px; }
+.pre-news h2 { display: flex; align-items: center; justify-content: center; gap: 10px; }
+.pre-news-sub { margin: -6px 0 16px; text-align: center; color: var(--muted); font-size: 14px; }
+@media (prefers-reduced-motion: reduce) { .pre-live::before { animation: none; } }

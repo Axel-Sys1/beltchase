@@ -825,5 +825,10 @@ export default {
 "Les actus sont momentanément indisponibles.": "Las noticias no están disponibles por el momento.",
 "L'actu MMA et boxe": "Actualidad de MMA y boxeo",
 "Les dernières infos, mises à jour en continu. Le jeu ouvre le {d}.": "Las últimas noticias, actualizadas continuamente. El juego abre el {d}.",
-"L'actu du moment": "Lo más destacado"
+"L'actu du moment": "Lo más destacado",
+"L'actu et les pronos <b>des fans de combat</b>": "Noticias y pronósticos <b>de los fans del combate</b>",
+"Toute l'actu MMA, UFC et boxe en direct, et le jeu de pronos pour la vivre à fond.": "Toda la actualidad de MMA, UFC y boxeo en directo, y el juego de pronósticos para vivirla a tope.",
+"L'actu est déjà là : reviens quand tu veux. Le {d}, le jeu ouvre avec le calendrier et les résultats.": "Las noticias ya están aquí: vuelve cuando quieras. El {d}, el juego abre con el calendario y los resultados.",
+"Suis l'actu": "Sigue la actualidad",
+"MMA, UFC, boxe, kick : les infos qui comptent, en continu, au même endroit.": "MMA, UFC, boxeo, kick: las noticias que importan, sin parar, en un solo lugar."
 };
