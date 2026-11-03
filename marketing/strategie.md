@@ -55,7 +55,7 @@ Compte : **@beltchase.officiel** (Instagram, pro). TikTok : même nom, à créer
 
 ## Premier post (prêt) : carrousel de lancement, 5 visuels (marketing/carrousel/car-1…5.jpg)
 1. Accroche « Le jeu de pronos des fans de combat · Bientôt » · 2. Pronostique · 3. 151 cartes ·
-4. Chasse la ceinture · 5. Abonne-toi pour le lancement.
+4. Chasse la ceinture · 5. Pré-inscris-toi, 1 000 Gold offerts, lien en bio.
 
 Légende :
 > Tu crois connaître le MMA mieux que tes potes ? 👀
@@ -64,6 +64,6 @@ Légende :
 > 🃏 151 cartes de combattants à collectionner
 > 🏆 Une ceinture à gagner chaque mois
 > Gratuit · 100 % virtuel · sans argent réel.
-> Abonne-toi et active les notifs pour le lancement 🔔
+> 🎁 Pré-inscris-toi (lien en bio) : 1 000 Gold offerts au lancement le 1er décembre
 > Ton prono pour le prochain gros combat ? Dis-le en commentaire 👇
 > #MMA #UFC #boxe #pronostic #sportsdecombat #MMAFrance

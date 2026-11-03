@@ -125,6 +125,7 @@ const EN = {
   'Chasse': 'Chase', 'BIENTÔT': 'COMING SOON', 'Le jeu de pronos': 'The picks game', 'des fans de combat': 'for fight fans', 'SWIPE →': 'SWIPE →',
   'Pronostique': 'Predict', 'le vainqueur, la méthode, le round': 'the winner, the method, the round', 'Plus ton prono est précis, plus la cote grimpe.': 'The more precise your pick, the bigger the odds.',
   'Chaque mois, un classement.': 'A new ranking every month.', 'Chaque mois, une ceinture.': 'A new belt every month.', 'Abonne-toi': 'Follow us', 'pour le lancement': 'for the launch', 'Active les notifs 🔔': 'Turn on notifications 🔔', 'Le Sniper': 'The Sniper', 'La Machine': 'The Machine', 'Ton Champion': 'Your Champion', 'la ceinture': 'the belt', '← toi, ce mois-ci': '← you, this month',
+  'Pré-inscris-toi': 'Pre-register', '1 000 Gold offerts': '1,000 free Gold', 'Lancement le 1er décembre · lien en bio 👆': 'Launching December 1 · link in bio 👆',
 };
 const L = (s) => (lang === 'en' ? EN[s] || s : s);
 
@@ -228,12 +229,12 @@ const ADS = [
     </div>
     <div class="ad-sub" style="top:960px;font-size:42px">${L('Chaque mois, un classement.')}<br><span style="color:#fff">${L('Chaque mois, une ceinture.')}</span></div>
     <div class="cr-dots"><i></i><i></i><i></i><i class="on"></i><i></i></div><div class="cr-swipe">${L('SWIPE →')}</div>` },
-  { id: 'car-5', fmt: 'portrait', label: 'Carrousel 5/5 · Abonne-toi', html: `
+  { id: 'car-5', fmt: 'portrait', label: 'Carrousel 5/5 · Pré-inscription', html: `
     <div class="ad-slash" style="left:560px"></div>
-    <div class="cr-mark" style="top:130px;width:330px">${markSvg()}</div>
-    <div class="ad-title" style="top:480px;font-size:112px">${L('Abonne-toi')}<br><em>${L('pour le lancement')}</em></div>
-    <div class="ad-sub" style="top:800px">${L('Active les notifs 🔔')}</div>
-    <div class="ad-cta">@beltchase.officiel</div>${foot}
+    <div class="cr-mark" style="top:110px;width:300px">${markSvg()}</div>
+    <div class="ad-title" style="top:440px;font-size:108px">${L('Pré-inscris-toi')}<br><em>${L('1 000 Gold offerts')}</em></div>
+    <div class="ad-sub" style="top:760px">${L('Lancement le 1er décembre · lien en bio 👆')}</div>
+    <div class="ad-cta">beltchase.com</div>${foot}
     <div class="cr-dots"><i></i><i></i><i></i><i></i><i class="on"></i></div>` },
   { id: 'pub-profil', label: 'Photo de profil (1080 × 1080)', square: true, html: `
     <div class="ad-slash" style="left:540px"></div><div class="ad-slash" style="left:760px;width:120px"></div>
