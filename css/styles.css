@@ -2129,7 +2129,7 @@ h1.tagline { font: inherit; font-size: 16px; letter-spacing: normal; margin: 1em
   color: var(--text); font: 600 14px/1.2 Barlow, system-ui, sans-serif; text-align: start; cursor: pointer; }
 .lang-menu li button:hover, .lang-menu li button:focus-visible { background: var(--surface-2); }
 .lang-menu li button.is-current { background: var(--accent-soft); color: var(--accent); }
-.lang-name small { margin-inline-start: 4px; color: var(--muted); font-size: 13px; font-weight: 500; }
+.lang-menu .lang-name { text-transform: uppercase; letter-spacing: 0.04em; }
 .lang-footer, .lang-landing { display: flex; justify-content: center; width: fit-content; margin: 12px auto 0; }
 
 /* Bilan sur la carte et fiche d'une carte de l'album (cardSheet.js). */
