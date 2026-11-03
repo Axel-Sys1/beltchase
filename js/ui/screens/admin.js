@@ -115,6 +115,11 @@ export function renderAdmin() {
   return `
     <h1 class="page-title">Admin des combats</h1>
     <p class="muted">Soirées ajoutées à la main (JJB, lutte, kick, Muay Thaï, ONE, ARES, Hexagone…). Elles apparaissent dans « Vrais combats » quelques minutes après.${due ? ` <b>${due} résultat${due > 1 ? 's' : ''} à saisir.</b>` : ''}</p>
+    <div class="card admin-prelaunch">
+      <h2>Pré-inscriptions</h2>
+      <p class="muted">Liste des e-mails de la page bientot.html (pour l'e-mail du lancement) : fichier CSV.</p>
+      <button class="btn btn-ghost" data-action="admin-prelaunch-csv" type="button">Télécharger la liste</button>
+    </div>
     ${fightForm(events)}
     <section class="admin-list">
       <div class="section-row">

@@ -23,6 +23,42 @@ match /fights/{id} {
 }
 ```
 
+## Pré-inscription (jusqu'au lancement)
+
+Avant `CONFIG.LAUNCH_AT` (1er décembre 2026, minuit à Paris), l'accueil de beltchase.com sert
+`bientot.html` (compte à rebours + inscription par e-mail, `js/bientot.js`, `css/bientot.css`) à la
+place du jeu (`functions/_middleware.js`). `https://beltchase.com/?app` ouvre le jeu et s'en souvient
+30 jours (cookie) : aperçu, page admin. À l'heure du lancement, la page bascule seule sur le jeu.
+En local (`serve.py`), l'accueil reste le jeu : la page est sur <http://localhost:5173/bientot>.
+
+Chaque pré-inscrit reçoit `CONFIG.PRELAUNCH_BONUS` Gold et le titre exclusif « Pionnier » à sa première
+connexion avec la même adresse (`js/services/prelaunch.js`). Liste des adresses : page `#admin` →
+« Télécharger la liste » (CSV, pour l'e-mail du lancement). Lien à suivre : `?src=instagram`, `?src=tiktok`…
+
+Règles Firestore (dans `match /databases/{database}/documents`) :
+
+```
+match /preinscriptions/{email} {
+  allow create: if request.resource.data.keys().hasOnly(['email', 'lang', 'src', 'at'])
+    && request.resource.data.email == email
+    && email.size() <= 120 && email.matches('^[^@\\s/]+@[^@\\s/]+\\.[^@\\s/]+$')
+    && request.resource.data.lang is string && request.resource.data.lang.size() <= 5
+    && request.resource.data.src is string && request.resource.data.src.size() <= 20
+    && request.resource.data.at == request.time
+    && getAfter(/databases/$(database)/documents/stats/preinscriptions).data.last == email;
+  allow get: if request.auth != null && request.auth.token.email.lower() == email;
+  allow list: if request.auth != null && request.auth.token.email_verified == true
+    && request.auth.token.email in ['axel.sirieys@gmail.com'];
+}
+match /stats/preinscriptions {
+  allow read: if true;
+  allow write: if request.resource.data.keys().hasOnly(['count', 'last'])
+    && request.resource.data.count == (resource == null ? 0 : resource.data.count) + 1
+    && !exists(/databases/$(database)/documents/preinscriptions/$(request.resource.data.last))
+    && existsAfter(/databases/$(database)/documents/preinscriptions/$(request.resource.data.last));
+}
+```
+
 ## Langues
 
 Le site est en 10 langues : français (texte source), anglais, espagnol, portugais (Brésil), russe,

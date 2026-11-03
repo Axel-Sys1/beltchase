@@ -1,0 +1,115 @@
+/* Page de pré-inscription (bientot.html) : mêmes couleurs que le jeu, bleu nuit et or. */
+:root {
+  --bg: #08122a;
+  --bg-2: #0b1733;
+  --surface: #0f1f40;
+  --surface-2: #15284f;
+  --line: #20365f;
+  --line-2: #2d4a7c;
+  --text: #edf2fb;
+  --muted: #8a9abb;
+  --accent: #f2b630;
+  --accent-hover: #ffc94d;
+  --accent-ink: #08122a;
+  --green: #3ddc84;
+  --red: #ff4d63;
+  --display: 'Barlow Condensed', 'Arial Narrow', system-ui, sans-serif;
+  --body: 'Barlow', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(900px 520px at 50% -120px, rgba(242, 182, 48, 0.16), transparent 70%),
+    repeating-linear-gradient(-60deg, transparent 0 22px, rgba(255, 255, 255, 0.014) 22px 23px),
+    linear-gradient(180deg, var(--bg-2), var(--bg) 520px);
+  background-color: var(--bg);
+  color: var(--text);
+  font: 500 16px/1.5 var(--body);
+  -webkit-font-smoothing: antialiased;
+}
+button, input { font: inherit; color: inherit; }
+a { color: var(--accent); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+.pre { max-width: 980px; margin: 0 auto; padding: 16px 16px calc(32px + env(safe-area-inset-bottom, 0px)); }
+
+/* En-tête */
+.pre-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.pre-brand { display: inline-flex; align-items: center; gap: 8px; font: italic 800 26px/1 var(--display); text-transform: uppercase; letter-spacing: 0.01em; }
+.pre-brand b { color: var(--accent); font-weight: inherit; }
+.pre-brand svg { width: 32px; height: 32px; }
+
+.pre-lang { position: relative; }
+.pre-lang summary { list-style: none; display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px; border: 1px solid var(--line-2); border-radius: 999px; background: var(--surface); cursor: pointer; font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 0.04em; }
+.pre-lang summary::-webkit-details-marker { display: none; }
+.pre-lang summary i { font-style: normal; color: var(--muted); }
+.pre-lang img { border-radius: 2px; display: block; }
+.pre-lang ul { position: absolute; inset-inline-end: 0; top: calc(100% + 6px); z-index: 5; margin: 0; padding: 6px; list-style: none; min-width: 190px; background: var(--surface); border: 1px solid var(--line-2); border-radius: 10px; box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45); }
+.pre-lang li button { width: 100%; display: flex; align-items: center; gap: 10px; padding: 8px 10px; border: 0; border-radius: 6px; background: none; text-align: start; text-transform: uppercase; font-size: 13px; font-weight: 700; letter-spacing: 0.03em; cursor: pointer; }
+.pre-lang li button:hover, .pre-lang li button[aria-current] { background: var(--surface-2); }
+.pre-lang li button[aria-current] { color: var(--accent); }
+
+/* Héros */
+.pre-hero { text-align: center; padding: 44px 0 8px; }
+.pre-kicker { display: inline-block; margin: 0 0 14px; padding: 5px 14px; border: 1px solid rgba(242, 182, 48, 0.45); border-radius: 999px; background: rgba(242, 182, 48, 0.1); color: var(--accent); font: 700 13px/1.2 var(--display); text-transform: uppercase; letter-spacing: 0.14em; }
+.pre-title { margin: 0; font: italic 800 clamp(40px, 9vw, 76px)/0.92 var(--display); text-transform: uppercase; letter-spacing: 0.005em; }
+.pre-title b { display: block; color: var(--accent); font-weight: inherit; }
+.pre-date { margin: 14px 0 0; font: 700 22px/1 var(--display); text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); }
+.pre-date sup { text-transform: none; font-size: 0.6em; letter-spacing: 0; }
+
+/* Compte à rebours : cases en octogone, comme le logo */
+.cd { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; max-width: 520px; margin: 28px auto 0; }
+.cd-cell { position: relative; display: grid; justify-items: center; gap: 2px; padding: 16px 4px 12px; background: linear-gradient(180deg, var(--surface-2), var(--surface)); clip-path: polygon(14px 0, calc(100% - 14px) 0, 100% 14px, 100% calc(100% - 14px), calc(100% - 14px) 100%, 14px 100%, 0 calc(100% - 14px), 0 14px); }
+.cd-cell::before { content: ''; position: absolute; inset: 0; padding: 2px; background: linear-gradient(180deg, #ffe08a, #b9821a); clip-path: inherit; -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; }
+.cd-num { font: 800 clamp(36px, 10vw, 58px)/1 var(--display); color: var(--accent); font-variant-numeric: tabular-nums; }
+.cd-num.flip { animation: flip 0.35s cubic-bezier(0.3, 1.5, 0.5, 1); }
+@keyframes flip { from { transform: translateY(-6px); opacity: 0.3; } }
+.cd-lbl { font: 700 12px/1 var(--display); text-transform: uppercase; letter-spacing: 0.14em; color: var(--muted); }
+
+/* Carte d'inscription */
+.pre-card { max-width: 520px; margin: 28px auto 0; padding: 20px; background: rgba(15, 31, 64, 0.85); border: 1px solid var(--line-2); border-radius: 14px; text-align: start; }
+.pre-gift { margin: 0 0 14px; font-size: 15px; }
+.pre-gift b { color: var(--accent); }
+.pre-form { display: flex; gap: 8px; }
+.pre-form input { flex: 1; min-width: 0; padding: 13px 14px; border: 1px solid var(--line-2); border-radius: 10px; background: var(--bg); font-size: 16px; }
+.pre-form input::placeholder { color: #5f7299; }
+.pre-form input:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: transparent; }
+.pre-btn { padding: 13px 18px; border: 0; border-radius: 10px; background: var(--accent); color: var(--accent-ink); font: 800 17px/1 var(--display); text-transform: uppercase; letter-spacing: 0.04em; cursor: pointer; white-space: nowrap; }
+.pre-btn:hover { background: var(--accent-hover); }
+.pre-btn:disabled { opacity: 0.6; cursor: wait; }
+.pre-msg { margin: 10px 0 0; color: var(--red); font-size: 14px; }
+.pre-count { margin: 12px 0 0; text-align: center; color: var(--muted); font-size: 14px; }
+.pre-count b { color: var(--text); }
+@media (max-width: 460px) {
+  .pre-form { flex-direction: column; }
+}
+
+.pre-done { display: flex; gap: 12px; align-items: flex-start; }
+.pre-done-ico { flex: none; display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: rgba(61, 220, 132, 0.15); color: var(--green); font-weight: 800; font-size: 20px; }
+.pre-done strong { font: 800 22px/1.1 var(--display); text-transform: uppercase; }
+.pre-done p { margin: 4px 0 0; color: var(--muted); font-size: 14px; word-break: break-word; }
+.pre-done b { color: var(--text); }
+.pre-actions { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+.pre-link { border: 0; background: none; padding: 4px 0; color: var(--muted); font-size: 13px; text-decoration: underline; cursor: pointer; }
+
+/* Atouts */
+.pre-feats { display: grid; gap: 12px; margin-top: 40px; }
+@media (min-width: 720px) { .pre-feats { grid-template-columns: repeat(3, 1fr); } }
+.pre-feat { padding: 18px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; }
+.pre-feat-ico { font-size: 26px; }
+.pre-feat h2 { margin: 6px 0 4px; font: italic 800 22px/1 var(--display); text-transform: uppercase; color: var(--accent); }
+.pre-feat p { margin: 0; color: var(--muted); font-size: 14px; }
+
+.pre-insta { display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; margin: 28px auto 0; padding: 14px; max-width: 520px; border: 1px solid var(--line-2); border-radius: 12px; color: var(--text); text-decoration: none; font-weight: 600; }
+.pre-insta:hover { border-color: var(--accent); }
+.pre-insta b { color: var(--accent); }
+
+.pre-foot { margin-top: 32px; text-align: center; color: var(--muted); font-size: 12.5px; }
+.pre-foot p { margin: 6px auto; max-width: 620px; }
+.pre-foot a { color: var(--muted); }
+
+@media (prefers-reduced-motion: reduce) { .cd-num.flip { animation: none; } }

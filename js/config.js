@@ -4,6 +4,11 @@ export const CONFIG = {
   CONTACT_EMAIL: 'contact@beltchase.com', // pied de page et mentions légales (redirection e-mail Cloudflare)
   // Comptes admin (page #admin : combats saisis à la main). Doit correspondre aux règles Firestore.
   ADMIN_EMAILS: ['axel.sirieys@gmail.com'],
+  // Lancement officiel. Avant cette date, beltchase.com affiche la page de pré-inscription (bientot.html,
+  // functions/_middleware.js) ; ?app dans l'adresse ouvre quand même le jeu (aperçu, admin).
+  LAUNCH_AT: '2026-12-01T00:00:00+01:00',
+  PRELAUNCH_BONUS: 1000, // Gold offerts à chaque pré-inscrit, à sa première connexion avec le même e-mail
+  INSTAGRAM: 'https://www.instagram.com/beltchase.officiel/',
   STARTING_BALANCE: 100,  // monnaie rare : on démarre petit et on gagne en pariant juste
   DAILY_BONUS: 50,
   MIN_STAKE: 1,

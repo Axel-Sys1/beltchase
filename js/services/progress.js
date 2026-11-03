@@ -58,6 +58,7 @@ export const ITEMS = [
   { id: 'title-legend', kind: 'title', rarity: 'legendaire', name: t('Légende'), level: 60 },
   { id: 'title-goat', kind: 'title', rarity: 'mythique', name: t('GOAT'), level: 100 },
   { id: 'title-champion', kind: 'title', rarity: 'exclusif', name: t('Champion de saison'), exclusive: t('Top 3 d\'une saison') },
+  { id: 'title-pionnier', kind: 'title', rarity: 'exclusif', name: t('Pionnier'), exclusive: t('Pré-inscrit avant le lancement') },
   // Anciens objets (plus disponibles) : gardés pour ceux qui les ont achetés, visibles seulement chez eux.
   { id: 'color-green', kind: 'color', rarity: 'commun', name: t('Vert pelouse'), retired: true },
   { id: 'color-pink', kind: 'color', rarity: 'rare', name: t('Rose fluo'), retired: true },

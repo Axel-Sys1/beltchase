@@ -24,6 +24,7 @@ import { DEMO, seedDemo } from './services/demo.js';
 import { CARDS } from './services/cards.js';
 import { levelOf } from './services/progress.js';
 import { applyPendingReferral, claimReferralRewards, readReferralFromUrl } from './services/referral.js';
+import { claimPrelaunchBonus } from './services/prelaunch.js';
 
 // Habillage saisonnier (Halloween, Noël…) : celui dont la période contient aujourd'hui.
 const season = activeEvent();
@@ -87,7 +88,7 @@ subscribe(async () => {
 });
 
 // Parrainage : parrain venu par un lien (appliqué dès le compte et le pseudo prêts), et récompenses
-// des filleuls réclamées une fois par session de compte.
+// des filleuls réclamées une fois par session de compte ; bonus des pré-inscrits (prelaunch.js).
 let claimedFor = null;
 let hofChecked = null;
 subscribe(async () => {
@@ -95,7 +96,7 @@ subscribe(async () => {
   if (res?.error && !/déjà/.test(res.error)) toast(`Parrainage : ${res.error}`, 'error');
   const s = getState();
   const key = cloud.user && s.currentPlayerId ? `${cloud.user.uid}|${s.currentPlayerId}` : null;
-  if (key && key !== claimedFor) { claimedFor = key; claimReferralRewards(); loadHallOfFame(); }
+  if (key && key !== claimedFor) { claimedFor = key; claimReferralRewards(); loadHallOfFame(); claimPrelaunchBonus(); }
   // Top 3 de la saison terminée : cadre et titre exclusifs, une fois par saison.
   const hof = cloud.hof;
   const me = s.players[s.currentPlayerId];

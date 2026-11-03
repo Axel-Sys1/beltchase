@@ -26,7 +26,7 @@ import { adsLeft, rewardAdWatched } from '../services/rewardAd.js';
 import { watchRewardAd } from './rewardAd.js';
 import { openCookieSettings } from './ads.js';
 import { readFights } from '../providers/beltchase.js';
-import { saveFight, deleteFight } from '../services/cloud.js';
+import { saveFight, deleteFight, listPreregistrations } from '../services/cloud.js';
 import { uid } from '../util.js';
 import { loadNews } from '../services/news.js';
 import { locale, setLang, t } from '../i18n.js';
@@ -97,6 +97,17 @@ const actions = {
   'admin-edit': (el) => { ui.adminEdit = adminFight(el.dataset.id) || null; render(); window.scrollTo({ top: 0, behavior: 'smooth' }); },
   'admin-cancel': () => { ui.adminEdit = null; render(); },
   'admin-refresh': () => { ui.adminFights = null; loadAdminFights(); },
+  'admin-prelaunch-csv': async () => {
+    const rows = await listPreregistrations();
+    const cell = (v) => `"${String(v ?? '').replace(/"/g, '""')}"`;
+    const csv = ['email,langue,source,date', ...rows.map((r) => [r.email, r.lang, r.src, r.at?.toDate?.().toISOString() || ''].map(cell).join(','))].join('\n');
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
+    a.download = `preinscriptions-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+    toast(`${rows.length} pré-inscrit${rows.length > 1 ? 's' : ''}.`, 'success');
+  },
   'admin-delete': async (el) => {
     const f = adminFight(el.dataset.id);
     if (!f) return;

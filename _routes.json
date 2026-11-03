@@ -1,7 +1,11 @@
 {
   "version": 1,
-  "description": "Fonctions seulement sur le relais de connexion, l'API, les pages de pronos, le sitemap et les fichiers internes à cacher (le reste est servi directement, sans entamer le quota gratuit).",
+  "description": "Fonctions seulement sur l'accueil (page de pré-inscription avant le lancement), le relais de connexion, l'API, les pages de pronos, le sitemap et les fichiers internes à cacher (le reste est servi directement, sans entamer le quota gratuit).",
   "include": [
+    "/",
+    "/index.html",
+    "/bientot",
+    "/bientot.html",
     "/__/auth/*",
     "/api/*",
     "/pronos",

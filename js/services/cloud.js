@@ -597,6 +597,27 @@ export const referralDb = {
   },
 };
 
+// ---------- Pré-inscription (bientot.html) ----------
+// preinscriptions/<e-mail> : lisible seulement par le compte qui a cette adresse.
+export async function isPreregistered() {
+  const email = cloud.user?.email?.toLowerCase();
+  if (!email) return false;
+  const { F, db } = await sdk();
+  try {
+    return (await F.getDoc(F.doc(db, 'preinscriptions', email))).exists();
+  } catch {
+    return false; // pas inscrit (règles) ou réseau : on réessaiera à la prochaine visite
+  }
+}
+
+// Admin : toutes les pré-inscriptions, les plus anciennes d'abord.
+export async function listPreregistrations() {
+  if (!isAdmin()) throw new Error('Réservé à l\'admin.');
+  const { F, db } = await sdk();
+  const snap = await F.getDocs(F.query(F.collection(db, 'preinscriptions'), F.orderBy('at')));
+  return snap.docs.map((d) => d.data());
+}
+
 // ---------- Ligues privées en ligne ----------
 function leagueRef(code) { return fb.F.doc(fb.db, 'leagues', code); }
 
