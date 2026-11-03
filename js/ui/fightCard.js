@@ -5,6 +5,7 @@
 import { CONFIG } from '../config.js';
 import { escapeHtml } from '../util.js';
 import { CARD_PHOTOS } from '../data/cardPhotos.js';
+import { CARD_STATS } from '../data/cardStats.js';
 import { sizedPhoto } from '../providers/photos.js';
 import { sportMeta } from '../sports.js';
 import { icons } from './icons.js';
@@ -48,6 +49,9 @@ export function flagCode(emoji) {
   return ri.length === 2 ? ri.map((c) => String.fromCharCode(c - 0x1f1e6 + 97)).join('') : '';
 }
 
+// Bilan court affiché sur la carte : « 15-1-0 » (victoires-défaites-nuls), si connu.
+const rec = (id) => { const s = CARD_STATS[id]; return s?.wins != null ? [s.wins, s.losses ?? 0, s.draws ?? 0].join('-') : ''; };
+
 const splitName = (name) => {
   const w = String(name).trim().split(/\s+/);
   return w.length > 1 ? [w.slice(0, -1).join(' '), w[w.length - 1]] : ['', w[0]];
@@ -77,6 +81,7 @@ export function fightCardHtml(card, { owned = true, size = '', count = 0, favori
           ${first ? `<small class="fc-first">${escapeHtml(first)}</small>` : ''}
           <strong class="fc-last">${escapeHtml(last)}</strong>
           <span class="fc-sub">${flag ? `${flag} ` : ''}${escapeHtml(sub)}</span>
+          ${owned && rec(card.id) ? `<span class="fc-rec">${rec(card.id)}</span>` : ''}
         </div>
       </div>
       ${count > 1 ? `<span class="fc-count">×${count}</span>` : ''}

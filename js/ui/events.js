@@ -9,6 +9,7 @@ import { betStamp, flyToSlip, replay, toast } from './effects.js';
 import { getState } from '../store.js';
 import { slipCheck } from '../services/bets.js';
 import { confirmDialog } from './dialog.js';
+import { showCardSheet } from './cardSheet.js';
 import { refreshSlipNumbers } from './screens/slip.js';
 import { ui } from './uiState.js';
 import { shareBet } from './share.js';
@@ -206,6 +207,7 @@ const actions = {
     showPack(results);
   },
   'card-fav': (el) => favoriteCard(el.dataset.id),
+  'card-open': (el) => showCardSheet(el.dataset.id),
   'album-set': (el) => { ui.albumSet = el.dataset.set; render(); },
   'album-rarity': (el) => { ui.albumRarity = el.dataset.rarity; render(); },
   'open-album': () => { ui.shopTab = 'album'; go('boutique'); },

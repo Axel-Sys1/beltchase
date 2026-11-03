@@ -756,5 +756,15 @@ export default {
 "Noël": "کرسمس",
 "Espace publicitaire": "اشتہار کی جگہ",
 "Annoncer sur BeltChase": "BeltChase پر اشتہار دیں",
-"Publicité": "اشتہار"
+"Publicité": "اشتہار",
+"Défaites": "شکستیں",
+"Nuls": "برابر",
+"Pas encore de statistiques pour ce combattant.": "اس فائٹر کے اعداد و شمار ابھی نہیں ہیں۔",
+"Fermer": "بند کریں",
+"Fiche complète": "مکمل پروفائل",
+"Mettre en carte favorite": "اسے پسندیدہ کارڈ بنائیں",
+"Stats : ESPN.": "اعداد و شمار: ESPN۔",
+"Stats : Wikipédia / Wikidata.": "اعداد و شمار: ویکیپیڈیا / ویکی ڈیٹا۔",
+"Fiche du combattant": "فائٹر پروفائل",
+"Touche une de tes cartes pour voir les stats du combattant et en faire ta favorite.": "فائٹر کے اعداد و شمار دیکھنے اور پسندیدہ بنانے کے لیے اپنا کوئی کارڈ دبائیں۔"
 };

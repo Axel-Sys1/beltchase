@@ -756,5 +756,15 @@ export default {
 "Halloween": "Halloween",
 "Espace publicitaire": "Ad space",
 "Annoncer sur BeltChase": "Advertise on BeltChase",
-"Publicité": "Advertisement"
+"Publicité": "Advertisement",
+"Défaites": "Losses",
+"Nuls": "Draws",
+"Pas encore de statistiques pour ce combattant.": "No stats for this fighter yet.",
+"Fermer": "Close",
+"Fiche complète": "Full profile",
+"Mettre en carte favorite": "Make it my favorite card",
+"Stats : ESPN.": "Stats: ESPN.",
+"Stats : Wikipédia / Wikidata.": "Stats: Wikipedia / Wikidata.",
+"Fiche du combattant": "Fighter profile",
+"Touche une de tes cartes pour voir les stats du combattant et en faire ta favorite.": "Tap one of your cards to see the fighter's stats and make it your favorite."
 };

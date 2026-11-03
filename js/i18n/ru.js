@@ -756,5 +756,15 @@ export default {
 "Noël": "Новый год",
 "Espace publicitaire": "Рекламное место",
 "Annoncer sur BeltChase": "Реклама на BeltChase",
-"Publicité": "Реклама"
+"Publicité": "Реклама",
+"Défaites": "Поражения",
+"Nuls": "Ничьи",
+"Pas encore de statistiques pour ce combattant.": "Статистики по этому бойцу пока нет.",
+"Fermer": "Закрыть",
+"Fiche complète": "Полный профиль",
+"Mettre en carte favorite": "Сделать любимой картой",
+"Stats : ESPN.": "Статистика: ESPN.",
+"Stats : Wikipédia / Wikidata.": "Статистика: Википедия / Викиданные.",
+"Fiche du combattant": "Профиль бойца",
+"Touche une de tes cartes pour voir les stats du combattant et en faire ta favorite.": "Нажми на свою карту, чтобы увидеть статистику бойца и сделать её любимой."
 };

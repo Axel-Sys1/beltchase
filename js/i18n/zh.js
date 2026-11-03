@@ -756,5 +756,15 @@ export default {
 "Noël": "圣诞节",
 "Espace publicitaire": "广告位",
 "Annoncer sur BeltChase": "在 BeltChase 投放广告",
-"Publicité": "广告"
+"Publicité": "广告",
+"Défaites": "负场",
+"Nuls": "平局",
+"Pas encore de statistiques pour ce combattant.": "暂无该选手的数据。",
+"Fermer": "关闭",
+"Fiche complète": "完整资料",
+"Mettre en carte favorite": "设为最爱卡牌",
+"Stats : ESPN.": "数据：ESPN。",
+"Stats : Wikipédia / Wikidata.": "数据：维基百科 / 维基数据。",
+"Fiche du combattant": "选手资料",
+"Touche une de tes cartes pour voir les stats du combattant et en faire ta favorite.": "点你的一张卡牌，查看选手数据并设为最爱。"
 };

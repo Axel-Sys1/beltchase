@@ -756,5 +756,15 @@ export default {
 "Noël": "عيد الميلاد",
 "Espace publicitaire": "مساحة إعلانية",
 "Annoncer sur BeltChase": "أعلن على BeltChase",
-"Publicité": "إعلان"
+"Publicité": "إعلان",
+"Défaites": "الهزائم",
+"Nuls": "التعادلات",
+"Pas encore de statistiques pour ce combattant.": "لا توجد إحصاءات لهذا المقاتل بعد.",
+"Fermer": "إغلاق",
+"Fiche complète": "الملف الكامل",
+"Mettre en carte favorite": "اجعلها بطاقتي المفضّلة",
+"Stats : ESPN.": "الإحصاءات: ESPN.",
+"Stats : Wikipédia / Wikidata.": "الإحصاءات: ويكيبيديا / ويكي بيانات.",
+"Fiche du combattant": "ملف المقاتل",
+"Touche une de tes cartes pour voir les stats du combattant et en faire ta favorite.": "اضغط على إحدى بطاقاتك لترى إحصاءات المقاتل وتجعلها مفضّلتك."
 };

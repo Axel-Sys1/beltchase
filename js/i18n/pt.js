@@ -756,5 +756,15 @@ export default {
 "Noël": "Natal",
 "Espace publicitaire": "Espaço publicitário",
 "Annoncer sur BeltChase": "Anuncie no BeltChase",
-"Publicité": "Publicidade"
+"Publicité": "Publicidade",
+"Défaites": "Derrotas",
+"Nuls": "Empates",
+"Pas encore de statistiques pour ce combattant.": "Ainda não há estatísticas deste lutador.",
+"Fermer": "Fechar",
+"Fiche complète": "Ficha completa",
+"Mettre en carte favorite": "Tornar minha carta favorita",
+"Stats : ESPN.": "Estatísticas: ESPN.",
+"Stats : Wikipédia / Wikidata.": "Estatísticas: Wikipédia / Wikidata.",
+"Fiche du combattant": "Ficha do lutador",
+"Touche une de tes cartes pour voir les stats du combattant et en faire ta favorite.": "Toque numa das suas cartas para ver as estatísticas do lutador e torná-la sua favorita."
 };

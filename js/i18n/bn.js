@@ -756,5 +756,15 @@ export default {
 "Noël": "বড়দিন",
 "Espace publicitaire": "বিজ্ঞাপনের জায়গা",
 "Annoncer sur BeltChase": "BeltChase-এ বিজ্ঞাপন দিন",
-"Publicité": "বিজ্ঞাপন"
+"Publicité": "বিজ্ঞাপন",
+"Défaites": "হার",
+"Nuls": "ড্র",
+"Pas encore de statistiques pour ce combattant.": "এই ফাইটারের পরিসংখ্যান এখনো নেই।",
+"Fermer": "বন্ধ করুন",
+"Fiche complète": "পুরো প্রোফাইল",
+"Mettre en carte favorite": "প্রিয় কার্ড বানান",
+"Stats : ESPN.": "পরিসংখ্যান: ESPN।",
+"Stats : Wikipédia / Wikidata.": "পরিসংখ্যান: উইকিপিডিয়া / উইকিডেটা।",
+"Fiche du combattant": "ফাইটার প্রোফাইল",
+"Touche une de tes cartes pour voir les stats du combattant et en faire ta favorite.": "ফাইটারের পরিসংখ্যান দেখতে আর প্রিয় করতে আপনার কোনো কার্ডে চাপুন।"
 };

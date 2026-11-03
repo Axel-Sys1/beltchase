@@ -15,7 +15,8 @@ export const CONFIG = {
     { id: 'halloween', name: 'Halloween', emoji: '🎃', from: '2026-10-01', until: '2026-11-02' },
     { id: 'noel', name: 'Noël', emoji: '🎄', from: '2026-12-01', until: '2027-01-02' },
   ],
-  CARD_PHOTOS: true,       // photos des combattants sur les cartes (TheSportsDB) ; false : silhouettes, sans redéploiement des cartes
+  CARD_PHOTOS: false,      // photos des combattants sur les cartes ; false (choix du 03/11/2026, droit à l'image et droits
+                           // des photos) : drapeau + silhouette, stats en touchant la carte dans l'album
   // Fond de l'accueil des nouveaux visiteurs : combattants détourés (photo de leur carte, ou `img`),
   // façon affiche de combat. crop : photo en pied recadrée au buste. Masqué avec CARD_PHOTOS: false.
   // 1 combattant : seul, en grand (.landing-solo) ; 2 : face à face, à gauche et à droite (.landing-duo).

@@ -101,10 +101,10 @@ function albumView(p) {
   const list = rarity === 'all' ? inSet : inSet.filter((c) => c.rarity === rarity);
   const count = (r) => { const g = inSet.filter((c) => c.rarity === r); return `${g.filter((c) => hasCard(p, c.id)).length}/${g.length}`; };
   const tile = (c) => (hasCard(p, c.id)
-    ? `<button class="album-card ${fav === c.id ? 'is-fav' : ''}" data-action="card-fav" data-id="${c.id}" type="button" aria-label="${escapeHtml(c.name)} : ${t('carte favorite')}">${cardHtml(c, { count: mine[c.id], favorite: fav === c.id })}</button>`
+    ? `<button class="album-card ${fav === c.id ? 'is-fav' : ''}" data-action="card-open" data-id="${c.id}" type="button" aria-label="${escapeHtml(c.name)} : ${t('Fiche du combattant')}">${cardHtml(c, { count: mine[c.id], favorite: fav === c.id })}</button>`
     : `<div class="album-card">${cardHtml(c, { owned: false })}</div>`);
   return `
-    <p class="muted shop-cat-help">${tn(ownedCount(p), '{n} carte sur {total}.', '{n} cartes sur {total}.', { total: CARDS.length })} ${t('Touche une de tes cartes pour en faire ta carte favorite (visible sur ton profil).')}</p>
+    <p class="muted shop-cat-help">${tn(ownedCount(p), '{n} carte sur {total}.', '{n} cartes sur {total}.', { total: CARDS.length })} ${t('Touche une de tes cartes pour voir les stats du combattant et en faire ta favorite.')}</p>
     <div class="album-sets">
       <button class="album-set ${setId === 'all' ? 'active' : ''}" data-action="album-set" data-set="all" type="button">
         <span>${t('Toutes')}</span><small>${ownedCount(p)}/${CARDS.length}</small></button>

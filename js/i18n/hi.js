@@ -756,5 +756,15 @@ export default {
 "Noël": "क्रिसमस",
 "Espace publicitaire": "विज्ञापन स्थान",
 "Annoncer sur BeltChase": "BeltChase पर विज्ञापन दें",
-"Publicité": "विज्ञापन"
+"Publicité": "विज्ञापन",
+"Défaites": "हार",
+"Nuls": "ड्रॉ",
+"Pas encore de statistiques pour ce combattant.": "इस फ़ाइटर के आँकड़े अभी नहीं हैं।",
+"Fermer": "बंद करें",
+"Fiche complète": "पूरी प्रोफ़ाइल",
+"Mettre en carte favorite": "इसे पसंदीदा कार्ड बनाएँ",
+"Stats : ESPN.": "आँकड़े: ESPN।",
+"Stats : Wikipédia / Wikidata.": "आँकड़े: विकिपीडिया / विकिडेटा।",
+"Fiche du combattant": "फ़ाइटर प्रोफ़ाइल",
+"Touche une de tes cartes pour voir les stats du combattant et en faire ta favorite.": "फ़ाइटर के आँकड़े देखने और पसंदीदा बनाने के लिए अपना कोई कार्ड दबाएँ।"
 };
