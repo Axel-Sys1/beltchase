@@ -310,3 +310,19 @@ a { color: var(--accent); }
 .pre-sh:hover { filter: brightness(1.1); }
 .pre-btn-ghost { background: var(--surface-2); color: var(--text); border: 1px solid var(--line-2); }
 .pre-btn-ghost:hover { background: var(--line-2); }
+
+/* Intro : l'arène (octogone) s'agrandit vers le spectateur, le logo apparaît au centre puis tout s'efface */
+.bc-intro { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; overflow: hidden; pointer-events: auto; cursor: pointer;
+  background: radial-gradient(60% 60% at 50% 50%, #12224a, #050a18 75%); animation: intro-out 0.5s ease-in 1.5s forwards; }
+.bc-intro-cage { position: absolute; width: 60vmin; height: 60vmin; fill: none; animation: intro-zoom 1.9s cubic-bezier(0.55, 0, 0.2, 1) forwards; filter: drop-shadow(0 0 18px rgba(242, 182, 48, 0.7)); }
+.bc-intro-cage path { stroke: #f2b630; stroke-width: 3; vector-effect: non-scaling-stroke; }
+.bc-intro-cage path:nth-child(2) { stroke-dasharray: 8 10; opacity: 0.7; }
+.bc-intro-cage path:nth-child(3) { opacity: 0.35; }
+.bc-intro-logo { position: relative; display: flex; align-items: center; gap: 14px; font: italic 800 clamp(40px, 9vw, 84px)/1 var(--display); color: #fff; letter-spacing: 0.01em;
+  animation: intro-logo 1.6s ease-out forwards; text-shadow: 0 6px 30px rgba(0, 0, 0, 0.6); }
+.bc-intro-logo b { color: var(--accent); font-weight: inherit; }
+.bc-intro-logo svg { width: 1.2em; height: 1.2em; filter: drop-shadow(0 0 14px rgba(242, 182, 48, 0.6)); }
+@keyframes intro-zoom { 0% { transform: scale(0.15) rotate(-22deg); opacity: 0; } 25% { opacity: 1; } 100% { transform: scale(4.5) rotate(0deg); opacity: 0.15; } }
+@keyframes intro-logo { 0% { opacity: 0; transform: scale(0.7); } 30% { opacity: 1; transform: scale(1); } 70% { opacity: 1; transform: scale(1.04); } 100% { opacity: 0; transform: scale(1.5); filter: blur(6px); } }
+@keyframes intro-out { to { opacity: 0; visibility: hidden; } }
+@media (prefers-reduced-motion: reduce) { .bc-intro { display: none; } }

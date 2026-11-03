@@ -475,6 +475,15 @@ root.addEventListener('click', async (e) => {
   }
 });
 
+// Intro : retirée à la fin de son animation, ou tout de suite au clic.
+const intro = document.querySelector('.bc-intro');
+if (intro) {
+  const end = () => intro.remove();
+  intro.addEventListener('animationend', (e) => { if (e.animationName === 'intro-out') end(); });
+  intro.addEventListener('click', end);
+  setTimeout(end, 3000);
+}
+
 render();
 startSparks(document.querySelector('.bc-sparks'));
 setInterval(() => { if (!document.hidden) loadCount(); }, COUNT_EVERY_MS);

@@ -37,6 +37,13 @@
     <svg class="bc-cage" viewBox="0 0 400 400"><path d="M117 8h166l109 109v166L283 392H117L8 283V117z"/><path d="M128 36h144l92 92v144l-92 92H128l-92-92V128z"/></svg>
     <canvas class="bc-sparks"></canvas>
   </div>
+  <!-- Intro (1,8 s, une fois par visite) : l'octogone de l'arène s'agrandit, BeltChase au centre puis disparaît.
+       Retirée par js/bientot.js ; ignorée si le visiteur réduit les animations. -->
+  <div class="bc-intro" aria-hidden="true">
+    <script>try { if (sessionStorage.getItem('bc-intro') || matchMedia('(prefers-reduced-motion: reduce)').matches) document.currentScript.parentNode.remove(); else sessionStorage.setItem('bc-intro', '1'); } catch (e) {}</script>
+    <svg class="bc-intro-cage" viewBox="0 0 400 400"><path d="M117 8h166l109 109v166L283 392H117L8 283V117z"/><path d="M128 36h144l92 92v144l-92 92H128l-92-92V128z"/><path d="M150 90h100l60 60v100l-60 60H150l-60-60V150z"/></svg>
+    <div class="bc-intro-logo"><svg viewBox="0 0 64 64"><path d="M21 3h22l18 18v22L43 61H21L3 43V21z" fill="#0b1733" stroke="#f2b630" stroke-width="5" stroke-linejoin="round"/><text x="32" y="42" text-anchor="middle" font-family="Barlow Condensed, Arial Narrow, sans-serif" font-style="italic" font-weight="800" font-size="27" fill="#f2b630">BC</text></svg><span>BELT<b>CHASE</b></span></div>
+  </div>
   <main id="pre" class="pre">
     <h1>BeltChase : lancement officiel le 3 décembre</h1>
     <p>Toute l'actu MMA, UFC et boxe en direct, et le jeu de pronos des fans de combat. Pré-inscris-toi pour réserver ton pseudo et recevoir
