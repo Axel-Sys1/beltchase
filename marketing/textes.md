@@ -4,7 +4,7 @@ Visuels : http://localhost:5173/marketing/pub.html (bouton « Télécharger PNG 
 
 ## Comptes
 
-- Nom : **@beltchase.com** sur Instagram et TikTok, nom affiché « BeltChase » (@beltchase est déjà pris sur les deux ; secours : @playbeltchase ; vérifié le 02/11/2026).
+- Instagram : **@beltchase.officiel** (créé par Axel, compte professionnel, nom affiché « BeltChase »). TikTok : à créer, idéalement @beltchase.officiel aussi.
 - Email d'inscription : contact@beltchase.com (arrive dans ta boîte Gmail).
 - Instagram : passer en **compte professionnel** (Paramètres → Type de compte) pour les statistiques et les pubs.
 - TikTok : passer en **compte Business** pour le lien en bio et TikTok Ads.
