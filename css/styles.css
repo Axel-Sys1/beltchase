@@ -2169,3 +2169,37 @@ h1.tagline { font: inherit; font-size: 16px; letter-spacing: normal; margin: 1em
 .fighter-oct img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.75; transform: scale(1.35); }
 .fighter-oct::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(8, 18, 42, 0.75), rgba(8, 18, 42, 0.15)); }
 .fighter-oct b { position: relative; z-index: 1; font: italic 800 15px/1 var(--display); color: #fff; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9); letter-spacing: 0.02em; }
+
+/* ===== Décor animé (même que bientot.html, en plus discret pour laisser lire le jeu) ===== */
+.bc-bg { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+.bc-bg::after { content: ''; position: absolute; inset: 0; background: radial-gradient(120% 90% at 50% 30%, transparent 45%, rgba(4, 9, 22, 0.85) 100%); }
+.bc-beam { position: absolute; top: -10vh; width: 80vw; height: 150vh; opacity: 0.9; filter: blur(10px); mix-blend-mode: screen;
+  background: conic-gradient(from 180deg at 50% 0%, transparent 0deg 166deg, rgba(255, 200, 90, 0.18) 172deg, rgba(255, 228, 160, 0.38) 180deg, rgba(255, 200, 90, 0.18) 188deg, transparent 194deg 360deg);
+  -webkit-mask: linear-gradient(180deg, #000 30%, transparent 90%); mask: linear-gradient(180deg, #000 30%, transparent 90%); }
+.bc-beam-l { left: -20vw; transform-origin: 50% 0; animation: beam-l 9s ease-in-out infinite alternate; }
+.bc-beam-r { right: -20vw; transform-origin: 50% 0; animation: beam-r 11s ease-in-out infinite alternate; }
+@keyframes beam-l { from { transform: rotate(-28deg); } to { transform: rotate(-8deg); } }
+@keyframes beam-r { from { transform: rotate(26deg); } to { transform: rotate(6deg); } }
+.bc-cage { position: absolute; left: 50%; top: 40vh; width: min(820px, 125vw); height: auto; transform: translate(-50%, -50%); opacity: 0.22;
+  fill: none; animation: cage 8s ease-in-out infinite; }
+.bc-cage path { stroke: #f2b630; stroke-width: 2; vector-effect: non-scaling-stroke; }
+.bc-cage path + path { stroke-dasharray: 6 10; opacity: 0.6; animation: cage-dash 30s linear infinite; }
+@keyframes cage { 0%, 100% { opacity: 0.28; transform: translate(-50%, -50%) scale(0.98); } 50% { opacity: 0.5; transform: translate(-50%, -50%) scale(1.02); } }
+.bc-cage { filter: drop-shadow(0 0 12px rgba(242, 182, 48, 0.55)); }
+@keyframes cage-dash { to { stroke-dashoffset: -480; } }
+/* Fumée colorée qui dérive lentement */
+.bc-bg::before { content: ''; position: absolute; inset: -20%; opacity: 0.8;
+  background: radial-gradient(35% 30% at 25% 35%, rgba(90, 140, 255, 0.22), transparent 70%), radial-gradient(30% 28% at 75% 60%, rgba(242, 150, 40, 0.18), transparent 70%), radial-gradient(40% 35% at 50% 20%, rgba(242, 182, 48, 0.16), transparent 70%);
+  animation: smoke 22s ease-in-out infinite alternate; }
+@keyframes smoke { from { transform: translate(-3%, -2%) rotate(0deg); } to { transform: translate(3%, 3%) rotate(6deg); } }
+.bc-sparks { position: absolute; inset: 0; width: 100%; height: 100%; }
+@media (prefers-reduced-motion: reduce) {
+  .bc-beam, .bc-cage, .bc-cage path + path, .bc-bg::before { animation: none; }
+}
+#app { position: relative; z-index: 1; }
+.bc-bg.is-soft .bc-beam { opacity: 0.45; }
+.bc-bg.is-soft .bc-cage { top: 46vh; animation-name: cage-soft; }
+@keyframes cage-soft { 0%, 100% { opacity: 0.1; transform: translate(-50%, -50%) scale(0.98); } 50% { opacity: 0.2; transform: translate(-50%, -50%) scale(1.02); } }
+.bc-bg.is-soft::before { opacity: 0.55; }
+.bc-bg.is-soft .bc-sparks { opacity: 0.6; }
+@media (prefers-reduced-motion: reduce) { .bc-bg.is-soft .bc-cage { animation: none; } }

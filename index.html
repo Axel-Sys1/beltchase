@@ -38,6 +38,13 @@
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+  <!-- Décor animé : projecteurs, octogone de la cage, étincelles (css/styles.css, js/ui/backdrop.js). -->
+  <div class="bc-bg is-soft" aria-hidden="true">
+    <div class="bc-beam bc-beam-l"></div>
+    <div class="bc-beam bc-beam-r"></div>
+    <svg class="bc-cage" viewBox="0 0 400 400"><path d="M117 8h166l109 109v166L283 392H117L8 283V117z"/><path d="M128 36h144l92 92v144l-92 92H128l-92-92V128z"/></svg>
+    <canvas class="bc-sparks"></canvas>
+  </div>
   <!-- Contenu lisible par les moteurs de recherche ; remplacé par l'appli dès son chargement. -->
   <div id="app">
     <main class="seo-intro">

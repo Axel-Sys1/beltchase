@@ -25,6 +25,7 @@ import { CARDS } from './services/cards.js';
 import { levelOf } from './services/progress.js';
 import { applyPendingReferral, claimReferralRewards, readReferralFromUrl } from './services/referral.js';
 import { claimPrelaunchBonus } from './services/prelaunch.js';
+import { startSparks } from './ui/backdrop.js';
 
 // Habillage saisonnier (Halloween, Noël…) : celui dont la période contient aujourd'hui.
 const season = activeEvent();
@@ -34,6 +35,7 @@ readInviteFromUrl();
 readReferralFromUrl();
 update((s) => { ensureBots(s); Object.values(s.players).forEach(ensureProgress); }, { silent: true });
 
+startSparks(document.querySelector('.bc-sparks'), { density: 26000, max: 50 });
 bindEvents();
 subscribe(render);
 subscribeNews(render); // actus arrivées : écran Actus et bandeau « À la une » des Combats redessinés
