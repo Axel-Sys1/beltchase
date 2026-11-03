@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BeltChase · Reel version TikTok</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;1,700;1,800&family=Barlow:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/cards.css">
+<!-- Reel / TikTok « Gen Z » (1080 × 1920, 10 s, sans musique) : hook « pov » dès la 1re seconde, coupes rapides,
+     sous-titres façon TikTok (minuscules, bulle blanche), zooms et flashs. Même export que reel.html :
+     window.seek(t) puis tools/frames2mp4.swift. -->
+<style>
+  :root { --display: 'Barlow Condensed', sans-serif; --body: 'Barlow', sans-serif; --muted: #8a9abb; --accent: #f2b630; --accent-ink: #08122a;
+    --gold: linear-gradient(180deg, #ffe08a, #f2b630 55%, #c48a12); --ease-out: cubic-bezier(.2,.9,.3,1); }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #000; display: grid; place-items: center; min-height: 100vh; }
+  #stage { position: relative; width: 1080px; height: 1920px; overflow: hidden; color: #fff; font-family: var(--body);
+    background: radial-gradient(70% 45% at 50% 42%, #18306a, #08122a 70%, #040814); }
+  #stage::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(120deg, transparent 0 46px, rgba(255,255,255,.025) 46px 50px); }
+  .scene { position: absolute; inset: 0; opacity: 0; animation: show var(--d) steps(1, end) var(--s) forwards; } /* avant son début : caché */
+  @keyframes show { 0% { opacity: 1; } 100% { opacity: 0; } }
+  .last { animation-name: show-last; }
+  @keyframes show-last { from, to { opacity: 1; } }
+  /* Flash blanc entre deux plans */
+  .flash { position: absolute; inset: 0; background: #fff; opacity: 0; animation: flash .18s ease-out var(--s) forwards; pointer-events: none; z-index: 9; }
+  @keyframes flash { 0% { opacity: .85; } 100% { opacity: 0; } }
+
+  /* Sous-titres façon TikTok : minuscules, bulle blanche, texte noir */
+  .cap { position: absolute; left: 50px; right: 50px; text-align: center; font: 800 60px/1.25 var(--body); color: #0a0a0a; }
+  .cap span { background: #fff; padding: 6px 18px; border-radius: 14px; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+  .cap.dark { color: #fff; text-shadow: 0 0 2px #000, 0 4px 14px rgba(0,0,0,.8); }
+  .cap.dark span { background: none; padding: 0; }
+  .in { animation: pin .28s cubic-bezier(.3,1.6,.5,1) var(--u, 0s) both; }
+  @keyframes pin { from { opacity: 0; transform: scale(.75) translateY(20px); } }
+  .punch { animation: punch .35s cubic-bezier(.3,1.6,.5,1) var(--u, 0s) both; }
+  @keyframes punch { from { transform: scale(1.35); opacity: 0; } }
+  .shake { animation: shake .4s linear var(--u, 0s) both; }
+  @keyframes shake { 0%,100% { transform: none; } 20% { transform: translate(-14px, 6px) rotate(-1deg); } 40% { transform: translate(12px, -8px) rotate(1deg); } 60% { transform: translate(-8px, 4px); } 80% { transform: translate(6px, -2px); } }
+
+  .oct { background-size: cover; background-position: center; clip-path: polygon(30% 0,70% 0,100% 30%,100% 70%,70% 100%,30% 100%,0 70%,0 30%); }
+  .vs { display: grid; place-items: center; background: var(--gold); color: var(--accent-ink); font: italic 800 60px/1 var(--display); clip-path: polygon(30% 0,70% 0,100% 30%,100% 70%,70% 100%,30% 100%,0 70%,0 30%); }
+  .duel { position: absolute; left: 60px; right: 60px; top: 760px; display: flex; align-items: center; justify-content: space-between; }
+  .duel .f { display: grid; justify-items: center; gap: 20px; font: italic 800 84px/1 var(--display); text-transform: uppercase; }
+  .duel .oct { width: 330px; height: 330px; }
+  .duel .vs { width: 140px; height: 140px; }
+
+  .brand { position: absolute; left: 50%; top: 50%; display: flex; align-items: center; gap: 24px; transform: translate(-50%, -50%); font: italic 800 150px/1 var(--display); }
+  .brand b { color: var(--accent); font-weight: inherit; }
+  .brand svg { width: 160px; height: 160px; filter: drop-shadow(0 0 30px rgba(242,182,48,.6)); }
+
+  /* Prono qui se remplit vite */
+  .pv { position: absolute; left: 80px; right: 80px; top: 620px; padding: 40px; border-radius: 40px; background: linear-gradient(180deg, #15284f, #0f1f40); border: 3px solid #2d4a7c; box-shadow: 0 40px 80px -30px #000; }
+  .pv-top { display: flex; align-items: center; justify-content: space-between; }
+  .pv-top .f { display: grid; justify-items: center; gap: 12px; font: italic 800 58px/1 var(--display); text-transform: uppercase; }
+  .pv-top .oct { width: 150px; height: 150px; }
+  .pv-top .vs { width: 90px; height: 90px; font-size: 38px; }
+  .row { display: grid; gap: 16px; margin-top: 26px; }
+  .r2 { grid-template-columns: 1fr 1fr; } .r3 { grid-template-columns: repeat(3, 1fr); } .r5 { grid-template-columns: repeat(5, 1fr); }
+  .btn { position: relative; display: flex; justify-content: center; gap: 18px; align-items: center; padding: 24px 10px; border-radius: 18px; background: #0b1733; border: 3px solid #20365f; font: 700 36px/1 var(--body); overflow: hidden; }
+  .btn b { font: 800 44px/1 var(--display); }
+  .btn i { position: absolute; inset: 0; background: var(--gold); opacity: 0; animation: on .12s ease-out var(--u) both; }
+  .btn span, .btn b { position: relative; }
+  .btn.sel span, .btn.sel b { animation: ink .12s ease-out var(--u) both; }
+  @keyframes on { to { opacity: 1; } }
+  @keyframes ink { to { color: #08122a; } }
+  .tap { position: absolute; width: 90px; height: 90px; border-radius: 50%; border: 6px solid #fff; opacity: 0; animation: tap .35s ease-out var(--u) both; z-index: 3; }
+  @keyframes tap { 0% { opacity: .9; transform: scale(.4); } 100% { opacity: 0; transform: scale(1.4); } }
+  .gain { position: absolute; left: 0; right: 0; top: 1390px; text-align: center; font: italic 800 150px/1 var(--display); color: #3ddc84; text-shadow: 0 0 40px rgba(61,220,132,.6); }
+
+  .fan { position: absolute; left: 0; right: 0; top: 600px; height: 800px; }
+  .fan .lc { position: absolute; top: 0; left: 50%; width: 400px; }
+  .fan .lc-0 { transform: translateX(-120%) rotate(-12deg) translateY(90px); }
+  .fan .lc-2 { transform: translateX(20%) rotate(12deg) translateY(90px); }
+  .fan .lc-1 { transform: translateX(-50%) scale(1.12); z-index: 2; }
+  .fan .lc > div { animation: card .35s cubic-bezier(.3,1.5,.5,1) var(--u) both; }
+  @keyframes card { from { opacity: 0; transform: translateY(200px) rotate(14deg) scale(.8); } }
+
+  .rank { position: absolute; left: 50%; top: 820px; display: grid; justify-items: center; gap: 30px; transform: translateX(-50%); font: italic 800 110px/1 var(--display); text-transform: uppercase; opacity: 0;
+    animation: rk .16s steps(1, end) var(--u) forwards; }
+  .rank svg { width: 360px; height: 405px; filter: drop-shadow(0 0 60px color-mix(in srgb, currentColor 60%, transparent)); }
+  .rank.final { animation: rk-last .3s cubic-bezier(.3,1.6,.5,1) var(--u) both; }
+  @keyframes rk { 0% { opacity: 1; } 100% { opacity: 0; } }
+  @keyframes rk-last { from { opacity: 0; transform: translateX(-50%) scale(1.4); } to { opacity: 1; transform: translateX(-50%) scale(1); } }
+
+  .date { position: absolute; left: 0; right: 0; top: 500px; text-align: center; font: italic 800 210px/.9 var(--display); text-transform: uppercase; }
+  .date em { font-style: inherit; padding: 0 .06em; background: var(--gold); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .cta { position: absolute; left: 50%; top: 1400px; transform: translateX(-50%); white-space: nowrap; padding: 34px 70px; border-radius: 24px; background: var(--gold); color: var(--accent-ink);
+    font: italic 800 76px/1 var(--display); text-transform: uppercase; box-shadow: 0 20px 60px -10px rgba(242,182,48,.6); }
+  .foot { position: absolute; left: 0; right: 0; top: 1620px; text-align: center; font: 700 36px/1 var(--display); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+  .mini { position: absolute; left: 50%; top: 230px; transform: translateX(-50%); display: flex; align-items: center; gap: 16px; font: italic 800 70px/1 var(--display); }
+  .mini b { color: var(--accent); font-weight: inherit; }
+  .mini svg { width: 86px; height: 86px; }
+</style>
+</head>
+<body>
+<div id="stage"><div id="scenes"></div></div>
+<template id="logo"><svg viewBox="0 0 64 64"><path d="M21 3h22l18 18v22L43 61H21L3 43V21z" fill="#0b1733" stroke="#f2b630" stroke-width="5" stroke-linejoin="round"/><text x="32" y="42" text-anchor="middle" font-family="Barlow Condensed, sans-serif" font-style="italic" font-weight="800" font-size="27" fill="#f2b630">BC</text></svg></template>
+<script type="module">
+import { CARDS } from '../js/data/cards.js';
+import { fightCardHtml } from '../js/ui/fightCard.js';
+import { RADIANT, TIERS } from '../js/services/ranks.js';
+import { rankEmblem } from '../js/ui/icons.js';
+
+const logo = document.getElementById('logo').innerHTML;
+const card = (id, flag) => fightCardHtml(CARDS.find((c) => c.id === id), { flag });
+const at = (s) => `--u:${s}s`;
+const scene = (s, e, html, cls = '') => `<div class="scene ${cls}" style="--s:${s}s;--d:${e - s}s">${html}</div>${s ? `<div class="flash" style="--s:${s}s"></div>` : ''}`;
+const flag = (code) => `https://flagcdn.com/w320/${code}.png`;
+const cap = (top, txt, u, cls = '') => `<div class="cap in ${cls}" style="top:${top}px;${at(u)}"><span>${txt}</span></div>`;
+
+// Rangs qui défilent à toute vitesse, puis Radiant reste.
+const ladder = [...TIERS, RADIANT];
+const RK0 = 6.3;
+const ranks = ladder.map((r, i) => {
+  const last = i === ladder.length - 1;
+  return `<div class="rank ${last ? 'final' : ''}" style="color:${r.color};${at(RK0 + i * 0.16)}">${rankEmblem({ ...r, division: last ? null : 3, label: r.name })}${r.name}</div>`;
+}).join('');
+
+document.getElementById('scenes').innerHTML = [
+  // Hook
+  scene(0, 1.3, `
+    ${cap(330, 'pov : ton pote dit que gane perd&nbsp;💀', 0.05)}
+    <div class="duel shake" style="${at(0.6)}">
+      <div class="f"><div class="oct" style="background-image:url(${flag('fr')})"></div>Gane</div>
+      <div class="vs">VS</div>
+      <div class="f"><div class="oct" style="background-image:url(${flag('us')})"></div>Hokit</div>
+    </div>`),
+  scene(1.3, 2.3, `
+    ${cap(560, 'bon. on règle ça ici 👇', 1.32)}
+    <div class="brand punch" style="${at(1.45)}">${logo}<span>BELT<b>CHASE</b></span></div>`),
+  // Prono en 3 taps
+  scene(2.3, 4.6, `
+    ${cap(330, 'tu choisis le vainqueur, la méthode, le round', 2.32)}
+    <div class="pv">
+      <div class="pv-top">
+        <div class="f"><div class="oct" style="background-image:url(${flag('fr')})"></div>Gane</div>
+        <div class="vs">VS</div>
+        <div class="f"><div class="oct" style="background-image:url(${flag('us')})"></div>Hokit</div>
+      </div>
+      <div class="row r2"><div class="btn sel" style="${at(2.8)}"><i></i><span>Gane</span><b>2,18</b></div><div class="btn"><span>Hokit</span><b>1,63</b></div></div>
+      <div class="row r3"><div class="btn sel" style="${at(3.2)}"><i></i><span>KO</span></div><div class="btn"><span>Soum.</span></div><div class="btn"><span>Déc.</span></div></div>
+      <div class="row r5"><div class="btn"><span>R1</span></div><div class="btn sel" style="${at(3.55)}"><i></i><span>R2</span></div><div class="btn"><span>R3</span></div><div class="btn"><span>R4</span></div><div class="btn"><span>R5</span></div></div>
+    </div>
+    <div class="tap" style="left:250px;top:1010px;${at(2.75)}"></div>
+    <div class="tap" style="left:180px;top:1130px;${at(3.15)}"></div>
+    <div class="tap" style="left:380px;top:1250px;${at(3.5)}"></div>
+    <div class="gain punch" style="${at(3.9)}">+690 gold</div>`),
+  // Cartes
+  scene(4.6, 6.3, `
+    ${cap(330, 'tu collectionnes les cartes 🃏', 4.62)}
+    <div class="fan">
+      <div class="lc lc-0"><div style="${at(4.75)}">${card('boxe-tyson-fury', '🇬🇧')}</div></div>
+      <div class="lc lc-2"><div style="${at(4.9)}">${card('boxe-oleksandr-usyk', '🇺🇦')}</div></div>
+      <div class="lc lc-1"><div style="${at(5.05)}">${card('mma-ilia-topuria', '🇬🇪')}</div></div>
+    </div>`),
+  // Rangs
+  scene(6.3, 8.2, `
+    ${cap(330, 'et tu grimpes de fer à radiant', 6.32)}
+    ${ranks}`),
+  // Fin
+  scene(8.2, 11, `
+    <div class="mini punch" style="${at(8.22)}">${logo}<span>BELT<b>CHASE</b></span></div>
+    <div class="date punch" style="${at(8.3)}"><em>3 décembre</em></div>
+    ${cap(1020, 'le meilleur parrain gagne les gants signés axel sola 🥊', 8.6, 'dark')}
+    <div class="cta punch" style="${at(9.0)}">Lien en bio</div>
+    <div class="foot in" style="${at(9.2)}">Gratuit · sans argent réel</div>`, 'last'),
+].join('');
+
+// Silhouettes des cartes en données intégrées (l'export ne recharge pas les url() des masques).
+window.ready = Promise.all([...document.querySelectorAll('.fc-sil')].map(async (el) => {
+  const raw = /url\('([^']+)'\)/.exec(el.getAttribute('style'))?.[1];
+  if (!raw) return;
+  const url = new URL(raw).pathname.replace(/^\/marketing\//, '/');
+  const blob = await (await fetch(url)).blob();
+  const data = await new Promise((ok) => { const r = new FileReader(); r.onload = () => ok(r.result); r.readAsDataURL(blob); });
+  el.style.setProperty('--sil', `url('${data}')`);
+}));
+
+window.seek = (t) => { for (const a of document.getAnimations()) { a.pause(); a.currentTime = t * 1000; } };
+window.DURATION = 11;
+if (new URLSearchParams(location.search).has('export')) window.seek(0);
+</script>
+</body>
+</html>
