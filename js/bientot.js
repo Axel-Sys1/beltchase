@@ -12,7 +12,7 @@
 // - stats/preinscriptions = { count, last } : nombre total d'inscrits.
 // Le bonus est donné dans le jeu (js/services/prelaunch.js).
 import { CONFIG } from './config.js';
-import { LANGS, lang, langInfo, locale, setLang, t } from './i18n.js';
+import { LANGS, lang, langInfo, locale, setLang, t, tn } from './i18n.js';
 import { beltLogo } from './ui/icons.js';
 import { escapeHtml } from './util.js';
 import { isOffensivePseudo } from './services/moderation.js';
@@ -25,7 +25,7 @@ const LAUNCH = new Date(CONFIG.LAUNCH_AT).getTime();
 const DONE_KEY = 'beltchase:preinscrit'; // { email, code } de l'inscription faite sur cet appareil
 const REF_KEY = 'beltchase:ref';
 const CODES_KEY = 'beltchase:mescodes'; // codes des inscriptions faites ici : pas de parrainage de soi-même
-const SHOW_COUNT_FROM = 50; // compteur affiché à partir de ce nombre d'inscrits
+const COUNT_EVERY_MS = 60_000; // nombre d'inscrits relu toutes les minutes (1 lecture Firestore)
 const TOP = 10; // lignes du classement des parrains
 const EMAIL = /^[^@\s/]+@[^@\s/]+\.[^@\s/]+$/; // pas de « / » : l'adresse sert d'identifiant de document
 const PSEUDO = /^[\p{L}\p{N} _.-]{2,16}$/u;
@@ -142,10 +142,10 @@ async function loadCount() {
     const snap = await F.getDoc(F.doc(d, 'stats', 'preinscriptions'));
     const n = snap.exists() ? snap.data().count : 0;
     const el = root.querySelector('.pre-count');
-    if (el && n >= SHOW_COUNT_FROM) {
-      el.innerHTML = t('<b>{n}</b> fans déjà pré-inscrits', { n: fmt(n) });
-      el.hidden = false;
-    }
+    if (!el) return;
+    el.innerHTML = n ? `<span class="pre-count-dot" aria-hidden="true"></span>${tn(n, '<b>{n}</b> fan déjà pré-inscrit', '<b>{n}</b> fans déjà pré-inscrits', { n: fmt(n) })}`
+      : t('Sois le premier à te pré-inscrire !');
+    el.hidden = false;
   } catch { /* compteur facultatif */ }
 }
 
@@ -254,10 +254,11 @@ function render() {
         ${[t('Jours'), t('Heures'), t('Min'), t('Sec')].map((l) => `<div class="cd-cell"><span class="cd-num">–</span><span class="cd-lbl">${l}</span></div>`).join('')}
       </div>
 
+      <p class="pre-count" role="status" hidden></p>
+
       <div class="pre-card">
         <p class="pre-gift"><span aria-hidden="true">🎁</span> ${t('Pré-inscris-toi : ton <b>pseudo réservé</b>, <b>{n} Gold</b>, le cadre et le titre exclusifs <b>OG</b> au lancement.', { n: fmt(CONFIG.PRELAUNCH_BONUS) })}</p>
         <div class="pre-form-slot">${formHtml()}</div>
-        <p class="pre-count" hidden></p>
       </div>
     </section>
 
@@ -360,6 +361,7 @@ root.addEventListener('click', async (e) => {
 
 render();
 startSparks(document.querySelector('.bc-sparks'));
+setInterval(() => { if (!document.hidden) loadCount(); }, COUNT_EVERY_MS);
 setInterval(tick, 1000);
 loadCount();
 loadBoard();

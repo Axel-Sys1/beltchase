@@ -819,5 +819,7 @@ export default {
 "Ce pseudo est déjà réservé. Choisis-en un autre.": "Этот ник уже занят. Выбери другой.",
 "Merci d'avoir été là avant le lancement ! +{n} Gold, le cadre et le titre OG.": "Спасибо, что был с нами до запуска! +{n} Gold, рамка и титул OG.",
 "Le n°1 le {d} à minuit gagne <b>des gants dédicacés par Axel Sola</b>, combattant de l'UFC, livrés chez lui !": "Первый в рейтинге {d} в полночь получит <b>перчатки с автографом Акселя Солы</b>, бойца UFC, с доставкой на дом!",
-"Règlement": "Правила"
+"Règlement": "Правила",
+"Sois le premier à te pré-inscrire !": "Запишись первым!",
+"<b>{n}</b> fan déjà pré-inscrit": "<b>{n}</b> фанат уже записался"
 };

@@ -819,5 +819,7 @@ export default {
 "Ce pseudo est déjà réservé. Choisis-en un autre.": "Este apodo ya está reservado. Elige otro.",
 "Merci d'avoir été là avant le lancement ! +{n} Gold, le cadre et le titre OG.": "¡Gracias por estar aquí antes del lanzamiento! +{n} Gold, el marco y el título OG.",
 "Le n°1 le {d} à minuit gagne <b>des gants dédicacés par Axel Sola</b>, combattant de l'UFC, livrés chez lui !": "¡El n.º 1 el {d} a medianoche gana <b>unos guantes firmados por Axel Sola</b>, luchador de la UFC, enviados a su casa!",
-"Règlement": "Reglamento"
+"Règlement": "Reglamento",
+"Sois le premier à te pré-inscrire !": "¡Sé el primero en preinscribirte!",
+"<b>{n}</b> fan déjà pré-inscrit": "<b>{n}</b> fan ya preinscrito"
 };

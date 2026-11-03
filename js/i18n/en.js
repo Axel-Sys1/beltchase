@@ -819,5 +819,7 @@ export default {
 "Ce pseudo est déjà réservé. Choisis-en un autre.": "This username is already reserved. Pick another one.",
 "Merci d'avoir été là avant le lancement ! +{n} Gold, le cadre et le titre OG.": "Thanks for being here before launch! +{n} Gold, the OG frame and title.",
 "Le n°1 le {d} à minuit gagne <b>des gants dédicacés par Axel Sola</b>, combattant de l'UFC, livrés chez lui !": "The #1 on {d} at midnight wins <b>gloves signed by Axel Sola</b>, UFC fighter, delivered to their door!",
-"Règlement": "Rules"
+"Règlement": "Rules",
+"Sois le premier à te pré-inscrire !": "Be the first to pre-register!",
+"<b>{n}</b> fan déjà pré-inscrit": "<b>{n}</b> fan already pre-registered"
 };

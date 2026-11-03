@@ -819,5 +819,7 @@ export default {
 "Ce pseudo est déjà réservé. Choisis-en un autre.": "এই ইউজারনেম আগেই রিজার্ভ করা। অন্য একটি বেছে নাও।",
 "Merci d'avoir été là avant le lancement ! +{n} Gold, le cadre et le titre OG.": "লঞ্চের আগে পাশে থাকার জন্য ধন্যবাদ! +{n} Gold, OG ফ্রেম আর টাইটেল।",
 "Le n°1 le {d} à minuit gagne <b>des gants dédicacés par Axel Sola</b>, combattant de l'UFC, livrés chez lui !": "{d} মধ্যরাতে ১ নম্বরে থাকা জন পাবে <b>UFC ফাইটার Axel Sola-র সই করা গ্লাভস</b>, বাড়িতে পৌঁছে দেওয়া হবে!",
-"Règlement": "নিয়মাবলি"
+"Règlement": "নিয়মাবলি",
+"Sois le premier à te pré-inscrire !": "সবার আগে প্রি-রেজিস্টার করো!",
+"<b>{n}</b> fan déjà pré-inscrit": "<b>{n}</b> জন ফ্যান প্রি-রেজিস্টার করেছে"
 };

@@ -819,5 +819,7 @@ export default {
 "Ce pseudo est déjà réservé. Choisis-en un autre.": "该昵称已被预留，请换一个。",
 "Merci d'avoir été là avant le lancement ! +{n} Gold, le cadre et le titre OG.": "感谢你在上线前就来支持！+{n} Gold、OG头像框和称号。",
 "Le n°1 le {d} à minuit gagne <b>des gants dédicacés par Axel Sola</b>, combattant de l'UFC, livrés chez lui !": "{d}零点排名第一的人将获得<b>UFC 选手 Axel Sola 亲笔签名的拳套</b>，送货上门！",
-"Règlement": "活动规则"
+"Règlement": "活动规则",
+"Sois le premier à te pré-inscrire !": "成为第一个预约的人！",
+"<b>{n}</b> fan déjà pré-inscrit": "已有 <b>{n}</b> 位粉丝预约"
 };

@@ -819,5 +819,7 @@ export default {
 "Ce pseudo est déjà réservé. Choisis-en un autre.": "هذا الاسم المستعار محجوز بالفعل. اختر اسمًا آخر.",
 "Merci d'avoir été là avant le lancement ! +{n} Gold, le cadre et le titre OG.": "شكرًا لوجودك معنا قبل الإطلاق! +{n} Gold، وإطار ولقب OG.",
 "Le n°1 le {d} à minuit gagne <b>des gants dédicacés par Axel Sola</b>, combattant de l'UFC, livrés chez lui !": "صاحب المركز الأول في {d} عند منتصف الليل يربح <b>قفازات موقّعة من أكسيل سولا</b>، مقاتل UFC، تصله إلى منزله!",
-"Règlement": "الشروط"
+"Règlement": "الشروط",
+"Sois le premier à te pré-inscrire !": "كن أول من يسجّل مسبقًا!",
+"<b>{n}</b> fan déjà pré-inscrit": "<b>{n}</b> مشجع سجّل مسبقًا"
 };
