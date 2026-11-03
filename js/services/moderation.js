@@ -17,6 +17,12 @@ const WHOLE_WORD = [
   'nique', 'pute', 'tamer', 'pede', 'raton', 'catin', 'negro', 'shit', 'nazi', 'heil', 'pedo', 'viol', 'nazis',
 ];
 
+// Se faire passer pour l'équipe du jeu, une organisation ou le combattant du concours : refusé aussi
+// (recherché n'importe où, lettres collées). « modo » / « mod » : seulement en mot entier.
+const IMPERSONATION = ['beltchase', 'admin', 'moderat', 'staff', 'support', 'officiel', 'official',
+  'ufc', 'bellator', 'pflmma', 'danawhite', 'axelsola'];
+const IMPERSONATION_WORDS = ['modo', 'mod', 'pfl', 'bc'];
+
 const LEET = { 0: 'o', 1: 'i', 3: 'e', 4: 'a', 5: 's', 7: 't', 8: 'b', '@': 'a', $: 's', '€': 'e', '!': 'i' };
 
 function normalize(pseudo) {
@@ -27,10 +33,12 @@ function normalize(pseudo) {
     .replace(/(.)\1{2,}/g, '$1$1');                    // « biiiite » → « biite »
 }
 
+// Pseudo refusé : insulte, propos haineux ou usurpation (équipe du jeu, organisations, Axel Sola).
 export function isOffensivePseudo(pseudo) {
   const n = normalize(pseudo);
   const glued = n.replace(/[^a-z]/g, '').replace(/(.)\1+/g, '$1'); // « b.i.i.t.e » → « bite »
-  if (ANYWHERE.some((w) => glued.includes(w) || n.replace(/[^a-z]/g, '').includes(w))) return true;
+  const letters = n.replace(/[^a-z]/g, '');
+  if ([...ANYWHERE, ...IMPERSONATION].some((w) => glued.includes(w) || letters.includes(w))) return true;
   const words = n.split(/[^a-z]+/).filter(Boolean);
-  return words.some((w) => WHOLE_WORD.includes(w) || WHOLE_WORD.includes(w.replace(/(.)\1+/g, '$1')));
+  return words.some((w) => WHOLE_WORD.includes(w) || IMPERSONATION_WORDS.includes(w) || WHOLE_WORD.includes(w.replace(/(.)\1+/g, '$1')));
 }

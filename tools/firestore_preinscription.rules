@@ -1,0 +1,69 @@
+// Règles Firestore de la pré-inscription (copie de README.md). Deux étapes dans Firebase → Firestore → Règles :
+//
+// 1) REMPLACER tout le bloc qui commence par « function preDoc » (ou « match /preinscriptions/ » s'il n'y a pas
+//    de preDoc) et finit par le bloc « match /stats/preinscriptions { … } » par ce qui suit :
+
+    function preDoc(id) { return /databases/$(database)/documents/preinscriptions/$(id); }
+    match /emails/{email} {
+      allow get: if true;
+      allow create: if request.resource.data.keys().hasOnly(['id', 'code'])
+        && email.size() <= 120 && email.matches('^[^@\\s/]+@[^@\\s/]+\\.[^@\\s/]+$')
+        && !exists(preDoc(request.resource.data.id))
+        && getAfter(preDoc(request.resource.data.id)).data.email == email
+        && getAfter(preDoc(request.resource.data.id)).data.code == request.resource.data.code;
+    }
+    match /preinscriptions/{id} {
+      allow create: if request.resource.data.keys().hasOnly(['email', 'pseudo', 'code', 'ref', 'lang', 'src', 'at'])
+        && request.resource.data.email is string
+        && getAfter(/databases/$(database)/documents/emails/$(request.resource.data.email)).data.id == id
+        && request.resource.data.pseudo is string && request.resource.data.pseudo.size() >= 2 && request.resource.data.pseudo.size() <= 16
+        && request.resource.data.code is string && request.resource.data.code.matches('^[a-z0-9]{6}$')
+        && request.resource.data.ref is string && request.resource.data.ref != request.resource.data.code
+        && request.resource.data.lang is string && request.resource.data.lang.size() <= 5
+        && request.resource.data.src is string && request.resource.data.src.size() <= 20
+        && request.resource.data.at == request.time
+        && getAfter(/databases/$(database)/documents/stats/preinscriptions).data.last == id
+        && getAfter(/databases/$(database)/documents/parrains/$(request.resource.data.code)).data.last == id
+        && (request.resource.data.ref == '' || getAfter(/databases/$(database)/documents/parrains/$(request.resource.data.ref)).data.last == id);
+      allow list: if request.auth != null && request.auth.token.email_verified == true
+        && request.auth.token.email in ['axel.sirieys@gmail.com'];
+    }
+    match /parrains/{code} {
+      allow read: if true;
+      allow create: if request.resource.data.keys().hasOnly(['pseudo', 'count', 'last'])
+        && request.resource.data.count == 0
+        && !exists(preDoc(request.resource.data.last))
+        && getAfter(preDoc(request.resource.data.last)).data.code == code
+        && getAfter(preDoc(request.resource.data.last)).data.pseudo == request.resource.data.pseudo
+        && getAfter(/databases/$(database)/documents/prepseudos/$(request.resource.data.pseudo.lower())).data.code == code;
+      allow update: if request.resource.data.keys().hasOnly(['pseudo', 'count', 'last'])
+        && request.resource.data.pseudo == resource.data.pseudo
+        && request.resource.data.count == resource.data.count + 1
+        && !exists(preDoc(request.resource.data.last))
+        && getAfter(preDoc(request.resource.data.last)).data.ref == code;
+    }
+    match /prepseudos/{name} {
+      allow get: if true;
+      allow create: if request.resource.data.keys().hasOnly(['code'])
+        && !exists(/databases/$(database)/documents/parrains/$(request.resource.data.code))
+        && getAfter(/databases/$(database)/documents/parrains/$(request.resource.data.code)).data.pseudo.lower() == name;
+    }
+    match /codes/{code} {
+      allow get: if request.auth != null;
+      allow create: if request.auth != null && request.resource.data.keys().hasOnly(['uid'])
+        && request.resource.data.uid == request.auth.uid
+        && get(/databases/$(database)/documents/emails/$(request.auth.token.email.lower())).data.code == code;
+    }
+    match /stats/preinscriptions {
+      allow read: if true;
+      allow write: if request.resource.data.keys().hasOnly(['count', 'last'])
+        && request.resource.data.count == (resource == null ? 0 : resource.data.count) + 1
+        && !exists(preDoc(request.resource.data.last))
+        && existsAfter(preDoc(request.resource.data.last));
+    }
+
+// 2) Dans « match /pseudos/{name} », à la fin de la ligne « allow create: if … », AVANT le « ; », ajouter :
+//
+//    && (!exists(/databases/$(database)/documents/prepseudos/$(name)) || ('email' in request.auth.token && get(/databases/$(database)/documents/emails/$(request.auth.token.email.lower())).data.code == get(/databases/$(database)/documents/prepseudos/$(name)).data.code))
+//
+// Puis cliquer « Publier ».
