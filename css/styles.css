@@ -185,6 +185,10 @@ input::placeholder { color: var(--placeholder); }
   background: var(--accent); transform: scaleX(0); transition: transform 0.25s var(--ease-out);
 }
 .nav-bottom .nav-item.active::before { transform: scaleX(1); }
+/* Libellés longs (russe, hindi…) : la case garde sa taille, le texte se coupe proprement. */
+.nav-bottom { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+.nav-bottom .nav-item { min-width: 0; padding: 0 2px; }
+.nav-bottom .nav-item > span:last-child { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; letter-spacing: 0.01em; }
 .nav-item.active { color: var(--accent); }
 .nav-icon { position: relative; display: grid; place-items: center; }
 .nav-icon svg { width: 22px; height: 22px; }
@@ -519,7 +523,9 @@ a.ad-ph:focus-visible { outline-offset: -2px; }
 .stat .muted { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
 .stat strong { font: italic 800 28px/1 var(--display); }
 .tabs { display: flex; gap: 4px; padding: 4px; background: var(--surface); border: 1px solid var(--line); border-radius: 9px; }
-.tab { flex: 1; border: 0; background: transparent; padding: 9px 8px; border-radius: 6px; font-weight: 700; font-size: 14px; transition: background 0.2s, color 0.2s; color: var(--muted); display: flex; align-items: center; justify-content: center; gap: 6px; }
+.tab > :not(.tab-count) { overflow: hidden; text-overflow: ellipsis; }
+.tab { overflow-wrap: anywhere; text-align: center; line-height: 1.15; }
+.tab { flex: 1; min-width: 0; border: 0; background: transparent; padding: 9px 8px; border-radius: 6px; font-weight: 700; font-size: 14px; transition: background 0.2s, color 0.2s; color: var(--muted); display: flex; align-items: center; justify-content: center; gap: 6px; }
 .tab.active { background: var(--surface-3); color: var(--text); box-shadow: inset 0 -2px 0 var(--accent); }
 .tab-count { font-size: 12px; background: var(--bg-2); border-radius: 999px; padding: 1px 7px; }
 .tab.active .tab-count { background: var(--accent); color: var(--accent-ink); font-weight: 700; }
