@@ -55,7 +55,10 @@ const initials = (name) => String(name).split(/\s+/).filter(Boolean).map((w) => 
 // Photo ronde du combattant, drapeau en médaillon ; initiales si la photo manque ou ne charge pas.
 function fighterAvatar(t, sport) {
   const ph = fighterPhoto(t, sport);
-  if (!ph) return teamMark(t);
+  // Sans photo : octogone au drapeau du combattant, initiales par-dessus (le style BeltChase).
+  if (!ph) {
+    return `<span class="fighter-oct">${t.logo ? `<img src="${escapeHtml(logoSrc(t.logo))}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">` : ''}<b>${escapeHtml(initials(t.name))}</b></span>`;
+  }
   return `<span class="fighter-ava" data-ini="${escapeHtml(initials(t.name))}">
       <img src="${escapeHtml(ph.img)}" alt="${escapeHtml(t.name)}" loading="lazy" referrerpolicy="no-referrer" ${withFallback(ph.full)}>
       ${t.logo ? teamMark(t, 'fighter-flag') : ''}

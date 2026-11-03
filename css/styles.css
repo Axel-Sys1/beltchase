@@ -2113,17 +2113,24 @@ h1.tagline { font: inherit; font-size: 16px; letter-spacing: normal; margin: 1em
 .credits-list { margin: 8px 0 0; padding-left: 18px; columns: 2 260px; font-size: 13px; color: var(--muted); }
 .credits-list li { margin-bottom: 4px; break-inside: avoid; }
 
-/* Choix de la langue (réglages, accueil, pied de page). */
-.lang-pick { display: inline-flex; align-items: center; gap: 8px; color: var(--muted); }
-.lang-pick select {
-  appearance: none; -webkit-appearance: none; cursor: pointer;
-  background: var(--surface-2) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23f2b630' stroke-width='2'/%3E%3C/svg%3E") no-repeat right 10px center / 11px 8px;
-  color: var(--text); border: 1px solid var(--line-2); border-radius: 8px;
-  padding: 8px 30px 8px 12px; font: 600 14px/1.2 Barlow, system-ui, sans-serif;
-}
-[dir="rtl"] .lang-pick select { background-position: left 10px center; padding: 8px 12px 8px 30px; }
-.lang-pick select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-.lang-footer, .lang-landing { display: flex; justify-content: center; margin: 12px auto 0; }
+/* Choix de la langue : menu à drapeaux (langPicker.js). */
+.lang-menu { position: relative; display: inline-block; }
+.lang-menu summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px;
+  background: var(--surface-2); border: 1px solid var(--line-2); border-radius: 8px; font: 600 14px/1.2 Barlow, system-ui, sans-serif; color: var(--text); }
+.lang-menu summary::-webkit-details-marker { display: none; }
+.lang-menu summary i { font-style: normal; color: var(--accent); font-size: 11px; }
+.lang-menu[open] summary { border-color: var(--accent); }
+.lang-flag { width: 20px; height: 15px; border-radius: 2px; object-fit: cover; box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.15); flex: none; }
+.lang-menu ul { position: absolute; z-index: 40; inset-inline-end: 0; top: calc(100% + 6px); margin: 0; padding: 6px; list-style: none; min-width: 240px;
+  max-height: 60vh; overflow-y: auto; background: var(--surface); border: 1px solid var(--line-2); border-radius: 10px; box-shadow: 0 18px 40px -12px #000; }
+.lang-menu.lang-footer ul, .lang-menu.lang-landing ul { top: auto; bottom: calc(100% + 6px); inset-inline-start: 50%; inset-inline-end: auto; transform: translateX(-50%); }
+[dir="rtl"] .lang-menu.lang-footer ul, [dir="rtl"] .lang-menu.lang-landing ul { transform: translateX(50%); }
+.lang-menu li button { width: 100%; display: flex; align-items: center; gap: 10px; padding: 9px 10px; border: 0; border-radius: 7px; background: transparent;
+  color: var(--text); font: 600 14px/1.2 Barlow, system-ui, sans-serif; text-align: start; cursor: pointer; }
+.lang-menu li button:hover, .lang-menu li button:focus-visible { background: var(--surface-2); }
+.lang-menu li button.is-current { background: var(--accent-soft); color: var(--accent); }
+.lang-name small { margin-inline-start: 4px; color: var(--muted); font-size: 13px; font-weight: 500; }
+.lang-footer, .lang-landing { display: flex; justify-content: center; width: fit-content; margin: 12px auto 0; }
 
 /* Bilan sur la carte et fiche d'une carte de l'album (cardSheet.js). */
 .fc-rec { display: inline-block; margin-top: 3px; padding: 1px 7px; border-radius: 99px; background: rgba(0, 0, 0, 0.45);
@@ -2143,3 +2150,22 @@ h1.tagline { font: inherit; font-size: 16px; letter-spacing: normal; margin: 1em
   .cs-body { text-align: center; }
   .cs-actions { justify-content: center; }
 }
+
+/* Style BeltChase sans photos : octogones et drapeaux (affiches composées, avatars des combattants). */
+.made-poster.mp-bare { background: linear-gradient(105deg, color-mix(in srgb, var(--c1) 55%, #08122a) 0 50%, color-mix(in srgb, var(--c2) 55%, #08122a) 50% 100%); }
+.mp-flagbg { position: absolute; top: 0; bottom: 0; width: 56%; z-index: 0; background-size: cover; background-position: center; opacity: 0.55;
+  filter: saturate(1.1) contrast(1.05); }
+.mp-flagbg1 { left: 0; clip-path: polygon(0 0, 100% 0, 82% 100%, 0 100%); }
+.mp-flagbg2 { right: 0; clip-path: polygon(18% 0, 100% 0, 100% 100%, 0 100%); }
+.mp-bare::before { content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: radial-gradient(ellipse 40% 60% at 50% 45%, rgba(8, 18, 42, 0.15), rgba(8, 18, 42, 0.7) 75%), repeating-linear-gradient(115deg, rgba(255, 255, 255, 0.04) 0 2px, transparent 2px 10px); }
+.mp-bare .mp-names { bottom: 18%; }
+.mp-bare .mp-vs { display: grid; place-items: center; width: 13cqi; height: 13cqi; margin-bottom: 1cqi; color: #0b1733; text-shadow: none; font-size: 6.4cqi;
+  background: linear-gradient(180deg, #ffe08a, #f2b630 55%, #b9821a); clip-path: polygon(30% 0, 70% 0, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0 70%, 0 30%);
+  box-shadow: 0 0 24px rgba(var(--accent-rgb), 0.5); }
+.mp-bare .mp-n { font-size: 8.4cqi; }
+.fighter-oct { position: relative; flex-shrink: 0; display: grid; place-items: center; width: 40px; height: 40px; overflow: hidden;
+  clip-path: polygon(30% 0, 70% 0, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0 70%, 0 30%); background: var(--surface-3); }
+.fighter-oct img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.75; transform: scale(1.35); }
+.fighter-oct::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(8, 18, 42, 0.75), rgba(8, 18, 42, 0.15)); }
+.fighter-oct b { position: relative; z-index: 1; font: italic 800 15px/1 var(--display); color: #fff; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9); letter-spacing: 0.02em; }

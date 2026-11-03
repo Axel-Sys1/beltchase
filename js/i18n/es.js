@@ -766,5 +766,6 @@ export default {
 "Stats : ESPN.": "Estadísticas: ESPN.",
 "Stats : Wikipédia / Wikidata.": "Estadísticas: Wikipedia / Wikidata.",
 "Fiche du combattant": "Ficha del peleador",
-"Touche une de tes cartes pour voir les stats du combattant et en faire ta favorite.": "Toca una de tus cartas para ver las estadísticas del peleador y hacerla tu favorita."
+"Touche une de tes cartes pour voir les stats du combattant et en faire ta favorite.": "Toca una de tus cartas para ver las estadísticas del peleador y hacerla tu favorita.",
+"Affiche {m}": "Cartel {m}"
 };

@@ -766,5 +766,6 @@ export default {
 "Stats : ESPN.": "数据：ESPN。",
 "Stats : Wikipédia / Wikidata.": "数据：维基百科 / 维基数据。",
 "Fiche du combattant": "选手资料",
-"Touche une de tes cartes pour voir les stats du combattant et en faire ta favorite.": "点你的一张卡牌，查看选手数据并设为最爱。"
+"Touche une de tes cartes pour voir les stats du combattant et en faire ta favorite.": "点你的一张卡牌，查看选手数据并设为最爱。",
+"Affiche {m}": "{m} 海报"
 };

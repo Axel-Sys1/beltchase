@@ -766,5 +766,6 @@ export default {
 "Stats : ESPN.": "आँकड़े: ESPN।",
 "Stats : Wikipédia / Wikidata.": "आँकड़े: विकिपीडिया / विकिडेटा।",
 "Fiche du combattant": "फ़ाइटर प्रोफ़ाइल",
-"Touche une de tes cartes pour voir les stats du combattant et en faire ta favorite.": "फ़ाइटर के आँकड़े देखने और पसंदीदा बनाने के लिए अपना कोई कार्ड दबाएँ।"
+"Touche une de tes cartes pour voir les stats du combattant et en faire ta favorite.": "फ़ाइटर के आँकड़े देखने और पसंदीदा बनाने के लिए अपना कोई कार्ड दबाएँ।",
+"Affiche {m}": "{m} पोस्टर"
 };

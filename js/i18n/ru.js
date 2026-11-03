@@ -766,5 +766,6 @@ export default {
 "Stats : ESPN.": "Статистика: ESPN.",
 "Stats : Wikipédia / Wikidata.": "Статистика: Википедия / Викиданные.",
 "Fiche du combattant": "Профиль бойца",
-"Touche une de tes cartes pour voir les stats du combattant et en faire ta favorite.": "Нажми на свою карту, чтобы увидеть статистику бойца и сделать её любимой."
+"Touche une de tes cartes pour voir les stats du combattant et en faire ta favorite.": "Нажми на свою карту, чтобы увидеть статистику бойца и сделать её любимой.",
+"Affiche {m}": "Афиша: {m}"
 };

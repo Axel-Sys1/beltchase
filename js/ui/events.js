@@ -208,6 +208,7 @@ const actions = {
   },
   'card-fav': (el) => favoriteCard(el.dataset.id),
   'card-open': (el) => showCardSheet(el.dataset.id),
+  'set-lang': (el) => setLang(el.dataset.lang),
   'album-set': (el) => { ui.albumSet = el.dataset.set; render(); },
   'album-rarity': (el) => { ui.albumRarity = el.dataset.rarity; render(); },
   'open-album': () => { ui.shopTab = 'album'; go('boutique'); },

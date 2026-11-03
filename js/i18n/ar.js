@@ -766,5 +766,6 @@ export default {
 "Stats : ESPN.": "الإحصاءات: ESPN.",
 "Stats : Wikipédia / Wikidata.": "الإحصاءات: ويكيبيديا / ويكي بيانات.",
 "Fiche du combattant": "ملف المقاتل",
-"Touche une de tes cartes pour voir les stats du combattant et en faire ta favorite.": "اضغط على إحدى بطاقاتك لترى إحصاءات المقاتل وتجعلها مفضّلتك."
+"Touche une de tes cartes pour voir les stats du combattant et en faire ta favorite.": "اضغط على إحدى بطاقاتك لترى إحصاءات المقاتل وتجعلها مفضّلتك.",
+"Affiche {m}": "ملصق {m}"
 };

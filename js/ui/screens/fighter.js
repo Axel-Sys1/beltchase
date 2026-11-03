@@ -1,6 +1,7 @@
 // Fiche d'un combattant (#combattant/<id ESPN>) : photo, bio, palmarès, prochain combat à parier,
 // historique des combats et actus qui le citent. Données : services/fighters.js (ESPN, UFC / PFL).
 import { escapeHtml } from '../../util.js';
+import { CONFIG } from '../../config.js';
 import { realNow } from '../../store.js';
 import { matchStatus } from '../../services/matchInfo.js';
 import { fighterState, loadFighter } from '../../services/fighters.js';
@@ -68,7 +69,7 @@ export function renderFighter(s, p) {
   return `
     ${back}
     <section class="fighter-hero">
-      ${f.photo ? `<img class="fighter-photo" src="${escapeHtml(sizedPhoto(f.photo, 400))}" alt="${escapeHtml(f.name)}" referrerpolicy="no-referrer" onerror="this.remove()">` : ''}
+      ${f.photo && CONFIG.CARD_PHOTOS ? `<img class="fighter-photo" src="${escapeHtml(sizedPhoto(f.photo, 400))}" alt="${escapeHtml(f.name)}" referrerpolicy="no-referrer" onerror="this.remove()">` : ''}
       <div class="fighter-id">
         ${f.flag ? `<img class="fighter-flag-big" src="${escapeHtml(f.flag)}" alt="" referrerpolicy="no-referrer">` : ''}
         <h1>${escapeHtml(f.name)}</h1>

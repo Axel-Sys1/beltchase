@@ -5,9 +5,9 @@ import { CONFIG } from '../config.js';
 import { escapeHtml } from '../util.js';
 import { sizedPhoto, withFallback } from '../providers/photos.js';
 import { fighterPhoto } from './stars.js';
-import { teamMark } from './logos.js';
+import { logoSrc, teamMark } from './logos.js';
 import { matchTitle } from '../services/matchInfo.js';
-import { locale } from '../i18n.js';
+import { locale, t } from '../i18n.js';
 
 const SUFFIX = /^(jr|sr|ii|iii|iv)\.?$/i;
 
@@ -48,9 +48,12 @@ export function madePoster(m, { width = 400 } = {}) {
     };
   };
   const [h, a] = [side(m.home, 1), side(m.away, 2)];
+  // Sans photos (choix par défaut) : les drapeaux des deux combattants en fond, de part et d'autre.
+  const bare = !h.img && !a.img;
+  const flagBg = (team, n) => (team.logo ? `<span class="mp-flagbg mp-flagbg${n}" style="background-image:url('${escapeHtml(logoSrc(team.logo))}')"></span>` : '');
   return `
-    <div class="made-poster" style="--c1:${c1};--c2:${c2}" role="img" aria-label="Affiche ${escapeHtml(matchTitle(m))}">
-      ${h.img}${a.img}
+    <div class="made-poster ${bare ? 'mp-bare' : ''}" style="--c1:${c1};--c2:${c2}" role="img" aria-label="${t('Affiche {m}', { m: escapeHtml(matchTitle(m)) })}">
+      ${bare ? `${flagBg(m.home, 1)}${flagBg(m.away, 2)}` : `${h.img}${a.img}`}
       <span class="mp-event">${m.competitionLogo ? `<img src="${escapeHtml(m.competitionLogo)}" alt="" referrerpolicy="no-referrer" onerror="this.remove()">` : ''}${escapeHtml(m.competition || '')}</span>
       <span class="mp-names">${h.name}<b class="mp-vs">VS</b>${a.name}</span>
       <span class="mp-date">${escapeHtml(dateText(m.startsAt))}</span>
@@ -60,9 +63,10 @@ export function madePoster(m, { width = 400 } = {}) {
 // Affiche d'un combat : officielle, sinon composée. → HTML (contenu d'un cadre 16:9) ou ''.
 // fail : code JS si l'officielle ne charge pas (le cadre est alors retiré).
 export function posterHtml(m, { width = 400, fail = 'this.parentNode.remove()' } = {}) {
-  if (!CONFIG.CARD_PHOTOS) return '';
-  if (m.poster) {
-    return `<img src="${escapeHtml(sizedPhoto(m.poster, width))}" alt="Affiche ${escapeHtml(matchTitle(m))}" loading="lazy" referrerpolicy="no-referrer" ${withFallback(m.poster, fail)}>`;
+  // Affiches officielles et photos seulement si CARD_PHOTOS (droits d'auteur, droit à l'image) ;
+  // sinon notre affiche, aux drapeaux des combattants.
+  if (CONFIG.CARD_PHOTOS && m.poster) {
+    return `<img src="${escapeHtml(sizedPhoto(m.poster, width))}" alt="${t('Affiche {m}', { m: escapeHtml(matchTitle(m)) })}" loading="lazy" referrerpolicy="no-referrer" ${withFallback(m.poster, fail)}>`;
   }
   return madePoster(m, { width });
 }
