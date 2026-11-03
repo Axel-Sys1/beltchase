@@ -842,5 +842,6 @@ export default {
 "Prono gagné : tu gagnes des RR (points de rang). Plus la cote est osée, plus tu en gagnes.": "Palpite certo: você ganha RR (pontos de ranque). Quanto mais ousada a cotação, mais você ganha.",
 "Prono perdu : tu en perds {n}. Parier au hasard ne fait pas monter, seuls les bons pronos comptent.": "Palpite errado: você perde {n}. Chutar não te faz subir, só os bons palpites contam.",
 "= une division. 3 divisions par rang, de Fer 1 à Immortel 3. Les {n} meilleurs Immortels deviennent Radiant.": "= uma divisão. 3 divisões por ranque, do Ferro 1 ao Imortal 3. Os {n} melhores Imortais viram Radiante.",
-"Chaque mois, une nouvelle saison : le top 3 entre au Hall of Fame avec un cadre et un titre Champion exclusifs.": "Todo mês, uma nova temporada: o top 3 entra no Hall of Fame com moldura e título Campeão exclusivos."
+"Chaque mois, une nouvelle saison : le top 3 entre au Hall of Fame avec un cadre et un titre Champion exclusifs.": "Todo mês, uma nova temporada: o top 3 entra no Hall of Fame com moldura e título Campeão exclusivos.",
+"Bon prono : tu montes. Mauvais : tu descends. Chaque mois, le top 3 entre au Hall of Fame.": "Palpite certo: você sobe. Errado: você desce. Todo mês, o top 3 entra no Hall of Fame."
 };

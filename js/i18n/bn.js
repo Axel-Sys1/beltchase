@@ -842,5 +842,6 @@ export default {
 "Prono gagné : tu gagnes des RR (points de rang). Plus la cote est osée, plus tu en gagnes.": "সঠিক প্রেডিকশন: তুমি RR (র‍্যাঙ্ক পয়েন্ট) পাও। অড যত সাহসী, তত বেশি পয়েন্ট।",
 "Prono perdu : tu en perds {n}. Parier au hasard ne fait pas monter, seuls les bons pronos comptent.": "ভুল প্রেডিকশন: তুমি {n} হারাও। আন্দাজে খেললে র‍্যাঙ্ক বাড়ে না, শুধু ভালো প্রেডিকশনই গোনা হয়।",
 "= une division. 3 divisions par rang, de Fer 1 à Immortel 3. Les {n} meilleurs Immortels deviennent Radiant.": "= এক ডিভিশন। প্রতি র‍্যাঙ্কে ৩ ডিভিশন, আয়রন ১ থেকে ইমর্টাল ৩। সেরা {n} ইমর্টাল রেডিয়েন্ট হয়।",
-"Chaque mois, une nouvelle saison : le top 3 entre au Hall of Fame avec un cadre et un titre Champion exclusifs.": "প্রতি মাসে নতুন সিজন: সেরা ৩ জন হল অফ ফেমে, এক্সক্লুসিভ চ্যাম্পিয়ন ফ্রেম আর টাইটেল নিয়ে।"
+"Chaque mois, une nouvelle saison : le top 3 entre au Hall of Fame avec un cadre et un titre Champion exclusifs.": "প্রতি মাসে নতুন সিজন: সেরা ৩ জন হল অফ ফেমে, এক্সক্লুসিভ চ্যাম্পিয়ন ফ্রেম আর টাইটেল নিয়ে।",
+"Bon prono : tu montes. Mauvais : tu descends. Chaque mois, le top 3 entre au Hall of Fame.": "সঠিক প্রেডিকশন: ওপরে ওঠো। ভুল: নিচে নামো। প্রতি মাসে সেরা ৩ জন হল অফ ফেমে।"
 };

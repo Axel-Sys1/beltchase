@@ -842,5 +842,6 @@ export default {
 "Prono gagné : tu gagnes des RR (points de rang). Plus la cote est osée, plus tu en gagnes.": "درست پیشگوئی: آپ کو RR (رینک پوائنٹس) ملتے ہیں۔ جتنا جرات مند اوڈ، اتنے زیادہ پوائنٹس۔",
 "Prono perdu : tu en perds {n}. Parier au hasard ne fait pas monter, seuls les bons pronos comptent.": "غلط پیشگوئی: آپ {n} کھوتے ہیں۔ اندازے سے کھیلنے سے رینک نہیں بڑھتا، صرف اچھی پیشگوئیاں گنی جاتی ہیں۔",
 "= une division. 3 divisions par rang, de Fer 1 à Immortel 3. Les {n} meilleurs Immortels deviennent Radiant.": "= ایک ڈویژن۔ ہر رینک میں 3 ڈویژن، آئرن 1 سے امورٹل 3 تک۔ بہترین {n} امورٹل ریڈیئنٹ بنتے ہیں۔",
-"Chaque mois, une nouvelle saison : le top 3 entre au Hall of Fame avec un cadre et un titre Champion exclusifs.": "ہر مہینے نیا سیزن: ٹاپ 3 ہال آف فیم میں، خاص چیمپیئن فریم اور ٹائٹل کے ساتھ۔"
+"Chaque mois, une nouvelle saison : le top 3 entre au Hall of Fame avec un cadre et un titre Champion exclusifs.": "ہر مہینے نیا سیزن: ٹاپ 3 ہال آف فیم میں، خاص چیمپیئن فریم اور ٹائٹل کے ساتھ۔",
+"Bon prono : tu montes. Mauvais : tu descends. Chaque mois, le top 3 entre au Hall of Fame.": "درست پیشگوئی: اوپر جائیں۔ غلط: نیچے آئیں۔ ہر مہینے ٹاپ 3 ہال آف فیم میں۔"
 };

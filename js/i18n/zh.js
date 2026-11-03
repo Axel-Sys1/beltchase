@@ -842,5 +842,6 @@ export default {
 "Prono gagné : tu gagnes des RR (points de rang). Plus la cote est osée, plus tu en gagnes.": "猜中：获得 RR（段位分）。赔率越大胆，得分越多。",
 "Prono perdu : tu en perds {n}. Parier au hasard ne fait pas monter, seuls les bons pronos comptent.": "猜错：扣 {n} 分。随便乱猜不会上分，只有好的竞猜才算数。",
 "= une division. 3 divisions par rang, de Fer 1 à Immortel 3. Les {n} meilleurs Immortels deviennent Radiant.": "= 一个小段。每个段位 3 个小段，从黑铁 1 到不朽 3。前 {n} 名不朽成为辐能。",
-"Chaque mois, une nouvelle saison : le top 3 entre au Hall of Fame avec un cadre et un titre Champion exclusifs.": "每月一个新赛季：前三名进入名人堂，获得专属冠军头像框和称号。"
+"Chaque mois, une nouvelle saison : le top 3 entre au Hall of Fame avec un cadre et un titre Champion exclusifs.": "每月一个新赛季：前三名进入名人堂，获得专属冠军头像框和称号。",
+"Bon prono : tu montes. Mauvais : tu descends. Chaque mois, le top 3 entre au Hall of Fame.": "猜对就上分，猜错就掉分。每月前三名进入名人堂。"
 };

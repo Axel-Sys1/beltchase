@@ -842,5 +842,6 @@ export default {
 "Prono gagné : tu gagnes des RR (points de rang). Plus la cote est osée, plus tu en gagnes.": "Pronóstico acertado: ganas RR (puntos de rango). Cuanto más arriesgada la cuota, más ganas.",
 "Prono perdu : tu en perds {n}. Parier au hasard ne fait pas monter, seuls les bons pronos comptent.": "Pronóstico fallado: pierdes {n}. Apostar al azar no te hace subir, solo cuentan los buenos pronósticos.",
 "= une division. 3 divisions par rang, de Fer 1 à Immortel 3. Les {n} meilleurs Immortels deviennent Radiant.": "= una división. 3 divisiones por rango, de Hierro 1 a Inmortal 3. Los {n} mejores Inmortales se vuelven Radiantes.",
-"Chaque mois, une nouvelle saison : le top 3 entre au Hall of Fame avec un cadre et un titre Champion exclusifs.": "Cada mes, una nueva temporada: el top 3 entra en el Hall of Fame con un marco y un título Campeón exclusivos."
+"Chaque mois, une nouvelle saison : le top 3 entre au Hall of Fame avec un cadre et un titre Champion exclusifs.": "Cada mes, una nueva temporada: el top 3 entra en el Hall of Fame con un marco y un título Campeón exclusivos.",
+"Bon prono : tu montes. Mauvais : tu descends. Chaque mois, le top 3 entre au Hall of Fame.": "Buen pronóstico: subes. Malo: bajas. Cada mes, el top 3 entra en el Hall of Fame."
 };

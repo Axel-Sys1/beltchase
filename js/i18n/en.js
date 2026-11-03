@@ -842,5 +842,6 @@ export default {
 "Prono gagné : tu gagnes des RR (points de rang). Plus la cote est osée, plus tu en gagnes.": "Winning pick: you earn RR (rank points). The bolder the odds, the more you earn.",
 "Prono perdu : tu en perds {n}. Parier au hasard ne fait pas monter, seuls les bons pronos comptent.": "Losing pick: you lose {n}. Random picks won't get you anywhere, only good picks count.",
 "= une division. 3 divisions par rang, de Fer 1 à Immortel 3. Les {n} meilleurs Immortels deviennent Radiant.": "= one division. 3 divisions per rank, from Iron 1 to Immortal 3. The top {n} Immortals become Radiant.",
-"Chaque mois, une nouvelle saison : le top 3 entre au Hall of Fame avec un cadre et un titre Champion exclusifs.": "Every month, a new season: the top 3 enter the Hall of Fame with an exclusive Champion frame and title."
+"Chaque mois, une nouvelle saison : le top 3 entre au Hall of Fame avec un cadre et un titre Champion exclusifs.": "Every month, a new season: the top 3 enter the Hall of Fame with an exclusive Champion frame and title.",
+"Bon prono : tu montes. Mauvais : tu descends. Chaque mois, le top 3 entre au Hall of Fame.": "Good pick: you climb. Bad pick: you drop. Every month, the top 3 enter the Hall of Fame."
 };

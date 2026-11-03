@@ -842,5 +842,6 @@ export default {
 "Prono gagné : tu gagnes des RR (points de rang). Plus la cote est osée, plus tu en gagnes.": "Верный прогноз: ты получаешь RR (очки ранга). Чем смелее коэффициент, тем больше очков.",
 "Prono perdu : tu en perds {n}. Parier au hasard ne fait pas monter, seuls les bons pronos comptent.": "Неверный прогноз: ты теряешь {n}. Ставки наугад не помогут, считаются только хорошие прогнозы.",
 "= une division. 3 divisions par rang, de Fer 1 à Immortel 3. Les {n} meilleurs Immortels deviennent Radiant.": "= одно деление. 3 деления на ранг, от Железа 1 до Бессмертного 3. {n} лучших Бессмертных становятся Радиантами.",
-"Chaque mois, une nouvelle saison : le top 3 entre au Hall of Fame avec un cadre et un titre Champion exclusifs.": "Каждый месяц — новый сезон: топ-3 попадают в Зал славы с эксклюзивными рамкой и титулом Чемпиона."
+"Chaque mois, une nouvelle saison : le top 3 entre au Hall of Fame avec un cadre et un titre Champion exclusifs.": "Каждый месяц — новый сезон: топ-3 попадают в Зал славы с эксклюзивными рамкой и титулом Чемпиона.",
+"Bon prono : tu montes. Mauvais : tu descends. Chaque mois, le top 3 entre au Hall of Fame.": "Верный прогноз — растёшь, неверный — падаешь. Каждый месяц топ-3 попадают в Зал славы."
 };

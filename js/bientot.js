@@ -14,7 +14,7 @@
 import { CONFIG } from './config.js';
 import { LANGS, lang, langInfo, locale, setLang, t, tn } from './i18n.js';
 import { beltLogo, rankEmblem } from './ui/icons.js';
-import { LOSS_RR, RADIANT, RADIANT_SPOTS, RR_PER_DIVISION, TIERS } from './services/ranks.js';
+import { RADIANT, TIERS } from './services/ranks.js';
 import { escapeHtml } from './util.js';
 import { isOffensivePseudo } from './services/moderation.js';
 import { startSparks } from './ui/backdrop.js';
@@ -255,7 +255,6 @@ function previewHtml() {
     <div class="pv-odds"><span class="is-on">Gane <b>2,18</b></span><span>Hokit <b>1,63</b></span></div>
     <div class="pv-meth"><span class="is-on">KO / TKO</span><span>${t('Soumission')}</span><span>${t('Décision')}</span></div>
     <div class="pv-slip"><span>${t('Ton prono : Gane par KO')}</span><b>× 4,40</b></div>
-    <p class="pv-cap">${t('Vainqueur, méthode, round : plus ton prono est précis, plus tu gagnes de Gold.')}</p>
   </div>`;
 }
 
@@ -305,28 +304,26 @@ function render() {
 
     <section class="pre-game" aria-labelledby="pre-game-title">
       <h2 id="pre-game-title">${t('Le jeu en un coup d\'œil')}</h2>
-      ${previewHtml()}
-    </section>
-
-    <section class="pre-ranks" aria-labelledby="pre-ranks-title">
-      <h2 id="pre-ranks-title">${t('Chasse la ceinture')}</h2>
-      <p class="pre-ranks-sub">${t('Chaque prono te fait monter ou descendre. De Fer à Radiant, prouve que c\'est toi qui connais le mieux le combat.')}</p>
-      <ol class="pre-ladder">
-        ${[...TIERS, RADIANT].map((r, i) => `<li style="--i:${i}">${rankEmblem({ ...r, division: r.id === 'radiant' ? null : 3, label: r.name }, 'rank-emblem pre-emblem')}<span style="color:${r.color}">${escapeHtml(r.name)}</span></li>`).join('')}
-      </ol>
-      <div class="pre-rules">
-        <div><b>+ RR</b><p>${t('Prono gagné : tu gagnes des RR (points de rang). Plus la cote est osée, plus tu en gagnes.')}</p></div>
-        <div><b>− ${LOSS_RR} RR</b><p>${t('Prono perdu : tu en perds {n}. Parier au hasard ne fait pas monter, seuls les bons pronos comptent.', { n: LOSS_RR })}</p></div>
-        <div><b>${RR_PER_DIVISION} RR</b><p>${t('= une division. 3 divisions par rang, de Fer 1 à Immortel 3. Les {n} meilleurs Immortels deviennent Radiant.', { n: RADIANT_SPOTS })}</p></div>
-        <div><b>🏆</b><p>${t('Chaque mois, une nouvelle saison : le top 3 entre au Hall of Fame avec un cadre et un titre Champion exclusifs.')}</p></div>
+      <div class="pre-trio">
+        <article class="pre-col">
+          <h3><span aria-hidden="true">🎯</span> ${t('Pronostique')}</h3>
+          ${previewHtml()}
+        </article>
+        <article class="pre-col">
+          <h3><span aria-hidden="true">🃏</span> ${t('Collectionne')}</h3>
+          <div class="pre-cards" aria-label="${t('Exemples de cartes à collectionner')}">
+            ${SHOWCASE.map(([id, flag], i) => { const c = CARDS.find((x) => x.id === id); return c ? `<div class="lc lc-${i}">${fightCardHtml(c, { flag })}</div>` : ''; }).join('')}
+          </div>
+          <p class="pre-col-txt">${t('{n} cartes à collectionner · MMA, boxe, kick, JJB…', { n: CARDS.length })}</p>
+        </article>
+        <article class="pre-col">
+          <h3><span aria-hidden="true">🏆</span> ${t('Chasse la ceinture')}</h3>
+          <ol class="pre-ladder">
+            ${[...TIERS, RADIANT].map((r, i) => `<li style="--i:${i}">${rankEmblem({ ...r, division: r.id === 'radiant' ? null : 3, label: r.name }, 'rank-emblem pre-emblem')}<span style="color:${r.color}">${escapeHtml(r.name)}</span></li>`).join('')}
+          </ol>
+          <p class="pre-col-txt">${t('Bon prono : tu montes. Mauvais : tu descends. Chaque mois, le top 3 entre au Hall of Fame.')}</p>
+        </article>
       </div>
-    </section>
-
-    <section class="pre-game pre-collect" aria-label="${t('Exemples de cartes à collectionner')}">
-      <div class="pre-cards">
-        ${SHOWCASE.map(([id, flag], i) => { const c = CARDS.find((x) => x.id === id); return c ? `<div class="lc lc-${i}">${fightCardHtml(c, { flag })}</div>` : ''; }).join('')}
-      </div>
-      <p class="pre-cards-cap">${t('{n} cartes à collectionner · MMA, boxe, kick, JJB…', { n: CARDS.length })}</p>
     </section>
 
     <section class="pre-board" id="pre-board" aria-labelledby="pre-board-title">
@@ -339,15 +336,6 @@ function render() {
     <section class="pre-news" id="pre-news" aria-labelledby="pre-news-title">
       <h2 id="pre-news-title"><span class="pre-live">${t('En direct')}</span>${t('L\'actu du moment')}</h2>
       <div class="pre-news-body">${newsHtml()}</div>
-    </section>
-
-    <section class="pre-feats">
-      ${[
-    ['📰', t('Suis l\'actu'), t('MMA, UFC, boxe, kick : les infos qui comptent, en continu, au même endroit.')],
-    ['🎯', t('Pronostique'), t('Vainqueur, méthode, round : sur les vrais combats de MMA, boxe, kick et JJB.')],
-    ['🃏', t('Collectionne'), t('151 cartes de combattants, de commune à légendaire.')],
-    ['🏆', t('Chasse la ceinture'), t('Grimpe les rangs et décroche la ceinture du mois.')],
-  ].map(([ico, h, p]) => `<article class="pre-feat"><span class="pre-feat-ico" aria-hidden="true">${ico}</span><h2>${h}</h2><p>${p}</p></article>`).join('')}
     </section>
 
     <a class="pre-insta" href="${CONFIG.INSTAGRAM}" target="_blank" rel="noopener">

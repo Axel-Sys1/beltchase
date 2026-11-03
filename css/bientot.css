@@ -278,3 +278,18 @@ a { color: var(--accent); }
 }
 @media (prefers-reduced-motion: reduce) { .pre-ladder li { animation: none; } }
 .pre-collect { margin-top: 36px; text-align: center; }
+
+/* Version courte : « Le jeu » en 3 colonnes (empilées sur téléphone) */
+.pre-trio { display: grid; gap: 14px; }
+@media (min-width: 900px) { .pre-trio { grid-template-columns: repeat(3, 1fr); align-items: stretch; } }
+.pre-col { display: flex; flex-direction: column; gap: 10px; padding: 16px; border-radius: 14px; background: rgba(15, 31, 64, 0.8); border: 1px solid var(--line-2); text-align: center; }
+.pre-col h3 { margin: 0; font: italic 800 22px/1 var(--display); text-transform: uppercase; color: var(--accent); }
+.pre-col-txt { margin: auto 0 0; color: var(--muted); font-size: 13.5px; }
+.pre-col .pv { padding: 12px; box-shadow: none; }
+.pre-col .pv-oct { width: 52px; height: 52px; }
+.pre-col .pv-f strong { font-size: 19px; }
+.pre-col .pre-cards { height: 180px; margin: 4px 0 0; }
+.pre-col .pre-cards .lc { width: 104px; margin: 0 -14px; }
+.pre-col .pre-ladder { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px 6px; padding: 12px 6px; }
+.pre-col .pre-emblem { width: 36px; height: 41px; }
+.pre-col .pre-ladder span { font-size: 12px; }
