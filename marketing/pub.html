@@ -40,7 +40,7 @@
   .og-mark svg { width: 70px; height: 70px; }
   .og-mark b { font: italic 800 54px/1 var(--display); }
   .og-mark b span { color: var(--accent); }
-  .og-title { position: absolute; left: 70px; top: 160px; width: 760px; font: italic 800 92px/.92 var(--display); text-transform: uppercase; text-shadow: 0 8px 30px rgba(0,0,0,.5); }
+  .og-title { position: absolute; left: 70px; right: 70px; top: 160px; font: italic 800 92px/.92 var(--display); text-transform: uppercase; text-shadow: 0 8px 30px rgba(0,0,0,.5); }
   .og-title em { font-style: inherit; background: var(--gold-grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
   .og-sub { position: absolute; left: 70px; bottom: 70px; font: 600 32px/1.2 Barlow, sans-serif; color: #c9d4ea; }
   .og-sub b { color: #fff; font: 700 32px/1.2 Barlow, sans-serif; letter-spacing: 0; text-transform: none; }
@@ -250,7 +250,6 @@ const ADS = [
     <div class="cr-dots"><i></i><i></i><i></i><i></i><i class="on"></i></div>` },
   { id: 'og-concours', fmt: 'og', label: 'Aperçu des liens partagés (1200 × 630)', html: `
     <div class="ad-slash" style="left:820px"></div>
-    <div class="og-ring"></div><div class="og-glove">🥊</div>
     <div class="og-mark">${markSvg()}<b>BELT<span>CHASE</span></b></div>
     <div class="og-title">${L('Gagne des gants')}<br><em>${L('dédicacés par')}<br>Axel Sola</em></div>
     <div class="og-sub">${L('Pré-inscris-toi avec mon lien')} · <b>${L('lancement le 3 décembre')}</b></div>` },
