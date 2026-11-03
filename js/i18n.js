@@ -74,7 +74,9 @@ export function setLang(id) {
   try { localStorage.setItem(KEY, id); } catch { /* stockage indisponible */ }
   const url = new URL(location.href);
   url.searchParams.delete('lang');
-  location.replace(url.toString());
+  // Même adresse (pas de ?lang=) : replace() ne recharge pas la page, il faut reload().
+  if (url.toString() === location.href) location.reload();
+  else location.replace(url.toString());
 }
 
 // Attributs de la page : langue (lecteurs d'écran, polices) et sens d'écriture (arabe, ourdou).
