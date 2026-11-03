@@ -598,15 +598,15 @@ export const referralDb = {
 };
 
 // ---------- Pré-inscription (bientot.html) ----------
-// preinscriptions/<e-mail> : lisible seulement par le compte qui a cette adresse.
+// emails/<e-mail> : existe si cette adresse s'est pré-inscrite (voir js/bientot.js).
 export async function isPreregistered() {
   const email = cloud.user?.email?.toLowerCase();
   if (!email) return false;
   const { F, db } = await sdk();
   try {
-    return (await F.getDoc(F.doc(db, 'preinscriptions', email))).exists();
+    return (await F.getDoc(F.doc(db, 'emails', email))).exists();
   } catch {
-    return false; // pas inscrit (règles) ou réseau : on réessaiera à la prochaine visite
+    return false; // réseau : on réessaiera à la prochaine visite
   }
 }
 

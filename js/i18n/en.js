@@ -801,5 +801,17 @@ export default {
 "Lien copié !": "Link copied!",
 "Merci d'avoir été là avant le lancement ! +{n} Gold et le titre Pionnier.": "Thanks for being here before launch! +{n} Gold and the Pioneer title.",
 "Pionnier": "Pioneer",
-"Pré-inscrit avant le lancement": "Pre-registered before launch"
+"Pré-inscrit avant le lancement": "Pre-registered before launch",
+"Invité par <b>{p}</b>": "Invited by <b>{p}</b>",
+"Chaque ami qui se pré-inscrit avec ton lien te fait monter dans le classement.": "Every friend who pre-registers with your link moves you up the leaderboard.",
+"Ton pseudo": "Your username",
+"Chargement…": "Loading…",
+"Personne pour l'instant : sois le premier à faire inscrire un ami !": "Nobody yet: be the first to get a friend signed up!",
+"toi": "you",
+"inscrits": "sign-ups",
+"inscrit": "sign-up",
+"Toi : <b>{n}</b> ami(s) inscrit(s) avec ton lien.": "You: <b>{n}</b> friend(s) signed up with your link.",
+"Classement des parrains": "Top referrers",
+"Seuls comptent les amis qui se pré-inscrivent avec ton lien. Partager ne suffit pas.": "Only friends who pre-register with your link count. Sharing isn't enough.",
+"Ton pseudo doit faire entre 2 et 16 caractères (lettres, chiffres, espaces, _ . -).": "Your username must be 2 to 16 characters (letters, numbers, spaces, _ . -)."
 };

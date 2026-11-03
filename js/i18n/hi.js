@@ -801,5 +801,17 @@ export default {
 "Lien copié !": "लिंक कॉपी हो गया!",
 "Merci d'avoir été là avant le lancement ! +{n} Gold et le titre Pionnier.": "लॉन्च से पहले साथ देने के लिए शुक्रिया! +{n} Gold और पायनियर टाइटल।",
 "Pionnier": "पायनियर",
-"Pré-inscrit avant le lancement": "लॉन्च से पहले प्री-रजिस्टर किया"
+"Pré-inscrit avant le lancement": "लॉन्च से पहले प्री-रजिस्टर किया",
+"Invité par <b>{p}</b>": "<b>{p}</b> ने बुलाया",
+"Chaque ami qui se pré-inscrit avec ton lien te fait monter dans le classement.": "तुम्हारे लिंक से प्री-रजिस्टर करने वाला हर दोस्त तुम्हें रैंकिंग में ऊपर ले जाता है।",
+"Ton pseudo": "तुम्हारा यूज़रनेम",
+"Chargement…": "लोड हो रहा है…",
+"Personne pour l'instant : sois le premier à faire inscrire un ami !": "अभी कोई नहीं: किसी दोस्त को जोड़ने वाले पहले बनो!",
+"toi": "तुम",
+"inscrits": "साइन-अप",
+"inscrit": "साइन-अप",
+"Toi : <b>{n}</b> ami(s) inscrit(s) avec ton lien.": "तुम: तुम्हारे लिंक से <b>{n}</b> दोस्त जुड़े।",
+"Classement des parrains": "टॉप रेफ़रर",
+"Seuls comptent les amis qui se pré-inscrivent avec ton lien. Partager ne suffit pas.": "सिर्फ़ वही दोस्त गिने जाते हैं जो तुम्हारे लिंक से प्री-रजिस्टर करें। सिर्फ़ शेयर करना काफ़ी नहीं।",
+"Ton pseudo doit faire entre 2 et 16 caractères (lettres, chiffres, espaces, _ . -).": "यूज़रनेम 2 से 16 अक्षरों का होना चाहिए (अक्षर, अंक, स्पेस, _ . -)।"
 };

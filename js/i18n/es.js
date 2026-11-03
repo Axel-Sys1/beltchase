@@ -801,5 +801,17 @@ export default {
 "Lien copié !": "¡Enlace copiado!",
 "Merci d'avoir été là avant le lancement ! +{n} Gold et le titre Pionnier.": "¡Gracias por estar aquí antes del lanzamiento! +{n} Gold y el título Pionero.",
 "Pionnier": "Pionero",
-"Pré-inscrit avant le lancement": "Preinscrito antes del lanzamiento"
+"Pré-inscrit avant le lancement": "Preinscrito antes del lanzamiento",
+"Invité par <b>{p}</b>": "Invitado por <b>{p}</b>",
+"Chaque ami qui se pré-inscrit avec ton lien te fait monter dans le classement.": "Cada amigo que se preinscribe con tu enlace te hace subir en la clasificación.",
+"Ton pseudo": "Tu apodo",
+"Chargement…": "Cargando…",
+"Personne pour l'instant : sois le premier à faire inscrire un ami !": "Nadie todavía: ¡sé el primero en conseguir que un amigo se inscriba!",
+"toi": "tú",
+"inscrits": "inscritos",
+"inscrit": "inscrito",
+"Toi : <b>{n}</b> ami(s) inscrit(s) avec ton lien.": "Tú: <b>{n}</b> amigo(s) inscrito(s) con tu enlace.",
+"Classement des parrains": "Ranking de padrinos",
+"Seuls comptent les amis qui se pré-inscrivent avec ton lien. Partager ne suffit pas.": "Solo cuentan los amigos que se preinscriben con tu enlace. Compartir no basta.",
+"Ton pseudo doit faire entre 2 et 16 caractères (lettres, chiffres, espaces, _ . -).": "Tu apodo debe tener entre 2 y 16 caracteres (letras, números, espacios, _ . -)."
 };

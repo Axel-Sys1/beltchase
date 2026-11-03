@@ -801,5 +801,17 @@ export default {
 "Lien copié !": "تم نسخ الرابط!",
 "Merci d'avoir été là avant le lancement ! +{n} Gold et le titre Pionnier.": "شكرًا لوجودك معنا قبل الإطلاق! +{n} Gold ولقب الرائد.",
 "Pionnier": "الرائد",
-"Pré-inscrit avant le lancement": "سجّل مسبقًا قبل الإطلاق"
+"Pré-inscrit avant le lancement": "سجّل مسبقًا قبل الإطلاق",
+"Invité par <b>{p}</b>": "بدعوة من <b>{p}</b>",
+"Chaque ami qui se pré-inscrit avec ton lien te fait monter dans le classement.": "كل صديق يسجّل مسبقًا عبر رابطك يرفعك في الترتيب.",
+"Ton pseudo": "اسمك المستعار",
+"Chargement…": "جارٍ التحميل…",
+"Personne pour l'instant : sois le premier à faire inscrire un ami !": "لا أحد بعد: كن أول من يُسجّل صديقًا!",
+"toi": "أنت",
+"inscrits": "مسجّلين",
+"inscrit": "مسجّل",
+"Toi : <b>{n}</b> ami(s) inscrit(s) avec ton lien.": "أنت: <b>{n}</b> صديق سجّلوا عبر رابطك.",
+"Classement des parrains": "ترتيب أفضل الداعين",
+"Seuls comptent les amis qui se pré-inscrivent avec ton lien. Partager ne suffit pas.": "يُحتسب فقط الأصدقاء الذين يسجّلون مسبقًا عبر رابطك. المشاركة وحدها لا تكفي.",
+"Ton pseudo doit faire entre 2 et 16 caractères (lettres, chiffres, espaces, _ . -).": "يجب أن يكون اسمك المستعار بين 2 و16 حرفًا (حروف، أرقام، مسافات، _ . -)."
 };

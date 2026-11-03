@@ -31,31 +31,62 @@ place du jeu (`functions/_middleware.js`). `https://beltchase.com/?app` ouvre le
 30 jours (cookie) : aperçu, page admin. À l'heure du lancement, la page bascule seule sur le jeu.
 En local (`serve.py`), l'accueil reste le jeu : la page est sur <http://localhost:5173/bientot>.
 
-Chaque pré-inscrit reçoit `CONFIG.PRELAUNCH_BONUS` Gold et le titre exclusif « Pionnier » à sa première
+Chaque pré-inscrit (pseudo + e-mail) reçoit `CONFIG.PRELAUNCH_BONUS` Gold et le titre exclusif « Pionnier » à sa première
 connexion avec la même adresse (`js/services/prelaunch.js`). Liste des adresses : page `#admin` →
 « Télécharger la liste » (CSV, pour l'e-mail du lancement). Lien à suivre : `?src=instagram`, `?src=tiktok`…
+
+Classement des parrains : chaque pré-inscrit a son lien `beltchase.com/?ref=CODE` ; il ne gagne une
+place que pour chaque ami qui se pré-inscrit avec (un simple partage ne compte pas). Limite : rien
+n'empêche quelqu'un d'inscrire de fausses adresses avec son lien ; pour une récompense, ne compter que
+les filleuls qui créent vraiment un compte au lancement (colonne « parrain » du CSV).
 
 Règles Firestore (dans `match /databases/{database}/documents`) :
 
 ```
-match /preinscriptions/{email} {
-  allow create: if request.resource.data.keys().hasOnly(['email', 'lang', 'src', 'at'])
-    && request.resource.data.email == email
+function preDoc(id) { return /databases/$(database)/documents/preinscriptions/$(id); }
+match /emails/{email} {
+  allow get: if true;
+  allow create: if request.resource.data.keys().hasOnly(['id', 'code'])
     && email.size() <= 120 && email.matches('^[^@\\s/]+@[^@\\s/]+\\.[^@\\s/]+$')
+    && !exists(preDoc(request.resource.data.id))
+    && getAfter(preDoc(request.resource.data.id)).data.email == email
+    && getAfter(preDoc(request.resource.data.id)).data.code == request.resource.data.code;
+}
+match /preinscriptions/{id} {
+  allow create: if request.resource.data.keys().hasOnly(['email', 'pseudo', 'code', 'ref', 'lang', 'src', 'at'])
+    && request.resource.data.email is string
+    && getAfter(/databases/$(database)/documents/emails/$(request.resource.data.email)).data.id == id
+    && request.resource.data.pseudo is string && request.resource.data.pseudo.size() >= 2 && request.resource.data.pseudo.size() <= 16
+    && request.resource.data.code is string && request.resource.data.code.matches('^[a-z0-9]{6}$')
+    && request.resource.data.ref is string && request.resource.data.ref != request.resource.data.code
     && request.resource.data.lang is string && request.resource.data.lang.size() <= 5
     && request.resource.data.src is string && request.resource.data.src.size() <= 20
     && request.resource.data.at == request.time
-    && getAfter(/databases/$(database)/documents/stats/preinscriptions).data.last == email;
-  allow get: if request.auth != null && request.auth.token.email.lower() == email;
+    && getAfter(/databases/$(database)/documents/stats/preinscriptions).data.last == id
+    && getAfter(/databases/$(database)/documents/parrains/$(request.resource.data.code)).data.last == id
+    && (request.resource.data.ref == '' || getAfter(/databases/$(database)/documents/parrains/$(request.resource.data.ref)).data.last == id);
   allow list: if request.auth != null && request.auth.token.email_verified == true
     && request.auth.token.email in ['axel.sirieys@gmail.com'];
+}
+match /parrains/{code} {
+  allow read: if true;
+  allow create: if request.resource.data.keys().hasOnly(['pseudo', 'count', 'last'])
+    && request.resource.data.count == 0
+    && !exists(preDoc(request.resource.data.last))
+    && getAfter(preDoc(request.resource.data.last)).data.code == code
+    && getAfter(preDoc(request.resource.data.last)).data.pseudo == request.resource.data.pseudo;
+  allow update: if request.resource.data.keys().hasOnly(['pseudo', 'count', 'last'])
+    && request.resource.data.pseudo == resource.data.pseudo
+    && request.resource.data.count == resource.data.count + 1
+    && !exists(preDoc(request.resource.data.last))
+    && getAfter(preDoc(request.resource.data.last)).data.ref == code;
 }
 match /stats/preinscriptions {
   allow read: if true;
   allow write: if request.resource.data.keys().hasOnly(['count', 'last'])
     && request.resource.data.count == (resource == null ? 0 : resource.data.count) + 1
-    && !exists(/databases/$(database)/documents/preinscriptions/$(request.resource.data.last))
-    && existsAfter(/databases/$(database)/documents/preinscriptions/$(request.resource.data.last));
+    && !exists(preDoc(request.resource.data.last))
+    && existsAfter(preDoc(request.resource.data.last));
 }
 ```
 

@@ -801,5 +801,17 @@ export default {
 "Lien copié !": "লিংক কপি হয়েছে!",
 "Merci d'avoir été là avant le lancement ! +{n} Gold et le titre Pionnier.": "লঞ্চের আগে পাশে থাকার জন্য ধন্যবাদ! +{n} Gold আর পায়োনিয়ার টাইটেল।",
 "Pionnier": "পায়োনিয়ার",
-"Pré-inscrit avant le lancement": "লঞ্চের আগে প্রি-রেজিস্টার করেছে"
+"Pré-inscrit avant le lancement": "লঞ্চের আগে প্রি-রেজিস্টার করেছে",
+"Invité par <b>{p}</b>": "আমন্ত্রণ জানিয়েছে <b>{p}</b>",
+"Chaque ami qui se pré-inscrit avec ton lien te fait monter dans le classement.": "তোমার লিংক দিয়ে প্রি-রেজিস্টার করা প্রতিটি বন্ধু তোমাকে র‍্যাঙ্কিংয়ে ওপরে তোলে।",
+"Ton pseudo": "তোমার ইউজারনেম",
+"Chargement…": "লোড হচ্ছে…",
+"Personne pour l'instant : sois le premier à faire inscrire un ami !": "এখনো কেউ নেই: প্রথম বন্ধুকে যোগ করাও তুমি!",
+"toi": "তুমি",
+"inscrits": "সাইন-আপ",
+"inscrit": "সাইন-আপ",
+"Toi : <b>{n}</b> ami(s) inscrit(s) avec ton lien.": "তুমি: তোমার লিংকে <b>{n}</b> জন বন্ধু যোগ দিয়েছে।",
+"Classement des parrains": "সেরা রেফারার",
+"Seuls comptent les amis qui se pré-inscrivent avec ton lien. Partager ne suffit pas.": "শুধু তোমার লিংক দিয়ে প্রি-রেজিস্টার করা বন্ধুরাই গোনা হয়। শুধু শেয়ার করলে হবে না।",
+"Ton pseudo doit faire entre 2 et 16 caractères (lettres, chiffres, espaces, _ . -).": "ইউজারনেম ২ থেকে ১৬ অক্ষরের হতে হবে (অক্ষর, সংখ্যা, স্পেস, _ . -)।"
 };

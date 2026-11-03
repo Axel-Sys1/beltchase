@@ -113,3 +113,36 @@ a { color: var(--accent); }
 .pre-foot a { color: var(--muted); }
 
 @media (prefers-reduced-motion: reduce) { .cd-num.flip { animation: none; } }
+
+/* Inscription : pseudo + e-mail, parrain du lien */
+.pre-form { flex-wrap: wrap; }
+.pre-form #pre-pseudo { flex: 1 1 140px; }
+.pre-form #pre-email { flex: 2 1 200px; }
+.pre-invited { margin: 0 0 10px; padding: 8px 12px; border-radius: 8px; background: rgba(61, 220, 132, 0.12); color: var(--green); font-size: 14px; }
+.pre-invited b { color: var(--text); }
+
+/* Lien de parrainage */
+.pre-link-box { margin-top: 16px; padding: 14px; border: 1px dashed rgba(242, 182, 48, 0.5); border-radius: 10px; background: rgba(242, 182, 48, 0.06); }
+.pre-link-lbl { margin: 0 0 8px; font: 700 13px/1 var(--display); text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent); }
+.pre-link-row { display: flex; gap: 8px; }
+.pre-link-input { flex: 1; min-width: 0; padding: 11px 12px; border: 1px solid var(--line-2); border-radius: 10px; background: var(--bg); font-size: 14px; color: var(--text); direction: ltr; cursor: copy; }
+.pre-link-help { margin: 8px 0 0; color: var(--muted); font-size: 13px; }
+.pre-link-box + .pre-link { margin-top: 10px; }
+@media (max-width: 460px) { .pre-link-row { flex-direction: column; } }
+
+/* Classement des parrains */
+.pre-board { max-width: 520px; margin: 36px auto 0; padding: 20px; background: var(--surface); border: 1px solid var(--line-2); border-radius: 14px; }
+.pre-board h2 { margin: 0; font: italic 800 28px/1 var(--display); text-transform: uppercase; }
+.pre-board-sub { margin: 6px 0 14px; color: var(--muted); font-size: 14px; }
+.pre-board-list { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+.pre-board-list li { display: grid; grid-template-columns: 34px 1fr auto; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 10px; background: var(--bg-2); }
+.pre-board-list li:nth-child(-n+3) { background: linear-gradient(90deg, rgba(242, 182, 48, 0.14), var(--bg-2) 70%); }
+.pre-board-list li.is-me { outline: 2px solid var(--accent); }
+.pb-rank { text-align: center; font: 800 20px/1 var(--display); color: var(--muted); }
+.pb-name { font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pb-name em { font-style: normal; font-size: 12px; color: var(--accent); text-transform: uppercase; }
+.pb-count { color: var(--muted); font-size: 14px; white-space: nowrap; }
+.pb-count b { color: var(--accent); font: 800 20px/1 var(--display); }
+.pre-board-empty, .pre-board-me { margin: 0; color: var(--muted); font-size: 14px; text-align: center; }
+.pre-board-me { margin-top: 10px; }
+.pre-board-me b { color: var(--accent); }

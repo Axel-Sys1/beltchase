@@ -801,5 +801,17 @@ export default {
 "Lien copié !": "لنک کاپی ہو گیا!",
 "Merci d'avoir été là avant le lancement ! +{n} Gold et le titre Pionnier.": "لانچ سے پہلے ساتھ دینے کا شکریہ! +{n} Gold اور پائنیئر ٹائٹل۔",
 "Pionnier": "پائنیئر",
-"Pré-inscrit avant le lancement": "لانچ سے پہلے پری رجسٹر کیا"
+"Pré-inscrit avant le lancement": "لانچ سے پہلے پری رجسٹر کیا",
+"Invité par <b>{p}</b>": "<b>{p}</b> نے مدعو کیا",
+"Chaque ami qui se pré-inscrit avec ton lien te fait monter dans le classement.": "آپ کے لنک سے پری رجسٹر کرنے والا ہر دوست آپ کو رینکنگ میں اوپر لے جاتا ہے۔",
+"Ton pseudo": "آپ کا یوزرنیم",
+"Chargement…": "لوڈ ہو رہا ہے…",
+"Personne pour l'instant : sois le premier à faire inscrire un ami !": "ابھی کوئی نہیں: کسی دوست کو شامل کرنے والے پہلے بنیں!",
+"toi": "آپ",
+"inscrits": "سائن اپ",
+"inscrit": "سائن اپ",
+"Toi : <b>{n}</b> ami(s) inscrit(s) avec ton lien.": "آپ: آپ کے لنک سے <b>{n}</b> دوست شامل ہوئے۔",
+"Classement des parrains": "بہترین ریفرر",
+"Seuls comptent les amis qui se pré-inscrivent avec ton lien. Partager ne suffit pas.": "صرف وہی دوست گنے جاتے ہیں جو آپ کے لنک سے پری رجسٹر کریں۔ صرف شیئر کرنا کافی نہیں۔",
+"Ton pseudo doit faire entre 2 et 16 caractères (lettres, chiffres, espaces, _ . -).": "یوزرنیم 2 سے 16 حروف کا ہونا چاہیے (حروف، اعداد، اسپیس، _ . -)۔"
 };

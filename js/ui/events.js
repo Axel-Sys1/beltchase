@@ -100,7 +100,7 @@ const actions = {
   'admin-prelaunch-csv': async () => {
     const rows = await listPreregistrations();
     const cell = (v) => `"${String(v ?? '').replace(/"/g, '""')}"`;
-    const csv = ['email,langue,source,date', ...rows.map((r) => [r.email, r.lang, r.src, r.at?.toDate?.().toISOString() || ''].map(cell).join(','))].join('\n');
+    const csv = ['email,pseudo,code,parrain,langue,source,date', ...rows.map((r) => [r.email, r.pseudo, r.code, r.ref, r.lang, r.src, r.at?.toDate?.().toISOString() || ''].map(cell).join(','))].join('\n');
     const a = document.createElement('a');
     a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
     a.download = `preinscriptions-${new Date().toISOString().slice(0, 10)}.csv`;

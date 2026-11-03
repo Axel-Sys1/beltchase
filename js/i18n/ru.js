@@ -801,5 +801,17 @@ export default {
 "Lien copié !": "Ссылка скопирована!",
 "Merci d'avoir été là avant le lancement ! +{n} Gold et le titre Pionnier.": "Спасибо, что был с нами до запуска! +{n} Gold и титул Первопроходец.",
 "Pionnier": "Первопроходец",
-"Pré-inscrit avant le lancement": "Записался до запуска"
+"Pré-inscrit avant le lancement": "Записался до запуска",
+"Invité par <b>{p}</b>": "Тебя пригласил <b>{p}</b>",
+"Chaque ami qui se pré-inscrit avec ton lien te fait monter dans le classement.": "Каждый друг, записавшийся по твоей ссылке, поднимает тебя в рейтинге.",
+"Ton pseudo": "Твой ник",
+"Chargement…": "Загрузка…",
+"Personne pour l'instant : sois le premier à faire inscrire un ami !": "Пока никого: стань первым, кто приведёт друга!",
+"toi": "ты",
+"inscrits": "записей",
+"inscrit": "запись",
+"Toi : <b>{n}</b> ami(s) inscrit(s) avec ton lien.": "Ты: <b>{n}</b> друзей записались по твоей ссылке.",
+"Classement des parrains": "Рейтинг пригласивших",
+"Seuls comptent les amis qui se pré-inscrivent avec ton lien. Partager ne suffit pas.": "Считаются только друзья, записавшиеся по твоей ссылке. Просто поделиться мало.",
+"Ton pseudo doit faire entre 2 et 16 caractères (lettres, chiffres, espaces, _ . -).": "Ник должен быть от 2 до 16 символов (буквы, цифры, пробелы, _ . -)."
 };

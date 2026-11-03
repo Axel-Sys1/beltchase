@@ -801,5 +801,17 @@ export default {
 "Lien copié !": "链接已复制！",
 "Merci d'avoir été là avant le lancement ! +{n} Gold et le titre Pionnier.": "感谢你在上线前就来支持！+{n} Gold 和先锋称号。",
 "Pionnier": "先锋",
-"Pré-inscrit avant le lancement": "上线前预约"
+"Pré-inscrit avant le lancement": "上线前预约",
+"Invité par <b>{p}</b>": "邀请人：<b>{p}</b>",
+"Chaque ami qui se pré-inscrit avec ton lien te fait monter dans le classement.": "每有一位好友通过你的链接预约，你的排名就会上升。",
+"Ton pseudo": "你的昵称",
+"Chargement…": "加载中…",
+"Personne pour l'instant : sois le premier à faire inscrire un ami !": "还没有人上榜：成为第一个邀请好友的人吧！",
+"toi": "你",
+"inscrits": "人预约",
+"inscrit": "人预约",
+"Toi : <b>{n}</b> ami(s) inscrit(s) avec ton lien.": "你：已有 <b>{n}</b> 位好友通过你的链接预约。",
+"Classement des parrains": "邀请排行榜",
+"Seuls comptent les amis qui se pré-inscrivent avec ton lien. Partager ne suffit pas.": "只计算通过你的链接预约的好友，仅分享不算。",
+"Ton pseudo doit faire entre 2 et 16 caractères (lettres, chiffres, espaces, _ . -).": "昵称需为 2 到 16 个字符（字母、数字、空格、_ . -）。"
 };
