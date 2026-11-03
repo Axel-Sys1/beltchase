@@ -837,5 +837,10 @@ export default {
 "Lancement le {d}": "{d} को लॉन्च",
 "Pronostique les vrais combats, collectionne les cartes et suis toute l'actu MMA et boxe.": "असली फ़ाइट्स पर प्रेडिक्ट करो, कार्ड इकट्ठा करो और MMA व बॉक्सिंग की सारी खबरें फ़ॉलो करो।",
 "Fais inscrire le plus d'amis et gagne <b>des gants dédicacés par Axel Sola</b>, combattant de l'UFC": "सबसे ज़्यादा दोस्त जोड़ो और जीतो <b>UFC फ़ाइटर Axel Sola के साइन किए ग्लव्स</b>",
-"Le jeu en un coup d'œil": "गेम एक नज़र में"
+"Le jeu en un coup d'œil": "गेम एक नज़र में",
+"Chaque prono te fait monter ou descendre. De Fer à Radiant, prouve que c'est toi qui connais le mieux le combat.": "हर प्रेडिक्शन तुम्हें ऊपर या नीचे ले जाता है। आयरन से रेडिएंट तक, साबित करो कि फ़ाइट तुम सबसे बेहतर समझते हो।",
+"Prono gagné : tu gagnes des RR (points de rang). Plus la cote est osée, plus tu en gagnes.": "सही प्रेडिक्शन: तुम्हें RR (रैंक पॉइंट) मिलते हैं। जितना साहसी ऑड, उतने ज़्यादा पॉइंट।",
+"Prono perdu : tu en perds {n}. Parier au hasard ne fait pas monter, seuls les bons pronos comptent.": "गलत प्रेडिक्शन: तुम {n} खोते हो। अंदाज़े से खेलने से रैंक नहीं बढ़ती, सिर्फ़ अच्छे प्रेडिक्शन गिने जाते हैं।",
+"= une division. 3 divisions par rang, de Fer 1 à Immortel 3. Les {n} meilleurs Immortels deviennent Radiant.": "= एक डिवीज़न। हर रैंक में 3 डिवीज़न, आयरन 1 से इम्मॉर्टल 3 तक। टॉप {n} इम्मॉर्टल रेडिएंट बनते हैं।",
+"Chaque mois, une nouvelle saison : le top 3 entre au Hall of Fame avec un cadre et un titre Champion exclusifs.": "हर महीने नया सीज़न: टॉप 3 हॉल ऑफ़ फ़ेम में, खास चैंपियन फ़्रेम और टाइटल के साथ।"
 };

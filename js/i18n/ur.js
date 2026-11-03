@@ -837,5 +837,10 @@ export default {
 "Lancement le {d}": "{d} کو لانچ",
 "Pronostique les vrais combats, collectionne les cartes et suis toute l'actu MMA et boxe.": "اصلی مقابلوں کی پیشگوئی کریں، کارڈز جمع کریں اور MMA اور باکسنگ کی تمام خبریں فالو کریں۔",
 "Fais inscrire le plus d'amis et gagne <b>des gants dédicacés par Axel Sola</b>, combattant de l'UFC": "سب سے زیادہ دوستوں کو شامل کریں اور جیتیں <b>UFC فائٹر Axel Sola کے دستخط شدہ دستانے</b>",
-"Le jeu en un coup d'œil": "گیم ایک نظر میں"
+"Le jeu en un coup d'œil": "گیم ایک نظر میں",
+"Chaque prono te fait monter ou descendre. De Fer à Radiant, prouve que c'est toi qui connais le mieux le combat.": "ہر پیشگوئی آپ کو اوپر یا نیچے لے جاتی ہے۔ آئرن سے ریڈیئنٹ تک، ثابت کریں کہ فائٹ آپ سب سے بہتر سمجھتے ہیں۔",
+"Prono gagné : tu gagnes des RR (points de rang). Plus la cote est osée, plus tu en gagnes.": "درست پیشگوئی: آپ کو RR (رینک پوائنٹس) ملتے ہیں۔ جتنا جرات مند اوڈ، اتنے زیادہ پوائنٹس۔",
+"Prono perdu : tu en perds {n}. Parier au hasard ne fait pas monter, seuls les bons pronos comptent.": "غلط پیشگوئی: آپ {n} کھوتے ہیں۔ اندازے سے کھیلنے سے رینک نہیں بڑھتا، صرف اچھی پیشگوئیاں گنی جاتی ہیں۔",
+"= une division. 3 divisions par rang, de Fer 1 à Immortel 3. Les {n} meilleurs Immortels deviennent Radiant.": "= ایک ڈویژن۔ ہر رینک میں 3 ڈویژن، آئرن 1 سے امورٹل 3 تک۔ بہترین {n} امورٹل ریڈیئنٹ بنتے ہیں۔",
+"Chaque mois, une nouvelle saison : le top 3 entre au Hall of Fame avec un cadre et un titre Champion exclusifs.": "ہر مہینے نیا سیزن: ٹاپ 3 ہال آف فیم میں، خاص چیمپیئن فریم اور ٹائٹل کے ساتھ۔"
 };

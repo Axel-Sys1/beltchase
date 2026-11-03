@@ -837,5 +837,10 @@ export default {
 "Lancement le {d}": "Lanzamiento el {d}",
 "Pronostique les vrais combats, collectionne les cartes et suis toute l'actu MMA et boxe.": "Pronostica combates reales, colecciona las cartas y sigue toda la actualidad de MMA y boxeo.",
 "Fais inscrire le plus d'amis et gagne <b>des gants dédicacés par Axel Sola</b>, combattant de l'UFC": "Consigue que se inscriban más amigos y gana <b>unos guantes firmados por Axel Sola</b>, luchador de la UFC",
-"Le jeu en un coup d'œil": "El juego de un vistazo"
+"Le jeu en un coup d'œil": "El juego de un vistazo",
+"Chaque prono te fait monter ou descendre. De Fer à Radiant, prouve que c'est toi qui connais le mieux le combat.": "Cada pronóstico te hace subir o bajar. De Hierro a Radiante, demuestra que eres quien más sabe de combate.",
+"Prono gagné : tu gagnes des RR (points de rang). Plus la cote est osée, plus tu en gagnes.": "Pronóstico acertado: ganas RR (puntos de rango). Cuanto más arriesgada la cuota, más ganas.",
+"Prono perdu : tu en perds {n}. Parier au hasard ne fait pas monter, seuls les bons pronos comptent.": "Pronóstico fallado: pierdes {n}. Apostar al azar no te hace subir, solo cuentan los buenos pronósticos.",
+"= une division. 3 divisions par rang, de Fer 1 à Immortel 3. Les {n} meilleurs Immortels deviennent Radiant.": "= una división. 3 divisiones por rango, de Hierro 1 a Inmortal 3. Los {n} mejores Inmortales se vuelven Radiantes.",
+"Chaque mois, une nouvelle saison : le top 3 entre au Hall of Fame avec un cadre et un titre Champion exclusifs.": "Cada mes, una nueva temporada: el top 3 entra en el Hall of Fame con un marco y un título Campeón exclusivos."
 };

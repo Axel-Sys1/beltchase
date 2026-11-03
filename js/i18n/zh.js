@@ -837,5 +837,10 @@ export default {
 "Lancement le {d}": "{d}上线",
 "Pronostique les vrais combats, collectionne les cartes et suis toute l'actu MMA et boxe.": "竞猜真实比赛，收集卡牌，关注所有 MMA 与拳击新闻。",
 "Fais inscrire le plus d'amis et gagne <b>des gants dédicacés par Axel Sola</b>, combattant de l'UFC": "邀请最多好友预约，赢取<b>UFC 选手 Axel Sola 亲笔签名的拳套</b>",
-"Le jeu en un coup d'œil": "游戏一览"
+"Le jeu en un coup d'œil": "游戏一览",
+"Chaque prono te fait monter ou descendre. De Fer à Radiant, prouve que c'est toi qui connais le mieux le combat.": "每次竞猜都会让你升或降。从黑铁到辐能，证明你最懂格斗。",
+"Prono gagné : tu gagnes des RR (points de rang). Plus la cote est osée, plus tu en gagnes.": "猜中：获得 RR（段位分）。赔率越大胆，得分越多。",
+"Prono perdu : tu en perds {n}. Parier au hasard ne fait pas monter, seuls les bons pronos comptent.": "猜错：扣 {n} 分。随便乱猜不会上分，只有好的竞猜才算数。",
+"= une division. 3 divisions par rang, de Fer 1 à Immortel 3. Les {n} meilleurs Immortels deviennent Radiant.": "= 一个小段。每个段位 3 个小段，从黑铁 1 到不朽 3。前 {n} 名不朽成为辐能。",
+"Chaque mois, une nouvelle saison : le top 3 entre au Hall of Fame avec un cadre et un titre Champion exclusifs.": "每月一个新赛季：前三名进入名人堂，获得专属冠军头像框和称号。"
 };

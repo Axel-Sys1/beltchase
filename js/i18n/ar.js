@@ -837,5 +837,10 @@ export default {
 "Lancement le {d}": "الإطلاق في {d}",
 "Pronostique les vrais combats, collectionne les cartes et suis toute l'actu MMA et boxe.": "توقّع النزالات الحقيقية، اجمع البطاقات وتابع كل أخبار MMA والملاكمة.",
 "Fais inscrire le plus d'amis et gagne <b>des gants dédicacés par Axel Sola</b>, combattant de l'UFC": "ادعُ أكبر عدد من الأصدقاء واربح <b>قفازات موقّعة من أكسيل سولا</b>، مقاتل UFC",
-"Le jeu en un coup d'œil": "اللعبة في لمحة"
+"Le jeu en un coup d'œil": "اللعبة في لمحة",
+"Chaque prono te fait monter ou descendre. De Fer à Radiant, prouve que c'est toi qui connais le mieux le combat.": "كل توقّع يرفعك أو ينزلك. من الحديد إلى المتألّق، أثبت أنك الأعلم بالنزالات.",
+"Prono gagné : tu gagnes des RR (points de rang). Plus la cote est osée, plus tu en gagnes.": "توقّع صحيح: تربح RR (نقاط الرتبة). كلما كانت الاحتمالات أجرأ، ربحت أكثر.",
+"Prono perdu : tu en perds {n}. Parier au hasard ne fait pas monter, seuls les bons pronos comptent.": "توقّع خاطئ: تخسر {n}. الرهان العشوائي لا يرفعك، فقط التوقعات الجيدة تُحسب.",
+"= une division. 3 divisions par rang, de Fer 1 à Immortel 3. Les {n} meilleurs Immortels deviennent Radiant.": "= قسم واحد. 3 أقسام لكل رتبة، من الحديد 1 إلى الخالد 3. أفضل {n} خالدين يصبحون متألّقين.",
+"Chaque mois, une nouvelle saison : le top 3 entre au Hall of Fame avec un cadre et un titre Champion exclusifs.": "كل شهر موسم جديد: يدخل أفضل 3 قاعة المشاهير مع إطار ولقب البطل الحصريين."
 };

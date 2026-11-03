@@ -837,5 +837,10 @@ export default {
 "Lancement le {d}": "Launching {d}",
 "Pronostique les vrais combats, collectionne les cartes et suis toute l'actu MMA et boxe.": "Predict real fights, collect the cards and follow all the MMA and boxing news.",
 "Fais inscrire le plus d'amis et gagne <b>des gants dédicacés par Axel Sola</b>, combattant de l'UFC": "Get the most friends to sign up and win <b>gloves signed by Axel Sola</b>, UFC fighter",
-"Le jeu en un coup d'œil": "The game at a glance"
+"Le jeu en un coup d'œil": "The game at a glance",
+"Chaque prono te fait monter ou descendre. De Fer à Radiant, prouve que c'est toi qui connais le mieux le combat.": "Every pick moves you up or down. From Iron to Radiant, prove you know fighting best.",
+"Prono gagné : tu gagnes des RR (points de rang). Plus la cote est osée, plus tu en gagnes.": "Winning pick: you earn RR (rank points). The bolder the odds, the more you earn.",
+"Prono perdu : tu en perds {n}. Parier au hasard ne fait pas monter, seuls les bons pronos comptent.": "Losing pick: you lose {n}. Random picks won't get you anywhere, only good picks count.",
+"= une division. 3 divisions par rang, de Fer 1 à Immortel 3. Les {n} meilleurs Immortels deviennent Radiant.": "= one division. 3 divisions per rank, from Iron 1 to Immortal 3. The top {n} Immortals become Radiant.",
+"Chaque mois, une nouvelle saison : le top 3 entre au Hall of Fame avec un cadre et un titre Champion exclusifs.": "Every month, a new season: the top 3 enter the Hall of Fame with an exclusive Champion frame and title."
 };

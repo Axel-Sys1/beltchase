@@ -837,5 +837,10 @@ export default {
 "Lancement le {d}": "Запуск {d}",
 "Pronostique les vrais combats, collectionne les cartes et suis toute l'actu MMA et boxe.": "Прогнозируй реальные бои, собирай карточки и следи за всеми новостями MMA и бокса.",
 "Fais inscrire le plus d'amis et gagne <b>des gants dédicacés par Axel Sola</b>, combattant de l'UFC": "Приведи больше всех друзей и выиграй <b>перчатки с автографом Акселя Солы</b>, бойца UFC",
-"Le jeu en un coup d'œil": "Игра с первого взгляда"
+"Le jeu en un coup d'œil": "Игра с первого взгляда",
+"Chaque prono te fait monter ou descendre. De Fer à Radiant, prouve que c'est toi qui connais le mieux le combat.": "Каждый прогноз поднимает или опускает тебя. От Железа до Радианта — докажи, что ты лучше всех разбираешься в боях.",
+"Prono gagné : tu gagnes des RR (points de rang). Plus la cote est osée, plus tu en gagnes.": "Верный прогноз: ты получаешь RR (очки ранга). Чем смелее коэффициент, тем больше очков.",
+"Prono perdu : tu en perds {n}. Parier au hasard ne fait pas monter, seuls les bons pronos comptent.": "Неверный прогноз: ты теряешь {n}. Ставки наугад не помогут, считаются только хорошие прогнозы.",
+"= une division. 3 divisions par rang, de Fer 1 à Immortel 3. Les {n} meilleurs Immortels deviennent Radiant.": "= одно деление. 3 деления на ранг, от Железа 1 до Бессмертного 3. {n} лучших Бессмертных становятся Радиантами.",
+"Chaque mois, une nouvelle saison : le top 3 entre au Hall of Fame avec un cadre et un titre Champion exclusifs.": "Каждый месяц — новый сезон: топ-3 попадают в Зал славы с эксклюзивными рамкой и титулом Чемпиона."
 };

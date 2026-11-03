@@ -837,5 +837,10 @@ export default {
 "Lancement le {d}": "Lançamento em {d}",
 "Pronostique les vrais combats, collectionne les cartes et suis toute l'actu MMA et boxe.": "Dê palpites nas lutas reais, colecione as cartas e acompanhe todas as notícias de MMA e boxe.",
 "Fais inscrire le plus d'amis et gagne <b>des gants dédicacés par Axel Sola</b>, combattant de l'UFC": "Traga mais amigos e ganhe <b>luvas autografadas por Axel Sola</b>, lutador do UFC",
-"Le jeu en un coup d'œil": "O jogo num piscar de olhos"
+"Le jeu en un coup d'œil": "O jogo num piscar de olhos",
+"Chaque prono te fait monter ou descendre. De Fer à Radiant, prouve que c'est toi qui connais le mieux le combat.": "Cada palpite te faz subir ou descer. Do Ferro ao Radiante, prove que é você quem mais entende de luta.",
+"Prono gagné : tu gagnes des RR (points de rang). Plus la cote est osée, plus tu en gagnes.": "Palpite certo: você ganha RR (pontos de ranque). Quanto mais ousada a cotação, mais você ganha.",
+"Prono perdu : tu en perds {n}. Parier au hasard ne fait pas monter, seuls les bons pronos comptent.": "Palpite errado: você perde {n}. Chutar não te faz subir, só os bons palpites contam.",
+"= une division. 3 divisions par rang, de Fer 1 à Immortel 3. Les {n} meilleurs Immortels deviennent Radiant.": "= uma divisão. 3 divisões por ranque, do Ferro 1 ao Imortal 3. Os {n} melhores Imortais viram Radiante.",
+"Chaque mois, une nouvelle saison : le top 3 entre au Hall of Fame avec un cadre et un titre Champion exclusifs.": "Todo mês, uma nova temporada: o top 3 entra no Hall of Fame com moldura e título Campeão exclusivos."
 };
