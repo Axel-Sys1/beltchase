@@ -564,10 +564,13 @@ export const referralDb = {
   // 'ok' | 'unknown' (pas de joueur avec ce pseudo et un compte) | 'self' | 'already' (déjà parrainé)
   async create(parrainPseudo) {
     const { F, db } = await sdk();
-    const me = cloud.user.uid;
     const owner = await F.getDoc(F.doc(db, 'pseudos', pseudoKey(parrainPseudo)));
     if (!owner.exists()) return 'unknown';
-    const parrain = owner.data().uid;
+    return this.createFor(owner.data().uid);
+  },
+  async createFor(parrain) {
+    const { F, db } = await sdk();
+    const me = cloud.user.uid;
     if (parrain === me) return 'self';
     const ref = F.doc(db, 'referrals', me);
     if ((await F.getDoc(ref)).exists()) return 'already';
@@ -598,16 +601,48 @@ export const referralDb = {
 };
 
 // ---------- Pré-inscription (bientot.html) ----------
-// emails/<e-mail> : existe si cette adresse s'est pré-inscrite (voir js/bientot.js).
-export async function isPreregistered() {
+// emails/<e-mail> = { id, code } : existe si cette adresse s'est pré-inscrite (voir js/bientot.js).
+// Renvoie son code de parrainage, ou null.
+export async function prelaunchCode() {
   const email = cloud.user?.email?.toLowerCase();
-  if (!email) return false;
+  if (!email) return null;
   const { F, db } = await sdk();
   try {
-    return (await F.getDoc(F.doc(db, 'emails', email))).exists();
+    const snap = await F.getDoc(F.doc(db, 'emails', email));
+    return snap.exists() ? snap.data().code : null;
   } catch {
-    return false; // réseau : on réessaiera à la prochaine visite
+    return null; // réseau : on réessaiera à la prochaine visite
   }
+}
+
+// Liens de parrainage de la pré-inscription (beltchase.com/?ref=CODE), encore valables après le
+// lancement : codes/<code> = { uid } relie le code au compte de jeu de son propriétaire. Créé par
+// lui-même à sa première connexion (règles : le code doit être celui de son adresse).
+export async function linkPrelaunchCode(code) {
+  const { F, db } = await sdk();
+  const ref = F.doc(db, 'codes', code);
+  try {
+    if (!(await F.getDoc(ref)).exists()) await F.setDoc(ref, { uid: cloud.user.uid });
+  } catch (err) {
+    console.warn('Gold : lien de parrainage non relié', err);
+  }
+}
+
+// Compte de jeu du propriétaire d'un code : { uid, pseudo } ; null s'il n'a pas encore joué.
+export async function prelaunchCodeOwner(code) {
+  const { F, db } = await sdk();
+  const link = await F.getDoc(F.doc(db, 'codes', code));
+  if (!link.exists()) return null;
+  const { uid } = link.data();
+  const board = await F.getDoc(F.doc(db, 'leaderboard', uid));
+  return board.exists() ? { uid, pseudo: board.data().pseudo } : null;
+}
+
+// Pseudo choisi à la pré-inscription (affiché avant la connexion : « X t'invite »).
+export async function prelaunchPseudo(code) {
+  const { F, db } = await sdk();
+  const snap = await F.getDoc(F.doc(db, 'parrains', code));
+  return snap.exists() ? snap.data().pseudo : null;
 }
 
 // Admin : toutes les pré-inscriptions, les plus anciennes d'abord.

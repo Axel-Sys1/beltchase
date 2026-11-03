@@ -813,5 +813,6 @@ export default {
 "Toi : <b>{n}</b> ami(s) inscrit(s) avec ton lien.": "Ты: <b>{n}</b> друзей записались по твоей ссылке.",
 "Classement des parrains": "Рейтинг пригласивших",
 "Seuls comptent les amis qui se pré-inscrivent avec ton lien. Partager ne suffit pas.": "Считаются только друзья, записавшиеся по твоей ссылке. Просто поделиться мало.",
-"Ton pseudo doit faire entre 2 et 16 caractères (lettres, chiffres, espaces, _ . -).": "Ник должен быть от 2 до 16 символов (буквы, цифры, пробелы, _ . -)."
+"Ton pseudo doit faire entre 2 et 16 caractères (lettres, chiffres, espaces, _ . -).": "Ник должен быть от 2 до 16 символов (буквы, цифры, пробелы, _ . -).",
+"Un ami": "Друг"
 };

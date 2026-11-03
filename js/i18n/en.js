@@ -813,5 +813,6 @@ export default {
 "Toi : <b>{n}</b> ami(s) inscrit(s) avec ton lien.": "You: <b>{n}</b> friend(s) signed up with your link.",
 "Classement des parrains": "Top referrers",
 "Seuls comptent les amis qui se pré-inscrivent avec ton lien. Partager ne suffit pas.": "Only friends who pre-register with your link count. Sharing isn't enough.",
-"Ton pseudo doit faire entre 2 et 16 caractères (lettres, chiffres, espaces, _ . -).": "Your username must be 2 to 16 characters (letters, numbers, spaces, _ . -)."
+"Ton pseudo doit faire entre 2 et 16 caractères (lettres, chiffres, espaces, _ . -).": "Your username must be 2 to 16 characters (letters, numbers, spaces, _ . -).",
+"Un ami": "A friend"
 };

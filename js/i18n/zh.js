@@ -813,5 +813,6 @@ export default {
 "Toi : <b>{n}</b> ami(s) inscrit(s) avec ton lien.": "你：已有 <b>{n}</b> 位好友通过你的链接预约。",
 "Classement des parrains": "邀请排行榜",
 "Seuls comptent les amis qui se pré-inscrivent avec ton lien. Partager ne suffit pas.": "只计算通过你的链接预约的好友，仅分享不算。",
-"Ton pseudo doit faire entre 2 et 16 caractères (lettres, chiffres, espaces, _ . -).": "昵称需为 2 到 16 个字符（字母、数字、空格、_ . -）。"
+"Ton pseudo doit faire entre 2 et 16 caractères (lettres, chiffres, espaces, _ . -).": "昵称需为 2 到 16 个字符（字母、数字、空格、_ . -）。",
+"Un ami": "一位好友"
 };

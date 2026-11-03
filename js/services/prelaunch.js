@@ -1,7 +1,8 @@
 // Bonus des pré-inscrits (bientot.html) : à la première connexion avec l'adresse pré-inscrite,
-// CONFIG.PRELAUNCH_BONUS Gold et le titre exclusif « Pionnier », une seule fois par joueur.
+// CONFIG.PRELAUNCH_BONUS Gold et le titre exclusif « Pionnier », une seule fois par joueur. Son lien de
+// parrainage de la pré-inscription (?ref=CODE) est relié à son compte, pour qu'il serve encore.
 import { CONFIG } from '../config.js';
-import { cloud, isPreregistered } from './cloud.js';
+import { cloud, linkPrelaunchCode, prelaunchCode } from './cloud.js';
 import { getState, update } from '../store.js';
 import { currentPlayer } from './players.js';
 import { ensureProgress } from './progress.js';
@@ -12,9 +13,12 @@ let checked = null;
 export async function claimPrelaunchBonus() {
   const p = currentPlayer(getState());
   const key = cloud.user && p ? `${cloud.user.uid}|${p.id}` : null;
-  if (!key || key === checked || p.owned?.['title-pionnier']) return;
+  if (!key || key === checked) return;
   checked = key;
-  if (!(await isPreregistered())) return;
+  const code = await prelaunchCode();
+  if (!code) return;
+  linkPrelaunchCode(code);
+  if (p.owned?.['title-pionnier']) return;
   update((s) => {
     const me = currentPlayer(s);
     if (!me) return;

@@ -813,5 +813,6 @@ export default {
 "Toi : <b>{n}</b> ami(s) inscrit(s) avec ton lien.": "Tú: <b>{n}</b> amigo(s) inscrito(s) con tu enlace.",
 "Classement des parrains": "Ranking de padrinos",
 "Seuls comptent les amis qui se pré-inscrivent avec ton lien. Partager ne suffit pas.": "Solo cuentan los amigos que se preinscriben con tu enlace. Compartir no basta.",
-"Ton pseudo doit faire entre 2 et 16 caractères (lettres, chiffres, espaces, _ . -).": "Tu apodo debe tener entre 2 y 16 caracteres (letras, números, espacios, _ . -)."
+"Ton pseudo doit faire entre 2 et 16 caractères (lettres, chiffres, espaces, _ . -).": "Tu apodo debe tener entre 2 y 16 caracteres (letras, números, espacios, _ . -).",
+"Un ami": "Un amigo"
 };

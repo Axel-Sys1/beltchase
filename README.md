@@ -39,6 +39,9 @@ Classement des parrains : chaque pré-inscrit a son lien `beltchase.com/?ref=COD
 place que pour chaque ami qui se pré-inscrit avec (un simple partage ne compte pas). Limite : rien
 n'empêche quelqu'un d'inscrire de fausses adresses avec son lien ; pour une récompense, ne compter que
 les filleuls qui créent vraiment un compte au lancement (colonne « parrain » du CSV).
+Après le lancement, ces liens restent valables : ils ouvrent le jeu et donnent le parrainage habituel
+(REWARD Gold chacun, `js/services/referral.js`) dès que le parrain s'est connecté une fois au jeu avec
+son adresse de pré-inscription (`codes/<code>` = { uid }).
 
 Règles Firestore (dans `match /databases/{database}/documents`) :
 
@@ -80,6 +83,12 @@ match /parrains/{code} {
     && request.resource.data.count == resource.data.count + 1
     && !exists(preDoc(request.resource.data.last))
     && getAfter(preDoc(request.resource.data.last)).data.ref == code;
+}
+match /codes/{code} {
+  allow get: if request.auth != null;
+  allow create: if request.auth != null && request.resource.data.keys().hasOnly(['uid'])
+    && request.resource.data.uid == request.auth.uid
+    && get(/databases/$(database)/documents/emails/$(request.auth.token.email.lower())).data.code == code;
 }
 match /stats/preinscriptions {
   allow read: if true;

@@ -813,5 +813,6 @@ export default {
 "Toi : <b>{n}</b> ami(s) inscrit(s) avec ton lien.": "তুমি: তোমার লিংকে <b>{n}</b> জন বন্ধু যোগ দিয়েছে।",
 "Classement des parrains": "সেরা রেফারার",
 "Seuls comptent les amis qui se pré-inscrivent avec ton lien. Partager ne suffit pas.": "শুধু তোমার লিংক দিয়ে প্রি-রেজিস্টার করা বন্ধুরাই গোনা হয়। শুধু শেয়ার করলে হবে না।",
-"Ton pseudo doit faire entre 2 et 16 caractères (lettres, chiffres, espaces, _ . -).": "ইউজারনেম ২ থেকে ১৬ অক্ষরের হতে হবে (অক্ষর, সংখ্যা, স্পেস, _ . -)।"
+"Ton pseudo doit faire entre 2 et 16 caractères (lettres, chiffres, espaces, _ . -).": "ইউজারনেম ২ থেকে ১৬ অক্ষরের হতে হবে (অক্ষর, সংখ্যা, স্পেস, _ . -)।",
+"Un ami": "একজন বন্ধু"
 };

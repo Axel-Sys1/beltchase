@@ -813,5 +813,6 @@ export default {
 "Toi : <b>{n}</b> ami(s) inscrit(s) avec ton lien.": "तुम: तुम्हारे लिंक से <b>{n}</b> दोस्त जुड़े।",
 "Classement des parrains": "टॉप रेफ़रर",
 "Seuls comptent les amis qui se pré-inscrivent avec ton lien. Partager ne suffit pas.": "सिर्फ़ वही दोस्त गिने जाते हैं जो तुम्हारे लिंक से प्री-रजिस्टर करें। सिर्फ़ शेयर करना काफ़ी नहीं।",
-"Ton pseudo doit faire entre 2 et 16 caractères (lettres, chiffres, espaces, _ . -).": "यूज़रनेम 2 से 16 अक्षरों का होना चाहिए (अक्षर, अंक, स्पेस, _ . -)।"
+"Ton pseudo doit faire entre 2 et 16 caractères (lettres, chiffres, espaces, _ . -).": "यूज़रनेम 2 से 16 अक्षरों का होना चाहिए (अक्षर, अंक, स्पेस, _ . -)।",
+"Un ami": "एक दोस्त"
 };

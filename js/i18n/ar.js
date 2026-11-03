@@ -813,5 +813,6 @@ export default {
 "Toi : <b>{n}</b> ami(s) inscrit(s) avec ton lien.": "أنت: <b>{n}</b> صديق سجّلوا عبر رابطك.",
 "Classement des parrains": "ترتيب أفضل الداعين",
 "Seuls comptent les amis qui se pré-inscrivent avec ton lien. Partager ne suffit pas.": "يُحتسب فقط الأصدقاء الذين يسجّلون مسبقًا عبر رابطك. المشاركة وحدها لا تكفي.",
-"Ton pseudo doit faire entre 2 et 16 caractères (lettres, chiffres, espaces, _ . -).": "يجب أن يكون اسمك المستعار بين 2 و16 حرفًا (حروف، أرقام، مسافات، _ . -)."
+"Ton pseudo doit faire entre 2 et 16 caractères (lettres, chiffres, espaces, _ . -).": "يجب أن يكون اسمك المستعار بين 2 و16 حرفًا (حروف، أرقام، مسافات، _ . -).",
+"Un ami": "صديق"
 };
