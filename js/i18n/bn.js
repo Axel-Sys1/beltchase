@@ -843,5 +843,14 @@ export default {
 "Prono perdu : tu en perds {n}. Parier au hasard ne fait pas monter, seuls les bons pronos comptent.": "ভুল প্রেডিকশন: তুমি {n} হারাও। আন্দাজে খেললে র‍্যাঙ্ক বাড়ে না, শুধু ভালো প্রেডিকশনই গোনা হয়।",
 "= une division. 3 divisions par rang, de Fer 1 à Immortel 3. Les {n} meilleurs Immortels deviennent Radiant.": "= এক ডিভিশন। প্রতি র‍্যাঙ্কে ৩ ডিভিশন, আয়রন ১ থেকে ইমর্টাল ৩। সেরা {n} ইমর্টাল রেডিয়েন্ট হয়।",
 "Chaque mois, une nouvelle saison : le top 3 entre au Hall of Fame avec un cadre et un titre Champion exclusifs.": "প্রতি মাসে নতুন সিজন: সেরা ৩ জন হল অফ ফেমে, এক্সক্লুসিভ চ্যাম্পিয়ন ফ্রেম আর টাইটেল নিয়ে।",
-"Bon prono : tu montes. Mauvais : tu descends. Chaque mois, le top 3 entre au Hall of Fame.": "সঠিক প্রেডিকশন: ওপরে ওঠো। ভুল: নিচে নামো। প্রতি মাসে সেরা ৩ জন হল অফ ফেমে।"
+"Bon prono : tu montes. Mauvais : tu descends. Chaque mois, le top 3 entre au Hall of Fame.": "সঠিক প্রেডিকশন: ওপরে ওঠো। ভুল: নিচে নামো। প্রতি মাসে সেরা ৩ জন হল অফ ফেমে।",
+"Copier": "কপি করো",
+"Pour Instagram : copie le lien et colle-le dans ta story (sticker Lien) ou ta bio.": "Instagram-এর জন্য: লিংক কপি করে তোমার স্টোরিতে (লিংক স্টিকার) বা বায়োতে বসাও।",
+"Je tente de gagner des gants dédicacés par Axel Sola sur BeltChase 🥊 Inscris-toi avec mon lien, lancement le {d} :": "আমি BeltChase-এ Axel Sola-র সই করা গ্লাভস জেতার চেষ্টা করছি 🥊 আমার লিংকে যোগ দাও, লঞ্চ {d}:",
+"Autre…": "অন্যভাবে…",
+"Fais inscrire ton premier ami pour entrer dans le classement.": "র‍্যাঙ্কিংয়ে আসতে প্রথম বন্ধুকে যোগ করাও।",
+"Tu es <b>{r}</b> du classement avec {a}. Garde ta place !": "তুমি র‍্যাঙ্কিংয়ে <b>{r}</b>, {a}। জায়গা ধরে রাখো!",
+"Tu es <b>{r}</b> avec {a}. Encore <b>{k}</b> pour entrer dans le top 3.": "তুমি <b>{r}</b>, {a}। সেরা ৩-এ যেতে আরও <b>{k}</b> জন লাগবে।",
+"{n} ami inscrit": "{n} জন বন্ধু যোগ দিয়েছে",
+"{n} amis inscrits": "{n} জন বন্ধু যোগ দিয়েছে"
 };

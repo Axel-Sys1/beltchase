@@ -843,5 +843,14 @@ export default {
 "Prono perdu : tu en perds {n}. Parier au hasard ne fait pas monter, seuls les bons pronos comptent.": "Pronóstico fallado: pierdes {n}. Apostar al azar no te hace subir, solo cuentan los buenos pronósticos.",
 "= une division. 3 divisions par rang, de Fer 1 à Immortel 3. Les {n} meilleurs Immortels deviennent Radiant.": "= una división. 3 divisiones por rango, de Hierro 1 a Inmortal 3. Los {n} mejores Inmortales se vuelven Radiantes.",
 "Chaque mois, une nouvelle saison : le top 3 entre au Hall of Fame avec un cadre et un titre Champion exclusifs.": "Cada mes, una nueva temporada: el top 3 entra en el Hall of Fame con un marco y un título Campeón exclusivos.",
-"Bon prono : tu montes. Mauvais : tu descends. Chaque mois, le top 3 entre au Hall of Fame.": "Buen pronóstico: subes. Malo: bajas. Cada mes, el top 3 entra en el Hall of Fame."
+"Bon prono : tu montes. Mauvais : tu descends. Chaque mois, le top 3 entre au Hall of Fame.": "Buen pronóstico: subes. Malo: bajas. Cada mes, el top 3 entra en el Hall of Fame.",
+"Copier": "Copiar",
+"Pour Instagram : copie le lien et colle-le dans ta story (sticker Lien) ou ta bio.": "Para Instagram: copia el enlace y pégalo en tu historia (sticker Enlace) o en tu bio.",
+"Je tente de gagner des gants dédicacés par Axel Sola sur BeltChase 🥊 Inscris-toi avec mon lien, lancement le {d} :": "Intento ganar unos guantes firmados por Axel Sola en BeltChase 🥊 Inscríbete con mi enlace, lanzamiento el {d}:",
+"Autre…": "Otro…",
+"Fais inscrire ton premier ami pour entrer dans le classement.": "Consigue que se inscriba tu primer amigo para entrar en la clasificación.",
+"Tu es <b>{r}</b> du classement avec {a}. Garde ta place !": "Eres <b>{r}</b> en la clasificación con {a}. ¡Mantén tu puesto!",
+"Tu es <b>{r}</b> avec {a}. Encore <b>{k}</b> pour entrer dans le top 3.": "Eres <b>{r}</b> con {a}. Faltan <b>{k}</b> para entrar en el top 3.",
+"{n} ami inscrit": "{n} amigo inscrito",
+"{n} amis inscrits": "{n} amigos inscritos"
 };

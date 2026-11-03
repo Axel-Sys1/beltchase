@@ -293,3 +293,19 @@ a { color: var(--accent); }
 .pre-col .pre-ladder { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px 6px; padding: 12px 6px; }
 .pre-col .pre-emblem { width: 36px; height: 41px; }
 .pre-col .pre-ladder span { font-size: 12px; }
+
+/* Après l'inscription : ma position, boutons de partage */
+.pre-me { margin: 0 0 12px; padding: 10px 12px; border-radius: 8px; background: rgba(61, 220, 132, 0.1); border: 1px solid rgba(61, 220, 132, 0.35); color: var(--text); font-size: 14.5px; }
+.pre-me:empty { display: none; }
+.pre-me b { color: var(--accent); }
+.pre-share { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 8px; margin-bottom: 10px; }
+.pre-sh { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 11px 10px; border-radius: 10px; border: 0; color: #fff; font: 700 14px/1 var(--body); text-decoration: none; cursor: pointer; }
+.pre-sh svg { width: 18px; height: 18px; flex: none; }
+.pre-sh-whatsapp { background: #1fa855; }
+.pre-sh-snapchat { background: #fffc00; color: #111; }
+.pre-sh-x { background: #000; border: 1px solid #333; }
+.pre-sh-telegram { background: #229ed9; }
+.pre-sh-more { background: var(--surface-2); border: 1px solid var(--line-2); }
+.pre-sh:hover { filter: brightness(1.1); }
+.pre-btn-ghost { background: var(--surface-2); color: var(--text); border: 1px solid var(--line-2); }
+.pre-btn-ghost:hover { background: var(--line-2); }

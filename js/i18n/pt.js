@@ -843,5 +843,14 @@ export default {
 "Prono perdu : tu en perds {n}. Parier au hasard ne fait pas monter, seuls les bons pronos comptent.": "Palpite errado: você perde {n}. Chutar não te faz subir, só os bons palpites contam.",
 "= une division. 3 divisions par rang, de Fer 1 à Immortel 3. Les {n} meilleurs Immortels deviennent Radiant.": "= uma divisão. 3 divisões por ranque, do Ferro 1 ao Imortal 3. Os {n} melhores Imortais viram Radiante.",
 "Chaque mois, une nouvelle saison : le top 3 entre au Hall of Fame avec un cadre et un titre Champion exclusifs.": "Todo mês, uma nova temporada: o top 3 entra no Hall of Fame com moldura e título Campeão exclusivos.",
-"Bon prono : tu montes. Mauvais : tu descends. Chaque mois, le top 3 entre au Hall of Fame.": "Palpite certo: você sobe. Errado: você desce. Todo mês, o top 3 entra no Hall of Fame."
+"Bon prono : tu montes. Mauvais : tu descends. Chaque mois, le top 3 entre au Hall of Fame.": "Palpite certo: você sobe. Errado: você desce. Todo mês, o top 3 entra no Hall of Fame.",
+"Copier": "Copiar",
+"Pour Instagram : copie le lien et colle-le dans ta story (sticker Lien) ou ta bio.": "Para o Instagram: copie o link e cole no seu story (figurinha Link) ou na bio.",
+"Je tente de gagner des gants dédicacés par Axel Sola sur BeltChase 🥊 Inscris-toi avec mon lien, lancement le {d} :": "Estou tentando ganhar luvas autografadas por Axel Sola no BeltChase 🥊 Inscreva-se com meu link, lançamento em {d}:",
+"Autre…": "Outro…",
+"Fais inscrire ton premier ami pour entrer dans le classement.": "Traga seu primeiro amigo para entrar no ranking.",
+"Tu es <b>{r}</b> du classement avec {a}. Garde ta place !": "Você é <b>{r}</b> no ranking com {a}. Segure sua posição!",
+"Tu es <b>{r}</b> avec {a}. Encore <b>{k}</b> pour entrer dans le top 3.": "Você é <b>{r}</b> com {a}. Faltam <b>{k}</b> para entrar no top 3.",
+"{n} ami inscrit": "{n} amigo inscrito",
+"{n} amis inscrits": "{n} amigos inscritos"
 };

@@ -843,5 +843,14 @@ export default {
 "Prono perdu : tu en perds {n}. Parier au hasard ne fait pas monter, seuls les bons pronos comptent.": "غلط پیشگوئی: آپ {n} کھوتے ہیں۔ اندازے سے کھیلنے سے رینک نہیں بڑھتا، صرف اچھی پیشگوئیاں گنی جاتی ہیں۔",
 "= une division. 3 divisions par rang, de Fer 1 à Immortel 3. Les {n} meilleurs Immortels deviennent Radiant.": "= ایک ڈویژن۔ ہر رینک میں 3 ڈویژن، آئرن 1 سے امورٹل 3 تک۔ بہترین {n} امورٹل ریڈیئنٹ بنتے ہیں۔",
 "Chaque mois, une nouvelle saison : le top 3 entre au Hall of Fame avec un cadre et un titre Champion exclusifs.": "ہر مہینے نیا سیزن: ٹاپ 3 ہال آف فیم میں، خاص چیمپیئن فریم اور ٹائٹل کے ساتھ۔",
-"Bon prono : tu montes. Mauvais : tu descends. Chaque mois, le top 3 entre au Hall of Fame.": "درست پیشگوئی: اوپر جائیں۔ غلط: نیچے آئیں۔ ہر مہینے ٹاپ 3 ہال آف فیم میں۔"
+"Bon prono : tu montes. Mauvais : tu descends. Chaque mois, le top 3 entre au Hall of Fame.": "درست پیشگوئی: اوپر جائیں۔ غلط: نیچے آئیں۔ ہر مہینے ٹاپ 3 ہال آف فیم میں۔",
+"Copier": "کاپی کریں",
+"Pour Instagram : copie le lien et colle-le dans ta story (sticker Lien) ou ta bio.": "Instagram کے لیے: لنک کاپی کر کے اپنی اسٹوری (لنک اسٹیکر) یا بائیو میں لگائیں۔",
+"Je tente de gagner des gants dédicacés par Axel Sola sur BeltChase 🥊 Inscris-toi avec mon lien, lancement le {d} :": "میں BeltChase پر Axel Sola کے دستخط شدہ دستانے جیتنے کی کوشش کر رہا ہوں 🥊 میرے لنک سے شامل ہوں، لانچ {d}:",
+"Autre…": "مزید…",
+"Fais inscrire ton premier ami pour entrer dans le classement.": "رینکنگ میں آنے کے لیے اپنا پہلا دوست شامل کریں۔",
+"Tu es <b>{r}</b> du classement avec {a}. Garde ta place !": "آپ رینکنگ میں <b>{r}</b> ہیں، {a}۔ اپنی جگہ برقرار رکھیں!",
+"Tu es <b>{r}</b> avec {a}. Encore <b>{k}</b> pour entrer dans le top 3.": "آپ <b>{r}</b> ہیں، {a}۔ ٹاپ 3 کے لیے مزید <b>{k}</b> چاہییں۔",
+"{n} ami inscrit": "{n} دوست شامل ہوا",
+"{n} amis inscrits": "{n} دوست شامل ہوئے"
 };

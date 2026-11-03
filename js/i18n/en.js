@@ -843,5 +843,14 @@ export default {
 "Prono perdu : tu en perds {n}. Parier au hasard ne fait pas monter, seuls les bons pronos comptent.": "Losing pick: you lose {n}. Random picks won't get you anywhere, only good picks count.",
 "= une division. 3 divisions par rang, de Fer 1 à Immortel 3. Les {n} meilleurs Immortels deviennent Radiant.": "= one division. 3 divisions per rank, from Iron 1 to Immortal 3. The top {n} Immortals become Radiant.",
 "Chaque mois, une nouvelle saison : le top 3 entre au Hall of Fame avec un cadre et un titre Champion exclusifs.": "Every month, a new season: the top 3 enter the Hall of Fame with an exclusive Champion frame and title.",
-"Bon prono : tu montes. Mauvais : tu descends. Chaque mois, le top 3 entre au Hall of Fame.": "Good pick: you climb. Bad pick: you drop. Every month, the top 3 enter the Hall of Fame."
+"Bon prono : tu montes. Mauvais : tu descends. Chaque mois, le top 3 entre au Hall of Fame.": "Good pick: you climb. Bad pick: you drop. Every month, the top 3 enter the Hall of Fame.",
+"Copier": "Copy",
+"Pour Instagram : copie le lien et colle-le dans ta story (sticker Lien) ou ta bio.": "For Instagram: copy the link and paste it in your story (Link sticker) or your bio.",
+"Je tente de gagner des gants dédicacés par Axel Sola sur BeltChase 🥊 Inscris-toi avec mon lien, lancement le {d} :": "I'm trying to win gloves signed by Axel Sola on BeltChase 🥊 Sign up with my link, launching {d}:",
+"Autre…": "More…",
+"Fais inscrire ton premier ami pour entrer dans le classement.": "Get your first friend to sign up to enter the leaderboard.",
+"Tu es <b>{r}</b> du classement avec {a}. Garde ta place !": "You're <b>{r}</b> on the leaderboard with {a}. Hold your spot!",
+"Tu es <b>{r}</b> avec {a}. Encore <b>{k}</b> pour entrer dans le top 3.": "You're <b>{r}</b> with {a}. <b>{k}</b> more to reach the top 3.",
+"{n} ami inscrit": "{n} friend signed up",
+"{n} amis inscrits": "{n} friends signed up"
 };

@@ -843,5 +843,14 @@ export default {
 "Prono perdu : tu en perds {n}. Parier au hasard ne fait pas monter, seuls les bons pronos comptent.": "गलत प्रेडिक्शन: तुम {n} खोते हो। अंदाज़े से खेलने से रैंक नहीं बढ़ती, सिर्फ़ अच्छे प्रेडिक्शन गिने जाते हैं।",
 "= une division. 3 divisions par rang, de Fer 1 à Immortel 3. Les {n} meilleurs Immortels deviennent Radiant.": "= एक डिवीज़न। हर रैंक में 3 डिवीज़न, आयरन 1 से इम्मॉर्टल 3 तक। टॉप {n} इम्मॉर्टल रेडिएंट बनते हैं।",
 "Chaque mois, une nouvelle saison : le top 3 entre au Hall of Fame avec un cadre et un titre Champion exclusifs.": "हर महीने नया सीज़न: टॉप 3 हॉल ऑफ़ फ़ेम में, खास चैंपियन फ़्रेम और टाइटल के साथ।",
-"Bon prono : tu montes. Mauvais : tu descends. Chaque mois, le top 3 entre au Hall of Fame.": "सही प्रेडिक्शन: ऊपर चढ़ो। गलत: नीचे गिरो। हर महीने टॉप 3 हॉल ऑफ़ फ़ेम में।"
+"Bon prono : tu montes. Mauvais : tu descends. Chaque mois, le top 3 entre au Hall of Fame.": "सही प्रेडिक्शन: ऊपर चढ़ो। गलत: नीचे गिरो। हर महीने टॉप 3 हॉल ऑफ़ फ़ेम में।",
+"Copier": "कॉपी करें",
+"Pour Instagram : copie le lien et colle-le dans ta story (sticker Lien) ou ta bio.": "Instagram के लिए: लिंक कॉपी करके अपनी स्टोरी (लिंक स्टिकर) या बायो में लगाओ।",
+"Je tente de gagner des gants dédicacés par Axel Sola sur BeltChase 🥊 Inscris-toi avec mon lien, lancement le {d} :": "मैं BeltChase पर Axel Sola के साइन किए ग्लव्स जीतने की कोशिश कर रहा हूँ 🥊 मेरे लिंक से जुड़ो, लॉन्च {d}:",
+"Autre…": "और…",
+"Fais inscrire ton premier ami pour entrer dans le classement.": "रैंकिंग में आने के लिए अपना पहला दोस्त जोड़ो।",
+"Tu es <b>{r}</b> du classement avec {a}. Garde ta place !": "तुम रैंकिंग में <b>{r}</b> हो, {a}। अपनी जगह बचाओ!",
+"Tu es <b>{r}</b> avec {a}. Encore <b>{k}</b> pour entrer dans le top 3.": "तुम <b>{r}</b> हो, {a}। टॉप 3 के लिए <b>{k}</b> और चाहिए।",
+"{n} ami inscrit": "{n} दोस्त जुड़ा",
+"{n} amis inscrits": "{n} दोस्त जुड़े"
 };

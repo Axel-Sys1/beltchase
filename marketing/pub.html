@@ -25,6 +25,7 @@
   .frame { width: calc(1080px * var(--k)); height: calc(1920px * var(--k)); overflow: hidden; border-radius: 14px; box-shadow: 0 20px 40px -20px #000; --k: .3; }
   .frame.square { height: calc(1080px * var(--k)); }
   .frame.portrait { height: calc(1350px * var(--k)); }
+  .frame.og { width: calc(1200px * var(--k)); height: calc(630px * var(--k)); }
   .frame > .ad { transform: scale(var(--k)); transform-origin: 0 0; }
   .dl { background: var(--accent); color: var(--accent-ink); border: 0; border-radius: 8px; padding: 9px 14px; font: 700 15px var(--display); text-transform: uppercase; cursor: pointer; }
   .dl:disabled { opacity: .5; }
@@ -34,6 +35,17 @@
     background: radial-gradient(120% 70% at 50% 30%, #15295a 0%, #08122a 55%, #040a1a 100%); }
   .ad.square { height: 1080px; }
   .ad.portrait { height: 1350px; }
+  .ad.og { width: 1200px; height: 630px; }
+  .og-mark { position: absolute; left: 70px; top: 60px; display: flex; align-items: center; gap: 16px; }
+  .og-mark svg { width: 70px; height: 70px; }
+  .og-mark b { font: italic 800 54px/1 var(--display); }
+  .og-mark b span { color: var(--accent); }
+  .og-title { position: absolute; left: 70px; top: 160px; width: 760px; font: italic 800 92px/.92 var(--display); text-transform: uppercase; text-shadow: 0 8px 30px rgba(0,0,0,.5); }
+  .og-title em { font-style: inherit; background: var(--gold-grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .og-sub { position: absolute; left: 70px; bottom: 70px; font: 600 32px/1.2 Barlow, sans-serif; color: #c9d4ea; }
+  .og-sub b { color: #fff; font: 700 32px/1.2 Barlow, sans-serif; letter-spacing: 0; text-transform: none; }
+  .og-glove { position: absolute; right: 70px; top: 50%; transform: translateY(-50%) rotate(-12deg); font-size: 250px; filter: drop-shadow(0 20px 40px rgba(0,0,0,.6)); }
+  .og-ring { position: absolute; right: 30px; top: 50%; width: 400px; height: 400px; transform: translateY(-50%); border-radius: 50%; background: radial-gradient(circle, rgba(242,182,48,.35), transparent 65%); }
   /* Carrousel (4:5) */
   .cr-mark { position: absolute; left: 50%; transform: translateX(-50%); filter: drop-shadow(0 30px 60px rgba(242,182,48,.35)); }
   .cr-swipe { position: absolute; right: 70px; bottom: 70px; font: italic 800 40px/1 var(--display); color: var(--accent); letter-spacing: .04em; }
@@ -125,7 +137,7 @@ const EN = {
   'Chasse': 'Chase', 'BIENTÔT': 'COMING SOON', 'Le jeu de pronos': 'The picks game', 'des fans de combat': 'for fight fans', 'SWIPE →': 'SWIPE →',
   'Pronostique': 'Predict', 'le vainqueur, la méthode, le round': 'the winner, the method, the round', 'Plus ton prono est précis, plus la cote grimpe.': 'The more precise your pick, the bigger the odds.',
   'Chaque mois, un classement.': 'A new ranking every month.', 'Chaque mois, une ceinture.': 'A new belt every month.', 'Abonne-toi': 'Follow us', 'pour le lancement': 'for the launch', 'Active les notifs 🔔': 'Turn on notifications 🔔', 'Le Sniper': 'The Sniper', 'La Machine': 'The Machine', 'Ton Champion': 'Your Champion', 'la ceinture': 'the belt', '← toi, ce mois-ci': '← you, this month',
-  'Pré-inscris-toi': 'Pre-register', '1 000 Gold offerts': '1,000 free Gold', 'Lancement le 3 décembre · lien en bio 👆': 'Launching December 3 · link in bio 👆',
+  'Pré-inscris-toi': 'Pre-register', 'Gagne des gants': 'Win gloves', 'dédicacés par': 'signed by', 'Pré-inscris-toi avec mon lien': 'Pre-register with my link', 'lancement le 3 décembre': 'launching December 3', '1 000 Gold offerts': '1,000 free Gold', 'Lancement le 3 décembre · lien en bio 👆': 'Launching December 3 · link in bio 👆',
 };
 const L = (s) => (lang === 'en' ? EN[s] || s : s);
 
@@ -236,6 +248,12 @@ const ADS = [
     <div class="ad-sub" style="top:760px">${L('Lancement le 3 décembre · lien en bio 👆')}</div>
     <div class="ad-cta">beltchase.com</div>${foot}
     <div class="cr-dots"><i></i><i></i><i></i><i></i><i class="on"></i></div>` },
+  { id: 'og-concours', fmt: 'og', label: 'Aperçu des liens partagés (1200 × 630)', html: `
+    <div class="ad-slash" style="left:820px"></div>
+    <div class="og-ring"></div><div class="og-glove">🥊</div>
+    <div class="og-mark">${markSvg()}<b>BELT<span>CHASE</span></b></div>
+    <div class="og-title">${L('Gagne des gants')}<br><em>${L('dédicacés par')}<br>Axel Sola</em></div>
+    <div class="og-sub">${L('Pré-inscris-toi avec mon lien')} · <b>${L('lancement le 3 décembre')}</b></div>` },
   { id: 'pub-profil', label: 'Photo de profil (1080 × 1080)', square: true, html: `
     <div class="ad-slash" style="left:540px"></div><div class="ad-slash" style="left:760px;width:120px"></div>
     <div class="logo-big">${markSvg()}</div>` },
@@ -276,7 +294,7 @@ for (const a of ADS) {
     try {
       const { toPng } = await import('https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/+esm');
       const node = document.getElementById(a.id);
-      const url = await toPng(node, { width: 1080, height: { square: 1080, portrait: 1350 }[a.fmt || (a.square ? 'square' : '')] || 1920, pixelRatio: 1, style: { transform: 'none' }, fontEmbedCSS: await fontEmbedCss() });
+      const url = await toPng(node, { width: a.fmt === 'og' ? 1200 : 1080, height: { square: 1080, portrait: 1350, og: 630 }[a.fmt || (a.square ? 'square' : '')] || 1920, pixelRatio: 1, style: { transform: 'none' }, fontEmbedCSS: await fontEmbedCss() });
       Object.assign(document.createElement('a'), { href: url, download: `beltchase-${a.id}-${lang === 'en' ? 'en' : 'fr'}.png` }).click();
       btn.textContent = 'Téléchargé ✓';
     } catch (err) {

@@ -843,5 +843,14 @@ export default {
 "Prono perdu : tu en perds {n}. Parier au hasard ne fait pas monter, seuls les bons pronos comptent.": "Неверный прогноз: ты теряешь {n}. Ставки наугад не помогут, считаются только хорошие прогнозы.",
 "= une division. 3 divisions par rang, de Fer 1 à Immortel 3. Les {n} meilleurs Immortels deviennent Radiant.": "= одно деление. 3 деления на ранг, от Железа 1 до Бессмертного 3. {n} лучших Бессмертных становятся Радиантами.",
 "Chaque mois, une nouvelle saison : le top 3 entre au Hall of Fame avec un cadre et un titre Champion exclusifs.": "Каждый месяц — новый сезон: топ-3 попадают в Зал славы с эксклюзивными рамкой и титулом Чемпиона.",
-"Bon prono : tu montes. Mauvais : tu descends. Chaque mois, le top 3 entre au Hall of Fame.": "Верный прогноз — растёшь, неверный — падаешь. Каждый месяц топ-3 попадают в Зал славы."
+"Bon prono : tu montes. Mauvais : tu descends. Chaque mois, le top 3 entre au Hall of Fame.": "Верный прогноз — растёшь, неверный — падаешь. Каждый месяц топ-3 попадают в Зал славы.",
+"Copier": "Копировать",
+"Pour Instagram : copie le lien et colle-le dans ta story (sticker Lien) ou ta bio.": "Для Instagram: скопируй ссылку и вставь её в сторис (стикер «Ссылка») или в био.",
+"Je tente de gagner des gants dédicacés par Axel Sola sur BeltChase 🥊 Inscris-toi avec mon lien, lancement le {d} :": "Пытаюсь выиграть перчатки с автографом Акселя Солы на BeltChase 🥊 Записывайся по моей ссылке, запуск {d}:",
+"Autre…": "Другое…",
+"Fais inscrire ton premier ami pour entrer dans le classement.": "Приведи первого друга, чтобы попасть в рейтинг.",
+"Tu es <b>{r}</b> du classement avec {a}. Garde ta place !": "Ты <b>{r}</b> в рейтинге: {a}. Удержи место!",
+"Tu es <b>{r}</b> avec {a}. Encore <b>{k}</b> pour entrer dans le top 3.": "Ты <b>{r}</b>: {a}. Ещё <b>{k}</b> до топ-3.",
+"{n} ami inscrit": "{n} друг записался",
+"{n} amis inscrits": "{n} друзей записались"
 };

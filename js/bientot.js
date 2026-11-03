@@ -12,7 +12,7 @@
 // - stats/preinscriptions = { count, last } : nombre total d'inscrits.
 // Le bonus est donné dans le jeu (js/services/prelaunch.js).
 import { CONFIG } from './config.js';
-import { LANGS, lang, langInfo, locale, setLang, t, tn } from './i18n.js';
+import { LANGS, lang, langInfo, locale, ordinal, setLang, t, tn } from './i18n.js';
 import { beltLogo, rankEmblem } from './ui/icons.js';
 import { RADIANT, TIERS } from './services/ranks.js';
 import { escapeHtml } from './util.js';
@@ -113,9 +113,20 @@ async function loadBoard() {
     const { F, db: d } = await db();
     const snap = await F.getDocs(F.query(F.collection(d, 'parrains'), F.where('count', '>', 0), F.orderBy('count', 'desc'), F.limit(TOP)));
     board = snap.docs.map((x) => ({ code: x.id, ...x.data() })).filter((r) => !isOffensivePseudo(r.pseudo));
-    if (done && !board.some((r) => r.code === done.code)) {
-      const mine = await F.getDoc(F.doc(d, 'parrains', done.code));
-      if (mine.exists()) done.count = mine.data().count;
+    if (done) {
+      const inBoard = board.find((r) => r.code === done.code);
+      let count = inBoard?.count;
+      if (count == null) {
+        const mine = await F.getDoc(F.doc(d, 'parrains', done.code));
+        count = mine.exists() ? mine.data().count : 0;
+      }
+      done.count = count;
+      // Rang : 1 + nombre de parrains devant (égalités : le premier arrivé passe devant, approximation).
+      const ahead = count ? (await F.getCount(F.query(F.collection(d, 'parrains'), F.where('count', '>', count)))).data().count : 0;
+      const third = board[2]?.count ?? 0;
+      me = { count, rank: ahead + 1, need: Math.max(1, third - count + 1) };
+      const el = root.querySelector('.pre-me');
+      if (el) el.innerHTML = meHtml();
     }
   } catch (err) {
     console.warn('BeltChase : classement indisponible', err);
@@ -198,11 +209,13 @@ const formHtml = () => (done ? `
   </div>
   <div class="pre-link-box">
     <p class="pre-link-lbl">${t('Ton lien de parrainage')}</p>
+    <p class="pre-me" role="status">${meHtml()}</p>
+    <div class="pre-share">${shareButtons()}</div>
     <div class="pre-link-row">
       <input class="pre-link-input" type="text" readonly value="${escapeHtml(myLink())}" aria-label="${t('Ton lien de parrainage')}">
-      <button class="pre-btn" type="button" data-act="share">${t('Partager')}</button>
+      <button class="pre-btn pre-btn-ghost" type="button" data-act="copy">${t('Copier')}</button>
     </div>
-    <p class="pre-link-help">${t('Chaque ami qui se pré-inscrit avec ton lien te fait monter dans le classement.')}</p>
+    <p class="pre-link-help">${t('Pour Instagram : copie le lien et colle-le dans ta story (sticker Lien) ou ta bio.')}</p>
   </div>
   <button class="pre-link" type="button" data-act="other">${t('Inscrire une autre adresse')}</button>` : `
   <p class="pre-invited" hidden></p>
@@ -256,6 +269,39 @@ function previewHtml() {
     <div class="pv-meth"><span class="is-on">KO / TKO</span><span>${t('Soumission')}</span><span>${t('Décision')}</span></div>
     <div class="pv-slip"><span>${t('Ton prono : Gane par KO')}</span><b>× 4,40</b></div>
   </div>`;
+}
+
+// ---------- Partage du lien (après l'inscription) ----------
+const shareText = () => t('Je tente de gagner des gants dédicacés par Axel Sola sur BeltChase 🥊 Inscris-toi avec mon lien, lancement le {d} :', { d: launchDay });
+const enc = encodeURIComponent;
+const ICON = {
+  whatsapp: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15l-1.4 5 5.1-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg>',
+  snapchat: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2c3 0 5.3 2.3 5.3 5.4v2.1l1.4-.5c.6-.1 1.1.4.8 1-.3.5-1.6 1-2.3 1.3.4 1.6 2 3.4 4 3.9.4.1.5.6.2.9-.6.6-1.8.8-2.6.9-.2.5-.2 1.2-.7 1.3-.9.1-1.8-.3-2.8.1-1.1.5-1.8 1.6-3.3 1.6s-2.2-1.1-3.3-1.6c-1-.4-1.9 0-2.8-.1-.5-.1-.5-.8-.7-1.3-.8-.1-2-.3-2.6-.9-.3-.3-.2-.8.2-.9 2-.5 3.6-2.3 4-3.9-.7-.3-2-.8-2.3-1.3-.3-.6.2-1.1.8-1l1.4.5V7.4C6.7 4.3 9 2 12 2z"/></svg>',
+  x: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M17.8 3h3.1l-6.8 7.7 8 10.3h-6.2l-4.9-6.3L5.4 21H2.3l7.2-8.3L1.8 3h6.4l4.4 5.8L17.8 3zm-1.1 16.2h1.7L7.4 4.7H5.6l11.1 14.5z"/></svg>',
+  telegram: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21.9 4.3 18.7 19c-.2 1-.9 1.3-1.8.8l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.3-5 9.2-8.3c.4-.4-.1-.6-.6-.2L6.1 12.6l-4.9-1.5c-1-.3-1.1-1 .2-1.5L20.5 2.4c.9-.3 1.7.2 1.4 1.9z"/></svg>',
+};
+function shareButtons() {
+  const url = myLink();
+  const text = shareText();
+  const links = [
+    ['whatsapp', 'WhatsApp', `https://wa.me/?text=${enc(`${text} ${url}`)}`],
+    ['snapchat', 'Snapchat', `https://www.snapchat.com/scan?attachmentUrl=${enc(url)}`],
+    ['x', 'X', `https://twitter.com/intent/tweet?text=${enc(text)}&url=${enc(url)}`],
+    ['telegram', 'Telegram', `https://t.me/share/url?url=${enc(url)}&text=${enc(text)}`],
+  ];
+  return `${links.map(([id, name, href]) => `<a class="pre-sh pre-sh-${id}" href="${escapeHtml(href)}" target="_blank" rel="noopener">${ICON[id]}<span>${name}</span></a>`).join('')}
+    ${typeof navigator !== 'undefined' && navigator.share ? `<button class="pre-sh pre-sh-more" type="button" data-act="share">${t('Autre…')}</button>` : ''}`;
+}
+
+// Ma position dans le classement des parrains et ce qu'il me manque pour le top 3.
+let me = null; // { count, rank, need }
+function meHtml() {
+  if (!me) return '';
+  if (!me.count) return t('Fais inscrire ton premier ami pour entrer dans le classement.');
+  const amis = tn(me.count, '{n} ami inscrit', '{n} amis inscrits', { n: fmt(me.count) });
+  return me.rank <= 3
+    ? t('Tu es <b>{r}</b> du classement avec {a}. Garde ta place !', { r: ordinal(me.rank), a: amis })
+    : t('Tu es <b>{r}</b> avec {a}. Encore <b>{k}</b> pour entrer dans le top 3.', { r: ordinal(me.rank), a: amis, k: fmt(me.need) });
 }
 
 function boardHtml() {
@@ -404,18 +450,16 @@ root.addEventListener('click', async (e) => {
     loadReferrer();
     root.querySelector('#pre-pseudo')?.focus();
   } else if (act === 'share') {
-    const data = { title: 'BeltChase', text: t('BeltChase, le jeu de pronos des fans de combat, ouvre le {d}. Pré-inscris-toi : {n} Gold offerts !', { d: launchDay, n: fmt(CONFIG.PRELAUNCH_BONUS) }), url: myLink() };
+    try { await navigator.share({ title: 'BeltChase', text: shareText(), url: myLink() }); } catch { /* partage annulé */ }
+  } else if (act === 'copy') {
     const btn = e.target.closest('button');
-    try {
-      if (navigator.share) await navigator.share(data);
-      else { await navigator.clipboard.writeText(`${data.text} ${data.url}`); btn.textContent = t('Lien copié !'); }
-    } catch { /* partage annulé */ }
+    try { await navigator.clipboard.writeText(myLink()); btn.textContent = t('Lien copié !'); } catch { root.querySelector('.pre-link-input')?.select(); }
   } else if (e.target.matches('.pre-link-input')) {
     e.target.select();
     try {
       await navigator.clipboard.writeText(e.target.value);
-      const btn = root.querySelector('[data-act="share"]');
-      if (btn && !navigator.share) btn.textContent = t('Lien copié !');
+      const btn = root.querySelector('[data-act="copy"]');
+      if (btn) btn.textContent = t('Lien copié !');
     } catch { /* partage annulé */ }
   }
 });

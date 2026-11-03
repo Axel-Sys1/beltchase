@@ -843,5 +843,14 @@ export default {
 "Prono perdu : tu en perds {n}. Parier au hasard ne fait pas monter, seuls les bons pronos comptent.": "猜错：扣 {n} 分。随便乱猜不会上分，只有好的竞猜才算数。",
 "= une division. 3 divisions par rang, de Fer 1 à Immortel 3. Les {n} meilleurs Immortels deviennent Radiant.": "= 一个小段。每个段位 3 个小段，从黑铁 1 到不朽 3。前 {n} 名不朽成为辐能。",
 "Chaque mois, une nouvelle saison : le top 3 entre au Hall of Fame avec un cadre et un titre Champion exclusifs.": "每月一个新赛季：前三名进入名人堂，获得专属冠军头像框和称号。",
-"Bon prono : tu montes. Mauvais : tu descends. Chaque mois, le top 3 entre au Hall of Fame.": "猜对就上分，猜错就掉分。每月前三名进入名人堂。"
+"Bon prono : tu montes. Mauvais : tu descends. Chaque mois, le top 3 entre au Hall of Fame.": "猜对就上分，猜错就掉分。每月前三名进入名人堂。",
+"Copier": "复制",
+"Pour Instagram : copie le lien et colle-le dans ta story (sticker Lien) ou ta bio.": "Instagram：复制链接，贴到快拍（链接贴纸）或个人简介里。",
+"Je tente de gagner des gants dédicacés par Axel Sola sur BeltChase 🥊 Inscris-toi avec mon lien, lancement le {d} :": "我正在 BeltChase 争夺 Axel Sola 亲笔签名拳套 🥊 用我的链接预约，{d}上线：",
+"Autre…": "更多…",
+"Fais inscrire ton premier ami pour entrer dans le classement.": "邀请第一位好友预约，即可进入排行榜。",
+"Tu es <b>{r}</b> du classement avec {a}. Garde ta place !": "你在排行榜第 <b>{r}</b> 位，{a}。守住位置！",
+"Tu es <b>{r}</b> avec {a}. Encore <b>{k}</b> pour entrer dans le top 3.": "你排第 <b>{r}</b> 位，{a}。再邀请 <b>{k}</b> 位即可进入前三。",
+"{n} ami inscrit": "已邀请 {n} 位好友",
+"{n} amis inscrits": "已邀请 {n} 位好友"
 };

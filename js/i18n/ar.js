@@ -843,5 +843,14 @@ export default {
 "Prono perdu : tu en perds {n}. Parier au hasard ne fait pas monter, seuls les bons pronos comptent.": "توقّع خاطئ: تخسر {n}. الرهان العشوائي لا يرفعك، فقط التوقعات الجيدة تُحسب.",
 "= une division. 3 divisions par rang, de Fer 1 à Immortel 3. Les {n} meilleurs Immortels deviennent Radiant.": "= قسم واحد. 3 أقسام لكل رتبة، من الحديد 1 إلى الخالد 3. أفضل {n} خالدين يصبحون متألّقين.",
 "Chaque mois, une nouvelle saison : le top 3 entre au Hall of Fame avec un cadre et un titre Champion exclusifs.": "كل شهر موسم جديد: يدخل أفضل 3 قاعة المشاهير مع إطار ولقب البطل الحصريين.",
-"Bon prono : tu montes. Mauvais : tu descends. Chaque mois, le top 3 entre au Hall of Fame.": "توقّع صحيح: تصعد. خاطئ: تنزل. كل شهر يدخل أفضل 3 قاعة المشاهير."
+"Bon prono : tu montes. Mauvais : tu descends. Chaque mois, le top 3 entre au Hall of Fame.": "توقّع صحيح: تصعد. خاطئ: تنزل. كل شهر يدخل أفضل 3 قاعة المشاهير.",
+"Copier": "نسخ",
+"Pour Instagram : copie le lien et colle-le dans ta story (sticker Lien) ou ta bio.": "لإنستغرام: انسخ الرابط والصقه في قصتك (ملصق الرابط) أو في السيرة.",
+"Je tente de gagner des gants dédicacés par Axel Sola sur BeltChase 🥊 Inscris-toi avec mon lien, lancement le {d} :": "أحاول الفوز بقفازات موقّعة من أكسيل سولا على BeltChase 🥊 سجّل عبر رابطي، الإطلاق في {d}:",
+"Autre…": "غير ذلك…",
+"Fais inscrire ton premier ami pour entrer dans le classement.": "ادعُ أول صديق لتدخل الترتيب.",
+"Tu es <b>{r}</b> du classement avec {a}. Garde ta place !": "أنت <b>{r}</b> في الترتيب مع {a}. حافظ على مكانك!",
+"Tu es <b>{r}</b> avec {a}. Encore <b>{k}</b> pour entrer dans le top 3.": "أنت <b>{r}</b> مع {a}. بقي <b>{k}</b> لتدخل أفضل 3.",
+"{n} ami inscrit": "{n} صديق مسجّل",
+"{n} amis inscrits": "{n} أصدقاء مسجّلون"
 };
