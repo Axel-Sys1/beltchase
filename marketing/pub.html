@@ -89,7 +89,7 @@
 </head>
 <body>
   <h1 class="pg">Visuels pub BeltChase</h1>
-  <p class="pg-note">Format 1080 × 1920 (stories, reels, TikTok, pubs Meta et TikTok) et photo de profil 1080 × 1080. Bouton sous chaque visuel pour le télécharger en PNG.</p>
+  <p class="pg-note"><a href="?lang=fr" style="color:var(--accent)">Français</a> · <a href="?lang=en" style="color:var(--accent)">English</a> — Format 1080 × 1920 (stories, reels, TikTok, pubs Meta et TikTok) et photo de profil 1080 × 1080. Bouton sous chaque visuel pour le télécharger en PNG.</p>
   <div class="grid" id="grid"></div>
 
 <template id="belt-tpl">
@@ -99,10 +99,23 @@
 <script type="module">
 import { fightCardHtml } from '../js/ui/fightCard.js';
 import { TIERS } from '../js/services/ranks.js';
+import { lang } from '../js/i18n.js';
+
+// Textes propres aux visuels (le reste vient de l'appli, déjà traduit) : ?lang=en pour la version anglaise.
+const EN = {
+  'Gratuit': 'Free', '100 % virtuel': '100% virtual', 'sans argent réel': 'no real money',
+  'Tu crois': 'Think you', 'connaître': 'know', 'le MMA ?': 'MMA?', 'Coin rouge': 'Red corner', 'Coin bleu': 'Blue corner',
+  'Rouge': 'Red', 'Bleu': 'Blue', 'Méthode': 'Method', 'Round': 'Round', 'Soumission': 'Submission', 'Décision': 'Decision',
+  'Vainqueur, méthode, round :': 'Winner, method, round:', 'prouve-le.': 'prove it.',
+  'Collectionne': 'Collect', '151 cartes': '151 cards', 'MMA · Boxe · Kick · JJB · Lutte': 'MMA · Boxing · Kickboxing · BJJ · Wrestling',
+  'Commun': 'Common', 'Rare': 'Rare', 'Épique': 'Epic', 'Légendaire': 'Legendary', 'Mythique': 'Mythic',
+  'Chasse': 'Chase', 'Le Sniper': 'The Sniper', 'La Machine': 'The Machine', 'Ton Champion': 'Your Champion', 'la ceinture': 'the belt', '← toi, ce mois-ci': '← you, this month',
+};
+const L = (s) => (lang === 'en' ? EN[s] || s : s);
 
 const belt = document.getElementById('belt-tpl').innerHTML;
 const top = `<div class="ad-top">${belt}<div class="ad-brand">BELT<span>CHASE</span></div></div>`;
-const foot = '<div class="ad-foot">Gratuit · <span>100 % virtuel</span> · sans argent réel</div>';
+const foot = `<div class="ad-foot">${L('Gratuit')} · <span>${L('100 % virtuel')}</span> · ${L('sans argent réel')}</div>`;
 const cta = '<div class="ad-cta">beltchase.com</div>';
 const fighter = `<svg viewBox="0 0 200 220"><g fill="rgba(0,0,0,.55)"><ellipse cx="100" cy="60" rx="27" ry="33"/><path d="M88 88h24l3 16H85z"/><path d="M14 220c3-56 24-92 62-104l24 8 24-8c38 12 59 48 62 104z"/></g><g fill="rgba(0,0,0,.7)"><path d="M52 150l14-46 22 4-10 50z"/><path d="M148 150l-14-46-22 4 10 50z"/><rect x="58" y="74" width="34" height="40" rx="14"/><rect x="108" y="74" width="34" height="40" rx="14"/></g></svg>`;
 
@@ -113,43 +126,43 @@ const ADS = [
   { id: 'pub-1-prono', label: '1 · Prouve-le (pronostic)', html: `
     <div class="ad-slash" style="left:-80px"></div><div class="ad-slash" style="right:-120px"></div>
     ${top}
-    <div class="ad-title" style="top:250px">Tu crois<br>connaître<br><em>le MMA ?</em></div>
+    <div class="ad-title" style="top:250px">${L('Tu crois')}<br>${L('connaître')}<br><em>${L('le MMA ?')}</em></div>
     <div class="mk-vs">
       <div class="mk-vs-head">
-        <div class="mk-corner mk-red"><div class="mk-av">${fighter}</div><strong>Coin rouge</strong></div>
+        <div class="mk-corner mk-red"><div class="mk-av">${fighter}</div><strong>${L('Coin rouge')}</strong></div>
         <div class="mk-vs-x">VS</div>
-        <div class="mk-corner mk-blue"><div class="mk-av">${fighter}</div><strong>Coin bleu</strong></div>
+        <div class="mk-corner mk-blue"><div class="mk-av">${fighter}</div><strong>${L('Coin bleu')}</strong></div>
       </div>
-      <div class="mk-row mk-r2"><div class="mk-odd mk-on">Rouge<span class="mk-o">1,85</span></div><div class="mk-odd">Bleu<span class="mk-o">2,10</span></div></div>
-      <div class="mk-lbl">Méthode</div>
-      <div class="mk-row mk-r3"><div class="mk-odd mk-on">KO / TKO<span class="mk-o">3,40</span></div><div class="mk-odd">Soumission<span class="mk-o">6,20</span></div><div class="mk-odd">Décision<span class="mk-o">2,50</span></div></div>
+      <div class="mk-row mk-r2"><div class="mk-odd mk-on">${L('Rouge')}<span class="mk-o">1,85</span></div><div class="mk-odd">${L('Bleu')}<span class="mk-o">2,10</span></div></div>
+      <div class="mk-lbl">${L('Méthode')}</div>
+      <div class="mk-row mk-r3"><div class="mk-odd mk-on">KO / TKO<span class="mk-o">3,40</span></div><div class="mk-odd">${L('Soumission')}<span class="mk-o">6,20</span></div><div class="mk-odd">${L('Décision')}<span class="mk-o">2,50</span></div></div>
       <div class="mk-lbl">Round</div>
       <div class="mk-row mk-r5"><div class="mk-odd">R1</div><div class="mk-odd mk-on">R2</div><div class="mk-odd">R3</div><div class="mk-odd">R4</div><div class="mk-odd">R5</div></div>
     </div>
     <div class="mk-win">+ 1 240 Gold</div>
-    <div class="ad-sub" style="top:1450px;font-size:40px">Vainqueur, méthode, round : <span style="color:#fff">prouve-le.</span></div>
+    <div class="ad-sub" style="top:1450px;font-size:40px">${L('Vainqueur, méthode, round :')} <span style="color:#fff">${L('prouve-le.')}</span></div>
     ${cta}${foot}` },
   { id: 'pub-2-cartes', label: '2 · Collectionne (cartes)', html: `
     <div class="ad-slash" style="left:120px"></div>
     ${top}
-    <div class="ad-title" style="top:260px">Collectionne<br><em>151 cartes</em></div>
-    <div class="ad-sub" style="top:560px">MMA · Boxe · Kick · JJB · Lutte</div>
+    <div class="ad-title" style="top:260px">${L('Collectionne')}<br><em>${L('151 cartes')}</em></div>
+    <div class="ad-sub" style="top:560px">${L('MMA · Boxe · Kick · JJB · Lutte')}</div>
     <div class="mk-fan">
-      ${fake('epique', 'Le Sniper', 'Brésil', 'Poids légers', '🇧🇷')}
-      ${fake('legendaire', 'La Machine', 'États-Unis', 'Poids lourds', '🇺🇸')}
-      ${fake('mythique', 'Ton Champion', 'France', 'Poids moyens', '🇫🇷')}
+      ${fake('epique', L('Le Sniper'), 'Brésil', 'Poids légers', '🇧🇷')}
+      ${fake('legendaire', L('La Machine'), 'États-Unis', 'Poids lourds', '🇺🇸')}
+      ${fake('mythique', L('Ton Champion'), 'France', 'Poids moyens', '🇫🇷')}
     </div>
     <div class="mk-gems">
-      <span style="background:#8d97a8">Commun</span><span style="background:#6fb6ff">Rare</span><span style="background:#c38bff">Épique</span><span style="background:#ffe08a">Légendaire</span><span style="background:linear-gradient(90deg,#ff5ea0,#ffb84d,#5dffb4,#58c8ff,#a77bff)">Mythique</span>
+      <span style="background:#8d97a8">${L('Commun')}</span><span style="background:#6fb6ff">${L('Rare')}</span><span style="background:#c38bff">${L('Épique')}</span><span style="background:#ffe08a">${L('Légendaire')}</span><span style="background:linear-gradient(90deg,#ff5ea0,#ffb84d,#5dffb4,#58c8ff,#a77bff)">${L('Mythique')}</span>
     </div>
     ${cta}${foot}` },
   { id: 'pub-3-ceinture', label: '3 · Chasse la ceinture (classement)', html: `
     <div class="ad-slash" style="right:80px"></div>
     ${top}
-    <div class="ad-title" style="top:260px">Chasse<br><em>la ceinture</em></div>
+    <div class="ad-title" style="top:260px">${L('Chasse')}<br><em>${L('la ceinture')}</em></div>
     <div class="mk-belt">${belt}</div>
     <div class="mk-ladder">
-      ${TIERS.slice(3).map((t) => `<div class="${t.id === 'diamond' ? 'mk-me' : ''}"><i style="background:${t.color}"></i>${t.name}${t.id === 'diamond' ? '<small>← toi, ce mois-ci</small>' : ''}</div>`).join('')}
+      ${TIERS.slice(3).map((t) => `<div class="${t.id === 'diamond' ? 'mk-me' : ''}"><i style="background:${t.color}"></i>${t.name}${t.id === 'diamond' ? `<small>${L('← toi, ce mois-ci')}</small>` : ''}</div>`).join('')}
     </div>
     ${cta}${foot}` },
   { id: 'pub-profil', label: 'Photo de profil (1080 × 1080)', square: true, html: `
@@ -177,6 +190,8 @@ async function fontEmbedCss() {
 }
 
 const grid = document.getElementById('grid');
+// Anglais : décimales à point et milliers à virgule (1.85, 1,240).
+if (lang === 'en') for (const a of ADS) a.html = a.html.replace(/(\d),(\d{2})</g, '$1.$2<').replace(/(\d) (\d{3}) Gold/g, '$1,$2 Gold');
 for (const a of ADS) {
   const slot = document.createElement('div');
   slot.className = 'slot';
@@ -190,7 +205,7 @@ for (const a of ADS) {
       const { toPng } = await import('https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/+esm');
       const node = document.getElementById(a.id);
       const url = await toPng(node, { width: 1080, height: a.square ? 1080 : 1920, pixelRatio: 1, style: { transform: 'none' }, fontEmbedCSS: await fontEmbedCss() });
-      Object.assign(document.createElement('a'), { href: url, download: `beltchase-${a.id}.png` }).click();
+      Object.assign(document.createElement('a'), { href: url, download: `beltchase-${a.id}-${lang === 'en' ? 'en' : 'fr'}.png` }).click();
       btn.textContent = 'Téléchargé ✓';
     } catch (err) {
       btn.textContent = 'Erreur, réessaie';
