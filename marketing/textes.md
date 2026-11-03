@@ -8,7 +8,7 @@ Visuels : http://localhost:5173/marketing/pub.html (bouton « Télécharger PNG 
 - Email d'inscription : contact@beltchase.com (arrive dans ta boîte Gmail).
 - Instagram : passer en **compte professionnel** (Paramètres → Type de compte) pour les statistiques et les pubs.
 - TikTok : passer en **compte Business** pour le lien en bio et TikTok Ads.
-- Photo de profil : visuel « Photo de profil » (ceinture dorée).
+- Photo de profil : marketing/photo-profil.png (logo octogone « BC », 1080 × 1080).
 
 ## Bio (même texte sur les deux)
 

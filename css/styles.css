@@ -1702,7 +1702,7 @@ h1.tagline { font: inherit; font-size: 16px; letter-spacing: normal; margin: 1em
 @keyframes pumpkin-in { from { transform: scale(0.3) rotate(-20deg); opacity: 0; } }
 
 /* Logo BeltChase : ceinture un peu plus large que l'ancien ballon */
-.logo svg.belt-logo { width: 34px; height: 34px; margin: -4px 0; }
+.logo svg.belt-logo { width: 30px; height: 30px; }
 .brand-big svg.belt-logo { width: 1.05em; height: 1.05em; }
 
 /* ---------- Paris méthode & round (services/markets.js) ---------- */

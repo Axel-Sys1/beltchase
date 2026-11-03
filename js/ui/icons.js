@@ -53,23 +53,10 @@ export const pumpkinLogo = `<svg class="pumpkin-logo" viewBox="0 0 64 64" width=
   <path fill="#2a1200" d="M18 33l6-5 5 5zM35 33l5-5 6 5zM19 44c4 5 9 7 13 7s9-2 13-7l-4 1-2 3-3-2-4 3-4-3-3 2-2-3z"/>
 </svg>`;
 
-// Logo BeltChase : ceinture de champion (sangle, plaques latérales, grande plaque dorée et son étoile).
-export const beltLogo = `<svg class="belt-logo" viewBox="0 0 64 64" width="24" height="24" aria-hidden="true">
-  <defs>
-    <linearGradient id="belt-gold" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#ffe08a"/><stop offset="0.5" stop-color="#f2b630"/><stop offset="1" stop-color="#b9821a"/>
-    </linearGradient>
-  </defs>
-  <rect x="1" y="23" width="62" height="18" rx="4" fill="#1a2c55" stroke="#f2b630" stroke-width="1.6"/>
-  <path d="M3 27.5h58M3 36.5h58" stroke="#f2b630" stroke-width="1" stroke-dasharray="2.5 2.5" opacity="0.7"/>
-  <rect x="6" y="25" width="9" height="14" rx="2.5" fill="url(#belt-gold)"/>
-  <rect x="49" y="25" width="9" height="14" rx="2.5" fill="url(#belt-gold)"/>
-  <ellipse cx="32" cy="32" rx="17" ry="19" fill="url(#belt-gold)" stroke="#8a5e0f" stroke-width="1.4"/>
-  <ellipse cx="32" cy="32" rx="12" ry="14" fill="none" stroke="#8a5e0f" stroke-width="1.2" opacity="0.7"/>
-  <path d="M32 22.5l2.9 5.9 6.5.9-4.7 4.6 1.1 6.4-5.8-3-5.8 3 1.1-6.4-4.7-4.6 6.5-.9z" fill="#fff7d6" stroke="#8a5e0f" stroke-width="0.8"/>
-</svg>`;
+// Logo de la marque : « BC » dans un octogone doré (lettres en tracés : même rendu partout).
+export const beltLogo = `<svg class="belt-logo" viewBox="0 0 64 64" width="24" height="24" aria-hidden="true"><defs><linearGradient id="bc-gold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe08a"/><stop offset=".5" stop-color="#f2b630"/><stop offset="1" stop-color="#b9821a"/></linearGradient></defs><path d="M21 3h22l18 18v22L43 61H21L3 43V21z" fill="#0b1733" stroke="url(#bc-gold)" stroke-width="5" stroke-linejoin="round"/><path transform="translate(14.4 45.3) scale(.38)" fill="url(#bc-gold)" d="M44.90-19.90Q43.90-10.30 37.55-5.15Q31.20 0 22.20 0L22.20 0L2.60 0Q2.10 0 1.80-0.35Q1.50-0.70 1.60-1.20L1.60-1.20L9.90-68.80Q10-69.30 10.35-69.65Q10.70-70 11.20-70L11.20-70L28.30-70Q37.40-70 42.55-66Q47.70-62 47.70-54L47.70-54Q47.70-51.80 47.50-50.60L47.50-50.60Q46.30-41 39.70-36.50L39.70-36.50Q39.20-36.20 39.50-35.90L39.50-35.90Q45.10-31.30 45.10-23.10L45.10-23.10Q45.10-22.10 44.90-19.90L44.90-19.90ZM24.90-55.80Q24.50-55.80 24.30-55.30L24.30-55.30L22.80-42.50Q22.60-42 23.20-42L23.20-42L25-42Q28.10-42 29.85-44.25Q31.60-46.50 31.60-50.50L31.60-50.50Q31.60-53.10 30.35-54.45Q29.10-55.80 26.70-55.80L26.70-55.80L24.90-55.80ZM22.70-14.30Q25.50-14.30 27.35-16.80Q29.20-19.30 29.20-23.80L29.20-23.80Q29.20-26.70 28-28.40Q26.80-30.10 24.70-30.10L24.70-30.10L21.70-30.10Q21.20-30.10 21.20-29.60L21.20-29.60L19.40-14.80Q19.20-14.30 19.80-14.30L19.80-14.30L22.70-14.30ZM67.20 0.80Q58.80 0.80 54.00-3.80Q49.20-8.40 49.20-16.40L49.20-16.40Q49.20-17.50 49.40-19.70L49.40-19.70L53.20-50.40Q54.30-59.80 60.50-65.30Q66.70-70.80 75.90-70.80L75.90-70.80Q84.30-70.80 89.15-66.25Q94-61.70 94-53.80L94-53.80Q94-52.80 93.80-50.40L93.80-50.40L93.70-49.50Q93.60-49 93.25-48.65Q92.90-48.30 92.40-48.30L92.40-48.30L78.50-47.70Q77.40-47.70 77.50-48.90L77.50-48.90L77.90-51.60Q78.10-53.90 77.10-55.25Q76.10-56.60 74.20-56.60L74.20-56.60Q72.30-56.60 71-55.25Q69.70-53.90 69.40-51.60L69.40-51.60L65.30-18.30Q65.10-16.10 66.05-14.75Q67-13.40 68.90-13.40L68.90-13.40Q70.80-13.40 72.15-14.75Q73.50-16.10 73.80-18.30L73.80-18.30L74.10-21.20Q74.20-21.70 74.55-22.05Q74.90-22.40 75.40-22.40L75.40-22.40L89.10-21.80Q90.20-21.80 90.20-20.60L90.20-20.60L90-19.70Q88.90-10.40 82.65-4.80Q76.40 0.80 67.20 0.80L67.20 0.80Z"/></svg>`;
 
-// Boule de Noël (logo pendant Noël, à la place de la ceinture) : boule rouge brillante, rubans et étoile
+// Boule de Noël (logo pendant Noël, à la place du logo) : boule rouge brillante, rubans et étoile
 // dorés, attache dorée et son anneau.
 export const baubleLogo = `<svg class="bauble-logo" viewBox="0 0 64 64" width="24" height="24" aria-hidden="true">
   <defs>

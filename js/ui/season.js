@@ -16,7 +16,7 @@ export function activeEvent(t = new Date()) {
 const current = () => document.documentElement.dataset.event || null;
 const event = () => (CONFIG.EVENTS || []).find((e) => e.id === current()) || null;
 
-// Logo : citrouille à Halloween, boule de Noël à Noël, ceinture de champion le reste du temps.
+// Logo : citrouille à Halloween, boule de Noël à Noël, octogone « BC » le reste du temps.
 export function eventLogo() {
   if (current() === 'halloween') return pumpkinLogo;
   if (current() === 'noel') return baubleLogo;
