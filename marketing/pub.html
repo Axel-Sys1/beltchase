@@ -24,6 +24,7 @@
   .slot b { font: 700 15px var(--display); text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
   .frame { width: calc(1080px * var(--k)); height: calc(1920px * var(--k)); overflow: hidden; border-radius: 14px; box-shadow: 0 20px 40px -20px #000; --k: .3; }
   .frame.square { height: calc(1080px * var(--k)); }
+  .frame.portrait { height: calc(1350px * var(--k)); }
   .frame > .ad { transform: scale(var(--k)); transform-origin: 0 0; }
   .dl { background: var(--accent); color: var(--accent-ink); border: 0; border-radius: 8px; padding: 9px 14px; font: 700 15px var(--display); text-transform: uppercase; cursor: pointer; }
   .dl:disabled { opacity: .5; }
@@ -32,6 +33,15 @@
   .ad { position: relative; width: 1080px; height: 1920px; overflow: hidden; color: #fff; font-family: Barlow, sans-serif;
     background: radial-gradient(120% 70% at 50% 30%, #15295a 0%, #08122a 55%, #040a1a 100%); }
   .ad.square { height: 1080px; }
+  .ad.portrait { height: 1350px; }
+  /* Carrousel (4:5) */
+  .cr-mark { position: absolute; left: 50%; transform: translateX(-50%); filter: drop-shadow(0 30px 60px rgba(242,182,48,.35)); }
+  .cr-swipe { position: absolute; right: 70px; bottom: 70px; font: italic 800 40px/1 var(--display); color: var(--accent); letter-spacing: .04em; }
+  .cr-dots { position: absolute; left: 70px; bottom: 82px; display: flex; gap: 10px; }
+  .cr-dots i { width: 16px; height: 16px; border-radius: 50%; background: rgba(255,255,255,.25); }
+  .cr-dots i.on { background: var(--accent); }
+  .ad.portrait .ad-foot { bottom: 150px; }
+  .ad.portrait .ad-cta { bottom: 230px; }
   .ad::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(120deg, transparent 0 46px, rgba(255,255,255,.025) 46px 50px); }
   .ad-slash { position: absolute; top: -10%; bottom: -10%; width: 260px; background: rgba(242,182,48,.07); transform: skewX(-18deg); }
   .ad-top { position: absolute; top: 90px; left: 0; right: 0; display: flex; justify-content: center; align-items: center; gap: 18px; }
@@ -112,13 +122,18 @@ const EN = {
   'Vainqueur, méthode, round :': 'Winner, method, round:', 'prouve-le.': 'prove it.',
   'Collectionne': 'Collect', '151 cartes': '151 cards', 'MMA · Boxe · Kick · JJB · Lutte': 'MMA · Boxing · Kickboxing · BJJ · Wrestling',
   'Commun': 'Common', 'Rare': 'Rare', 'Épique': 'Epic', 'Légendaire': 'Legendary', 'Mythique': 'Mythic',
-  'Chasse': 'Chase', 'Le Sniper': 'The Sniper', 'La Machine': 'The Machine', 'Ton Champion': 'Your Champion', 'la ceinture': 'the belt', '← toi, ce mois-ci': '← you, this month',
+  'Chasse': 'Chase', 'BIENTÔT': 'COMING SOON', 'Le jeu de pronos': 'The picks game', 'des fans de combat': 'for fight fans', 'SWIPE →': 'SWIPE →',
+  'Pronostique': 'Predict', 'le vainqueur, la méthode, le round': 'the winner, the method, the round', 'Plus ton prono est précis, plus la cote grimpe.': 'The more precise your pick, the bigger the odds.',
+  'Chaque mois, un classement.': 'A new ranking every month.', 'Chaque mois, une ceinture.': 'A new belt every month.', 'Abonne-toi': 'Follow us', 'pour le lancement': 'for the launch', 'Active les notifs 🔔': 'Turn on notifications 🔔', 'Le Sniper': 'The Sniper', 'La Machine': 'The Machine', 'Ton Champion': 'Your Champion', 'la ceinture': 'the belt', '← toi, ce mois-ci': '← you, this month',
 };
 const L = (s) => (lang === 'en' ? EN[s] || s : s);
 
 const belt = document.getElementById('belt-tpl').innerHTML;
-const mark = document.getElementById('mark-tpl').innerHTML; // logo (octogone « BC »)
-const top = `<div class="ad-top">${mark}<div class="ad-brand">BELT<span>CHASE</span></div></div>`;
+// Logo (octogone « BC ») : un identifiant de dégradé par copie, sinon les copies suivantes perdent leur or.
+const markTpl = document.getElementById('mark-tpl').innerHTML;
+let markN = 0;
+const markSvg = () => { markN += 1; return markTpl.replaceAll('mk-gold', `mk-gold-${markN}`); };
+const top = () => `<div class="ad-top">${markSvg()}<div class="ad-brand">BELT<span>CHASE</span></div></div>`;
 const foot = `<div class="ad-foot">${L('Gratuit')} · <span>${L('100 % virtuel')}</span> · ${L('sans argent réel')}</div>`;
 const cta = '<div class="ad-cta">beltchase.com</div>';
 const fighter = `<svg viewBox="0 0 200 220"><g fill="rgba(0,0,0,.55)"><ellipse cx="100" cy="60" rx="27" ry="33"/><path d="M88 88h24l3 16H85z"/><path d="M14 220c3-56 24-92 62-104l24 8 24-8c38 12 59 48 62 104z"/></g><g fill="rgba(0,0,0,.7)"><path d="M52 150l14-46 22 4-10 50z"/><path d="M148 150l-14-46-22 4 10 50z"/><rect x="58" y="74" width="34" height="40" rx="14"/><rect x="108" y="74" width="34" height="40" rx="14"/></g></svg>`;
@@ -129,7 +144,7 @@ const fake = (rarity, name, team, pos, flag) => fightCardHtml({ id: `ad-${rarity
 const ADS = [
   { id: 'pub-1-prono', label: '1 · Prouve-le (pronostic)', html: `
     <div class="ad-slash" style="left:-80px"></div><div class="ad-slash" style="right:-120px"></div>
-    ${top}
+    ${top()}
     <div class="ad-title" style="top:250px">${L('Tu crois')}<br>${L('connaître')}<br><em>${L('le MMA ?')}</em></div>
     <div class="mk-vs">
       <div class="mk-vs-head">
@@ -148,7 +163,7 @@ const ADS = [
     ${cta}${foot}` },
   { id: 'pub-2-cartes', label: '2 · Collectionne (cartes)', html: `
     <div class="ad-slash" style="left:120px"></div>
-    ${top}
+    ${top()}
     <div class="ad-title" style="top:260px">${L('Collectionne')}<br><em>${L('151 cartes')}</em></div>
     <div class="ad-sub" style="top:560px">${L('MMA · Boxe · Kick · JJB · Lutte')}</div>
     <div class="mk-fan">
@@ -162,16 +177,67 @@ const ADS = [
     ${cta}${foot}` },
   { id: 'pub-3-ceinture', label: '3 · Chasse la ceinture (classement)', html: `
     <div class="ad-slash" style="right:80px"></div>
-    ${top}
+    ${top()}
     <div class="ad-title" style="top:260px">${L('Chasse')}<br><em>${L('la ceinture')}</em></div>
     <div class="mk-belt">${belt}</div>
     <div class="mk-ladder">
       ${TIERS.slice(3).map((t) => `<div class="${t.id === 'diamond' ? 'mk-me' : ''}"><i style="background:${t.color}"></i>${t.name}${t.id === 'diamond' ? `<small>${L('← toi, ce mois-ci')}</small>` : ''}</div>`).join('')}
     </div>
     ${cta}${foot}` },
+  // Carrousel de lancement (4:5, le format qui prend le plus de place dans le fil Instagram).
+  { id: 'car-1', fmt: 'portrait', label: 'Carrousel 1/5 · Accroche', html: `
+    <div class="ad-slash" style="left:600px"></div>
+    <div class="cr-mark" style="top:150px;width:470px">${markSvg()}</div>
+    <div class="ad-title" style="top:690px;font-size:120px">${L('Le jeu de pronos')}<br><em>${L('des fans de combat')}</em></div>
+    <div class="ad-sub" style="top:960px">MMA · UFC · Boxe · Kick · JJB</div>
+    <div class="ad-cta" style="bottom:200px">${L('BIENTÔT')}</div>
+    <div class="cr-dots"><i class="on"></i><i></i><i></i><i></i><i></i></div><div class="cr-swipe">${L('SWIPE →')}</div>` },
+  { id: 'car-2', fmt: 'portrait', label: 'Carrousel 2/5 · Pronostique', html: `
+    <div class="ad-slash" style="left:-80px"></div>
+    <div class="ad-title" style="top:110px;font-size:130px">${L('Pronostique')}</div>
+    <div class="ad-sub" style="top:260px">${L('le vainqueur, la méthode, le round')}</div>
+    <div class="mk-vs" style="top:380px">
+      <div class="mk-vs-head">
+        <div class="mk-corner mk-red"><div class="mk-av">${fighter}</div><strong>${L('Coin rouge')}</strong></div>
+        <div class="mk-vs-x">VS</div>
+        <div class="mk-corner mk-blue"><div class="mk-av">${fighter}</div><strong>${L('Coin bleu')}</strong></div>
+      </div>
+      <div class="mk-row mk-r2"><div class="mk-odd mk-on">${L('Rouge')}<span class="mk-o">1,85</span></div><div class="mk-odd">${L('Bleu')}<span class="mk-o">2,10</span></div></div>
+      <div class="mk-lbl">${L('Méthode')}</div>
+      <div class="mk-row mk-r3"><div class="mk-odd mk-on">KO / TKO<span class="mk-o">3,40</span></div><div class="mk-odd">${L('Soumission')}<span class="mk-o">6,20</span></div><div class="mk-odd">${L('Décision')}<span class="mk-o">2,50</span></div></div>
+    </div>
+    <div class="ad-sub" style="top:1070px;font-size:40px">${L('Plus ton prono est précis, plus la cote grimpe.')}</div>
+    <div class="cr-dots"><i></i><i class="on"></i><i></i><i></i><i></i></div><div class="cr-swipe">${L('SWIPE →')}</div>` },
+  { id: 'car-3', fmt: 'portrait', label: 'Carrousel 3/5 · Cartes', html: `
+    <div class="ad-slash" style="left:120px"></div>
+    <div class="ad-title" style="top:110px;font-size:130px">${L('Collectionne')}<br><em>${L('151 cartes')}</em></div>
+    <div class="mk-fan" style="top:390px;height:600px">
+      ${fake('epique', L('Le Sniper'), 'Brésil', 'Poids légers', '🇧🇷')}
+      ${fake('legendaire', L('La Machine'), 'États-Unis', 'Poids lourds', '🇺🇸')}
+      ${fake('mythique', L('Ton Champion'), 'France', 'Poids moyens', '🇫🇷')}
+    </div>
+    <div class="mk-gems" style="top:1150px">
+      <span style="background:#8d97a8">${L('Commun')}</span><span style="background:#6fb6ff">${L('Rare')}</span><span style="background:#c38bff">${L('Épique')}</span><span style="background:#ffe08a">${L('Légendaire')}</span><span style="background:linear-gradient(90deg,#ff5ea0,#ffb84d,#5dffb4,#58c8ff,#a77bff)">${L('Mythique')}</span>
+    </div>
+    <div class="cr-dots"><i></i><i></i><i class="on"></i><i></i><i></i></div><div class="cr-swipe">${L('SWIPE →')}</div>` },
+  { id: 'car-4', fmt: 'portrait', label: 'Carrousel 4/5 · Ceinture', html: `
+    <div class="ad-slash" style="right:80px"></div>
+    <div class="ad-title" style="top:110px;font-size:130px">${L('Chasse')}<br><em>${L('la ceinture')}</em></div>
+    <div class="mk-ladder" style="top:470px">
+      ${TIERS.slice(3).map((t) => `<div class="${t.id === 'diamond' ? 'mk-me' : ''}"><i style="background:${t.color}"></i>${t.name}${t.id === 'diamond' ? `<small>${L('← toi, ce mois-ci')}</small>` : ''}</div>`).join('')}
+    </div>
+    <div class="ad-sub" style="top:960px;font-size:42px">${L('Chaque mois, un classement.')}<br><span style="color:#fff">${L('Chaque mois, une ceinture.')}</span></div>
+    <div class="cr-dots"><i></i><i></i><i></i><i class="on"></i><i></i></div><div class="cr-swipe">${L('SWIPE →')}</div>` },
+  { id: 'car-5', fmt: 'portrait', label: 'Carrousel 5/5 · Abonne-toi', html: `
+    <div class="ad-slash" style="left:560px"></div>
+    <div class="cr-mark" style="top:130px;width:330px">${markSvg()}</div>
+    <div class="ad-title" style="top:480px;font-size:112px">${L('Abonne-toi')}<br><em>${L('pour le lancement')}</em></div>
+    <div class="ad-sub" style="top:800px">${L('Active les notifs 🔔')}</div>
+    <div class="ad-cta">@beltchase.officiel</div>${foot}
+    <div class="cr-dots"><i></i><i></i><i></i><i></i><i class="on"></i></div>` },
   { id: 'pub-profil', label: 'Photo de profil (1080 × 1080)', square: true, html: `
     <div class="ad-slash" style="left:540px"></div><div class="ad-slash" style="left:760px;width:120px"></div>
-    <div class="logo-big">${mark}</div>` },
+    <div class="logo-big">${markSvg()}</div>` },
 ];
 
 // Polices pour l'export : la bibliothèque ne sait pas lire la feuille Google Fonts (autre domaine),
@@ -199,7 +265,8 @@ if (lang === 'en') for (const a of ADS) a.html = a.html.replace(/(\d),(\d{2})</g
 for (const a of ADS) {
   const slot = document.createElement('div');
   slot.className = 'slot';
-  slot.innerHTML = `<b>${a.label}</b><div class="frame ${a.square ? 'square' : ''}"><div class="ad ${a.square ? 'square' : ''}" id="${a.id}">${a.html}</div></div><button class="dl" type="button">Télécharger PNG</button>`;
+  const fmt = a.fmt || (a.square ? 'square' : '');
+  slot.innerHTML = `<b>${a.label}</b><div class="frame ${fmt}"><div class="ad ${fmt}" id="${a.id}">${a.html}</div></div><button class="dl" type="button">Télécharger PNG</button>`;
   grid.append(slot);
   slot.querySelector('.dl').addEventListener('click', async (e) => {
     const btn = e.currentTarget;
@@ -208,7 +275,7 @@ for (const a of ADS) {
     try {
       const { toPng } = await import('https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/+esm');
       const node = document.getElementById(a.id);
-      const url = await toPng(node, { width: 1080, height: a.square ? 1080 : 1920, pixelRatio: 1, style: { transform: 'none' }, fontEmbedCSS: await fontEmbedCss() });
+      const url = await toPng(node, { width: 1080, height: { square: 1080, portrait: 1350 }[a.fmt || (a.square ? 'square' : '')] || 1920, pixelRatio: 1, style: { transform: 'none' }, fontEmbedCSS: await fontEmbedCss() });
       Object.assign(document.createElement('a'), { href: url, download: `beltchase-${a.id}-${lang === 'en' ? 'en' : 'fr'}.png` }).click();
       btn.textContent = 'Téléchargé ✓';
     } catch (err) {
