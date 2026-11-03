@@ -15,6 +15,7 @@
   --red: #ff4d63;
   --display: 'Barlow Condensed', 'Arial Narrow', system-ui, sans-serif;
   --body: 'Barlow', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --ease-out: cubic-bezier(0.2, 0.9, 0.3, 1);
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
@@ -174,3 +175,14 @@ a { color: var(--accent); }
 @media (prefers-reduced-motion: reduce) {
   .bc-beam, .bc-cage, .bc-cage path + path, .bc-bg::before { animation: none; }
 }
+
+/* Trois cartes en éventail (Fury, Topuria, Usyk), comme sur l'accueil du jeu */
+.pre-cards { position: relative; display: flex; justify-content: center; align-items: flex-end; height: 230px; margin: 26px 0 8px; }
+.pre-cards .lc { width: 136px; margin: 0 -16px; transition: transform 0.3s var(--ease-out); filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.6)); }
+.pre-cards .lc-0 { transform: rotate(-12deg) translateY(12px); }
+.pre-cards .lc-1 { transform: translateY(-8px) scale(1.1); z-index: 1; }
+.pre-cards .lc-2 { transform: rotate(12deg) translateY(12px); }
+.pre-cards:hover .lc-0 { transform: rotate(-16deg) translate(-14px, 6px); }
+.pre-cards:hover .lc-2 { transform: rotate(16deg) translate(14px, 6px); }
+.pre-cards-cap { position: relative; z-index: 2; margin: 34px 0 0; color: var(--muted); font-size: 13px; font-weight: 700; }
+@media (max-width: 460px) { .pre-cards { height: 190px; } .pre-cards .lc { width: 112px; margin: 0 -14px; } }

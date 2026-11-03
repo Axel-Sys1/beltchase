@@ -16,6 +16,8 @@ import { beltLogo } from './ui/icons.js';
 import { escapeHtml } from './util.js';
 import { isOffensivePseudo } from './services/moderation.js';
 import { startSparks } from './ui/backdrop.js';
+import { fightCardHtml } from './ui/fightCard.js';
+import { CARDS } from './data/cards.js';
 
 const SDK = 'https://www.gstatic.com/firebasejs/10.12.2';
 const LAUNCH = new Date(CONFIG.LAUNCH_AT).getTime();
@@ -26,6 +28,8 @@ const SHOW_COUNT_FROM = 50; // compteur affiché à partir de ce nombre d'inscri
 const TOP = 10; // lignes du classement des parrains
 const EMAIL = /^[^@\s/]+@[^@\s/]+\.[^@\s/]+$/; // pas de « / » : l'adresse sert d'identifiant de document
 const PSEUDO = /^[\p{L}\p{N} _.-]{2,16}$/u;
+// Cartes montrées en éventail (au centre : la plus rare) et leur drapeau.
+const SHOWCASE = [['boxe-tyson-fury', '🇬🇧'], ['mma-ilia-topuria', '🇬🇪'], ['boxe-oleksandr-usyk', '🇺🇦']];
 const ALPHABET = 'abcdefghjkmnpqrstuvwxyz23456789'; // codes de parrainage : sans 0/o, 1/l/i
 const FLAG = { fr: 'fr', en: 'gb', es: 'es', pt: 'br', ru: 'ru', ar: 'sa', zh: 'cn', hi: 'in', bn: 'bd', ur: 'pk' };
 const CODE = { pt: 'pt-BR', zh: 'zh-Hans' };
@@ -236,6 +240,11 @@ function render() {
       <p class="pre-kicker">${t('Lancement officiel')}</p>
       <h1 class="pre-title">${t('Le jeu de pronos <b>des fans de combat</b>')}</h1>
       <p class="pre-date">${escapeHtml(launchDay).replace(/^1er /, '1<sup>er</sup> ')}</p>
+
+      <div class="pre-cards" aria-label="${t('Exemples de cartes à collectionner')}">
+        ${SHOWCASE.map(([id, flag], i) => { const c = CARDS.find((x) => x.id === id); return c ? `<div class="lc lc-${i}">${fightCardHtml(c, { flag })}</div>` : ''; }).join('')}
+      </div>
+      <p class="pre-cards-cap">${t('{n} cartes à collectionner · MMA, boxe, kick, JJB…', { n: CARDS.length })}</p>
 
       <div class="cd" role="timer" aria-label="${t('Compte à rebours avant le lancement')}">
         ${[t('Jours'), t('Heures'), t('Min'), t('Sec')].map((l) => `<div class="cd-cell"><span class="cd-num">–</span><span class="cd-lbl">${l}</span></div>`).join('')}

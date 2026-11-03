@@ -2035,61 +2035,6 @@ h1.tagline { font: inherit; font-size: 16px; letter-spacing: normal; margin: 1em
 .odd-trend-down .odd-move { color: var(--red); }
 .odd.selected .odd-was { color: var(--accent-ink); opacity: 0.7; }
 
-/* ---------- Cartes de combattants, nouveau design (js/ui/fightCard.js) ---------- */
-.fc { --c1: #8d97a8; --c2: #4b5466; --glow: rgba(141, 151, 168, 0.35); position: relative; width: 100%; aspect-ratio: 63 / 88; border-radius: 14px; padding: 3px; isolation: isolate;
-  background: linear-gradient(145deg, var(--c1), var(--c2) 45%, var(--c1) 70%, var(--c2)); box-shadow: 0 14px 30px -14px #000, 0 0 22px -6px var(--glow);
-  transition: transform 0.35s var(--ease-out), box-shadow 0.35s; container-type: inline-size; }
-.fc:hover { transform: translateY(-4px) rotate(-0.6deg); box-shadow: 0 22px 40px -16px #000, 0 0 34px -4px var(--glow); }
-.fc-rare { --c1: #6fb6ff; --c2: #1f4f9c; --glow: rgba(90, 168, 255, 0.45); }
-.fc-epique { --c1: #c38bff; --c2: #5b23a8; --glow: rgba(176, 108, 255, 0.5); }
-.fc-legendaire { --c1: #ffe08a; --c2: #b07a12; --glow: rgba(242, 182, 48, 0.6); }
-.fc-mythique { --glow: rgba(255, 90, 160, 0.6);
-  background: linear-gradient(115deg, #ff5ea0, #ffb84d, #f8ff6a, #5dffb4, #58c8ff, #a77bff, #ff5ea0); background-size: 300% 300%; animation: fc-holo 6s linear infinite; }
-@keyframes fc-holo { to { background-position: 300% 0; } }
-.fc-frame { position: relative; height: 100%; border-radius: 11px; overflow: hidden; background: radial-gradient(90% 60% at 50% 35%, color-mix(in srgb, var(--c1) 35%, #0b1430), #060b1c 75%); }
-.fc-art { position: absolute; inset: 0; overflow: hidden; }
-.fc-art::before { content: ''; position: absolute; inset: -20%; background: repeating-linear-gradient(120deg, transparent 0 18px, rgba(255, 255, 255, 0.035) 18px 20px); }
-.fc-bigname { position: absolute; left: 50%; top: 20%; transform: translateX(-50%) rotate(-8deg); font: italic 800 34cqi/0.8 var(--display); text-transform: uppercase; white-space: nowrap;
-  color: transparent; -webkit-text-stroke: 1.5px color-mix(in srgb, var(--c1) 70%, transparent); opacity: 0.55; letter-spacing: -0.01em; }
-.fc-photo { position: absolute; left: 50%; bottom: 22%; transform: translateX(-50%); }
-.fc-photo.is-cut { width: 132%; max-width: none; height: auto; filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.7)); bottom: 21%; }
-.fc-photo.is-full { inset: 0 0 22% 0; transform: none; width: 100%; height: 78%; object-fit: cover; object-position: 50% 18%;
-  -webkit-mask-image: linear-gradient(to bottom, #000 62%, transparent); mask-image: linear-gradient(to bottom, #000 62%, transparent); }
-.fc-silhouette { position: absolute; inset: 18% 0 30%; display: grid; place-items: center; font: italic 800 34cqi/1 var(--display); color: color-mix(in srgb, var(--c1) 55%, transparent); }
-/* Sans photo : grand drapeau du pays en fond, flottant et fondu, silhouette sombre devant. */
-.fc-flagbg { position: absolute; inset: 4% -12% 30%; width: 124%; height: 66%; object-fit: cover; opacity: 0.75; transform: perspective(300px) rotateY(-14deg) skewY(-4deg);
-  -webkit-mask-image: linear-gradient(to bottom, #000 45%, transparent); mask-image: linear-gradient(to bottom, #000 45%, transparent); }
-.fc-flagbg ~ .fc-ghost g { fill: #0b0b14; opacity: 0.92; }
-.fc-flagbg ~ .fc-ghost { filter: drop-shadow(0 0 2px var(--c1)) drop-shadow(0 0 10px color-mix(in srgb, var(--c1) 60%, transparent)); }
-.fc-ghost { position: absolute; left: 50%; bottom: 22%; width: 92%; transform: translateX(-50%);
-  -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent); mask-image: linear-gradient(to bottom, #000 55%, transparent); }
-.fc-shine { position: absolute; inset: 0; background: linear-gradient(115deg, transparent 35%, rgba(255, 255, 255, 0.35) 48%, transparent 60%); transform: translateX(-120%); pointer-events: none; mix-blend-mode: overlay; }
-.fc:hover .fc-shine, .fc-legendaire .fc-shine, .fc-mythique .fc-shine { animation: fc-shine 3.2s ease-in-out infinite; }
-.fc:hover .fc-shine { animation-duration: 1.2s; animation-iteration-count: 1; }
-@keyframes fc-shine { 0%, 55% { transform: translateX(-120%); } 100% { transform: translateX(120%); } }
-.fc-top { position: absolute; top: 6px; left: 6px; right: 6px; display: flex; justify-content: space-between; align-items: center; }
-.fc-rar { padding: 3px 7px; border-radius: 5px; background: linear-gradient(135deg, var(--c1), var(--c2)); color: #071022; font: italic 800 clamp(9px, 6.5cqi, 13px)/1 var(--display); letter-spacing: 0.06em; text-transform: uppercase; }
-.fc-mythique .fc-rar { background: linear-gradient(90deg, #ff5ea0, #ffb84d, #5dffb4, #58c8ff); }
-.fc-sport { font-size: clamp(12px, 9cqi, 18px); filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.7)); }
-.fc-plate { position: absolute; left: 0; right: 0; bottom: 0; display: grid; justify-items: center; gap: 1px; padding: 18% 6px 7%;
-  background: linear-gradient(to top, #060b1c 55%, transparent); text-align: center; }
-.fc-plate::before { content: ''; position: absolute; left: 12%; right: 12%; top: 34%; height: 2px; background: linear-gradient(90deg, transparent, var(--c1), transparent); }
-.fc-first { font: 700 clamp(8px, 6cqi, 12px)/1.1 var(--body, inherit); color: rgba(255, 255, 255, 0.75); text-transform: uppercase; letter-spacing: 0.08em; }
-.fc-last { font: italic 800 clamp(13px, 13cqi, 26px)/0.95 var(--display); text-transform: uppercase; color: #fff; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8); max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.fc-legendaire .fc-last, .fc-mythique .fc-last { background: linear-gradient(180deg, #fff, var(--c1, #ffe08a)); -webkit-background-clip: text; background-clip: text; color: transparent; }
-.fc-mythique .fc-last { background: linear-gradient(90deg, #ffd1e6, #fff3c4, #c9fff0, #d6ecff); -webkit-background-clip: text; background-clip: text; }
-.fc-sub { font-size: clamp(7px, 5.4cqi, 11px); color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
-.fc-count, .fc-fav { position: absolute; z-index: 2; top: -6px; right: -6px; min-width: 24px; height: 24px; padding: 0 6px; display: grid; place-items: center; border-radius: 12px;
-  background: var(--accent); color: var(--accent-ink); font: 800 12px/1 var(--display); box-shadow: 0 2px 6px rgba(0, 0, 0, 0.6); }
-.fc-fav { left: -6px; right: auto; padding: 0; width: 24px; }
-.fc-fav svg { width: 14px; height: 14px; }
-.fc-locked .fc-frame { filter: grayscale(0.9) brightness(0.5); } /* cadre en couleur : la rareté reste lisible */
-.fc-locked { box-shadow: 0 10px 24px -14px #000; }
-.fc-locked:hover { transform: none; }
-.fc-lock { position: absolute; z-index: 2; inset: 0; display: grid; place-items: center; color: rgba(255, 255, 255, 0.6); }
-.fc-lock svg { width: 28%; height: auto; }
-@media (prefers-reduced-motion: reduce) { .fc-mythique, .fc-shine { animation: none !important; } }
-
 /* Album : filtres et titres par rareté, aux couleurs des cadres des cartes (fightCard.js) */
 .rar-filter { display: flex; gap: 6px; overflow-x: auto; margin: 12px -16px 4px; padding: 2px 16px 6px; scrollbar-width: none; }
 .rar-chip { --rc: var(--muted); flex-shrink: 0; display: inline-flex; align-items: center; gap: 6px; padding: 7px 12px; border-radius: 999px; border: 1px solid color-mix(in srgb, var(--rc) 55%, transparent);
@@ -2133,8 +2078,6 @@ h1.tagline { font: inherit; font-size: 16px; letter-spacing: normal; margin: 1em
 .lang-footer, .lang-landing { display: flex; justify-content: center; width: fit-content; margin: 12px auto 0; }
 
 /* Bilan sur la carte et fiche d'une carte de l'album (cardSheet.js). */
-.fc-rec { display: inline-block; margin-top: 3px; padding: 1px 7px; border-radius: 99px; background: rgba(0, 0, 0, 0.45);
-  border: 1px solid color-mix(in srgb, var(--c1) 60%, transparent); color: var(--c1); font: 800 7cqi/1.3 var(--display); letter-spacing: 0.04em; }
 .card-sheet { position: relative; max-width: 640px; width: calc(100% - 32px); display: grid; grid-template-columns: 210px 1fr; gap: 22px; align-items: start; }
 .card-sheet .cs-card { width: 210px; }
 .cs-close { position: absolute; top: 10px; inset-inline-end: 10px; }
@@ -2203,12 +2146,3 @@ h1.tagline { font: inherit; font-size: 16px; letter-spacing: normal; margin: 1em
 .bc-bg.is-soft::before { opacity: 0.55; }
 .bc-bg.is-soft .bc-sparks { opacity: 0.6; }
 @media (prefers-reduced-motion: reduce) { .bc-bg.is-soft .bc-cage { animation: none; } }
-
-/* Silhouette du vrai combattant (icons/silhouettes/<id>.png, masque blanc) : aplat sombre, liseré et halo
-   de la couleur de la rareté, fondu vers le bas comme le reste de l'illustration. */
-.fc-sil { position: absolute; left: 50%; bottom: 22%; width: 96%; height: 74%; transform: translateX(-50%);
-  filter: drop-shadow(0 0 1.5px var(--c1)) drop-shadow(0 0 1px var(--c1)) drop-shadow(0 0 12px color-mix(in srgb, var(--c1) 60%, transparent)); }
-.fc-sil::before { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, #161a2c, #07080f 70%);
-  -webkit-mask: var(--sil) center bottom / contain no-repeat; mask: var(--sil) center bottom / contain no-repeat; }
-.fc-sil::after { content: ''; position: absolute; inset: 0; background: linear-gradient(115deg, color-mix(in srgb, var(--c1) 35%, transparent), transparent 45%);
-  -webkit-mask: var(--sil) center bottom / contain no-repeat; mask: var(--sil) center bottom / contain no-repeat; mix-blend-mode: screen; }

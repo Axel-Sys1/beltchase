@@ -3,7 +3,7 @@
 // auprès du serveur), pour que chaque mise en ligne arrive tout de suite ; le cache ne sert que si le
 // réseau ne répond pas. Les données sportives et Firebase ne sont jamais mises en cache ici.
 const CACHE = 'beltchase-v1';
-const SHELL = ['./', 'index.html', 'css/styles.css', 'js/main.js', 'manifest.webmanifest', 'icons/icon-192.png'];
+const SHELL = ['./', 'index.html', 'css/styles.css', 'css/cards.css', 'js/main.js', 'manifest.webmanifest', 'icons/icon-192.png'];
 
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(CACHE)
