@@ -99,6 +99,14 @@ match /stats/preinscriptions {
 }
 ```
 
+## Silhouettes des cartes
+
+Aucune photo de combattant n'est affichée : chaque carte montre la silhouette du vrai combattant, tirée
+d'une photo libre de Wikimedia Commons (jamais ESPN, UFC ni agences). 103 cartes sur 151 en ont une ;
+les autres (aucune photo libre trouvée) gardent la silhouette générique. Pour chercher de nouvelles
+photos libres et refaire les silhouettes (crédits des mentions légales compris) :
+`python3 tools/card_silhouettes.py` (≈ 5 min), puis vérifier les nouvelles à l'œil (`REJECT` sinon).
+
 ## Langues
 
 Le site est en 10 langues : français (texte source), anglais, espagnol, portugais (Brésil), russe,
