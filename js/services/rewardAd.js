@@ -4,6 +4,7 @@ import { CONFIG } from '../config.js';
 import { getState, update } from '../store.js';
 import { currentPlayer } from './players.js';
 import { dayKey } from './progress.js';
+import { locale, t } from '../i18n.js';
 
 const settings = () => CONFIG.ADS?.rewarded || {};
 
@@ -24,8 +25,8 @@ export function adsLeft(p, t = Date.now()) {
 // Pub regardée jusqu'au bout : on verse la récompense.
 export function rewardAdWatched() {
   const p = currentPlayer(getState());
-  if (!p) throw new Error('Choisis d\'abord ton pseudo.');
-  if (!adsLeft(p)) throw new Error('Plus de bonus vidéo aujourd\'hui. Reviens demain !');
+  if (!p) throw new Error(t('Choisis d\'abord ton pseudo.'));
+  if (!adsLeft(p)) throw new Error(t('Plus de bonus vidéo aujourd\'hui. Reviens demain !'));
   const amount = AD_GOLD();
   update((s) => {
     const me = s.players[p.id];
@@ -36,7 +37,7 @@ export function rewardAdWatched() {
     const left = adsLeft(me);
     me.inbox.push({
       type: 'reward', amount,
-      text: `Bonus vidéo : +${amount.toLocaleString('fr-FR')} Gold · ${left ? `encore ${left} aujourd'hui` : 'reviens demain pour les suivantes'}`,
+      text: `${t('Bonus vidéo : +{n} Gold', { n: amount.toLocaleString(locale) })} · ${left ? t("encore {n} aujourd'hui", { n: left }) : t('reviens demain pour les suivantes')}`,
     });
   });
 }

@@ -2,6 +2,7 @@
 import { clockFor } from '../store.js';
 import { sportMeta } from '../sports.js';
 import { METHOD_LABEL, marketLabel, marketOf } from './markets.js';
+import { t as tr } from '../i18n.js';
 
 const PERSON_SPORTS = new Set(['mma', 'boxing', 'kickboxing', 'bjj', 'wrestling']);
 
@@ -18,9 +19,9 @@ export const isAwaitingKickoff = (m, t = clockFor(m)) =>
 
 export function outcomeLabel(m, outcome) {
   if (marketOf(outcome) !== 'winner') return marketLabel(m, outcome);
-  if (outcome === 'X') return 'Match nul';
+  if (outcome === 'X') return tr('Match nul');
   const side = outcome === '1' ? m.home : m.away;
-  return PERSON_SPORTS.has(m.sport) ? `${side.name} gagne` : `Victoire ${side.name}`;
+  return PERSON_SPORTS.has(m.sport) ? tr('{n} gagne', { n: side.name }) : tr('Victoire {n}', { n: side.name });
 }
 
 // Nom sur les boutons de cote : nom de famille ('Raul Rosas Jr.' → 'Rosas') ; code court ('ROS') s'il est
@@ -36,11 +37,11 @@ function callName(m, side) {
 export function outcomeShort(m, outcome) {
   if (marketOf(outcome) === 'method') {
     const [side, method] = outcome.split('-');
-    return `${callName(m, side)} ${METHOD_LABEL[method] || method}`;
+    return `${callName(m, side)} ${tr(METHOD_LABEL[method] || method)}`;
   }
-  if (outcome === 'DEC') return 'Décision';
-  if (/^R\d$/.test(outcome)) return `Round ${outcome.slice(1)}`;
-  if (outcome === 'X') return 'Nul';
+  if (outcome === 'DEC') return tr('Décision');
+  if (/^R\d$/.test(outcome)) return tr('Round {n}', { n: outcome.slice(1) });
+  if (outcome === 'X') return tr('Nul');
   return callName(m, outcome);
 }
 

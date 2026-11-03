@@ -13,7 +13,10 @@ import { activeEvent } from './ui/season.js';
 import { startAdsTag } from './ui/ads.js';
 import { loadNews, subscribeNews } from './services/news.js';
 import { fightFlash, flashFor } from './ui/effects.js';
-import { resultSentence } from './seo/pages.js';
+import { resultText } from './ui/resultText.js';
+import { lang, t } from './i18n.js';
+
+if (lang !== 'fr') document.title = t('BeltChase · Pronos MMA, UFC et boxe pour le fun');
 import { realNow } from './store.js';
 import { subscribeResults } from './services/results.js';
 import { subscribeFighters } from './services/fighters.js';
@@ -43,7 +46,7 @@ subscribe(() => {
     const prev = seenStatus.get(m.id);
     seenStatus.set(m.id, m.status);
     if (statusReady && prev && prev !== 'finished' && m.status === 'finished' && m.outcome && t - m.startsAt < 12 * 3600 * 1000) {
-      fightFlash(flashFor(m, resultSentence(m)));
+      fightFlash(flashFor(m, resultText(m)));
     }
   }
   statusReady = true;

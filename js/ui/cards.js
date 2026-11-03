@@ -5,6 +5,7 @@ import { escapeHtml } from '../util.js';
 import { icons } from './icons.js';
 import { RARITY } from '../services/progress.js';
 import { setById } from '../services/cards.js';
+import { t } from '../i18n.js';
 
 const FLAGS = {
   France: '🇫🇷', Argentine: '🇦🇷', Portugal: '🇵🇹', Brésil: '🇧🇷', Espagne: '🇪🇸', Norvège: '🇳🇴',
@@ -42,7 +43,7 @@ export function cardHtmlClassic(card, { owned = true, size = '', count = 0, favo
         <span class="pc-team">${escapeHtml(team)}${card.pos ? ` · ${escapeHtml(card.pos)}` : ''}</span>
       </div>
       ${count > 1 ? `<span class="pc-count">×${count}</span>` : ''}
-      ${favorite ? `<span class="pc-fav" title="Carte favorite">${icons.star}</span>` : ''}
+      ${favorite ? `<span class="pc-fav" title="${t('Carte favorite')}">${icons.star}</span>` : ''}
       ${owned ? '' : `<span class="pc-lock">${icons.lock}</span>`}
     </div>`;
 }
@@ -54,7 +55,7 @@ export function showPack(results, onClose) {
   el.className = 'pack-overlay';
   el.innerHTML = `
     <div class="pack-stage" role="dialog" aria-label="Ouverture de la pochette">
-      <h2 class="pack-title">Ta pochette</h2>
+      <h2 class="pack-title">${t('Ta pochette')}</h2>
       <div class="pack-cards">
         ${results.map(({ card, duplicate, refund }, i) => `
           <div class="pack-slot" style="--i:${i}">
@@ -65,7 +66,7 @@ export function showPack(results, onClose) {
             <span class="pack-tag ${duplicate ? 'is-dup' : 'is-new'}">${duplicate ? `Doublon · +${refund} Gold` : `Nouvelle · ${escapeHtml(setById(card.sport)?.name || '')}`}</span>
           </div>`).join('')}
       </div>
-      <button class="btn btn-primary btn-lg" data-pack-close type="button">Super !</button>
+      <button class="btn btn-primary btn-lg" data-pack-close type="button">${t('Super !')}</button>
     </div>`;
   document.body.appendChild(el);
   requestAnimationFrame(() => el.classList.add('open'));

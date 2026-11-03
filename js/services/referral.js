@@ -6,6 +6,7 @@ import { cloud, referralDb } from './cloud.js';
 import { getState, update } from '../store.js';
 import { currentPlayer } from './players.js';
 import { addXp, XP } from './progress.js';
+import { t } from '../i18n.js';
 
 export const REWARD = 200;
 const KEY = 'beltchase:parrain';
@@ -49,17 +50,17 @@ function credit(amount, text, patch = () => {}) {
 export async function applyReferral(rawPseudo) {
   const pseudo = String(rawPseudo || '').trim();
   const p = currentPlayer(getState());
-  if (!cloud.user) throw new Error('Crée ton compte pour utiliser un parrainage.');
-  if (!p) throw new Error('Choisis d\'abord ton pseudo.');
-  if (p.referredBy) throw new Error('Tu as déjà un parrain.');
-  if (pseudo.length < 2) throw new Error('Entre le pseudo de ton parrain.');
-  if (pseudo.toLowerCase() === p.pseudo.toLowerCase()) throw new Error('Tu ne peux pas être ton propre parrain.');
+  if (!cloud.user) throw new Error(t('Crée ton compte pour utiliser un parrainage.'));
+  if (!p) throw new Error(t('Choisis d\'abord ton pseudo.'));
+  if (p.referredBy) throw new Error(t('Tu as déjà un parrain.'));
+  if (pseudo.length < 2) throw new Error(t('Entre le pseudo de ton parrain.'));
+  if (pseudo.toLowerCase() === p.pseudo.toLowerCase()) throw new Error(t('Tu ne peux pas être ton propre parrain.'));
   const res = await referralDb.create(pseudo);
-  if (res === 'unknown') throw new Error(`Aucun joueur « ${pseudo} » avec un compte.`);
-  if (res === 'self') throw new Error('Tu ne peux pas être ton propre parrain.');
+  if (res === 'unknown') throw new Error(t('Aucun joueur « {p} » avec un compte.', { p: pseudo }));
+  if (res === 'self') throw new Error(t('Tu ne peux pas être ton propre parrain.'));
   if (res === 'already') {
     update((s) => { const me = currentPlayer(s); if (me) me.referredBy = me.referredBy || '?'; });
-    throw new Error('Ce compte a déjà un parrain.');
+    throw new Error(t('Ce compte a déjà un parrain.'));
   }
   credit(REWARD, `Parrainage : +${REWARD} Gold grâce à ${pseudo} !`, (me) => { me.referredBy = pseudo; });
   clearPending();

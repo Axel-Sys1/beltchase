@@ -4,6 +4,7 @@ import { BADGES } from '../services/badges.js';
 import { fmt, rand, pick, escapeHtml } from '../util.js';
 import { icons } from './icons.js';
 import { play } from './sounds.js';
+import { t as tr } from '../i18n.js';
 
 const reducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -99,9 +100,9 @@ export function betStamp({ count = 1, combo = false } = {}) {
   el.className = 'bet-stamp';
   el.setAttribute('aria-hidden', 'true');
   el.innerHTML = `
-    <small>${combo ? 'Combiné' : count > 1 ? `${count} paris` : 'Pari'}</small>
-    <strong>Ticket envoyé</strong>
-    <span class="stamp">Validé</span>`;
+    <small>${combo ? tr('Combiné') : count > 1 ? tr('{n} paris', { n: count }) : tr('Pari')}</small>
+    <strong>${tr('Ticket envoyé')}</strong>
+    <span class="stamp">${tr('Validé')}</span>`;
   document.body.appendChild(el);
   setTimeout(() => el.remove(), 1700);
 }
@@ -110,7 +111,7 @@ export function betStamp({ count = 1, combo = false } = {}) {
 // Un à la fois : les combats d'une même soirée se terminent souvent à quelques secondes d'écart.
 const flashQueue = [];
 let flashing = false;
-const FLASH_WORD = [[/KO/i, 'KO !', 'ko'], [/soumission/i, 'Soumission !', 'sub'], [/décision/i, 'Décision !', 'dec'], [/nul/i, 'Match nul !', 'dec']];
+const FLASH_WORD = [[/KO/i, tr('KO !'), 'ko'], [/soumission/i, tr('Soumission !'), 'sub'], [/décision/i, tr('Décision !'), 'dec'], [/nul/i, tr('Match nul !'), 'dec']];
 export function fightFlash({ word, kind, line, event }) {
   flashQueue.push({ word, kind, line, event });
   if (!flashing) nextFlash();
@@ -129,7 +130,7 @@ function nextFlash() {
 }
 // Match terminé → contenu du flash (mot fort selon la méthode).
 export function flashFor(m, sentence) {
-  const hit = FLASH_WORD.find(([re]) => re.test(m.score || '')) || [null, m.outcome === 'X' ? 'Match nul !' : 'Victoire !', 'dec'];
+  const hit = FLASH_WORD.find(([re]) => re.test(m.score || '')) || [null, m.outcome === 'X' ? tr('Match nul !') : tr('Victoire !'), 'dec'];
   return { word: hit[1], kind: hit[2], line: sentence, event: m.competition };
 }
 
@@ -201,10 +202,10 @@ function showNextBadge() {
     <div class="badge-pop" role="dialog" aria-modal="true" aria-labelledby="badge-pop-title">
       <div class="badge-rays"></div>
       <div class="badge-pop-icon">${icons[b.icon] || ""}</div>
-      <p class="eyebrow">Badge débloqué !</p>
-      <h2 id="badge-pop-title">${escapeHtml(b.name)}</h2>
-      <p class="muted">${escapeHtml(b.desc)}</p>
-      <button class="btn btn-primary" type="button">Continuer</button>
+      <p class="eyebrow">${tr('Badge débloqué !')}</p>
+      <h2 id="badge-pop-title">${escapeHtml(tr(b.name))}</h2>
+      <p class="muted">${escapeHtml(tr(b.desc))}</p>
+      <button class="btn btn-primary" type="button">${tr('Continuer')}</button>
     </div>`;
   document.body.appendChild(ov);
   const close = () => {
@@ -233,10 +234,10 @@ function levelUp({ level }, unlocks) {
   el.setAttribute('role', 'status');
   el.innerHTML = `
     <div class="level-up-card">
-      <span class="level-up-kicker">Niveau supérieur</span>
+      <span class="level-up-kicker">${tr('Niveau supérieur')}</span>
       <strong class="level-up-num">${level}</strong>
-      ${unlocks.length ? `<span class="level-up-unlock">Débloqué : ${unlocks.map(escapeHtml).join(', ')}</span>` : ''}
-      <span class="muted">Va voir la boutique pour t'équiper.</span>
+      ${unlocks.length ? `<span class="level-up-unlock">${tr('Débloqué :')} ${unlocks.map((u) => escapeHtml(tr(u))).join(', ')}</span>` : ''}
+      <span class="muted">${tr("Va voir la boutique pour t'équiper.")}</span>
     </div>`;
   el.addEventListener('click', () => el.remove());
   document.body.appendChild(el);
@@ -253,29 +254,29 @@ export function processInbox(player) {
   const losses = items.filter((i) => i.type === 'loss');
 
   for (const i of items.filter((x) => x.type === 'welcome')) {
-    toast(`Bienvenue ! ${fmt(i.amount)} Gold offerts pour commencer.`, 'win');
+    toast(tr('Bienvenue ! {n} Gold offerts pour commencer.', { n: fmt(i.amount) }), 'win');
   }
   for (const i of items.filter((x) => x.type === 'bonus')) {
-    toast(`Bonus du jour : +${fmt(i.amount)} Gold${i.day ? ` · série jour ${i.day}/7` : ''}`, 'win');
+    toast(`${tr('Bonus du jour : +{n} Gold', { n: fmt(i.amount) })}${i.day ? ` · ${tr('série jour {d}/7', { d: i.day })}` : ''}`, 'win');
     confetti({ colors: ['#ffc83d', '#e79a00', '#fff3c4'], count: 70, originY: 0.12 });
     play('bonus');
   }
   if (wins.length) {
     const total = wins.reduce((s, w) => s + w.amount, 0);
     toast(wins.length === 1
-      ? `Pari gagné : ${wins[0].label} · +${fmt(total)} Gold`
-      : `${wins.length} paris gagnés · +${fmt(total)} Gold`, 'win');
+      ? tr('Pari gagné : {l} · +{n} Gold', { l: wins[0].label, n: fmt(total) })
+      : tr('{c} paris gagnés · +{n} Gold', { c: wins.length, n: fmt(total) }), 'win');
     confetti();
     play('win');
   }
   if (losses.length) {
     toast(losses.length === 1
-      ? `Pari perdu : ${losses[0].label}. La prochaine sera la bonne !`
-      : `${losses.length} paris perdus… la prochaine sera la bonne !`, 'loss');
+      ? tr('Pari perdu : {l}. La prochaine sera la bonne !', { l: losses[0].label })
+      : tr('{c} paris perdus… la prochaine sera la bonne !', { c: losses.length }), 'loss');
     if (!wins.length) play('loss');
   }
   for (const i of items.filter((x) => x.type === 'void')) {
-    toast(`Pari remboursé (+${fmt(i.amount)}) : ${i.label}`, 'info');
+    toast(tr('Pari remboursé (+{n}) : {l}', { n: fmt(i.amount), l: i.label }), 'info');
   }
   for (const i of items.filter((x) => x.type === 'info')) toast(i.text, 'info');
   const levels = items.filter((x) => x.type === 'level');

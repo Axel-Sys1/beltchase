@@ -14,7 +14,8 @@ import { coin, icons } from '../icons.js';
 import { ui } from '../uiState.js';
 import { accountNudge, inviteBanner } from './account.js';
 import { cloud, isGuest } from '../../services/cloud.js';
-import { LEAGUE_PAGES, matchPath, resultSentence } from '../../seo/pages.js';
+import { LEAGUE_PAGES, matchPath } from '../../seo/pages.js';
+import { resultText } from '../resultText.js';
 import { loadResults, mergeResults, results, RESULTS_DAYS } from '../../services/results.js';
 import { DAYS as SEO_DAYS } from '../../seo/data.js';
 import { fighterPhoto, portrait, starOf } from '../stars.js';
@@ -22,6 +23,7 @@ import { withFallback } from '../../providers/photos.js';
 import { posterHtml } from '../posters.js';
 import { uneBanner } from './news.js';
 import { METHOD_LABEL, marketOf, settleKey } from '../../services/markets.js';
+import { locale, t as tr, tParts } from '../../i18n.js';
 
 const ORDER = { 1: 0, X: 1, 2: 2 };
 
@@ -29,23 +31,23 @@ const ORDER = { 1: 0, X: 1, 2: 2 };
 function analysisLink(m, status, t) {
   if (status !== 'upcoming' || m.meta?.adapter !== 'mma' || m.startsAt - t > SEO_DAYS * 86_400_000) return '';
   const league = LEAGUE_PAGES.find((l) => l.sport === m.sport && l.league === m.meta.league);
-  return league ? `<a class="match-analysis" href="${matchPath(league, m)}">Analyse et cotes du combat ›</a>` : '';
+  return league ? `<a class="match-analysis" href="${matchPath(league, m)}">${tr('Analyse et cotes du combat')} ›</a>` : '';
 }
 
 // Horaire court utilisé dans une liste déjà groupée par jour.
 export function kickoffShort(ts, t) {
   const diff = ts - t;
   if (diff > 0 && diff < 60 * 60_000) return formatKickoff(ts, t);
-  return new Date(ts).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+  return new Date(ts).toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit' });
 }
 
 function dayLabel(key) {
   const today = todayKey(new Date(realNow()));
   const tomorrow = todayKey(new Date(realNow() + 86_400_000));
-  if (key === today) return "Aujourd'hui";
-  if (key === tomorrow) return 'Demain';
+  if (key === today) return tr("Aujourd'hui");
+  if (key === tomorrow) return tr('Demain');
   const [y, mo, d] = key.split('-').map(Number);
-  return new Date(y, mo - 1, d).toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric', month: 'short' });
+  return new Date(y, mo - 1, d).toLocaleDateString(locale, { weekday: 'short', day: 'numeric', month: 'short' });
 }
 
 const initials = (name) => String(name).split(/\s+/).filter(Boolean).map((w) => w[0]).slice(0, 2).join('').toUpperCase();
@@ -113,9 +115,9 @@ function oddsButtons(m, status, slipPick, market = null, guest = false) {
         <button class="odd ${selected ? 'selected' : ''} ${won ? 'won' : ''} ${move ? `odd-${move}` : ''} ${trend ? `odd-trend-${trend}` : ''}" type="button"
           data-action="${guest ? 'guest-pick' : 'pick'}" data-match="${escapeHtml(m.id)}" data-outcome="${o}"
           ${open ? '' : 'disabled'}
-          aria-pressed="${selected}" aria-label="${escapeHtml(label)} ${v ? `à ${fmtOdds(v)}` : ': non proposé'}">
+          aria-pressed="${selected}" aria-label="${escapeHtml(label)} ${v ? tr('à {o}', { o: fmtOdds(v) }) : tr(': non proposé')}">
           <span class="odd-label">${escapeHtml(label)}</span>
-          <span class="odd-val">${was ? `<s class="odd-was" title="Cote précédente">${fmtOdds(was)}</s>` : ''}${v ? fmtOdds(v) : icons.lock}${move || trend ? `<i class="odd-move" aria-hidden="true">${(move || trend) === 'up' ? '▲' : '▼'}</i>` : ''}</span>
+          <span class="odd-val">${was ? `<s class="odd-was" title="${tr('Cote précédente')}">${fmtOdds(was)}</s>` : ''}${v ? fmtOdds(v) : icons.lock}${move || trend ? `<i class="odd-move" aria-hidden="true">${(move || trend) === 'up' ? '▲' : '▼'}</i>` : ''}</span>
         </button>`;
       }).join('')}
     </div>`;
@@ -130,7 +132,7 @@ function marketButton(m, key, label, status, slipPick, guest) {
   return `
         <button class="odd odd-sm ${selected ? 'selected' : ''} ${won ? 'won' : ''}" type="button"
           data-action="${guest ? 'guest-pick' : 'pick'}" data-match="${escapeHtml(m.id)}" data-outcome="${key}"
-          ${open ? '' : 'disabled'} aria-pressed="${selected}" aria-label="${escapeHtml(outcomeLabel(m, key))} ${v ? `à ${fmtOdds(v)}` : ''}">
+          ${open ? '' : 'disabled'} aria-pressed="${selected}" aria-label="${escapeHtml(outcomeLabel(m, key))} ${v ? tr('à {o}', { o: fmtOdds(v) }) : ''}">
           <span class="odd-label">${escapeHtml(label)}</span>
           <span class="odd-val">${v ? fmtOdds(v) : icons.lock}</span>
         </button>`;
@@ -147,24 +149,24 @@ function fightMarkets(m, status, slipPick, guest) {
   const ends = keys.filter((k) => marketOf(k) === 'end').sort((a, b) => (a === 'DEC' ? 1 : b === 'DEC' ? -1 : a.localeCompare(b)));
   const toggle = `
     <button class="more-markets ${open ? 'is-open' : ''}" data-action="toggle-markets" data-match="${escapeHtml(m.id)}" type="button" aria-expanded="${open}">
-      <span>${picked ? `Ton prono : <b>${escapeHtml(picked)}</b>` : `Méthode & round <small>${keys.length} paris</small>`}</span>
+      <span>${picked ? `${tr('Ton prono :')} <b>${escapeHtml(picked)}</b>` : `${tr('Méthode & round')} <small>${tr('{n} paris', { n: keys.length })}</small>`}</span>
       <span aria-hidden="true">${open ? '▴' : '▾'}</span>
     </button>`;
   if (!open) return toggle;
   return `${toggle}
     <div class="markets">
-      <p class="market-title">Vainqueur et méthode</p>
+      <p class="market-title">${tr('Vainqueur et méthode')}</p>
       <div class="market-grid">
         ${['1', '2'].map((side) => `
         <div class="market-col">
           <span class="market-who">${escapeHtml(side === '1' ? m.home.short || m.home.name : m.away.short || m.away.name)}</span>
-          ${methods.map((k) => marketButton(m, `${side}-${k}`, METHOD_LABEL[k] || k, status, slipPick, guest)).join('')}
+          ${methods.map((k) => marketButton(m, `${side}-${k}`, tr(METHOD_LABEL[k] || k), status, slipPick, guest)).join('')}
         </div>`).join('')}
       </div>
       ${ends.length ? `
-      <p class="market-title">Fin du combat</p>
+      <p class="market-title">${tr('Fin du combat')}</p>
       <div class="market-row cols-${ends.length}">
-        ${ends.map((k) => marketButton(m, k, k === 'DEC' ? 'Décision' : `Round ${k.slice(1)}`, status, slipPick, guest)).join('')}
+        ${ends.map((k) => marketButton(m, k, k === 'DEC' ? tr('Décision') : tr('Round {n}', { n: k.slice(1) }), status, slipPick, guest)).join('')}
       </div>` : ''}
     </div>`;
 }
@@ -204,11 +206,11 @@ function spotlightCard({ m, tag }, slipPick, first) {
     ${poster ? `<div class="spot-poster">${poster}</div>` : ''}
     ${photo(stars[0], 'spot-star-home')}${photo(stars[1], 'spot-star-away')}
     <header class="featured-head">
-      <span class="featured-tag">${escapeHtml(first && tag === m.competition ? 'Combat à la une' : tag)}</span>
+      <span class="featured-tag">${escapeHtml(first && tag === m.competition ? tr('Combat à la une') : tParts(tag))}</span>
       <span class="kick" data-kickoff="${m.startsAt}"${m.real ? ' data-real="1"' : ''}>${formatKickoff(m.startsAt, t)}</span>
     </header>
     <div class="ft-teams">${side(m.home)}<span class="ft-vs">VS</span>${side(m.away)}</div>
-    <p class="ft-comp">${sportMeta(m.sport).icon} ${escapeHtml(m.competition)}${m.round ? ` · ${escapeHtml(m.round)}` : ''}</p>
+    <p class="ft-comp">${sportMeta(m.sport).icon} ${escapeHtml(tParts(m.competition))}${m.round ? ` · ${escapeHtml(tParts(m.round))}` : ''}</p>
     ${oddsButtons(m, 'upcoming', slipPick)}
   </article>`;
 }
@@ -216,10 +218,10 @@ function spotlightCard({ m, tag }, slipPick, first) {
 function spotlightSection(list, picks) {
   if (!list.length) return '';
   return `
-    <section class="spotlight" aria-label="Combats à l'affiche">
+    <section class="spotlight" aria-label="${tr("Combats à l'affiche")}">
       <div class="section-row spot-head">
-        <h2 class="section-title">À l'affiche</h2>
-        ${list.length > 1 ? `<span class="muted spot-hint">${list.length} gros combats →</span>` : ''}
+        <h2 class="section-title">${tr("À l'affiche")}</h2>
+        ${list.length > 1 ? `<span class="muted spot-hint">${tr('{n} gros combats', { n: list.length })} →</span>` : ''}
       </div>
       <div class="spot-track">
         ${list.map((x, i) => spotlightCard(x, picks.get(x.m.id), i === 0)).join('')}
@@ -240,7 +242,7 @@ export function fightProgress(m) {
   const pct = Math.min(100, (((round - 1) * ROUND_S + secs) / (rounds * ROUND_S)) * 100);
   return `
     <div class="fight-progress" data-live-round="${round}" data-live-secs="${secs}" data-live-since="${Date.now()}" data-live-rounds="${rounds}">
-      <span class="fp-label"><span class="fp-dot"></span>Round <b>${round}</b>/${rounds} · <span class="fp-time">${Math.floor(secs / 60)}:${String(secs % 60).padStart(2, '0')}</span></span>
+      <span class="fp-label"><span class="fp-dot"></span>${tr('Round')} <b>${round}</b>/${rounds} · <span class="fp-time">${Math.floor(secs / 60)}:${String(secs % 60).padStart(2, '0')}</span></span>
       <span class="fp-bar">${Array.from({ length: rounds }, (_, i) => `<i class="${i < round - 1 ? 'done' : i === round - 1 ? 'now' : ''}"></i>`).join('')}<em style="width:${pct.toFixed(1)}%"></em></span>
     </div>`;
 }
@@ -257,14 +259,14 @@ export function matchCard(m, { slipPick = null, grouped = false, guest = false, 
   let right = grouped
     ? `<span class="kick" data-kickoff-short="${m.startsAt}"${realAttr}>${kickoffShort(m.startsAt, t)}</span>`
     : `<span class="kick" data-kickoff="${m.startsAt}"${realAttr}>${formatKickoff(m.startsAt, t)}</span>`;
-  if (status === 'live') right = isAwaitingKickoff(m, t) ? '<span class="soon-pill">PARIS FERMÉS</span>' : '<span class="live-pill">EN DIRECT</span>';
+  if (status === 'live') right = isAwaitingKickoff(m, t) ? `<span class="soon-pill">${tr('PARIS FERMÉS')}</span>` : `<span class="live-pill">${tr('EN DIRECT')}</span>`;
   const market = status === 'live' && LIVE_SPORTS.has(m.sport) && !isAwaitingKickoff(m, t) ? liveMarket(m, t) : null;
-  if (status === 'finished') right = `<span class="done-pill">${m.outcome === 'void' ? 'Remboursé' : 'Terminé'}</span>`;
-  if (status === 'void') right = '<span class="done-pill">Annulé</span>';
+  if (status === 'finished') right = `<span class="done-pill">${m.outcome === 'void' ? tr('Remboursé') : tr('Terminé')}</span>`;
+  if (status === 'void') right = `<span class="done-pill">${tr('Annulé')}</span>`;
 
   const head = grouped
-    ? `${m.round ? escapeHtml(m.round) : ''}${m.oddsSource === 'model' ? `${m.round ? ' · ' : ''}<span class="est" title="Aucune cote bookmaker disponible : cote estimée par BeltChase">cotes estimées</span>` : ''}`
-    : `${sport.icon} ${escapeHtml(m.competition)}${m.round ? ` · ${escapeHtml(m.round)}` : ''}`;
+    ? `${m.round ? escapeHtml(tParts(m.round)) : ''}${m.oddsSource === 'model' ? `${m.round ? ' · ' : ''}<span class="est" title="${tr('Aucune cote bookmaker disponible : cote estimée par BeltChase')}">${tr('cotes estimées')}</span>` : ''}`
+    : `${sport.icon} ${escapeHtml(tParts(m.competition))}${m.round ? ` · ${escapeHtml(tParts(m.round))}` : ''}`;
 
   let extra = '';
   if (status === 'finished' || status === 'void') extra = scoreBlock(m, m.score);
@@ -274,8 +276,8 @@ export function matchCard(m, { slipPick = null, grouped = false, guest = false, 
 
   const liveNote = market ? `
     <p class="live-note ${market.open ? 'is-open' : ''}">${market.open
-      ? `${icons.bolt}<span>Cotes en direct</span>`
-      : `${icons.lock}<span>${escapeHtml(market.reason || 'Paris suspendus')}</span>`}</p>` : '';
+      ? `${icons.bolt}<span>${tr('Cotes en direct')}</span>`
+      : `${icons.lock}<span>${escapeHtml(tr(market.reason || 'Paris suspendus'))}</span>`}</p>` : '';
 
   return `
   <article class="match match-${status}${market?.open ? ' match-bettable' : ''}${slipPick ? ' has-pick' : ''}">
@@ -320,27 +322,27 @@ function sportChips(list, countOf) {
       <span class="sport-count">${counts[key] || 0}</span>
     </button>`;
   return `
-    <nav class="sports-bar" aria-label="Choisir un sport">
-      ${tile('all', '🏆', 'Tout')}
-      ${present.map((k) => tile(k, sportMeta(k).icon, sportMeta(k).label)).join('')}
-      ${amateurs ? tile('amateur', '⭐', 'Amateurs') : ''}
+    <nav class="sports-bar" aria-label="${tr('Choisir un sport')}">
+      ${tile('all', '🏆', tr('Tout'))}
+      ${present.map((k) => tile(k, sportMeta(k).icon, tr(sportMeta(k).label))).join('')}
+      ${amateurs ? tile('amateur', '⭐', tr('Amateurs')) : ''}
     </nav>`;
 }
 
 function modeSwitch(mode) {
   return `
-    <div class="mode-switch" role="tablist" aria-label="Type de combats">
+    <div class="mode-switch" role="tablist" aria-label="${tr('Type de combats')}">
       <button class="mode ${mode === 'real' ? 'active' : ''}" role="tab" aria-selected="${mode === 'real'}" data-action="set-mode" data-mode="real" type="button">
-        <span class="mode-icon">${icons.stadium}</span><span><strong>Vrais combats</strong><small>UFC, PFL, boxe…</small></span>
+        <span class="mode-icon">${icons.stadium}</span><span><strong>${tr('Vrais combats')}</strong><small>${tr('UFC, PFL, boxe…')}</small></span>
       </button>
       <button class="mode ${mode === 'fake' ? 'active' : ''}" role="tab" aria-selected="${mode === 'fake'}" data-action="set-mode" data-mode="fake" type="button">
-        <span class="mode-icon">${icons.bolt}</span><span><strong>Combats éclair</strong><small>Fictifs · 2 min</small></span>
+        <span class="mode-icon">${icons.bolt}</span><span><strong>${tr('Combats éclair')}</strong><small>${tr('Fictifs · 2 min')}</small></span>
       </button>
     </div>`;
 }
 
 // Vues de l'écran des vrais combats : parier (par jour), calendrier des soirées, résultats récents.
-const REAL_VIEWS = [['paris', 'Parier'], ['calendrier', 'Calendrier'], ['resultats', 'Résultats']];
+const REAL_VIEWS = [['paris', tr('Parier')], ['calendrier', tr('Calendrier')], ['resultats', tr('Résultats')]];
 function viewTabs() {
   return `
     <div class="tabs real-views" role="tablist">
@@ -348,8 +350,8 @@ function viewTabs() {
     </div>`;
 }
 
-const dateLong = (t) => new Date(t).toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
-const hourOf = (t) => new Date(t).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+const dateLong = (t) => new Date(t).toLocaleDateString(locale, { weekday: 'long', day: 'numeric', month: 'long' });
+const hourOf = (t) => new Date(t).toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit' });
 const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
 
 // Soirées : combats d'une même compétition le même jour (la boxe sans nom de soirée : un combat = une soirée).
@@ -370,7 +372,7 @@ function eventsOf(list) {
 // Calendrier : une ligne par soirée à venir ; la toucher ouvre ses combats (vue Parier, ce jour-là).
 function calendarView(upcoming) {
   const events = eventsOf(upcoming).sort((a, b) => a.startsAt - b.startsAt);
-  if (!events.length) return '<div class="empty"><p class="muted">Aucune soirée prévue pour le moment.</p></div>';
+  if (!events.length) return `<div class="empty"><p class="muted">${tr('Aucune soirée prévue pour le moment.')}</p></div>`;
   const byDay = new Map();
   for (const e of events) {
     const k = todayKey(new Date(e.startsAt));
@@ -382,14 +384,14 @@ function calendarView(upcoming) {
     <div class="cal-list">
       ${list.map((e) => {
     const m = e.main;
-    const title = m.competition === 'Boxe' ? `Boxe · ${m.home.name} – ${m.away.name}` : m.competition;
+    const title = m.competition === 'Boxe' ? `${tr('Boxe')} · ${m.home.name} – ${m.away.name}` : tParts(m.competition);
     return `
       <button class="cal-event" data-action="cal-open" data-day="${day}" type="button">
         <span class="cal-poster">${posterHtml(m, { width: 400 })}</span>
         <span class="cal-body">
-          <span class="cal-sport">${sportMeta(m.sport).icon} ${escapeHtml(sportMeta(m.sport).label)} · ${escapeHtml(hourOf(e.startsAt))}</span>
+          <span class="cal-sport">${sportMeta(m.sport).icon} ${escapeHtml(tr(sportMeta(m.sport).label))} · ${escapeHtml(hourOf(e.startsAt))}</span>
           <strong>${escapeHtml(title)}</strong>
-          <span class="muted">${e.fights.length > 1 ? `${e.fights.length} combats · ` : ''}${escapeHtml(m.home.name)} – ${escapeHtml(m.away.name)}</span>
+          <span class="muted">${e.fights.length > 1 ? `${tr('{n} combats', { n: e.fights.length })} · ` : ''}${escapeHtml(m.home.name)} – ${escapeHtml(m.away.name)}</span>
         </span>
         ${icons.arrow}
       </button>`;
@@ -399,7 +401,7 @@ function calendarView(upcoming) {
 
 // Phrase de résultat, noms des combattants cliquables (fiche).
 function resultLinks(m) {
-  let html = escapeHtml(resultSentence(m));
+  let html = escapeHtml(resultText(m));
   for (const t of [m.home, m.away]) if (t.espnId) html = html.replace(escapeHtml(t.name), fighterName(t));
   return html;
 }
@@ -411,14 +413,14 @@ function resultsView(local, sport) {
   if (!list.length) {
     return results.loading || !results.at
       ? '<div class="skeletons" aria-busy="true">' + '<div class="skeleton"></div>'.repeat(3) + '</div>'
-      : `<div class="empty"><p class="muted">${escapeHtml(results.error || 'Aucun résultat récent.')}</p></div>`;
+      : `<div class="empty"><p class="muted">${escapeHtml(results.error || tr('Aucun résultat récent.'))}</p></div>`;
   }
   const events = eventsOf(list).sort((a, b) => b.startsAt - a.startsAt);
   return `
-    <p class="muted results-note">Combats terminés des ${RESULTS_DAYS} derniers jours.</p>
+    <p class="muted results-note">${tr('Combats terminés des {n} derniers jours.', { n: RESULTS_DAYS })}</p>
     ${events.map((e) => `
     <section class="result-event">
-      <h2 class="cal-day">${escapeHtml(e.main.competition === 'Boxe' ? 'Boxe' : e.main.competition)} <small>${escapeHtml(cap(dateLong(e.startsAt)))}</small></h2>
+      <h2 class="cal-day">${escapeHtml(tParts(e.main.competition))} <small>${escapeHtml(cap(dateLong(e.startsAt)))}</small></h2>
       <ul class="result-list">
         ${[...e.fights].reverse().map((m) => `
         <li class="result-row">
@@ -437,19 +439,19 @@ function renderReal(s, p, picks) {
   const card = (m, poster = true) => matchCard(m, { slipPick: picks.get(m.id), grouped: true, poster });
 
   if (!feed.configured) {
-    return `<div class="empty"><p><strong>Aucune source de vrais combats n'est configurée.</strong></p></div>`;
+    return `<div class="empty"><p><strong>${tr("Aucune source de vrais combats n'est configurée.")}</strong></p></div>`;
   }
   if (!all.length) {
     if (feed.error && !feed.loading) {
       return `
       <div class="empty feed-error">
-        <p><strong>Impossible de charger les vrais combats</strong></p>
-        <p class="muted">Vérifie ta connexion internet. (${escapeHtml(feed.error)})</p>
-        <button class="btn btn-ghost" data-action="refresh-real" type="button">Réessayer</button>
+        <p><strong>${tr('Impossible de charger les vrais combats')}</strong></p>
+        <p class="muted">${tr('Vérifie ta connexion internet.')} (${escapeHtml(feed.error)})</p>
+        <button class="btn btn-ghost" data-action="refresh-real" type="button">${tr('Réessayer')}</button>
       </div>`;
     }
     return `
-      <div class="skeletons" aria-busy="true" aria-label="Chargement des vrais combats">
+      <div class="skeletons" aria-busy="true" aria-label="${tr('Chargement des vrais combats')}">
         ${'<div class="skeleton"></div>'.repeat(4)}
       </div>`;
   }
@@ -490,11 +492,11 @@ function renderReal(s, p, picks) {
     ${sportChips(all, (m) => matchStatus(m, t) === 'upcoming')}
 
     ${live.length ? `
-      <h2 class="section-title"><span class="live-dot"></span>En direct <span class="muted section-note">${live.some((m) => LIVE_SPORTS.has(m.sport)) ? 'paris en direct' : 'paris fermés'}</span></h2>
+      <h2 class="section-title"><span class="live-dot"></span>${tr('En direct')} <span class="muted section-note">${live.some((m) => LIVE_SPORTS.has(m.sport)) ? tr('paris en direct') : tr('paris fermés')}</span></h2>
       <div class="match-grid">${live.map((m) => matchCard(m, { slipPick: picks.get(m.id) })).join('')}</div>` : ''}
 
     ${days.length ? `
-      <div class="day-chips" role="toolbar" aria-label="Choisir un jour">
+      <div class="day-chips" role="toolbar" aria-label="${tr('Choisir un jour')}">
         ${days.map((d) => `
           <button class="day-chip ${d === ui.day ? 'active' : ''}" data-action="filter-day" data-day="${d}" type="button">${dayLabel(d)}</button>`).join('')}
       </div>
@@ -509,29 +511,29 @@ function renderReal(s, p, picks) {
         const headPoster = shared ? posterHtml(shared, { width: 800 }) : '';
         const newSport = ui.sport === 'all' && (i === 0 || arr[i - 1][0].sport !== first.sport);
         return `
-        ${newSport ? `<h2 class="sport-heading">${sportMeta(first.sport).icon} ${escapeHtml(sportMeta(first.sport).label)}</h2>` : ''}
+        ${newSport ? `<h2 class="sport-heading">${sportMeta(first.sport).icon} ${escapeHtml(tr(sportMeta(first.sport).label))}</h2>` : ''}
         <section class="comp-group">
           <h3 class="comp-title">
             ${first.competitionLogo ? `<img class="comp-logo" src="${escapeHtml(logoSrc(first.competitionLogo))}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">` : `<span class="comp-emoji">${sportMeta(first.sport).icon}</span>`}
-            <span>${escapeHtml(first.competition)}</span>
+            <span>${escapeHtml(tParts(first.competition))}</span>
             <span class="comp-count">${list.length}</span>
           </h3>
           ${headPoster ? `<div class="comp-poster">${headPoster}</div>` : ''}
           <div class="match-grid">${list.map((m) => card(m, !headPoster || (m.poster && m.poster !== shared.poster))).join('')}</div>
         </section>`;
       }).join('')}` : `
-      <div class="empty"><p class="muted">Aucun combat à venir pour ce sport dans les ${CONFIG.REAL_DAYS_AHEAD} prochains jours.</p></div>`}
+      <div class="empty"><p class="muted">${tr('Aucun combat à venir pour ce sport dans les {n} prochains jours.', { n: CONFIG.REAL_DAYS_AHEAD })}</p></div>`}
 
     ${finished.length ? `
-      <h2 class="section-title">Derniers résultats</h2>
+      <h2 class="section-title">${tr('Derniers résultats')}</h2>
       <div class="match-grid">${finished.map((m) => matchCard(m)).join('')}</div>` : ''}
 
     <p class="feed-credit">
-      Données : ${escapeHtml(feed.sources.join(', ') || 'sources sportives publiques')}${feed.snapshotAt
-        ? ` · instantané du ${new Date(feed.snapshotAt).toLocaleString('fr-FR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' })}. Les résultats arrivent à chaque mise à jour de l'instantané.`
-        : `${feed.lastOk ? ` · mis à jour à ${new Date(feed.lastOk).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}` : ''}.`}
-      Les cotes viennent des bookmakers quand elles sont publiées, sinon BeltChase les estime.
-      ${feed.snapshotAt ? '' : '<button class="link-btn" data-action="refresh-real" type="button">Actualiser</button>'}
+      ${tr('Données :')} ${escapeHtml(feed.sources.join(', ') || tr('sources sportives publiques'))}${feed.snapshotAt
+        ? ` · ${tr('instantané du {d}', { d: new Date(feed.snapshotAt).toLocaleString(locale, { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) })}. ${tr("Les résultats arrivent à chaque mise à jour de l'instantané.")}`
+        : `${feed.lastOk ? ` · ${tr('mis à jour à {h}', { h: new Date(feed.lastOk).toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit' }) })}` : ''}.`}
+      ${tr('Les cotes viennent des bookmakers quand elles sont publiées, sinon BeltChase les estime.')}
+      ${feed.snapshotAt ? '' : `<button class="link-btn" data-action="refresh-real" type="button">${tr('Actualiser')}</button>`}
     </p>
   `;
 }
@@ -549,21 +551,21 @@ function renderFake(s, p, picks) {
     ${sportChips(fakes, (m) => matchStatus(m) === 'upcoming')}
 
     ${live.length ? `
-      <h2 class="section-title"><span class="live-dot"></span>En direct <span class="muted section-note">paris en direct</span></h2>
+      <h2 class="section-title"><span class="live-dot"></span>${tr('En direct')} <span class="muted section-note">${tr('paris en direct')}</span></h2>
       <div class="match-grid">${live.map(card).join('')}</div>` : ''}
 
     <div class="section-row">
-      <h2 class="section-title">À venir</h2>
-      <button class="link-btn" data-action="fast-forward" type="button" title="Simuler le passage du temps">
+      <h2 class="section-title">${tr('À venir')}</h2>
+      <button class="link-btn" data-action="fast-forward" type="button" title="${tr('Simuler le passage du temps')}">
         ${icons.forward} +${CONFIG.FAST_FORWARD_MIN} min
       </button>
     </div>
     ${upcoming.length
       ? `<div class="match-grid">${upcoming.map(card).join('')}</div>`
-      : `<div class="empty"><p>Chargement des prochains combats…</p></div>`}
+      : `<div class="empty"><p>${tr('Chargement des prochains combats…')}</p></div>`}
 
     ${finished.length ? `
-      <h2 class="section-title">Derniers résultats</h2>
+      <h2 class="section-title">${tr('Derniers résultats')}</h2>
       <div class="match-grid">${finished.map(card).join('')}</div>` : ''}
   `;
 }
@@ -575,7 +577,7 @@ function dayStrip(p) {
     <section class="card day-strip day-locked">
       <button class="day-ad" data-action="go-account" type="button">
         <span class="day-ico">${icons.lock}</span>
-        <span class="grow"><strong>Bonus du jour · défis · bonus vidéo</strong><small>Crée ton compte gratuit pour les débloquer</small></span>
+        <span class="grow"><strong>${tr('Bonus du jour · défis · bonus vidéo')}</strong><small>${tr('Crée ton compte gratuit pour les débloquer')}</small></span>
       </button>
     </section>`;
   const list = challengeStatus(p);
@@ -588,15 +590,15 @@ function dayStrip(p) {
         ${claimable ? `
           <button class="day-bonus" data-action="claim-bonus" type="button">
             <span class="day-ico">${icons.gift}</span>
-            <span><strong>Bonus +${fmt(bonusFor(day))}</strong><small>${day > 1 ? `Série jour ${day}/${STREAK_DAYS}` : 'Récupère-le !'}</small></span>
+            <span><strong>${tr('Bonus +{n}', { n: fmt(bonusFor(day)) })}</strong><small>${day > 1 ? tr('Série jour {d}/{n}', { d: day, n: STREAK_DAYS }) : tr('Récupère-le !')}</small></span>
           </button>` : `
           <div class="day-bonus is-done">
             <span class="day-ico">${icons.check}</span>
-            <span><strong>Bonus récupéré</strong><small>Série ${p.bonusStreak || 1}/${STREAK_DAYS} · reviens demain</small></span>
+            <span><strong>${tr('Bonus récupéré')}</strong><small>${tr('Série {d}/{n} · reviens demain', { d: p.bonusStreak || 1, n: STREAK_DAYS })}</small></span>
           </div>`}
         <button class="day-challenges" data-action="toggle-challenges" type="button" aria-expanded="${!!ui.challengesOpen}">
           <span class="day-ico">${icons.target}</span>
-          <span class="grow"><strong>Défis ${done}/${list.length}</strong>
+          <span class="grow"><strong>${tr('Défis')} ${done}/${list.length}</strong>
             <span class="challenge-bar"><span style="width:${Math.round((done / list.length) * 100)}%"></span></span></span>
           <span class="day-chevron">${ui.challengesOpen ? '▴' : '▾'}</span>
         </button>
@@ -614,12 +616,12 @@ function adButton(p) {
   return left ? `
       <button class="day-ad" data-action="watch-ad" type="button">
         <span class="day-ico">${icons.play}</span>
-        <span class="grow"><strong>Bonus vidéo · +${fmt(AD_GOLD())}</strong><small>${watched}/${AD_PER_DAY()} aujourd'hui</small></span>
+        <span class="grow"><strong>${tr('Bonus vidéo')} · +${fmt(AD_GOLD())}</strong><small>${tr("{d}/{n} aujourd'hui", { d: watched, n: AD_PER_DAY() })}</small></span>
         <span class="day-ad-coin">${coin('coin coin-sm')}</span>
       </button>` : `
       <div class="day-ad is-done">
         <span class="day-ico">${icons.check}</span>
-        <span class="grow"><strong>Bonus vidéo du jour récupérés</strong><small>${AD_PER_DAY()}/${AD_PER_DAY()} · reviens demain</small></span>
+        <span class="grow"><strong>${tr('Bonus vidéo du jour récupérés')}</strong><small>${AD_PER_DAY()}/${AD_PER_DAY()} · ${tr('reviens demain')}</small></span>
       </div>`;
 }
 
@@ -630,10 +632,10 @@ function challengesList(list) {
           <li class="challenge ${c.done ? 'is-done' : ''}">
             <span class="challenge-check">${c.done ? icons.check : ''}</span>
             <span class="grow">
-              <span class="challenge-text">${escapeHtml(c.text)}</span>
+              <span class="challenge-text">${escapeHtml(tr(c.text))}</span>
               <span class="challenge-bar"><span style="width:${Math.round((c.count / c.target) * 100)}%"></span></span>
             </span>
-            <span class="challenge-reward">${c.done ? 'Réussi' : `${c.count}/${c.target}`}<small>+${c.gold} ${coin('coin coin-xs')} · +${c.xp} XP</small></span>
+            <span class="challenge-reward">${c.done ? tr('Réussi') : `${c.count}/${c.target}`}<small>+${c.gold} ${coin('coin coin-xs')} · +${c.xp} XP</small></span>
           </li>`).join('')}
       </ul>`;
 }
@@ -645,8 +647,8 @@ export function renderMatches(s, p) {
 
   return `
     <section class="greeting">
-      <h1>Salut <b>${escapeHtml(p.pseudo)}</b></h1>
-      ${mode === 'fake' ? '<p class="muted">Des combats fictifs de 2 minutes pour jouer tout de suite.</p>' : ''}
+      <h1>${tr('Salut')} <b>${escapeHtml(p.pseudo)}</b></h1>
+      ${mode === 'fake' ? `<p class="muted">${tr('Des combats fictifs de 2 minutes pour jouer tout de suite.')}</p>` : ''}
     </section>
 
     ${cloud.user ? '' : inviteBanner({ inGame: true }) || (p.stats.betsPlaced > 0 ? accountNudge() : '')}

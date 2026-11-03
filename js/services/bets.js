@@ -13,6 +13,7 @@ import { RR_VERSION } from './ranks.js';
 import { addXp, XP } from './progress.js';
 import { placeEvents, track } from './daily.js';
 import { settleKey } from './markets.js';
+import { t as tr } from '../i18n.js';
 
 export const potentialGain = (stake, odds) => Math.floor((Number(stake) || 0) * odds);
 
@@ -131,13 +132,13 @@ export function slipCheck(s = getState()) {
   const live = items.filter((x) => x.live);
   const oddsChanged = live.some((x) => x.current && x.current !== x.odds);
   let error = null;
-  if (!items.length) error = 'Ton panier est vide.';
-  else if (items.some((x) => !x.live && matchStatus(x.match) !== 'upcoming')) error = 'Un combat a déjà commencé : retire-le du panier.';
-  else if (live.some((x) => !x.current)) error = 'Paris suspendus sur un combat en direct : attends la reprise ou retire-le.';
-  else if (oddsChanged) error = 'Une cote en direct a changé : accepte la nouvelle cote pour valider.';
-  else if (combo && items.length > COMBO_MAX) error = `Un combiné peut contenir ${COMBO_MAX} combats au maximum.`;
-  else if (stakes.some((x) => !Number.isInteger(x) || x < CONFIG.MIN_STAKE)) error = `Mise minimum : ${CONFIG.MIN_STAKE} Gold par pari.`;
-  else if (total > p.balance) error = 'Solde insuffisant pour ces mises.';
+  if (!items.length) error = tr('Ton panier est vide.');
+  else if (items.some((x) => !x.live && matchStatus(x.match) !== 'upcoming')) error = tr('Un combat a déjà commencé : retire-le du panier.');
+  else if (live.some((x) => !x.current)) error = tr('Paris suspendus sur un combat en direct : attends la reprise ou retire-le.');
+  else if (oddsChanged) error = tr('Une cote en direct a changé : accepte la nouvelle cote pour valider.');
+  else if (combo && items.length > COMBO_MAX) error = tr('Un combiné peut contenir {n} combats au maximum.', { n: COMBO_MAX });
+  else if (stakes.some((x) => !Number.isInteger(x) || x < CONFIG.MIN_STAKE)) error = tr('Mise minimum : {n} Gold par pari.', { n: CONFIG.MIN_STAKE });
+  else if (total > p.balance) error = tr('Solde insuffisant pour ces mises.');
   return { items, total, potential, error, combo, comboOdds, comboStake: p.comboStake ?? CONFIG.DEFAULT_STAKE, oddsChanged, hasLive: live.length > 0 };
 }
 
@@ -221,7 +222,7 @@ function settleCombos(s, m) {
     const leg = bet.legs.find((l) => l.matchId === m.id);
     if (leg.status !== 'pending') continue;
     leg.status = settleKey(leg.outcome, m);
-    const label = `Combiné ${bet.legs.length} combats`;
+    const label = `${tr('Combiné')} · ${tr('{n} combats', { n: bet.legs.length })}`;
     if (leg.status === 'lost') {
       bet.status = 'lost';
       bet.rrv = RR_VERSION;

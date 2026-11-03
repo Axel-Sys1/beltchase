@@ -7,24 +7,25 @@ import { coin, icons } from '../icons.js';
 import { teamMark } from '../logos.js';
 import { ui } from '../uiState.js';
 import { renderSlip } from './slip.js';
+import { t, tParts } from '../../i18n.js';
 
 const STATUS = {
-  pending: { label: 'En cours', empty: 'Aucun pari en cours. Va jeter un œil aux combats !' },
-  won: { label: 'Gagnés', empty: 'Pas encore de pari gagné… ça va venir !' },
-  lost: { label: 'Perdus', empty: 'Aucun pari perdu. Joli !' },
-  void: { label: 'Remboursés', empty: 'Aucun pari remboursé.' },
+  pending: { label: t('En cours'), empty: t('Aucun pari en cours. Va jeter un œil aux combats !') },
+  won: { label: t('Gagnés'), empty: t('Pas encore de pari gagné… ça va venir !') },
+  lost: { label: t('Perdus'), empty: t('Aucun pari perdu. Joli !') },
+  void: { label: t('Remboursés'), empty: t('Aucun pari remboursé.') },
 };
 
 const LEG = { pending: icons.clock, won: icons.check, lost: icons.cross, void: icons.undo };
 
 function comboCard(b) {
-  const pill = { pending: 'En cours', won: 'Gagné', lost: 'Perdu', void: 'Remboursé' }[b.status];
+  const pill = { pending: t('En cours'), won: t('Gagné'), lost: t('Perdu'), void: t('Remboursé') }[b.status];
   const left = b.legs.filter((l) => l.status === 'pending').length;
   return `
   <article class="bet bet-${b.status} bet-combo">
     <header class="bet-head">
-      <span class="comp">Combiné · ${b.legs.length} combats</span>
-      <span class="bet-right">${b.status === 'pending' ? `<span class="kick">${left} restant${left > 1 ? 's' : ''}</span>` : ''}<span class="status-pill">${pill}</span></span>
+      <span class="comp">${t('Combiné')} · ${t('{n} combats', { n: b.legs.length })}</span>
+      <span class="bet-right">${b.status === 'pending' ? `<span class="kick">${t(left > 1 ? '{n} restants' : '{n} restant', { n: left })}</span>` : ''}<span class="status-pill">${pill}</span></span>
     </header>
     <ul class="combo-legs">
       ${b.legs.map((l) => `
@@ -37,7 +38,7 @@ function comboCard(b) {
           <span class="at">${fmtOdds(l.odds)}</span>
         </li>`).join('')}
     </ul>
-    <div class="bet-pick">Cote totale <span class="at">@ ${fmtOdds(b.finalOdds || b.odds)}</span></div>
+    <div class="bet-pick">${t('Cote totale')} <span class="at">@ ${fmtOdds(b.finalOdds || b.odds)}</span></div>
     ${betNums(b)}
   </article>`;
 }
@@ -45,35 +46,35 @@ function comboCard(b) {
 function betNums(b) {
   return `
     <div class="bet-nums">
-      <div><span class="muted">Mise</span><strong>${fmt(b.stake)} ${coin('coin coin-xs')}</strong></div>
+      <div><span class="muted">${t('Mise')}</span><strong>${fmt(b.stake)} ${coin('coin coin-xs')}</strong></div>
       <div class="right">
-        <span class="muted">${{ pending: 'Gain potentiel', won: 'Gain', lost: 'Résultat', void: 'Mise rendue' }[b.status]}</span>
+        <span class="muted">${{ pending: t('Gain potentiel'), won: t('Gain'), lost: t('Résultat'), void: t('Mise rendue') }[b.status]}</span>
         <strong class="${b.status === 'won' ? 'gain' : b.status === 'lost' ? 'loss' : ''}">
           ${b.status === 'lost' ? `−${fmt(b.stake)}` : b.status === 'won' ? `+${fmt(b.payout)}` : fmt(b.status === 'void' ? b.payout : b.potential)}
           ${coin('coin coin-xs')}
         </strong>
       </div>
     </div>
-    ${b.refused ? '' : `<button class="link-btn share-bet" data-action="share-bet" data-id="${escapeHtml(b.id)}" type="button">${icons.share} Partager</button>`}`;
+    ${b.refused ? '' : `<button class="link-btn share-bet" data-action="share-bet" data-id="${escapeHtml(b.id)}" type="button">${icons.share} ${t('Partager')}</button>`}`;
 }
 
 function betCard(b) {
   if (b.legs) return comboCard(b);
   const m = b.match;
-  const t = clockFor(m);
-  const st = matchStatus(m, t);
+  const now = clockFor(m);
+  const st = matchStatus(m, now);
   let when = '';
   if (b.status === 'pending') {
-    if (st === 'live') when = isAwaitingKickoff(m, t) ? '<span class="soon-pill">PARIS FERMÉS</span>' : '<span class="live-pill">EN DIRECT</span>';
-    else when = `<span class="kick" data-kickoff="${m.startsAt}"${m.real ? ' data-real="1"' : ''}>${formatKickoff(m.startsAt, t)}</span>`;
+    if (st === 'live') when = isAwaitingKickoff(m, now) ? `<span class="soon-pill">${t('PARIS FERMÉS')}</span>` : `<span class="live-pill">${t('EN DIRECT')}</span>`;
+    else when = `<span class="kick" data-kickoff="${m.startsAt}"${m.real ? ' data-real="1"' : ''}>${formatKickoff(m.startsAt, now)}</span>`;
   }
-  const pill = b.check ? 'Validation…' : b.refused ? 'Refusé' : { pending: 'En cours', won: 'Gagné', lost: 'Perdu', void: 'Remboursé' }[b.status];
+  const pill = b.check ? t('Validation…') : b.refused ? t('Refusé') : { pending: t('En cours'), won: t('Gagné'), lost: t('Perdu'), void: t('Remboursé') }[b.status];
   const score = m.score || (st === 'live' && m.liveScore ? m.liveScore : '');
-  const live = b.live ? `<span class="tag tag-live">${icons.bolt} En direct${b.live.score ? ` à ${escapeHtml(b.live.score)}` : ''}${b.live.clock ? ` (${escapeHtml(b.live.clock)})` : ''}</span>` : '';
+  const live = b.live ? `<span class="tag tag-live">${icons.bolt} ${t('En direct')}${b.live.score ? ` ${t('à {s}', { s: escapeHtml(b.live.score) })}` : ''}${b.live.clock ? ` (${escapeHtml(b.live.clock)})` : ''}</span>` : '';
   return `
   <article class="bet bet-${b.status}">
     <header class="bet-head">
-      <span class="comp">${sportOf(m).icon} ${escapeHtml(m.competition)}${m.real ? '' : ' <span class="tag tag-muted">éclair</span>'}</span>
+      <span class="comp">${sportOf(m).icon} ${escapeHtml(tParts(m.competition))}${m.real ? '' : ` <span class="tag tag-muted">${t('éclair')}</span>`}</span>
       <span class="bet-right">${when}<span class="status-pill">${pill}</span></span>
     </header>
     <div class="bet-match">
@@ -81,8 +82,8 @@ function betCard(b) {
       ${score ? `<span class="bet-score">${escapeHtml(score)}</span>` : ''}
     </div>
     <div class="bet-pick">${escapeHtml(outcomeLabel(m, b.outcome))} <span class="at">@ ${fmtOdds(b.odds)}</span>${live}</div>
-    ${b.check ? '<p class="muted bet-note">Validé si le score ne bouge pas dans la minute, sinon remboursé.</p>' : ''}
-    ${b.refused ? '<p class="muted bet-note">Le score a changé avant la validation : mise rendue.</p>' : ''}
+    ${b.check ? `<p class="muted bet-note">${t('Validé si le score ne bouge pas dans la minute, sinon remboursé.')}</p>` : ''}
+    ${b.refused ? `<p class="muted bet-note">${t('Le score a changé avant la validation : mise rendue.')}</p>` : ''}
     ${betNums(b)}
   </article>`;
 }
@@ -107,13 +108,13 @@ export function renderMyBets(s, p) {
 
   // Panier en haut (sélections en attente de validation), puis les paris placés.
   return `
-    <h1 class="page-title">Mes paris</h1>
+    <h1 class="page-title">${t('Mes paris')}</h1>
     ${p.slip.length ? renderSlip(s, p, { context: 'page' }) : ''}
 
     <div class="stat-row">
-      <div class="stat"><span class="muted">Paris placés</span><strong>${bets.length}</strong></div>
-      <div class="stat"><span class="muted">Réussite</span><strong>${settled ? `${rate} %` : '–'}</strong></div>
-      <div class="stat"><span class="muted">Bilan</span><strong class="${net > 0 ? 'gain' : net < 0 ? 'loss' : ''}">${net > 0 ? '+' : net < 0 ? '−' : ''}${fmt(Math.abs(net))}</strong></div>
+      <div class="stat"><span class="muted">${t('Paris placés')}</span><strong>${bets.length}</strong></div>
+      <div class="stat"><span class="muted">${t('Réussite')}</span><strong>${settled ? `${rate} %` : '–'}</strong></div>
+      <div class="stat"><span class="muted">${t('Bilan')}</span><strong class="${net > 0 ? 'gain' : net < 0 ? 'loss' : ''}">${net > 0 ? '+' : net < 0 ? '−' : ''}${fmt(Math.abs(net))}</strong></div>
     </div>
 
     <div class="tabs" role="tablist">
@@ -127,8 +128,8 @@ export function renderMyBets(s, p) {
     ${ui.betsTab === 'pending' && pendingFake ? `
       <div class="ff-card">
         <div class="grow">
-          <strong>Des combats éclair sont en cours</strong>
-          <span class="muted">Avance l'horloge des combats fictifs. Les vrais combats, eux, suivent le temps réel.</span>
+          <strong>${t('Des combats éclair sont en cours')}</strong>
+          <span class="muted">${t("Avance l'horloge des combats fictifs. Les vrais combats, eux, suivent le temps réel.")}</span>
         </div>
         <button class="btn btn-ghost" data-action="fast-forward" type="button">${icons.forward} +${CONFIG.FAST_FORWARD_MIN} min</button>
       </div>` : ''}
@@ -136,6 +137,6 @@ export function renderMyBets(s, p) {
     ${list.length
       ? `<div class="bet-list">${list.map((b) => betCard(b)).join('')}</div>`
       : `<div class="empty"><p class="muted">${STATUS[ui.betsTab].empty}</p>
-          ${ui.betsTab === 'pending' ? `<button class="btn btn-ghost" data-action="go" data-route="matchs" type="button">Voir les combats</button>` : ''}</div>`}
+          ${ui.betsTab === 'pending' ? `<button class="btn btn-ghost" data-action="go" data-route="matchs" type="button">${t('Voir les combats')}</button>` : ''}</div>`}
   `;
 }

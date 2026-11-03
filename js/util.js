@@ -1,3 +1,4 @@
+import { locale, t } from './i18n.js';
 export const MIN = 60_000;
 
 export const rand = (a, b) => a + Math.random() * (b - a);
@@ -23,7 +24,7 @@ export function escapeHtml(s) {
   ));
 }
 
-export const fmt = (n) => Math.round(n).toLocaleString('fr-FR');
+export const fmt = (n) => Math.round(n).toLocaleString(locale);
 export const fmtOdds = (o) => o.toFixed(2);
 
 export function todayKey(d = new Date()) {
@@ -39,14 +40,14 @@ export function countdown(ms) {
 
 export function formatKickoff(ts, now) {
   const diff = ts - now;
-  if (diff <= 0) return 'En cours';
-  if (diff < 10 * MIN) return `dans ${countdown(diff)}`;
-  if (diff < 60 * MIN) return `dans ${Math.round(diff / MIN)} min`;
+  if (diff <= 0) return t('En cours');
+  if (diff < 10 * MIN) return t('dans {d}', { d: countdown(diff) });
+  if (diff < 60 * MIN) return t('dans {n} min', { n: Math.round(diff / MIN) });
   const d = new Date(ts);
-  const hm = d.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+  const hm = d.toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit' });
   return todayKey(d) === todayKey(new Date(now))
-    ? `Aujourd'hui ${hm}`
-    : `${d.toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric' })} ${hm}`;
+    ? t("Aujourd'hui {h}", { h: hm })
+    : `${d.toLocaleDateString(locale, { weekday: 'short', day: 'numeric' })} ${hm}`;
 }
 
 export function leagueCode() {

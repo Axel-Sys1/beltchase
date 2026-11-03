@@ -3,18 +3,19 @@
 // Le rang suit les résultats des paris, pas le solde : miser gros ne fait pas monter plus vite.
 
 import { MARGIN } from '../providers/odds.js';
+import { locale, t } from '../i18n.js';
 
 export const TIERS = [
-  { id: 'iron', name: 'Fer', color: '#8a8f94' },
-  { id: 'bronze', name: 'Bronze', color: '#c0834f' },
-  { id: 'silver', name: 'Argent', color: '#d4dde3' },
-  { id: 'gold', name: 'Or', color: '#f2c94c' },
-  { id: 'platinum', name: 'Platine', color: '#45c6cf' },
-  { id: 'diamond', name: 'Diamant', color: '#d18cf5' },
-  { id: 'ascendant', name: 'Ascendant', color: '#3ed68a' },
-  { id: 'immortal', name: 'Immortel', color: '#ff4a6a' },
+  { id: 'iron', name: t('Fer'), color: '#8a8f94' },
+  { id: 'bronze', name: t('Bronze'), color: '#c0834f' },
+  { id: 'silver', name: t('Argent'), color: '#d4dde3' },
+  { id: 'gold', name: t('Or'), color: '#f2c94c' },
+  { id: 'platinum', name: t('Platine'), color: '#45c6cf' },
+  { id: 'diamond', name: t('Diamant'), color: '#d18cf5' },
+  { id: 'ascendant', name: t('Ascendant'), color: '#3ed68a' },
+  { id: 'immortal', name: t('Immortel'), color: '#ff4a6a' },
 ];
-export const RADIANT = { id: 'radiant', name: 'Radiant', color: '#fff2a8' };
+export const RADIANT = { id: 'radiant', name: t('Radiant'), color: '#fff2a8' };
 
 export const RR_PER_DIVISION = 100;
 const DIVISIONS = TIERS.length * 3;             // Fer 1 → Immortel 3
@@ -80,7 +81,7 @@ export function prevSeasonKey(key = seasonKey()) {
 }
 export function seasonLabel(key) {
   const [y, m] = key.split('-').map(Number);
-  return new Date(y, m - 1, 1).toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' });
+  return new Date(y, m - 1, 1).toLocaleDateString(locale, { month: 'long', year: 'numeric' });
 }
 // Fin de la saison en cours (minuit, le 1er du mois suivant).
 export function seasonEnd(key = seasonKey()) {

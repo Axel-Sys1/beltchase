@@ -8,8 +8,9 @@ import { CARD_PHOTOS } from '../data/cardPhotos.js';
 import { sizedPhoto } from '../providers/photos.js';
 import { sportMeta } from '../sports.js';
 import { icons } from './icons.js';
+import { t, tParts } from '../i18n.js';
 
-export const RARITY_LABEL = { commun: 'Commun', rare: 'Rare', epique: 'Épique', legendaire: 'Légendaire', mythique: 'Mythique' };
+export const RARITY_LABEL = { commun: t('Commun'), rare: t('Rare'), epique: t('Épique'), legendaire: t('Légendaire'), mythique: t('Mythique') };
 
 // Photo d'une carte → { src, cut } (cut : détourée, fond transparent) ou null.
 export function cardPhoto(card) {
@@ -56,8 +57,8 @@ const splitName = (name) => {
 export function fightCardHtml(card, { owned = true, size = '', count = 0, favorite = false, flag = '' } = {}) {
   const ph = owned ? cardPhoto(card) : null;
   const [first, last] = splitName(card.name);
-  const country = card.national ? card.team : '';
-  const sub = [card.pos, country].filter(Boolean).join(' · ');
+  const country = card.national ? t(card.team) : '';
+  const sub = [tParts(card.pos), country].filter(Boolean).join(' · ');
   return `
     <div class="fc fc-${card.rarity} ${size ? `fc-${size}` : ''} ${owned ? '' : 'fc-locked'}" data-sport="${card.sport}">
       <div class="fc-frame">
@@ -79,7 +80,7 @@ export function fightCardHtml(card, { owned = true, size = '', count = 0, favori
         </div>
       </div>
       ${count > 1 ? `<span class="fc-count">×${count}</span>` : ''}
-      ${favorite ? `<span class="fc-fav" title="Carte favorite">${icons.star}</span>` : ''}
+      ${favorite ? `<span class="fc-fav" title="${t('Carte favorite')}">${icons.star}</span>` : ''}
       ${owned ? '' : `<span class="fc-lock">${icons.lock}</span>`}
     </div>`;
 }

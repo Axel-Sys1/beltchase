@@ -1,7 +1,8 @@
 // Fenêtre de confirmation intégrée à la page (confirm() est bloqué dans certains cadres).
 import { escapeHtml } from '../util.js';
+import { t } from '../i18n.js';
 
-export function confirmDialog({ title, message = '', confirmLabel = 'Confirmer', cancelLabel = 'Annuler', danger = false }) {
+export function confirmDialog({ title, message = '', confirmLabel = t('Confirmer'), cancelLabel = t('Annuler'), danger = false }) {
   return new Promise((resolve) => {
     const previous = document.activeElement;
     const ov = document.createElement('div');

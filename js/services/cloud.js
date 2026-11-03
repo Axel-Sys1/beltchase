@@ -18,6 +18,7 @@ import { isOffensivePseudo } from './moderation.js';
 import { levelOf } from './progress.js';
 
 import { DEMO } from './demo.js';
+import { t as tr } from '../i18n.js';
 const SDK = 'https://www.gstatic.com/firebasejs/10.12.2';
 const EMAIL_KEY = 'beltchase:emailForSignIn';
 // Au plus une sauvegarde en ligne toutes les 30 s (et à la fermeture de la page) : le plan
@@ -59,7 +60,7 @@ function restoreBoard(name) {
   try { return JSON.parse(localStorage.getItem(boardKey(name)) || 'null', (k, v) => (v && Array.isArray(v.__set) ? new Set(v.__set) : v)); } catch { return null; }
 }
 const DIVISION_LIMIT = 50;
-const TOP_LIMIT = 50; // classement général et saison : 50 lignes (lectures Firestore comptées une par ligne)
+export const TOP_LIMIT = 50; // classement général et saison : 50 lignes (lectures Firestore comptées une par ligne)
 const LAST_DIVISION = TIERS.length * 3 - 1;
 export const divisionIndex = (rr) => Math.min(LAST_DIVISION, Math.floor(rr / RR_PER_DIVISION));
 let lastBoard = '';
@@ -499,33 +500,33 @@ export function divisionRows() {
 }
 
 const ERRORS = {
-  'auth/invalid-email': 'Adresse email invalide.',
-  'auth/invalid-credential': 'Email ou mot de passe incorrect.',
-  'auth/wrong-password': 'Email ou mot de passe incorrect.',
-  'auth/user-not-found': 'Email ou mot de passe incorrect.',
-  'auth/email-already-in-use': 'Un compte existe déjà avec cet email : connecte-toi.',
-  'auth/weak-password': 'Mot de passe trop court : 6 caractères minimum.',
-  'auth/missing-password': 'Entre ton mot de passe.',
-  'auth/too-many-requests': 'Trop de tentatives. Patiente quelques minutes.',
-  'auth/network-request-failed': 'Pas de connexion internet.',
-  'auth/popup-blocked': 'Ton navigateur a bloqué la fenêtre Google. Autorise les pop-ups et réessaie.',
-  'auth/quota-exceeded': 'Trop de demandes aujourd\'hui. Réessaie demain.',
-  'auth/invalid-action-code': 'Ce lien a expiré ou a déjà servi.',
-  'auth/expired-action-code': 'Ce lien a expiré.',
+  'auth/invalid-email': tr('Adresse email invalide.'),
+  'auth/invalid-credential': tr('Email ou mot de passe incorrect.'),
+  'auth/wrong-password': tr('Email ou mot de passe incorrect.'),
+  'auth/user-not-found': tr('Email ou mot de passe incorrect.'),
+  'auth/email-already-in-use': tr('Un compte existe déjà avec cet email : connecte-toi.'),
+  'auth/weak-password': tr('Mot de passe trop court : 6 caractères minimum.'),
+  'auth/missing-password': tr('Entre ton mot de passe.'),
+  'auth/too-many-requests': tr('Trop de tentatives. Patiente quelques minutes.'),
+  'auth/network-request-failed': tr('Pas de connexion internet.'),
+  'auth/popup-blocked': tr('Ton navigateur a bloqué la fenêtre Google. Autorise les pop-ups et réessaie.'),
+  'auth/quota-exceeded': tr('Trop de demandes aujourd\'hui. Réessaie demain.'),
+  'auth/invalid-action-code': tr('Ce lien a expiré ou a déjà servi.'),
+  'auth/expired-action-code': tr('Ce lien a expiré.'),
 };
 const SILENT = new Set(['auth/popup-closed-by-user', 'auth/cancelled-popup-request']);
-const friendly = (err) => new Error(ERRORS[err?.code] || 'Connexion impossible pour le moment. Réessaie plus tard.');
+const friendly = (err) => new Error(ERRORS[err?.code] || tr('Connexion impossible pour le moment. Réessaie plus tard.'));
 
 function checkEmail(raw) {
   const email = String(raw || '').trim();
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) throw new Error('Adresse email invalide.');
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) throw new Error(tr('Adresse email invalide.'));
   return email;
 }
 
 // mode 'login' : compte existant · 'signup' : nouveau compte.
 export async function signInWithEmail(rawEmail, password, mode = 'login') {
   const email = checkEmail(rawEmail);
-  if (mode === 'signup' && String(password || '').length < 6) throw new Error('Mot de passe trop court : 6 caractères minimum.');
+  if (mode === 'signup' && String(password || '').length < 6) throw new Error(tr('Mot de passe trop court : 6 caractères minimum.'));
   const { auth, A } = await sdk();
   try {
     if (mode === 'signup') await A.createUserWithEmailAndPassword(auth, email, password);
@@ -600,7 +601,7 @@ export const referralDb = {
 function leagueRef(code) { return fb.F.doc(fb.db, 'leagues', code); }
 
 function needAccount() {
-  if (!cloud.user || !fb) throw new Error('Connecte-toi pour créer ou rejoindre une ligue avec tes amis.');
+  if (!cloud.user || !fb) throw new Error(tr('Connecte-toi pour créer ou rejoindre une ligue avec tes amis.'));
 }
 
 // Fiches de classement des membres (par paquets de 30, la limite d'une requête « in »).
@@ -643,7 +644,7 @@ export async function loadMyLeagues({ force = false } = {}) {
 export async function createOnlineLeague(rawName) {
   needAccount();
   const name = String(rawName || '').trim();
-  if (name.length < 3 || name.length > 24) throw new Error('Le nom de la ligue doit faire entre 3 et 24 caractères.');
+  if (name.length < 3 || name.length > 24) throw new Error(tr('Le nom de la ligue doit faire entre 3 et 24 caractères.'));
   await publishRank(); // pour apparaître tout de suite dans le classement de la ligue
   const { F } = fb;
   for (let attempt = 0; attempt < 5; attempt++) {
@@ -654,10 +655,10 @@ export async function createOnlineLeague(rawName) {
       await loadMyLeagues({ force: true });
       return code;
     } catch (err) {
-      if (err?.code !== 'permission-denied') throw new Error('Impossible de créer la ligue pour le moment.');
+      if (err?.code !== 'permission-denied') throw new Error(tr('Impossible de créer la ligue pour le moment.'));
     }
   }
-  throw new Error('Impossible de créer la ligue pour le moment.');
+  throw new Error(tr('Impossible de créer la ligue pour le moment.'));
 }
 
 export async function joinOnlineLeague(rawCode) {
@@ -665,10 +666,10 @@ export async function joinOnlineLeague(rawCode) {
   const code = String(rawCode || '').trim().toUpperCase().replace(/[^A-Z0-9]/g, '');
   const { F } = fb;
   const snap = await F.getDoc(leagueRef(code)).catch(() => null);
-  if (!snap || !snap.exists()) throw new Error('Aucune ligue trouvée avec ce code.');
+  if (!snap || !snap.exists()) throw new Error(tr('Aucune ligue trouvée avec ce code.'));
   const l = snap.data();
-  if (l.members.includes(cloud.user.uid)) throw new Error('Tu fais déjà partie de cette ligue.');
-  if (l.members.length >= LEAGUE_MAX_MEMBERS) throw new Error(`Cette ligue est complète (${LEAGUE_MAX_MEMBERS} joueurs).`);
+  if (l.members.includes(cloud.user.uid)) throw new Error(tr('Tu fais déjà partie de cette ligue.'));
+  if (l.members.length >= LEAGUE_MAX_MEMBERS) throw new Error(tr('Cette ligue est complète ({n} joueurs).', { n: LEAGUE_MAX_MEMBERS }));
   await publishRank();
   await F.updateDoc(leagueRef(code), { members: F.arrayUnion(cloud.user.uid) });
   await loadMyLeagues({ force: true });
@@ -697,7 +698,7 @@ export async function deleteAccount() {
   if (!user || Date.now() - lastLogin > 4 * 60_000) {
     await A.signOut(auth);
     cloud.user = null;
-    throw new Error('Par sécurité, reconnecte-toi puis relance la suppression (Profil → Réglages).');
+    throw new Error(tr('Par sécurité, reconnecte-toi puis relance la suppression (Profil → Réglages).'));
   }
   const uid = user.uid;
   clearTimeout(pushTimer);

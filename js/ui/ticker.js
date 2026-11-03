@@ -6,7 +6,8 @@ import { realNow } from '../store.js';
 import { matchStatus } from '../services/matchInfo.js';
 import { headlines, news } from '../services/news.js';
 import { loadResults, mergeResults, results } from '../services/results.js';
-import { finishPhrase } from '../seo/pages.js';
+import { finishText } from './resultText.js';
+import { lang, t as tr } from '../i18n.js';
 
 const DAY = 24 * 3600 * 1000;
 const last = (name) => String(name).split(/\s+/).filter((w) => !/^(jr|sr)\.?$/i.test(w)).pop();
@@ -27,15 +28,16 @@ export function tickerItems(s) {
     .filter((m) => t - m.startsAt < 2 * DAY).slice(0, 8);
   for (const m of done) {
     const [w, l] = m.outcome === '2' ? [m.away, m.home] : [m.home, m.away];
-    const how = finishPhrase(m.score);
-    items.push({ kind: 'result', href: '#matchs', text: m.outcome === 'X' ? `${m.home.name} – ${m.away.name} : match nul` : `${w.name} bat ${last(l.name)}${how ? ` ${how}` : ''}` });
+    const how = finishText(m.score);
+    items.push({ kind: 'result', href: '#matchs', text: m.outcome === 'X' ? `${m.home.name} – ${m.away.name} : ${tr('match nul')}` : `${tr('{w} bat {l}', { w: w.name, l: last(l.name) })}${how ? ` ${how}` : ''}` });
   }
 
-  for (const a of headlines(news.items, 4)) items.push({ kind: 'news', href: a.link, text: a.title, external: true });
+  // Les actus viennent de sources françaises : seulement pour les joueurs en français.
+  if (lang === 'fr') for (const a of headlines(news.items, 4)) items.push({ kind: 'news', href: a.link, text: a.title, external: true });
   return items;
 }
 
-const LABEL = { live: 'En direct', result: 'Résultat', news: 'Actu' };
+const LABEL = { live: tr('En direct'), result: tr('Résultat'), news: tr('Actu') };
 
 export function tickerHtml(s) {
   const items = tickerItems(s);
@@ -47,6 +49,6 @@ export function tickerHtml(s) {
   // Contenu doublé : le défilement boucle sans trou. Vitesse constante (≈ 70 px/s) quelle que soit la longueur.
   const secs = Math.max(30, Math.round(items.reduce((n, i) => n + i.text.length + 12, 0) * 0.13));
   return `
-    <div class="tk-flag">Dernière minute</div>
+    <div class="tk-flag">${tr('Dernière minute')}</div>
     <div class="tk-window"><div class="tk-track" style="--tk-dur:${secs}s">${row}<i class="tk-sep" aria-hidden="true">◆</i><span class="tk-copy" aria-hidden="true">${row}<i class="tk-sep">◆</i></span></div></div>`;
 }

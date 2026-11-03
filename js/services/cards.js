@@ -5,6 +5,7 @@ import { getState, update } from '../store.js';
 import { currentPlayer } from './players.js';
 import { CARDS } from '../data/cards.js';
 import { nextMidnight, seeded, dayKey } from './progress.js';
+import { locale, t as tr } from '../i18n.js';
 
 export { CARDS };
 // Anciennes cartes (avant BeltChase) : plus vendues, mais toujours lisibles pour ceux qui les ont.
@@ -12,7 +13,7 @@ export const cardById = (id) => CARDS.find((c) => c.id === id) || null;
 
 // Collections : une par sport (clubs, sélections et féminines confondus).
 const SPORT_NAMES = {
-  mma: 'MMA', boxing: 'Boxe', kickboxing: 'Kick & Muay Thaï', bjj: 'JJB & Grappling', wrestling: 'Lutte',
+  mma: 'MMA', boxing: tr('Boxe'), kickboxing: tr('Kick & Muay Thaï'), bjj: tr('JJB & Grappling'), wrestling: tr('Lutte'),
 };
 export const CARD_SETS = Object.entries(SPORT_NAMES)
   .filter(([id]) => CARDS.some((c) => c.sport === id))
@@ -84,18 +85,18 @@ function giveCard(me, card) {
     const reward = setReward(card.sport);
     me.setRewards[card.sport] = Date.now();
     me.balance += reward;
-    me.inbox.push({ type: 'reward', amount: reward, text: `Collection ${setById(card.sport)?.name} complète ! +${reward.toLocaleString('fr-FR')} Gold` });
+    me.inbox.push({ type: 'reward', amount: reward, text: tr('Collection {s} complète ! +{n} Gold', { s: setById(card.sport)?.name, n: reward.toLocaleString(locale) }) });
   }
 }
 
 export function buyCard(id) {
   const card = cardById(id);
   const p = currentPlayer(getState());
-  if (!card || !p) throw new Error('Carte introuvable.');
-  if (hasCard(p, id)) throw new Error('Tu l\'as déjà.');
+  if (!card || !p) throw new Error(tr('Carte introuvable.'));
+  if (hasCard(p, id)) throw new Error(tr('Tu l\'as déjà.'));
   const price = cardPrice(id, p);
-  if (price == null) throw new Error('Cette carte n\'est plus dans ta boutique du jour.');
-  if (p.balance < price) throw new Error(`Il te manque ${(price - p.balance).toLocaleString('fr-FR')} Gold.`);
+  if (price == null) throw new Error(tr('Cette carte n\'est plus dans ta boutique du jour.'));
+  if (p.balance < price) throw new Error(tr('Il te manque {n} Gold.', { n: (price - p.balance).toLocaleString(locale) }));
   update((s) => {
     const me = currentPlayer(s);
     me.balance -= price;
@@ -114,9 +115,9 @@ export function packsLeft(p, t = Date.now()) {
 // → [{ card, duplicate, refund }]
 export function openPack(rand = Math.random) {
   const p = currentPlayer(getState());
-  if (!p) throw new Error('Joueur introuvable.');
-  if (!packsLeft(p)) throw new Error('Plus de pochette aujourd\'hui : prends une Recharge pochettes dans les Boosts, ou reviens demain !');
-  if (p.balance < PACK.price) throw new Error(`Il te manque ${(PACK.price - p.balance).toLocaleString('fr-FR')} Gold.`);
+  if (!p) throw new Error(tr('Joueur introuvable.'));
+  if (!packsLeft(p)) throw new Error(tr('Plus de pochette aujourd\'hui : prends une Recharge pochettes dans les Boosts, ou reviens demain !'));
+  if (p.balance < PACK.price) throw new Error(tr('Il te manque {n} Gold.', { n: (PACK.price - p.balance).toLocaleString(locale) }));
   const picks = [];
   for (let i = 0; i < PACK.size; i++) {
     const list = CARDS.filter((c) => !picks.includes(c));

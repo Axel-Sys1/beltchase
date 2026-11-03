@@ -27,18 +27,20 @@ import { legalLinks } from './screens/legal.js';
 import { isGuest } from '../services/cloud.js';
 import { renderLocked } from './screens/onboarding.js';
 import { renderAdmin } from './screens/admin.js';
+import { t } from '../i18n.js';
+import { langPicker } from './langPicker.js';
 
 const ROUTES = [
-  { id: 'matchs', label: 'Combats', icon: 'ball', render: renderMatches },
-  { id: 'actus', label: 'Actus', icon: 'news', render: renderNews },
+  { id: 'matchs', label: t('Combats'), icon: 'ball', render: renderMatches },
+  { id: 'actus', label: t('Actus'), icon: 'news', render: renderNews },
   // Le panier est en haut de « Mes paris » ; #panier (anciens liens) y mène aussi.
-  { id: 'paris', label: 'Mes paris', icon: 'ticket', render: renderMyBets },
-  { id: 'panier', label: 'Mes paris', icon: 'ticket', render: renderMyBets, hidden: true },
-  { id: 'boutique', label: 'Boutique', icon: 'bag', render: renderShop, account: true },
-  { id: 'classement', label: 'Rangs', icon: 'trophy', render: renderRanking, account: true },
-  { id: 'profil', label: 'Profil', icon: 'user', render: renderProfile, account: true },
+  { id: 'paris', label: t('Mes paris'), icon: 'ticket', render: renderMyBets },
+  { id: 'panier', label: t('Mes paris'), icon: 'ticket', render: renderMyBets, hidden: true },
+  { id: 'boutique', label: t('Boutique'), icon: 'bag', render: renderShop, account: true },
+  { id: 'classement', label: t('Rangs'), icon: 'trophy', render: renderRanking, account: true },
+  { id: 'profil', label: t('Profil'), icon: 'user', render: renderProfile, account: true },
   { id: 'admin', label: 'Admin', icon: 'crown', render: renderAdmin, hidden: true },
-  { id: 'combattant', label: 'Combattant', icon: 'user', render: renderFighter, hidden: true }, // #combattant/<id ESPN>
+  { id: 'combattant', label: t('Combattant'), icon: 'user', render: renderFighter, hidden: true }, // #combattant/<id ESPN>
 ];
 
 const isBetsRoute = (route) => route.id === 'paris' || route.id === 'panier';
@@ -60,18 +62,18 @@ let liveSig = '';
 const shellHtml = () => `
   <header class="topbar">
     <div class="topbar-inner">
-      <a class="logo" href="#matchs" aria-label="BeltChase, accueil">${eventLogo()}<span>BELT<b>CHASE</b></span></a>
-      <nav class="nav-top" id="nav-top" aria-label="Navigation principale"></nav>
+      <a class="logo" href="#matchs" aria-label="${t('BeltChase, accueil')}">${eventLogo()}<span>BELT<b>CHASE</b></span></a>
+      <nav class="nav-top" id="nav-top" aria-label="${t('Navigation principale')}"></nav>
       <div class="top-right">
-        <a class="level-chip" id="level-chip" href="#profil" aria-label="Niveau"><b>1</b><i><span></span></i></a>
+        <a class="level-chip" id="level-chip" href="#profil" aria-label="${t('Niveau')}"><b>1</b><i><span></span></i></a>
         <button class="bonus-btn" id="bonus-btn" data-action="claim-bonus" type="button">${icons.gift}<span class="bonus-dot"></span></button>
         <div class="balance" id="balance" aria-live="polite">
           ${coin()}<span id="balance-value">0</span>
         </div>
       </div>
     </div>
-    <div class="freebar">${eventTag()}Jeu gratuit, sans argent réel<span class="hide-sm"> · Le Gold n'a aucune valeur monétaire</span></div>
-    <div class="ticker" id="ticker" aria-label="Dernière minute"></div>
+    <div class="freebar">${eventTag()}${t('Jeu gratuit, sans argent réel')}<span class="hide-sm"> · ${t("Le Gold n'a aucune valeur monétaire")}</span></div>
+    <div class="ticker" id="ticker" aria-label="${t('Dernière minute')}"></div>
   </header>
   ${eventDecor()}
   ${adSlot('top') ? `<div class="ad-band">${adSlot('top')}</div>` : ''}
@@ -79,18 +81,19 @@ const shellHtml = () => `
     <main id="content" class="content"></main>
     <div class="aside">
       ${adSlot('side')}
-      <aside id="aside" class="aside-slip" aria-label="Panier"></aside>
+      <aside id="aside" class="aside-slip" aria-label="${t('Panier')}"></aside>
     </div>
     ${adSlot('bottom')}
     <footer class="site-footer">
-      <p>Une question, un partenariat ? <a href="mailto:${CONFIG.CONTACT_EMAIL}">${CONFIG.CONTACT_EMAIL}</a></p>
+      <p>${t('Une question, un partenariat ?')} <a href="mailto:${CONFIG.CONTACT_EMAIL}">${CONFIG.CONTACT_EMAIL}</a></p>
       ${legalLinks()}
-      <p class="muted">© ${new Date().getFullYear()} BeltChase · Jeu gratuit, sans argent réel</p>
+      ${langPicker('lang-footer')}
+      <p class="muted">© ${new Date().getFullYear()} BeltChase · ${t('Jeu gratuit, sans argent réel')}</p>
     </footer>
   </div>
   <div id="slipbar"></div>
   <div id="coach"></div>
-  <nav class="nav-bottom" id="nav-bottom" aria-label="Navigation"></nav>`;
+  <nav class="nav-bottom" id="nav-bottom" aria-label="${t('Navigation')}"></nav>`;
 
 function navHtml(route, p) {
   const guest = isGuest();
@@ -105,14 +108,14 @@ function renderHeader(p) {
   const bonus = root.querySelector('#bonus-btn');
   const available = canClaimBonus(p);
   bonus.classList.toggle('available', available);
-  bonus.title = available ? `Récupérer ton bonus du jour (+${bonusFor(nextStreakDay(p))})` : 'Bonus déjà récupéré. Reviens demain !';
+  bonus.title = available ? t('Récupérer ton bonus du jour (+{n})', { n: bonusFor(nextStreakDay(p)) }) : t('Bonus déjà récupéré. Reviens demain !');
   bonus.setAttribute('aria-label', bonus.title);
   animateBalance(p);
   const lv = levelOf(p.xp);
   const chip = root.querySelector('#level-chip');
   chip.querySelector('b').textContent = lv.level;
   chip.querySelector('i span').style.width = `${Math.round(lv.progress * 100)}%`;
-  chip.title = `Niveau ${lv.level}${lv.need ? ` · ${lv.into} / ${lv.need} XP` : ''}`;
+  chip.title = `${t('Niveau {n}', { n: lv.level })}${lv.need ? ` · ${lv.into} / ${lv.need} XP` : ''}`;
   chip.classList.toggle('boosted', boostActive(p));
 }
 
@@ -139,7 +142,7 @@ function renderSlipBar(route, p) {
   bar.innerHTML = `
     <a class="slipbar" href="#paris">
       <span class="slipbar-count">${p.slip.length}</span>
-      <span class="grow">${combo ? 'matchs en combiné' : p.slip.length > 1 ? 'sélections' : 'sélection'} dans le panier</span>
+      <span class="grow">${combo ? t('combats en combiné dans le panier') : p.slip.length > 1 ? t('sélections dans le panier') : t('sélection dans le panier')}</span>
       <span class="slipbar-gain${changed ? ' roll' : ''}"><span>${fmt(potential)}</span> ${coin('coin coin-sm')}</span>
       ${icons.arrow}
     </a>`;
@@ -258,7 +261,7 @@ export function updateClocks() {
   });
   document.querySelectorAll('[data-ends]').forEach((el) => {
     const ms = Number(el.dataset.ends) - game;
-    el.textContent = ms > 0 ? `Fin dans ${countdown(ms)}` : 'Résultat imminent…';
+    el.textContent = ms > 0 ? t('Fin dans {d}', { d: countdown(ms) }) : t('Résultat imminent…');
   });
 }
 

@@ -6,6 +6,7 @@ import { SPORTS, SPORT_ORDER, sportMeta } from '../../sports.js';
 import { METHOD_LABEL, resultText } from '../../services/markets.js';
 import { cloud, isAdmin } from '../../services/cloud.js';
 import { ui } from '../uiState.js';
+import { locale } from '../../i18n.js';
 
 // Rounds proposés par défaut selon la discipline (0 : pas de rounds, comme en JJB).
 export const DEFAULT_ROUNDS = { mma: 3, boxing: 10, kickboxing: 3, bjj: 0, wrestling: 0 };
@@ -17,7 +18,7 @@ export const toLocalInput = (ts) => {
   const d = new Date(ts);
   return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
 };
-const when = (ts) => new Date(ts).toLocaleString('fr-FR', { weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
+const when = (ts) => new Date(ts).toLocaleString(locale, { weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
 
 function fightForm(events) {
   const e = ui.adminEdit;

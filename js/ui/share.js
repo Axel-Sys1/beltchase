@@ -4,6 +4,7 @@ import { betsOf } from '../services/bets.js';
 import { outcomeLabel } from '../services/matchInfo.js';
 import { getState } from '../store.js';
 import { fmt, fmtOdds } from '../util.js';
+import { t, tParts } from '../i18n.js';
 
 const SITE = 'beltchase.com';
 const C = { bg: '#08122a', bg2: '#0f1f40', line: '#20365f', text: '#edf2fb', muted: '#8a9abb', accent: '#f2b630', green: '#3ddc84', red: '#ff4d63' };
@@ -38,11 +39,11 @@ async function drawBet(b) {
   // Logo.
   ctx.textBaseline = 'alphabetic';
   ctx.font = `italic 800 72px ${DISPLAY}`;
-  ctx.fillStyle = C.text; ctx.fillText('GOAL', 80, 150);
-  ctx.fillStyle = C.accent; ctx.fillText('ZZ', 80 + ctx.measureText('GOAL').width, 150);
+  ctx.fillStyle = C.text; ctx.fillText('BELT', 80, 150);
+  ctx.fillStyle = C.accent; ctx.fillText('CHASE', 80 + ctx.measureText('BELT').width, 150);
 
   // Bandeau d'état.
-  const status = { won: ['PARI GAGNÉ', C.green], lost: ['PARI PERDU', C.red], void: ['REMBOURSÉ', C.muted], pending: [b.live ? 'MON PRONO EN DIRECT' : 'MON PRONO', C.accent] }[b.status];
+  const status = { won: [t('PARI GAGNÉ'), C.green], lost: [t('PARI PERDU'), C.red], void: [t('REMBOURSÉ'), C.muted], pending: [b.live ? t('MON PRONO EN DIRECT') : t('MON PRONO'), C.accent] }[b.status];
   ctx.font = `800 40px ${DISPLAY}`;
   const tagW = ctx.measureText(status[0]).width + 48;
   ctx.fillStyle = status[1]; ctx.beginPath(); ctx.roundRect(80, 200, tagW, 64, 12); ctx.fill();
@@ -57,8 +58,8 @@ async function drawBet(b) {
     ctx.fillStyle = C.bg2; ctx.strokeStyle = C.line; ctx.lineWidth = 3;
     ctx.beginPath(); ctx.roundRect(80, y, W - 160, legs.length > 1 ? 150 : 230, 20); ctx.fill(); ctx.stroke();
     ctx.fillStyle = C.muted;
-    fit(ctx, m.competition, W - 240, 30, 600, BODY);
-    ctx.fillText(m.competition, 112, y + 50);
+    fit(ctx, tParts(m.competition), W - 240, 30, 600, BODY);
+    ctx.fillText(tParts(m.competition), 112, y + 50);
     ctx.fillStyle = C.text;
     const teams = `${m.home.name} – ${m.away.name}`;
     fit(ctx, teams, W - 240, legs.length > 1 ? 44 : 58, 800, DISPLAY, 'italic');
@@ -71,16 +72,16 @@ async function drawBet(b) {
   }
   if (legs.length > shown.length) {
     ctx.fillStyle = C.muted; ctx.font = `600 32px ${BODY}`;
-    ctx.fillText(`+ ${legs.length - shown.length} autre${legs.length - shown.length > 1 ? 's' : ''} combat${legs.length - shown.length > 1 ? 's' : ''}`, 112, y + 30);
+    ctx.fillText(t(legs.length - shown.length > 1 ? '+ {n} autres combats' : '+ {n} autre combat', { n: legs.length - shown.length }), 112, y + 30);
   }
 
   // Chiffres en bas.
   const odds = b.finalOdds || b.odds;
   const gain = b.status === 'won' ? `+${fmt(b.payout)}` : fmt(b.potential);
   const cols = [
-    [b.legs ? `Combiné ${legs.length} combats` : 'Cote', fmtOdds(odds), C.text],
-    ['Mise', `${fmt(b.stake)} G`, C.text],
-    [b.status === 'won' ? 'Gain' : 'Gain potentiel', `${gain} G`, b.status === 'won' ? C.green : C.accent],
+    [b.legs ? `${t('Combiné')} · ${t('{n} combats', { n: legs.length })}` : t('Cote'), fmtOdds(odds), C.text],
+    [t('Mise'), `${fmt(b.stake)} G`, C.text],
+    [b.status === 'won' ? t('Gain') : t('Gain potentiel'), `${gain} G`, b.status === 'won' ? C.green : C.accent],
   ];
   cols.forEach(([label, value, color], i) => {
     const x = 80 + i * 320;
@@ -89,7 +90,7 @@ async function drawBet(b) {
   });
 
   ctx.fillStyle = C.muted; ctx.font = `600 28px ${BODY}`;
-  ctx.fillText(`Joue gratuitement sur ${SITE} · sans argent réel`, 80, 1040);
+  ctx.fillText(t('Joue gratuitement sur {s} · sans argent réel', { s: SITE }), 80, 1040);
 
   return new Promise((resolve) => c.toBlob(resolve, 'image/png'));
 }
@@ -98,12 +99,12 @@ async function drawBet(b) {
 export async function shareBet(id) {
   const s = getState();
   const b = betsOf(s.currentPlayerId, s).find((x) => x.id === id);
-  if (!b) throw new Error('Pari introuvable.');
+  if (!b) throw new Error(t('Pari introuvable.'));
   const blob = await drawBet(b);
   const file = new File([blob], 'mon-pari-beltchase.png', { type: 'image/png' });
   const text = b.status === 'won'
-    ? `Pari gagné sur BeltChase : +${fmt(b.payout)} Gold ! Viens me défier : https://${SITE}`
-    : `Mon prono sur BeltChase, tu suis ? https://${SITE}`;
+    ? t('Pari gagné sur BeltChase : +{n} Gold ! Viens me défier : {url}', { n: fmt(b.payout), url: `https://${SITE}` })
+    : t('Mon prono sur BeltChase, tu suis ? {url}', { url: `https://${SITE}` });
   if (navigator.canShare?.({ files: [file] })) {
     try {
       await navigator.share({ files: [file], text });

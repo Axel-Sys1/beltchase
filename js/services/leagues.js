@@ -5,10 +5,11 @@ import { getState, update } from '../store.js';
 import { leagueCode } from '../util.js';
 import { checkBadges } from './badges.js';
 import { currentPlayer } from './players.js';
+import { t } from '../i18n.js';
 
 export function createLeague(rawName) {
   const name = String(rawName || '').trim();
-  if (name.length < 3 || name.length > 24) throw new Error('Le nom de la ligue doit faire entre 3 et 24 caractères.');
+  if (name.length < 3 || name.length > 24) throw new Error(t('Le nom de la ligue doit faire entre 3 et 24 caractères.'));
   const p = currentPlayer();
   return update((s) => {
     let code;
@@ -25,8 +26,8 @@ export function joinLeague(rawCode) {
   const code = String(rawCode || '').trim().toUpperCase().replace(/[^A-Z0-9]/g, '');
   const p = currentPlayer();
   const league = getState().leagues[code];
-  if (!league) throw new Error('Aucune ligue trouvée avec ce code.');
-  if (league.members.includes(p.id)) throw new Error('Tu fais déjà partie de cette ligue.');
+  if (!league) throw new Error(t('Aucune ligue trouvée avec ce code.'));
+  if (league.members.includes(p.id)) throw new Error(t('Tu fais déjà partie de cette ligue.'));
   update((s) => { s.leagues[code].members.push(p.id); });
   return league.name;
 }

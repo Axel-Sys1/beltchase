@@ -28,6 +28,7 @@ import { readFights } from '../providers/beltchase.js';
 import { saveFight, deleteFight } from '../services/cloud.js';
 import { uid } from '../util.js';
 import { loadNews } from '../services/news.js';
+import { locale, setLang, t } from '../i18n.js';
 
 // ─── Page admin : combats saisis à la main ───────────────────────────────────
 async function loadAdminFights() {
@@ -60,11 +61,11 @@ const actions = {
 
   'claim-bonus': () => claimBonus(),
   'watch-ad': async () => {
-    if (!adsLeft(currentPlayer())) throw new Error('Plus de bonus vidéo aujourd\'hui. Reviens demain !');
+    if (!adsLeft(currentPlayer())) throw new Error(t("Plus de bonus vidéo aujourd'hui. Reviens demain !"));
     const result = await watchRewardAd();
     if (result === 'viewed') rewardAdWatched();
-    else if (result === 'dismissed') toast('Vidéo fermée avant la fin : pas de Gold cette fois.', 'info');
-    else if (result === 'unavailable') toast('Aucune vidéo disponible pour le moment. Réessaie dans quelques minutes.', 'info');
+    else if (result === 'dismissed') toast(t('Vidéo fermée avant la fin : pas de Gold cette fois.'), 'info');
+    else if (result === 'unavailable') toast(t('Aucune vidéo disponible pour le moment. Réessaie dans quelques minutes.'), 'info');
   },
 
   'profile-tab': (el) => { ui.profileTab = el.dataset.tab === 'settings' ? 'settings' : 'stats'; render(); },
@@ -79,14 +80,14 @@ const actions = {
   },
   'delete-account': async () => {
     const ok = await confirmDialog({
-      title: 'Supprimer ton compte ?',
-      message: 'Ton compte, ta partie en ligne, ta place dans les classements et tes ligues seront effacés définitivement. C\'est irréversible.',
-      confirmLabel: 'Supprimer définitivement',
+      title: t('Supprimer ton compte ?'),
+      message: t("Ton compte, ta partie en ligne, ta place dans les classements et tes ligues seront effacés définitivement. C'est irréversible."),
+      confirmLabel: t('Supprimer définitivement'),
       danger: true,
     });
     if (!ok) return;
     await deleteAccount();
-    toast('Ton compte a été supprimé.', 'info');
+    toast(t('Ton compte a été supprimé.'), 'info');
     location.hash = '';
     location.reload();
   },
@@ -105,18 +106,18 @@ const actions = {
     await afterAdminWrite();
   },
   'cookie-settings': () => {
-    if (!openCookieSettings()) toast('Aucun cookie publicitaire pour le moment : BeltChase garde seulement ta partie et ta connexion, indispensables au jeu.', 'info');
+    if (!openCookieSettings()) toast(t('Aucun cookie publicitaire pour le moment : BeltChase garde seulement ta partie et ta connexion, indispensables au jeu.'), 'info');
   },
   'email-open': () => { ui.emailOpen = !ui.emailOpen; render(); if (ui.emailOpen) document.getElementById('email-input')?.focus(); },
   'cloud-reset': async () => {
     const email = await resetPassword(document.getElementById('email-input')?.value);
-    toast(`Si un compte existe pour ${email}, un email pour changer ton mot de passe vient de partir. Pense aux spams.`, 'info');
+    toast(t('Si un compte existe pour {e}, un email pour changer ton mot de passe vient de partir. Pense aux spams.', { e: email }), 'info');
   },
   'cloud-logout': async () => {
     const ok = await confirmDialog({
-      title: 'Se déconnecter ?',
-      message: 'Ta partie reste sauvegardée sur ton compte. Elle sera retirée de cet appareil.',
-      confirmLabel: 'Se déconnecter',
+      title: t('Se déconnecter ?'),
+      message: t('Ta partie reste sauvegardée sur ton compte. Elle sera retirée de cet appareil.'),
+      confirmLabel: t('Se déconnecter'),
     });
     if (!ok) return;
     await signOutCloud();
@@ -131,7 +132,7 @@ const actions = {
     const target = document.querySelector('.signup-first') || document.getElementById('pseudo-input');
     target?.scrollIntoView({ behavior: 'smooth', block: 'center' });
     if (target?.id === 'pseudo-input') target.focus({ preventScroll: true });
-    toast(match ? 'Crée ton compte : ta cote ira directement dans ton panier.' : 'Crée ton compte pour parier.', 'info');
+    toast(match ? t('Crée ton compte : ta cote ira directement dans ton panier.') : t('Crée ton compte pour parier.'), 'info');
   },
   pick: (el) => {
     const { match, outcome } = el.dataset;
@@ -161,7 +162,7 @@ const actions = {
   },
   'refresh-real': async () => {
     await refreshReal();
-    toast('Vrais combats actualisés', 'info');
+    toast(t('Vrais combats actualisés'), 'info');
   },
 
   'slip-remove': (el) => removeSelection(el.dataset.match),
@@ -183,7 +184,7 @@ const actions = {
     try { n = placeSlip(); } finally { lists.forEach((l) => l.classList.remove('sending')); }
     betStamp({ count: n, combo });
     play('place');
-    toast(combo ? 'Combiné validé. Bonne chance !' : n > 1 ? `${n} paris validés. Bonne chance !` : 'Pari validé. Bonne chance !', 'success');
+    toast(combo ? t('Combiné validé. Bonne chance !') : n > 1 ? t('{n} paris validés. Bonne chance !', { n }) : t('Pari validé. Bonne chance !'), 'success');
   },
 
   'bets-tab': (el) => { ui.betsTab = el.dataset.tab; render(); },
@@ -191,13 +192,13 @@ const actions = {
   'shop-buy': (el) => {
     const item = buyItem(el.dataset.id);
     play('bonus');
-    toast(item.packs ? `+${item.packs} pochettes pour aujourd'hui !` : item.kind === 'boost' ? `Boost activé : XP ×2 pendant ${item.hours >= 48 ? `${item.hours / 24} jours` : `${item.hours} h`} !` : `${item.name} : acheté et équipé !`, 'success');
+    toast(item.packs ? t("+{n} pochettes pour aujourd'hui !", { n: item.packs }) : item.kind === 'boost' ? t('Boost activé : XP ×2 pendant {d} !', { d: item.hours >= 48 ? t('{n} jours', { n: item.hours / 24 }) : `${item.hours} h` }) : t('{name} : acheté et équipé !', { name: item.name }), 'success');
   },
   'shop-equip': (el) => equipItem(el.dataset.id),
   'card-buy': (el) => {
     const card = buyCard(el.dataset.id);
     play('bonus');
-    toast(`${card.name} rejoint ton album !`, 'success');
+    toast(t('{name} rejoint ton album !', { name: card.name }), 'success');
   },
   'pack-open': () => {
     const results = openPack();
@@ -216,23 +217,23 @@ const actions = {
   'share-referral': async () => {
     const p = currentPlayer();
     const url = referralLink(p.pseudo);
-    const text = `Rejoins-moi sur BeltChase, le jeu de pronos gratuit : on gagne ${REWARD} Gold chacun avec mon lien !`;
+    const text = t('Rejoins-moi sur BeltChase, le jeu de pronos gratuit : on gagne {n} Gold chacun avec mon lien !', { n: REWARD });
     if (navigator.share) {
       try { await navigator.share({ title: 'BeltChase', text, url }); return; } catch (err) { if (err?.name === 'AbortError') return; }
     }
     await navigator.clipboard.writeText(`${text} ${url}`);
-    toast('Lien copié : colle-le à tes potes !', 'success');
+    toast(t('Lien copié : colle-le à tes potes !'), 'success');
   },
   'share-bet': async (el) => {
     el.disabled = true;
     try {
       const res = await shareBet(el.dataset.id);
-      if (res === 'downloaded') toast('Image enregistrée : envoie-la à tes potes !', 'success');
+      if (res === 'downloaded') toast(t('Image enregistrée : envoie-la à tes potes !'), 'success');
     } finally { el.disabled = false; }
   },
   'fast-forward': async () => {
     await fastForward();
-    toast(`+${CONFIG.FAST_FORWARD_MIN} minutes pour les combats éclair`, 'info');
+    toast(t('+{n} minutes pour les combats éclair', { n: CONFIG.FAST_FORWARD_MIN }), 'info');
   },
 
   'rank-tab': (el) => { ui.rankTab = el.dataset.tab; render(); },
@@ -247,7 +248,7 @@ const actions = {
     await loadDivision(playerRR(s.currentPlayerId, s), { force: true });
   },
   'league-leave': async (el) => {
-    const ok = await confirmDialog({ title: 'Quitter cette ligue ?', message: 'Tu pourras la rejoindre à nouveau avec son code.', confirmLabel: 'Quitter', danger: true });
+    const ok = await confirmDialog({ title: t('Quitter cette ligue ?'), message: t('Tu pourras la rejoindre à nouveau avec son code.'), confirmLabel: t('Quitter'), danger: true });
     if (!ok) return;
     if (cloud.user) await leaveOnlineLeague(el.dataset.code);
     else leaveLeague(el.dataset.code);
@@ -255,23 +256,23 @@ const actions = {
   'leagues-refresh': () => loadMyLeagues({ force: true }),
   'league-invite': async (el) => {
     const res = await shareLeague(el.dataset.code, el.dataset.name);
-    if (res === 'copied') toast('Lien d\'invitation copié : colle-le dans WhatsApp, Discord ou Snap !', 'success');
+    if (res === 'copied') toast(t("Lien d'invitation copié : colle-le dans WhatsApp, Discord ou Snap !"), 'success');
   },
   'copy-code': async (el) => {
     const code = el.dataset.code;
     try {
       await navigator.clipboard.writeText(code);
-      toast(`Code ${code} copié ! Partage-le avec tes amis.`, 'success');
+      toast(t('Code {c} copié ! Partage-le avec tes amis.', { c: code }), 'success');
     } catch {
-      toast(`Code de la ligue : ${code}`, 'info');
+      toast(t('Code de la ligue : {c}', { c: code }), 'info');
     }
   },
 
   'reset-app': async () => {
     const ok = await confirmDialog({
-      title: 'Réinitialiser BeltChase ?',
-      message: 'Tous les joueurs, paris et ligues de cet appareil seront effacés.',
-      confirmLabel: 'Tout effacer',
+      title: t('Réinitialiser BeltChase ?'),
+      message: t('Tous les joueurs, paris et ligues de cet appareil seront effacés.'),
+      confirmLabel: t('Tout effacer'),
       danger: true,
     });
     if (!ok) return;
@@ -327,7 +328,7 @@ const forms = {
   },
   referral: async (data) => {
     const name = await applyReferral(data.get('pseudo'));
-    toast(`Parrain enregistré : ${name}. +${REWARD} Gold !`, 'success');
+    toast(t('Parrain enregistré : {name}. +{n} Gold !', { name, n: REWARD }), 'success');
   },
   register: async (data) => {
     await register(data.get('pseudo'));
@@ -340,9 +341,9 @@ const forms = {
     const pseudo = String(data.get('pseudo') || '').trim();
     if (!free) {
       const ok = await confirmDialog({
-        title: 'Changer de pseudo ?',
-        message: `Ton pseudo deviendra « ${pseudo} » pour ${CONFIG.RENAME_COST.toLocaleString('fr-FR')} Gold.`,
-        confirmLabel: 'Payer et changer',
+        title: t('Changer de pseudo ?'),
+        message: t('Ton pseudo deviendra « {p} » pour {n} Gold.', { p: pseudo, n: CONFIG.RENAME_COST.toLocaleString(locale) }),
+        confirmLabel: t('Payer et changer'),
       });
       if (!ok) return;
     }
@@ -351,15 +352,15 @@ const forms = {
     cloud.pseudoBanned = false;
     form.reset();
     render();
-    toast(free ? 'Pseudo changé !' : `Pseudo changé (−${CONFIG.RENAME_COST.toLocaleString('fr-FR')} Gold)`, 'success');
+    toast(free ? t('Pseudo changé !') : t('Pseudo changé (−{n} Gold)', { n: CONFIG.RENAME_COST.toLocaleString(locale) }), 'success');
   },
   'cloud-auth': async (data, form) => {
     const btn = form.querySelector('button[type="submit"]');
     const label = btn?.textContent;
-    if (btn) { btn.disabled = true; btn.textContent = 'Connexion…'; }
+    if (btn) { btn.disabled = true; btn.textContent = t('Connexion…'); }
     try {
       await signInWithEmail(data.get('email'), data.get('password'), cloud.mode);
-      toast(cloud.mode === 'signup' ? 'Compte créé ! Ta partie est sauvegardée en ligne.' : 'Connecté ! Ta partie est récupérée.', 'success');
+      toast(cloud.mode === 'signup' ? t('Compte créé ! Ta partie est sauvegardée en ligne.') : t('Connecté ! Ta partie est récupérée.'), 'success');
     } finally {
       if (btn && btn.isConnected) { btn.disabled = false; btn.textContent = label; }
     }
@@ -374,12 +375,12 @@ const forms = {
       code = createLeague(data.get('name'));
     }
     form.reset();
-    toast(`Ligue créée ! Code à partager : ${code}`, 'success');
+    toast(t('Ligue créée ! Code à partager : {c}', { c: code }), 'success');
   },
   'league-join': async (data, form) => {
     const name = cloud.user ? await joinOnlineLeague(data.get('code')) : joinLeague(data.get('code'));
     form.reset();
-    toast(`Bienvenue dans « ${name} » !`, 'success');
+    toast(t('Bienvenue dans « {name} » !', { name }), 'success');
   },
 };
 
@@ -391,13 +392,13 @@ const ACCOUNT_ONLY = new Set([
 function needsAccount(name) {
   if (!ACCOUNT_ONLY.has(name) || !isGuest()) return false;
   cloud.mode = 'signup';
-  toast('Crée ton compte gratuit pour débloquer ça. Tes paris et tes Gold te suivent.', 'info');
+  toast(t('Crée ton compte gratuit pour débloquer ça. Tes paris et tes Gold te suivent.'), 'info');
   go('profil');
   return true;
 }
 
 async function safely(fn) {
-  try { await fn(); } catch (err) { toast(err.message || 'Oups, une erreur est survenue.', 'error'); }
+  try { await fn(); } catch (err) { toast(err.message || t('Oups, une erreur est survenue.'), 'error'); }
 }
 
 export function bindEvents() {
@@ -422,6 +423,10 @@ export function bindEvents() {
     e.preventDefault();
     const fn = forms[form.dataset.form];
     if (fn && !needsAccount(form.dataset.form)) safely(() => fn(new FormData(form), form));
+  });
+
+  document.addEventListener('change', (e) => {
+    if (e.target.matches?.('select[data-lang-select]')) setLang(e.target.value);
   });
 
   document.addEventListener('input', (e) => {

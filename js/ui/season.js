@@ -1,6 +1,7 @@
 // Habillage saisonnier (CONFIG.EVENTS) : logo, mention dans la barre du haut et décor animé.
 // L'événement actif est posé sur <html data-event="…"> au démarrage (main.js) ; les couleurs sont
 // dans styles.css (:root[data-event="…"]).
+import { t as tr } from '../i18n.js';
 import { CONFIG } from '../config.js';
 import { baubleLogo, beltLogo, pumpkinLogo } from './icons.js';
 
@@ -26,7 +27,7 @@ export function eventLogo() {
 export function eventTag({ short = false } = {}) {
   const e = event();
   if (!e) return '';
-  return short ? ` · ${e.emoji} spécial ${e.name}` : `${e.emoji} Spécial ${e.name} · `;
+  return short ? ` · ${e.emoji} ${tr('spécial {name}', { name: tr(e.name) })}` : `${e.emoji} ${tr('Spécial {name}', { name: tr(e.name) })} · `;
 }
 
 // Flocons de neige : positions et vitesses fixes (pas d'aléatoire, même rendu à chaque fois).

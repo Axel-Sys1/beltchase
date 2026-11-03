@@ -1,6 +1,7 @@
 // Affichage d'une pub récompensée. Vraie pub Google (« H5 Games Ads ») quand elle est activée sur le
 // site validé, sinon pub simulée : un encart et un compte à rebours. Rend 'viewed' (pub vue jusqu'au
 // bout), 'dismissed' (fermée avant la fin) ou 'unavailable' (aucune pub à montrer).
+import { t } from '../i18n.js';
 import { CONFIG } from '../config.js';
 import { fmt } from '../util.js';
 import { coin } from './icons.js';
@@ -38,13 +39,13 @@ function simulatedAd() {
     ov.className = 'dialog-overlay';
     ov.innerHTML = `
       <div class="dialog reward-ad" role="dialog" aria-modal="true" aria-labelledby="reward-ad-title">
-        <span class="ad-label">Bonus vidéo</span>
-        <div class="reward-ad-box">${coin('coin')}<strong>Ton bonus arrive</strong><small>Reste sur la page jusqu'à la fin</small></div>
+        <span class="ad-label">${t('Bonus vidéo')}</span>
+        <div class="reward-ad-box">${coin('coin')}<strong>${t('Ton bonus arrive')}</strong><small>${t("Reste sur la page jusqu'à la fin")}</small></div>
         <h2 id="reward-ad-title">+${fmt(settings().gold || 0)} Gold</h2>
         <div class="reward-ad-bar"><span></span></div>
-        <p class="muted" aria-live="polite">Récompense dans <b>${Math.ceil(total / 1000)}</b> s</p>
+        <p class="muted" aria-live="polite">${t('Récompense dans <b>{n}</b> s', { n: Math.ceil(total / 1000) })}</p>
         <div class="dialog-actions">
-          <button class="btn btn-ghost" type="button" data-choice="close">Fermer sans récompense</button>
+          <button class="btn btn-ghost" type="button" data-choice="close">${t('Fermer sans récompense')}</button>
         </div>
       </div>`;
     const bar = ov.querySelector('.reward-ad-bar span');

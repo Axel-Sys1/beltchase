@@ -2,6 +2,7 @@
 // s'illumine. 1. touche une cote · 2. valide ton pari · 3. bravo (défis, boutique). Seuls les joueurs
 // créés depuis l'ajout du parcours le voient (player.tutorial), et « Passer » l'arrête.
 import { icons } from './icons.js';
+import { t } from '../i18n.js';
 
 export function tutorialStep(p) {
   if (!p?.tutorial || p.tutorialDone) return null;
@@ -10,12 +11,12 @@ export function tutorialStep(p) {
 }
 
 const TEXT = {
-  1: ['Ton premier prono', 'Touche une cote sur un combat qui te tente : elle part dans ton panier.'],
-  2: ['Valide ton pari', 'Choisis ta mise, puis touche « Valider le pari ». Tu as 100 Gold pour commencer !'],
-  3: ['Bravo, c\'est parti ! 🎉', 'Chaque pari te fait monter de niveau. Les défis du jour rapportent des Gold, à dépenser en cartes de combattants dans la Boutique.'],
+  1: [t('Ton premier prono'), t('Touche une cote sur un combat qui te tente : elle part dans ton panier.')],
+  2: [t('Valide ton pari'), t('Choisis ta mise, puis touche « Valider le pari ». Tu as 100 Gold pour commencer !')],
+  3: [t("Bravo, c'est parti ! 🎉"), t('Chaque pari te fait monter de niveau. Les défis du jour rapportent des Gold, à dépenser en cartes de combattants dans la Boutique.')],
 };
 // Sans compte : la boutique et les défis sont verrouillés, l'étape 3 invite à créer un compte.
-const GUEST_DONE = ['Bravo, c\'est parti ! 🎉', 'Crée ton compte gratuit pour débloquer les défis du jour, les bonus, la boutique de cartes et le classement. Ton pari te suit.'];
+const GUEST_DONE = [t("Bravo, c'est parti ! 🎉"), t('Crée ton compte gratuit pour débloquer les défis du jour, les bonus, la boutique de cartes et le classement. Ton pari te suit.')];
 
 export function coachHtml(step, { guest = false } = {}) {
   if (!step) return '';
@@ -29,9 +30,9 @@ export function coachHtml(step, { guest = false } = {}) {
         ${step === 3
           ? `<button class="btn btn-ghost" data-action="coach-done" type="button">OK</button>
              ${guest
-               ? `<button class="btn btn-primary" data-action="coach-account" type="button">${icons.user} Créer mon compte</button>`
-               : `<button class="btn btn-primary" data-action="coach-shop" type="button">${icons.bag} Voir la boutique</button>`}`
-          : '<button class="link-btn" data-action="coach-done" type="button">Passer</button>'}
+               ? `<button class="btn btn-primary" data-action="coach-account" type="button">${icons.user} ${t('Créer mon compte')}</button>`
+               : `<button class="btn btn-primary" data-action="coach-shop" type="button">${icons.bag} ${t('Voir la boutique')}</button>`}`
+          : `<button class="link-btn" data-action="coach-done" type="button">${t('Passer')}</button>`}
       </div>
     </div>`;
 }

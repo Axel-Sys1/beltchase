@@ -7,6 +7,7 @@ import { sizedPhoto, withFallback } from '../providers/photos.js';
 import { fighterPhoto } from './stars.js';
 import { teamMark } from './logos.js';
 import { matchTitle } from '../services/matchInfo.js';
+import { locale } from '../i18n.js';
 
 const SUFFIX = /^(jr|sr|ii|iii|iv)\.?$/i;
 
@@ -32,7 +33,7 @@ function paletteOf(id) {
 
 const dateText = (t) => {
   const d = new Date(t);
-  return `${d.toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric', month: 'short' })} · ${d.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}`.toUpperCase();
+  return `${d.toLocaleDateString(locale, { weekday: 'short', day: 'numeric', month: 'short' })} · ${d.toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit' })}`.toUpperCase();
 };
 
 // Affiche composée d'un combat (HTML). width : largeur d'affichage, pour la taille des photos.

@@ -12,6 +12,7 @@ import { matchStatus, matchTitle } from './matchInfo.js';
 import { frenchTeamName } from '../countries.js';
 import { LIVE_SPORTS } from '../providers/liveOdds.js';
 import { isCombat } from '../sports.js';
+import { t as tr } from '../i18n.js';
 
 const HOUR = 60 * MIN;
 const RETRY_MS = 60_000;
@@ -91,7 +92,7 @@ async function syncProvider(p, force) {
 
   if (dueUpcoming) {
     if (fresh.status === 'fulfilled') { f.nextUpcoming = wall + p.refresh.upcomingMs; f.lastOk = wall; f.error = null; }
-    else { f.nextUpcoming = wall + RETRY_MS; f.error = fresh.reason?.message || 'Source indisponible'; console.warn(`[${p.id}] fetchUpcoming`, fresh.reason); }
+    else { f.nextUpcoming = wall + RETRY_MS; f.error = fresh.reason?.message || tr('Source indisponible'); console.warn(`[${p.id}] fetchUpcoming`, fresh.reason); }
   }
   if (dueResults) {
     const live = started.some((m) => m.status === 'live');
@@ -229,10 +230,10 @@ function dropStartedFromSlips(s) {
       const m = s.matches[x.matchId];
       const status = m && matchStatus(m);
       if (status === 'upcoming' || (x.live && status === 'live')) kept.push(x);
-      else if (m && x.live) p.inbox.push({ type: 'info', text: `${matchTitle(m)} est terminé : retiré de ton panier.` });
+      else if (m && x.live) p.inbox.push({ type: 'info', text: tr('{m} est terminé : retiré de ton panier.', { m: matchTitle(m) }) });
       else if (m) {
         const again = LIVE_SPORTS.has(m.sport) ? ' Tu peux le rejouer en direct.' : '';
-        p.inbox.push({ type: 'info', text: `${matchTitle(m)} a commencé : retiré de ton panier.${again}` });
+        p.inbox.push({ type: 'info', text: tr('{m} a commencé : retiré de ton panier.', { m: matchTitle(m) }) + again });
       }
     }
     p.slip = kept;

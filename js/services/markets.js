@@ -7,6 +7,7 @@
 // si la source ne donne pas la méthode, ces paris sont remboursés.
 import { sportMeta } from '../sports.js';
 import { fromProbabilities } from '../providers/odds.js';
+import { t } from '../i18n.js';
 
 export const METHOD_LABEL = { KO: 'KO/TKO', SUB: 'Soumission', DEC: 'Décision', FALL: 'Tombé' };
 export const MAX_ROUND_MARKET = 5;
@@ -88,10 +89,10 @@ export function settleKey(key, m) {
 export function marketLabel(m, key, name = (side) => (side === '1' ? m.home?.name : m.away?.name)) {
   if (marketOf(key) === 'method') {
     const [side, method] = key.split('-');
-    return `${name(side)} par ${METHOD_LABEL[method] || method}`;
+    return t('{n} par {m}', { n: name(side), m: t(METHOD_LABEL[method] || method) });
   }
-  if (key === 'DEC') return 'Va à la décision';
-  return `Arrêt au round ${key.slice(1)}`;
+  if (key === 'DEC') return t('Va à la décision');
+  return t('Arrêt au round {n}', { n: key.slice(1) });
 }
 
 // Résultat lisible : « KO/TKO · R2 », « Décision ».

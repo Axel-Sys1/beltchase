@@ -4,17 +4,19 @@ import { escapeHtml } from '../../util.js';
 import { NEWS_SPORTS, headlines, loadNews, news } from '../../services/news.js';
 import { sportMeta } from '../../sports.js';
 import { ui } from '../uiState.js';
+import { lang, t } from '../../i18n.js';
+import { locale } from '../../i18n.js';
 
 const MIN = 60 * 1000;
-function ago(t, now = Date.now()) {
-  const d = now - t;
-  if (!t || d < 0) return '';
-  if (d < 60 * MIN) return `il y a ${Math.max(1, Math.round(d / MIN))} min`;
-  if (d < 24 * 60 * MIN) return `il y a ${Math.round(d / (60 * MIN))} h`;
-  return new Date(t).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
+function ago(ts, now = Date.now()) {
+  const d = now - ts;
+  if (!ts || d < 0) return '';
+  if (d < 60 * MIN) return t('il y a {n} min', { n: Math.max(1, Math.round(d / MIN)) });
+  if (d < 24 * 60 * MIN) return t('il y a {n} h', { n: Math.round(d / (60 * MIN)) });
+  return new Date(ts).toLocaleDateString(locale, { day: 'numeric', month: 'short' });
 }
 
-const sportLabel = (id) => (id === 'amateur' ? 'Amateurs' : id ? sportMeta(id).label : '');
+const sportLabel = (id) => (id === 'amateur' ? t('Amateurs') : id ? t(sportMeta(id).label) : '');
 
 // Vignette : image du flux, sinon un fond aux couleurs de la discipline (La Sueur n'en fournit pas).
 function thumb(a) {
@@ -45,26 +47,27 @@ export function uneHtml(top) {
     <a class="une-card ${big ? 'une-main' : ''}" href="${escapeHtml(a.link)}" target="_blank" rel="noopener">
       <img src="${escapeHtml(a.image)}" alt="" loading="${big ? 'eager' : 'lazy'}" referrerpolicy="no-referrer" onerror="this.remove()">
       <span class="une-text">
-        <span class="une-badges">${big ? '<span class="une-flag">À la une</span>' : ''}${a.sport ? `<span class="news-tag">${escapeHtml(sportLabel(a.sport))}</span>` : ''}</span>
+        <span class="une-badges">${big ? `<span class="une-flag">${t('À la une')}</span>` : ''}${a.sport ? `<span class="news-tag">${escapeHtml(sportLabel(a.sport))}</span>` : ''}</span>
         <strong>${escapeHtml(a.title)}</strong>
         ${big && a.excerpt ? `<span class="une-excerpt">${escapeHtml(a.excerpt)}</span>` : ''}
         <small>${escapeHtml(a.source)} · ${escapeHtml(ago(a.date))}</small>
       </span>
     </a>`;
-  return `<section class="une" aria-label="À la une">${tile(main, true)}${rest.length ? `<div class="une-side">${rest.map((a) => tile(a, false)).join('')}</div>` : ''}</section>`;
+  return `<section class="une" aria-label="${t('À la une')}">${tile(main, true)}${rest.length ? `<div class="une-side">${rest.map((a) => tile(a, false)).join('')}</div>` : ''}</section>`;
 }
 
 // Bandeau de l'écran Combats : la grosse actu du moment, pour ceux qui viennent parier.
 export function uneBanner() {
+  if (lang !== 'fr') return ''; // actus en français : seulement dans l'onglet Actus pour les autres langues
   loadNews();
   const [a] = headlines(news.items, 1);
   if (!a) return '';
   return `
     <a class="une-banner" href="${escapeHtml(a.link)}" target="_blank" rel="noopener">
       <img src="${escapeHtml(a.image)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">
-      <span class="une-banner-text"><span class="une-flag">À la une</span><strong>${escapeHtml(a.title)}</strong></span>
+      <span class="une-banner-text"><span class="une-flag">${t('À la une')}</span><strong>${escapeHtml(a.title)}</strong></span>
     </a>
-    <a class="une-more" href="#actus">Toutes les actus →</a>`;
+    <a class="une-more" href="#actus">${t('Toutes les actus')} →</a>`;
 }
 
 export function renderNews() {
@@ -72,22 +75,22 @@ export function renderNews() {
   const sport = ui.newsSport || 'all';
   const list = news.items.filter((a) => sport === 'all' || a.sport === sport);
   const chips = NEWS_SPORTS.map((s) => `
-    <button class="chip ${s.id === sport ? 'active' : ''}" data-action="news-filter" data-sport="${s.id}" type="button">${escapeHtml(s.label)}</button>`).join('');
+    <button class="chip ${s.id === sport ? 'active' : ''}" data-action="news-filter" data-sport="${s.id}" type="button">${escapeHtml(t(s.label))}</button>`).join('');
 
   let body;
-  if (!news.items.length && news.loading) body = '<div class="empty"><p class="muted">Chargement des actus…</p></div>';
-  else if (!news.items.length) body = `<div class="empty"><p class="muted">${escapeHtml(news.error || 'Aucune actu pour le moment.')}</p><button class="btn btn-ghost" data-action="news-reload" type="button">Réessayer</button></div>`;
-  else if (!list.length) body = `<div class="empty"><p class="muted">Pas d'actu ${escapeHtml(sportLabel(sport))} en ce moment.</p></div>`;
+  if (!news.items.length && news.loading) body = `<div class="empty"><p class="muted">${t('Chargement des actus…')}</p></div>`;
+  else if (!news.items.length) body = `<div class="empty"><p class="muted">${escapeHtml(news.error || t('Aucune actu pour le moment.'))}</p><button class="btn btn-ghost" data-action="news-reload" type="button">${t('Réessayer')}</button></div>`;
+  else if (!list.length) body = `<div class="empty"><p class="muted">${t("Pas d'actu {s} en ce moment.", { s: escapeHtml(sportLabel(sport)) })}</p></div>`;
   else {
     const top = headlines(list, 3);
     const rest = list.filter((a) => !top.includes(a));
     body = `${top.length ? uneHtml(top) : card(rest.shift(), true)}
-      ${rest.length ? `<h2 class="section-title">Toutes les actus</h2><div class="news-grid">${rest.slice(0, 40).map((a) => card(a)).join('')}</div>` : ''}`;
+      ${rest.length ? `<h2 class="section-title">${t('Toutes les actus')}</h2><div class="news-grid">${rest.slice(0, 40).map((a) => card(a)).join('')}</div>` : ''}`;
   }
 
   return `
-    <h1 class="page-title">Actus</h1>
-    <div class="chips news-chips" role="toolbar" aria-label="Discipline">${chips}</div>
+    <h1 class="page-title">${t('Actus')}</h1>
+    <div class="chips news-chips" role="toolbar" aria-label="${t('Discipline')}">${chips}</div>
     ${body}
-    <p class="feed-credit">Sources : ${[...new Set(news.items.map((a) => a.source))].map(escapeHtml).join(', ') || 'RMC Sport, La Sueur'}. Chaque article s'ouvre sur le site qui l'a publié.</p>`;
+    <p class="feed-credit">${t('Sources :')} ${[...new Set(news.items.map((a) => a.source))].map(escapeHtml).join(', ') || 'RMC Sport, La Sueur'}. ${t("Chaque article s'ouvre sur le site qui l'a publié.")}${lang === 'fr' ? '' : ` ${t('Les actus sont en français.')}`}</p>`;
 }

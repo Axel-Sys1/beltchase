@@ -3,6 +3,7 @@
 // mise à jour, une annonce placée dedans serait rechargée en boucle (interdit par les régies).
 import { CONFIG } from '../config.js';
 import { escapeHtml } from '../util.js';
+import { t } from '../i18n.js';
 
 // Formats standards : petit emplacement, puis grand dès que l'emplacement fait 728 px de large.
 // Bannière et pavé ont une taille fixe (rien ne bouge quand l'annonce arrive) ; le bas de page s'adapte.
@@ -23,13 +24,13 @@ function placeholder(id) {
   const { sm, lg } = FORMATS[id];
   const { contact } = settings();
   const body = `
-      <strong>Espace publicitaire</strong>
+      <strong>${t('Espace publicitaire')}</strong>
       <small class="ad-size-sm">${sm[0]} × ${sm[1]}</small>
       <small class="ad-size-lg">${lg[0]} × ${lg[1]}</small>`;
   if (!contact) return `<div class="ad-ph">${body}</div>`;
   const newTab = !/^mailto:/i.test(contact);
   return `<a class="ad-ph" href="${escapeHtml(contact)}"${newTab ? ' target="_blank" rel="noopener"' : ''}
-    aria-label="Annoncer sur BeltChase${newTab ? ' (nouvel onglet)' : ''}">${body}</a>`;
+    aria-label="${t('Annoncer sur BeltChase')}">${body}</a>`;
 }
 
 // HTML d'un emplacement ('' si les pubs sont désactivées).
@@ -40,7 +41,7 @@ export function adSlot(id) {
   if (!live && (settings().hosts || []).includes(location.hostname)) return '';
   return `
     <div class="ad ad-${id}${live ? ' ad-live' : ''}">
-      <span class="ad-label">Publicité</span>
+      <span class="ad-label">${t('Publicité')}</span>
       <div class="ad-box"${live ? ` data-ad-unit="${id}"` : ''}>${live ? '' : placeholder(id)}</div>
     </div>`;
 }
