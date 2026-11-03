@@ -28,6 +28,13 @@
 <body>
   <!-- Page de pré-inscription, servie à la place du jeu jusqu'au lancement (functions/_middleware.js).
        Texte de secours pour les moteurs ; la page est redessinée dans la langue du visiteur (js/bientot.js). -->
+  <!-- Décor : projecteurs, octogone de la cage, étincelles (css/bientot.css, js/bientot.js). -->
+  <div class="pre-bg" aria-hidden="true">
+    <div class="pre-beam pre-beam-l"></div>
+    <div class="pre-beam pre-beam-r"></div>
+    <svg class="pre-cage" viewBox="0 0 400 400"><path d="M117 8h166l109 109v166L283 392H117L8 283V117z"/><path d="M128 36h144l92 92v144l-92 92H128l-92-92V128z"/></svg>
+    <canvas class="pre-sparks"></canvas>
+  </div>
   <main id="pre" class="pre">
     <h1>BeltChase : lancement officiel le 1er décembre</h1>
     <p>Le jeu de pronos des fans de MMA et de boxe. Pré-inscris-toi pour recevoir 1 000 Gold et le titre

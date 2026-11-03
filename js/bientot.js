@@ -336,7 +336,42 @@ root.addEventListener('click', async (e) => {
   }
 });
 
+// ---------- Décor : étincelles dorées qui montent doucement ----------
+function sparks() {
+  const cv = document.querySelector('.pre-sparks');
+  if (!cv || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const ctx = cv.getContext('2d');
+  let w = 0, h = 0, dots = [];
+  const spawn = (y) => ({ x: Math.random() * w, y: y ?? h + 10, r: 0.6 + Math.random() * 1.8, v: 0.15 + Math.random() * 0.45, d: Math.random() * 6.28, a: 0.25 + Math.random() * 0.6 });
+  const size = () => {
+    const dpr = Math.min(2, devicePixelRatio || 1);
+    w = innerWidth; h = innerHeight;
+    cv.width = w * dpr; cv.height = h * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    dots = Array.from({ length: Math.round(Math.min(90, w * h / 16000)) }, () => spawn(Math.random() * h));
+  };
+  size();
+  addEventListener('resize', size);
+  const frame = () => {
+    ctx.clearRect(0, 0, w, h);
+    for (const p of dots) {
+      p.y -= p.v; p.d += 0.01; p.x += Math.sin(p.d) * 0.25;
+      if (p.y < -10) Object.assign(p, spawn());
+      const fade = Math.min(1, p.y / (h * 0.35)); // s'éteignent en haut de l'écran
+      ctx.globalAlpha = p.a * fade;
+      ctx.fillStyle = '#ffcf5a';
+      ctx.shadowColor = '#f2b630';
+      ctx.shadowBlur = 6;
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.283); ctx.fill();
+    }
+    if (!document.hidden) requestAnimationFrame(frame);
+  };
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) requestAnimationFrame(frame); });
+  requestAnimationFrame(frame);
+}
+
 render();
+sparks();
 setInterval(tick, 1000);
 loadCount();
 loadBoard();
