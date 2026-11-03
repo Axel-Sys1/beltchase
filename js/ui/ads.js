@@ -36,6 +36,8 @@ function placeholder(id) {
 export function adSlot(id) {
   if (!settings().enabled || !FORMATS[id]) return '';
   const live = isLive(id);
+  // Sur le site en ligne sans régie configurée : rien (pas d'encart vide) ; les encarts restent en local.
+  if (!live && (settings().hosts || []).includes(location.hostname)) return '';
   return `
     <div class="ad ad-${id}${live ? ' ad-live' : ''}">
       <span class="ad-label">Publicité</span>

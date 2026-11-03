@@ -7,7 +7,11 @@ import { dayKey } from './progress.js';
 
 const settings = () => CONFIG.ADS?.rewarded || {};
 
-export const rewardAdEnabled = () => Boolean(CONFIG.ADS?.enabled && settings().enabled);
+// Sur le site en ligne, seulement avec une vraie pub Google (sinon le joueur regarderait une pub simulée) ;
+// en local, la pub simulée reste pour tester.
+const onLiveSite = () => typeof location !== 'undefined' && (CONFIG.ADS?.hosts || []).includes(location.hostname);
+export const rewardAdEnabled = () => Boolean(CONFIG.ADS?.enabled && settings().enabled
+  && (!onLiveSite() || (CONFIG.ADS.client && settings().live)));
 export const AD_GOLD = () => settings().gold || 0;
 export const AD_PER_DAY = () => settings().perDay || 0;
 
