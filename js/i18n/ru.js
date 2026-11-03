@@ -814,5 +814,8 @@ export default {
 "Classement des parrains": "Рейтинг пригласивших",
 "Seuls comptent les amis qui se pré-inscrivent avec ton lien. Partager ne suffit pas.": "Считаются только друзья, записавшиеся по твоей ссылке. Просто поделиться мало.",
 "Ton pseudo doit faire entre 2 et 16 caractères (lettres, chiffres, espaces, _ . -).": "Ник должен быть от 2 до 16 символов (буквы, цифры, пробелы, _ . -).",
-"Un ami": "Друг"
+"Un ami": "Друг",
+"Pré-inscris-toi : ton <b>pseudo réservé</b>, <b>{n} Gold</b>, le cadre et le titre exclusifs <b>Pionnier</b> au lancement.": "Запишись заранее: <b>ник зарезервирован</b>, <b>{n} Gold</b>, эксклюзивные рамка и титул <b>Первопроходец</b> при запуске.",
+"Ce pseudo est déjà réservé. Choisis-en un autre.": "Этот ник уже занят. Выбери другой.",
+"Merci d'avoir été là avant le lancement ! +{n} Gold, le cadre et le titre Pionnier.": "Спасибо, что был с нами до запуска! +{n} Gold, рамка и титул Первопроходец."
 };

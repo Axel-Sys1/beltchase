@@ -814,5 +814,8 @@ export default {
 "Classement des parrains": "Top referrers",
 "Seuls comptent les amis qui se pré-inscrivent avec ton lien. Partager ne suffit pas.": "Only friends who pre-register with your link count. Sharing isn't enough.",
 "Ton pseudo doit faire entre 2 et 16 caractères (lettres, chiffres, espaces, _ . -).": "Your username must be 2 to 16 characters (letters, numbers, spaces, _ . -).",
-"Un ami": "A friend"
+"Un ami": "A friend",
+"Pré-inscris-toi : ton <b>pseudo réservé</b>, <b>{n} Gold</b>, le cadre et le titre exclusifs <b>Pionnier</b> au lancement.": "Pre-register: your <b>reserved username</b>, <b>{n} Gold</b>, the exclusive <b>Pioneer</b> frame and title at launch.",
+"Ce pseudo est déjà réservé. Choisis-en un autre.": "This username is already reserved. Pick another one.",
+"Merci d'avoir été là avant le lancement ! +{n} Gold, le cadre et le titre Pionnier.": "Thanks for being here before launch! +{n} Gold, the Pioneer frame and title."
 };

@@ -49,6 +49,7 @@ export const ITEMS = [
   { id: 'frame-diamond', kind: 'frame', rarity: 'legendaire', name: t('Diamant'), level: 50 },
   { id: 'frame-legend', kind: 'frame', rarity: 'mythique', name: t('Légende'), level: 80 },
   { id: 'frame-champion', kind: 'frame', rarity: 'exclusif', name: t('Champion'), exclusive: t('Top 3 d\'une saison') },
+  { id: 'frame-pionnier', kind: 'frame', rarity: 'exclusif', name: t('Pionnier'), exclusive: t('Pré-inscrit avant le lancement') },
   // Titres
   { id: 'title-rookie', kind: 'title', rarity: 'commun', name: t('Rookie'), level: 1 },
   { id: 'title-prono', kind: 'title', rarity: 'commun', name: t('Pronostiqueur'), level: 4 },

@@ -814,5 +814,8 @@ export default {
 "Classement des parrains": "Ranking de padrinhos",
 "Seuls comptent les amis qui se pré-inscrivent avec ton lien. Partager ne suffit pas.": "Só contam os amigos que se pré-inscrevem com seu link. Compartilhar não basta.",
 "Ton pseudo doit faire entre 2 et 16 caractères (lettres, chiffres, espaces, _ . -).": "Seu apelido deve ter de 2 a 16 caracteres (letras, números, espaços, _ . -).",
-"Un ami": "Um amigo"
+"Un ami": "Um amigo",
+"Pré-inscris-toi : ton <b>pseudo réservé</b>, <b>{n} Gold</b>, le cadre et le titre exclusifs <b>Pionnier</b> au lancement.": "Pré-inscreva-se: seu <b>apelido reservado</b>, <b>{n} Gold</b>, a moldura e o título exclusivos <b>Pioneiro</b> no lançamento.",
+"Ce pseudo est déjà réservé. Choisis-en un autre.": "Esse apelido já está reservado. Escolha outro.",
+"Merci d'avoir été là avant le lancement ! +{n} Gold, le cadre et le titre Pionnier.": "Obrigado por estar aqui antes do lançamento! +{n} Gold, a moldura e o título Pioneiro."
 };

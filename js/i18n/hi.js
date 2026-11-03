@@ -814,5 +814,8 @@ export default {
 "Classement des parrains": "टॉप रेफ़रर",
 "Seuls comptent les amis qui se pré-inscrivent avec ton lien. Partager ne suffit pas.": "सिर्फ़ वही दोस्त गिने जाते हैं जो तुम्हारे लिंक से प्री-रजिस्टर करें। सिर्फ़ शेयर करना काफ़ी नहीं।",
 "Ton pseudo doit faire entre 2 et 16 caractères (lettres, chiffres, espaces, _ . -).": "यूज़रनेम 2 से 16 अक्षरों का होना चाहिए (अक्षर, अंक, स्पेस, _ . -)।",
-"Un ami": "एक दोस्त"
+"Un ami": "एक दोस्त",
+"Pré-inscris-toi : ton <b>pseudo réservé</b>, <b>{n} Gold</b>, le cadre et le titre exclusifs <b>Pionnier</b> au lancement.": "अभी प्री-रजिस्टर करो: लॉन्च पर <b>रिज़र्व यूज़रनेम</b>, <b>{n} Gold</b>, और खास <b>पायनियर</b> फ़्रेम व टाइटल।",
+"Ce pseudo est déjà réservé. Choisis-en un autre.": "यह यूज़रनेम पहले से रिज़र्व है। कोई और चुनो।",
+"Merci d'avoir été là avant le lancement ! +{n} Gold, le cadre et le titre Pionnier.": "लॉन्च से पहले साथ देने के लिए शुक्रिया! +{n} Gold, पायनियर फ़्रेम और टाइटल।"
 };

@@ -6,6 +6,7 @@
 // - emails/<e-mail en minuscules> = { id, code } : une seule inscription par adresse (lisible si on
 //   connaît l'adresse : retrouver son lien sur un autre appareil) ;
 // - preinscriptions/<id> = { email, pseudo, code, ref, lang, src, at } : privé (admin seulement) ;
+// - prepseudos/<pseudo en minuscules> = { code } : un pseudo par pré-inscrit, réservé pour le jeu au lancement ;
 // - parrains/<code> = { pseudo, count, last } : public, le classement ; count +1 seulement avec la
 //   création d'une pré-inscription dont ref = code ;
 // - stats/preinscriptions = { count, last } : nombre total d'inscrits.
@@ -64,7 +65,7 @@ async function db() {
   return fb;
 }
 
-// → { status: 'ok' | 'already', code } | { status: 'error' }. Adresse déjà inscrite : on renvoie son code
+// → { status: 'ok' | 'already', code } | { status: 'taken' } (pseudo déjà pris) | { status: 'error' }. Adresse déjà inscrite : on renvoie son code
 // (son lien de parrainage). Refus des règles à l'écriture : compteur ou fiche de parrain modifiés entre-temps
 // par l'inscription simultanée d'un autre fan → on relit tout et on réessaie une fois.
 async function register(email, pseudo, retry = true) {
@@ -73,6 +74,8 @@ async function register(email, pseudo, retry = true) {
     const lock = F.doc(d, 'emails', email);
     const known = await F.getDoc(lock);
     if (known.exists()) return { status: 'already', code: known.data().code };
+    const nameLock = F.doc(d, 'prepseudos', pseudo.toLowerCase());
+    if ((await F.getDoc(nameLock)).exists()) return { status: 'taken' };
     let code = newCode();
     while ((await F.getDoc(F.doc(d, 'parrains', code))).exists()) code = newCode();
     const counter = F.doc(d, 'stats', 'preinscriptions');
@@ -84,6 +87,7 @@ async function register(email, pseudo, retry = true) {
     const batch = F.writeBatch(d);
     batch.set(lock, { id, code });
     batch.set(F.doc(d, 'preinscriptions', id), { email, pseudo, code, ref: viaRef, lang, src, at: F.serverTimestamp() });
+    batch.set(nameLock, { code });
     batch.set(F.doc(d, 'parrains', code), { pseudo, count: 0, last: id });
     if (viaRef) batch.set(F.doc(d, 'parrains', viaRef), { pseudo: parrain.data().pseudo, count: parrain.data().count + 1, last: id });
     batch.set(counter, { count: (cur.exists() ? cur.data().count : 0) + 1, last: id });
@@ -251,7 +255,7 @@ function render() {
       </div>
 
       <div class="pre-card">
-        <p class="pre-gift"><span aria-hidden="true">🎁</span> ${t('Pré-inscris-toi : <b>{n} Gold</b> et le titre exclusif <b>Pionnier</b> offerts au lancement.', { n: fmt(CONFIG.PRELAUNCH_BONUS) })}</p>
+        <p class="pre-gift"><span aria-hidden="true">🎁</span> ${t('Pré-inscris-toi : ton <b>pseudo réservé</b>, <b>{n} Gold</b>, le cadre et le titre exclusifs <b>Pionnier</b> au lancement.', { n: fmt(CONFIG.PRELAUNCH_BONUS) })}</p>
         <div class="pre-form-slot">${formHtml()}</div>
         <p class="pre-count" hidden></p>
       </div>
@@ -304,6 +308,13 @@ root.addEventListener('submit', async (e) => {
   btn.disabled = true;
   btn.textContent = t('Un instant…');
   const res = await register(email, pseudo);
+  if (res.status === 'taken') {
+    btn.disabled = false;
+    btn.textContent = t('Je me pré-inscris');
+    say(t('Ce pseudo est déjà réservé. Choisis-en un autre.'));
+    pseudoIn.focus();
+    return;
+  }
   if (res.status === 'error') {
     btn.disabled = false;
     btn.textContent = t('Je me pré-inscris');

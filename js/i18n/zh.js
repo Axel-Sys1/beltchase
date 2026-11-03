@@ -814,5 +814,8 @@ export default {
 "Classement des parrains": "邀请排行榜",
 "Seuls comptent les amis qui se pré-inscrivent avec ton lien. Partager ne suffit pas.": "只计算通过你的链接预约的好友，仅分享不算。",
 "Ton pseudo doit faire entre 2 et 16 caractères (lettres, chiffres, espaces, _ . -).": "昵称需为 2 到 16 个字符（字母、数字、空格、_ . -）。",
-"Un ami": "一位好友"
+"Un ami": "一位好友",
+"Pré-inscris-toi : ton <b>pseudo réservé</b>, <b>{n} Gold</b>, le cadre et le titre exclusifs <b>Pionnier</b> au lancement.": "立即预约：上线时获得<b>专属昵称</b>、<b>{n} Gold</b>，以及专属<b>先锋</b>头像框和称号。",
+"Ce pseudo est déjà réservé. Choisis-en un autre.": "该昵称已被预留，请换一个。",
+"Merci d'avoir été là avant le lancement ! +{n} Gold, le cadre et le titre Pionnier.": "感谢你在上线前就来支持！+{n} Gold、先锋头像框和称号。"
 };

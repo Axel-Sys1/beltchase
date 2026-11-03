@@ -288,7 +288,17 @@ export async function isPseudoAvailable(pseudo) {
   if (!cloud.enabled) return true;
   const { F, db } = await sdk();
   const snap = await F.getDoc(F.doc(db, 'pseudos', pseudoKey(pseudo)));
-  return !snap.exists() || snap.data().uid === cloud.user?.uid;
+  if (snap.exists()) return snap.data().uid === cloud.user?.uid;
+  return prereservedFor(pseudo);
+}
+
+// Pseudo réservé à la pré-inscription (prepseudos/<pseudo en minuscules> = { code }) : seulement pour le
+// compte dont l'adresse a ce code de pré-inscription (règles Firestore : même vérification).
+async function prereservedFor(pseudo) {
+  const { F, db } = await sdk();
+  const res = await F.getDoc(F.doc(db, 'prepseudos', pseudoKey(pseudo)));
+  if (!res.exists()) return true;
+  return !!cloud.user && res.data().code === await prelaunchCode();
 }
 
 // Réserve le pseudo pour ce compte. Renvoie false s'il appartient déjà à un autre joueur.
@@ -301,6 +311,7 @@ export async function claimPseudo(pseudo) {
   if (snap.exists()) {
     if (snap.data().uid !== cloud.user.uid) return false;
   } else {
+    if (!(await prereservedFor(pseudo))) return false; // réservé par un autre pré-inscrit
     try {
       await fb.F.setDoc(ref, { uid: cloud.user.uid, pseudo: String(pseudo).trim() });
     } catch (err) {

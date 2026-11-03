@@ -814,5 +814,8 @@ export default {
 "Classement des parrains": "সেরা রেফারার",
 "Seuls comptent les amis qui se pré-inscrivent avec ton lien. Partager ne suffit pas.": "শুধু তোমার লিংক দিয়ে প্রি-রেজিস্টার করা বন্ধুরাই গোনা হয়। শুধু শেয়ার করলে হবে না।",
 "Ton pseudo doit faire entre 2 et 16 caractères (lettres, chiffres, espaces, _ . -).": "ইউজারনেম ২ থেকে ১৬ অক্ষরের হতে হবে (অক্ষর, সংখ্যা, স্পেস, _ . -)।",
-"Un ami": "একজন বন্ধু"
+"Un ami": "একজন বন্ধু",
+"Pré-inscris-toi : ton <b>pseudo réservé</b>, <b>{n} Gold</b>, le cadre et le titre exclusifs <b>Pionnier</b> au lancement.": "এখনই প্রি-রেজিস্টার করো: লঞ্চে <b>রিজার্ভ করা ইউজারনেম</b>, <b>{n} Gold</b>, আর এক্সক্লুসিভ <b>পায়োনিয়ার</b> ফ্রেম ও টাইটেল।",
+"Ce pseudo est déjà réservé. Choisis-en un autre.": "এই ইউজারনেম আগেই রিজার্ভ করা। অন্য একটি বেছে নাও।",
+"Merci d'avoir été là avant le lancement ! +{n} Gold, le cadre et le titre Pionnier.": "লঞ্চের আগে পাশে থাকার জন্য ধন্যবাদ! +{n} Gold, পায়োনিয়ার ফ্রেম আর টাইটেল।"
 };

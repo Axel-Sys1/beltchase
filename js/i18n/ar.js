@@ -814,5 +814,8 @@ export default {
 "Classement des parrains": "ترتيب أفضل الداعين",
 "Seuls comptent les amis qui se pré-inscrivent avec ton lien. Partager ne suffit pas.": "يُحتسب فقط الأصدقاء الذين يسجّلون مسبقًا عبر رابطك. المشاركة وحدها لا تكفي.",
 "Ton pseudo doit faire entre 2 et 16 caractères (lettres, chiffres, espaces, _ . -).": "يجب أن يكون اسمك المستعار بين 2 و16 حرفًا (حروف، أرقام، مسافات، _ . -).",
-"Un ami": "صديق"
+"Un ami": "صديق",
+"Pré-inscris-toi : ton <b>pseudo réservé</b>, <b>{n} Gold</b>, le cadre et le titre exclusifs <b>Pionnier</b> au lancement.": "سجّل مسبقًا: <b>اسم مستعار محجوز</b>، <b>{n} Gold</b>، والإطار واللقب الحصريان <b>الرائد</b> عند الإطلاق.",
+"Ce pseudo est déjà réservé. Choisis-en un autre.": "هذا الاسم المستعار محجوز بالفعل. اختر اسمًا آخر.",
+"Merci d'avoir été là avant le lancement ! +{n} Gold, le cadre et le titre Pionnier.": "شكرًا لوجودك معنا قبل الإطلاق! +{n} Gold، وإطار ولقب الرائد."
 };

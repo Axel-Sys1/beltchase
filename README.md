@@ -39,6 +39,11 @@ Classement des parrains : chaque pré-inscrit a son lien `beltchase.com/?ref=COD
 place que pour chaque ami qui se pré-inscrit avec (un simple partage ne compte pas). Limite : rien
 n'empêche quelqu'un d'inscrire de fausses adresses avec son lien ; pour une récompense, ne compter que
 les filleuls qui créent vraiment un compte au lancement (colonne « parrain » du CSV).
+Pseudos uniques : `prepseudos/<pseudo en minuscules>` = { code } réserve le pseudo de chaque pré-inscrit.
+Dans le jeu, seul le compte dont l'adresse a ce code peut le prendre : ajouter à la règle `create` de
+`match /pseudos/{name}` :
+`&& (!exists(/databases/$(database)/documents/prepseudos/$(name)) || ('email' in request.auth.token && get(/databases/$(database)/documents/emails/$(request.auth.token.email.lower())).data.code == get(/databases/$(database)/documents/prepseudos/$(name)).data.code))`.
+Chaque pré-inscrit reçoit aussi le cadre exclusif `frame-pionnier` avec le titre.
 Après le lancement, ces liens restent valables : ils ouvrent le jeu et donnent le parrainage habituel
 (REWARD Gold chacun, `js/services/referral.js`) dès que le parrain s'est connecté une fois au jeu avec
 son adresse de pré-inscription (`codes/<code>` = { uid }).
@@ -77,12 +82,19 @@ match /parrains/{code} {
     && request.resource.data.count == 0
     && !exists(preDoc(request.resource.data.last))
     && getAfter(preDoc(request.resource.data.last)).data.code == code
-    && getAfter(preDoc(request.resource.data.last)).data.pseudo == request.resource.data.pseudo;
+    && getAfter(preDoc(request.resource.data.last)).data.pseudo == request.resource.data.pseudo
+    && getAfter(/databases/$(database)/documents/prepseudos/$(request.resource.data.pseudo.lower())).data.code == code;
   allow update: if request.resource.data.keys().hasOnly(['pseudo', 'count', 'last'])
     && request.resource.data.pseudo == resource.data.pseudo
     && request.resource.data.count == resource.data.count + 1
     && !exists(preDoc(request.resource.data.last))
     && getAfter(preDoc(request.resource.data.last)).data.ref == code;
+}
+match /prepseudos/{name} {
+  allow get: if true;
+  allow create: if request.resource.data.keys().hasOnly(['code'])
+    && !exists(/databases/$(database)/documents/parrains/$(request.resource.data.code))
+    && getAfter(/databases/$(database)/documents/parrains/$(request.resource.data.code)).data.pseudo.lower() == name;
 }
 match /codes/{code} {
   allow get: if request.auth != null;
