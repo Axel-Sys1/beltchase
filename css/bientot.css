@@ -305,6 +305,7 @@ a { color: var(--accent); }
 .pre-sh-snapchat { background: #fffc00; color: #111; }
 .pre-sh-x { background: #000; border: 1px solid #333; }
 .pre-sh-telegram { background: #229ed9; }
+.pre-sh-instagram { background: linear-gradient(45deg, #f9a31c, #e1306c 45%, #833ab4); }
 .pre-sh-more { background: var(--surface-2); border: 1px solid var(--line-2); }
 .pre-sh:hover { filter: brightness(1.1); }
 .pre-btn-ghost { background: var(--surface-2); color: var(--text); border: 1px solid var(--line-2); }

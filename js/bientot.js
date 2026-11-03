@@ -278,6 +278,7 @@ const ICON = {
   whatsapp: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15l-1.4 5 5.1-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg>',
   snapchat: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2c3 0 5.3 2.3 5.3 5.4v2.1l1.4-.5c.6-.1 1.1.4.8 1-.3.5-1.6 1-2.3 1.3.4 1.6 2 3.4 4 3.9.4.1.5.6.2.9-.6.6-1.8.8-2.6.9-.2.5-.2 1.2-.7 1.3-.9.1-1.8-.3-2.8.1-1.1.5-1.8 1.6-3.3 1.6s-2.2-1.1-3.3-1.6c-1-.4-1.9 0-2.8-.1-.5-.1-.5-.8-.7-1.3-.8-.1-2-.3-2.6-.9-.3-.3-.2-.8.2-.9 2-.5 3.6-2.3 4-3.9-.7-.3-2-.8-2.3-1.3-.3-.6.2-1.1.8-1l1.4.5V7.4C6.7 4.3 9 2 12 2z"/></svg>',
   x: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M17.8 3h3.1l-6.8 7.7 8 10.3h-6.2l-4.9-6.3L5.4 21H2.3l7.2-8.3L1.8 3h6.4l4.4 5.8L17.8 3zm-1.1 16.2h1.7L7.4 4.7H5.6l11.1 14.5z"/></svg>',
+  instagram: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.3" cy="6.7" r="1.2" fill="currentColor"/></svg>',
   telegram: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21.9 4.3 18.7 19c-.2 1-.9 1.3-1.8.8l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.3-5 9.2-8.3c.4-.4-.1-.6-.6-.2L6.1 12.6l-4.9-1.5c-1-.3-1.1-1 .2-1.5L20.5 2.4c.9-.3 1.7.2 1.4 1.9z"/></svg>',
 };
 function shareButtons() {
@@ -289,7 +290,9 @@ function shareButtons() {
     ['x', 'X', `https://twitter.com/intent/tweet?text=${enc(text)}&url=${enc(url)}`],
     ['telegram', 'Telegram', `https://t.me/share/url?url=${enc(url)}&text=${enc(text)}`],
   ];
+  // Instagram n'a pas de lien de partage pour le web : on copie le lien puis on ouvre l'appli (story).
   return `${links.map(([id, name, href]) => `<a class="pre-sh pre-sh-${id}" href="${escapeHtml(href)}" target="_blank" rel="noopener">${ICON[id]}<span>${name}</span></a>`).join('')}
+    <button class="pre-sh pre-sh-instagram" type="button" data-act="insta">${ICON.instagram}<span>Instagram</span></button>
     ${typeof navigator !== 'undefined' && navigator.share ? `<button class="pre-sh pre-sh-more" type="button" data-act="share">${t('Autre…')}</button>` : ''}`;
 }
 
@@ -451,6 +454,14 @@ root.addEventListener('click', async (e) => {
     root.querySelector('#pre-pseudo')?.focus();
   } else if (act === 'share') {
     try { await navigator.share({ title: 'BeltChase', text: shareText(), url: myLink() }); } catch { /* partage annulé */ }
+  } else if (act === 'insta') {
+    const btn = e.target.closest('button');
+    try { await navigator.clipboard.writeText(myLink()); } catch { /* copie impossible : le lien reste affiché */ }
+    btn.querySelector('span').textContent = t('Lien copié !');
+    const help = root.querySelector('.pre-link-help');
+    if (help) help.innerHTML = `<b>${t('Lien copié !')}</b> ${t('Dans ta story Instagram, ajoute le sticker « Lien » et colle-le.')}`;
+    const mobile = /Android|iPhone|iPad/i.test(navigator.userAgent);
+    window.open(mobile ? 'instagram://story-camera' : 'https://www.instagram.com/', '_blank', 'noopener');
   } else if (act === 'copy') {
     const btn = e.target.closest('button');
     try { await navigator.clipboard.writeText(myLink()); btn.textContent = t('Lien copié !'); } catch { root.querySelector('.pre-link-input')?.select(); }

@@ -852,5 +852,6 @@ export default {
 "Tu es <b>{r}</b> du classement avec {a}. Garde ta place !": "آپ رینکنگ میں <b>{r}</b> ہیں، {a}۔ اپنی جگہ برقرار رکھیں!",
 "Tu es <b>{r}</b> avec {a}. Encore <b>{k}</b> pour entrer dans le top 3.": "آپ <b>{r}</b> ہیں، {a}۔ ٹاپ 3 کے لیے مزید <b>{k}</b> چاہییں۔",
 "{n} ami inscrit": "{n} دوست شامل ہوا",
-"{n} amis inscrits": "{n} دوست شامل ہوئے"
+"{n} amis inscrits": "{n} دوست شامل ہوئے",
+"Dans ta story Instagram, ajoute le sticker « Lien » et colle-le.": "اپنی Instagram اسٹوری میں « لنک » اسٹیکر لگائیں اور پیسٹ کریں۔"
 };

@@ -852,5 +852,6 @@ export default {
 "Tu es <b>{r}</b> du classement avec {a}. Garde ta place !": "Você é <b>{r}</b> no ranking com {a}. Segure sua posição!",
 "Tu es <b>{r}</b> avec {a}. Encore <b>{k}</b> pour entrer dans le top 3.": "Você é <b>{r}</b> com {a}. Faltam <b>{k}</b> para entrar no top 3.",
 "{n} ami inscrit": "{n} amigo inscrito",
-"{n} amis inscrits": "{n} amigos inscritos"
+"{n} amis inscrits": "{n} amigos inscritos",
+"Dans ta story Instagram, ajoute le sticker « Lien » et colle-le.": "No seu story do Instagram, adicione a figurinha « Link » e cole."
 };

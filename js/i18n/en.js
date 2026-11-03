@@ -852,5 +852,6 @@ export default {
 "Tu es <b>{r}</b> du classement avec {a}. Garde ta place !": "You're <b>{r}</b> on the leaderboard with {a}. Hold your spot!",
 "Tu es <b>{r}</b> avec {a}. Encore <b>{k}</b> pour entrer dans le top 3.": "You're <b>{r}</b> with {a}. <b>{k}</b> more to reach the top 3.",
 "{n} ami inscrit": "{n} friend signed up",
-"{n} amis inscrits": "{n} friends signed up"
+"{n} amis inscrits": "{n} friends signed up",
+"Dans ta story Instagram, ajoute le sticker « Lien » et colle-le.": "In your Instagram story, add the « Link » sticker and paste it."
 };

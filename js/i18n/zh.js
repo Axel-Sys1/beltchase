@@ -852,5 +852,6 @@ export default {
 "Tu es <b>{r}</b> du classement avec {a}. Garde ta place !": "你在排行榜第 <b>{r}</b> 位，{a}。守住位置！",
 "Tu es <b>{r}</b> avec {a}. Encore <b>{k}</b> pour entrer dans le top 3.": "你排第 <b>{r}</b> 位，{a}。再邀请 <b>{k}</b> 位即可进入前三。",
 "{n} ami inscrit": "已邀请 {n} 位好友",
-"{n} amis inscrits": "已邀请 {n} 位好友"
+"{n} amis inscrits": "已邀请 {n} 位好友",
+"Dans ta story Instagram, ajoute le sticker « Lien » et colle-le.": "在 Instagram 快拍中添加「链接」贴纸并粘贴。"
 };

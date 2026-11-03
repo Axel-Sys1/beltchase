@@ -852,5 +852,6 @@ export default {
 "Tu es <b>{r}</b> du classement avec {a}. Garde ta place !": "أنت <b>{r}</b> في الترتيب مع {a}. حافظ على مكانك!",
 "Tu es <b>{r}</b> avec {a}. Encore <b>{k}</b> pour entrer dans le top 3.": "أنت <b>{r}</b> مع {a}. بقي <b>{k}</b> لتدخل أفضل 3.",
 "{n} ami inscrit": "{n} صديق مسجّل",
-"{n} amis inscrits": "{n} أصدقاء مسجّلون"
+"{n} amis inscrits": "{n} أصدقاء مسجّلون",
+"Dans ta story Instagram, ajoute le sticker « Lien » et colle-le.": "في قصتك على إنستغرام، أضف ملصق « الرابط » والصقه."
 };

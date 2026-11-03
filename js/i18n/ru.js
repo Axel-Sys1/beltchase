@@ -852,5 +852,6 @@ export default {
 "Tu es <b>{r}</b> du classement avec {a}. Garde ta place !": "Ты <b>{r}</b> в рейтинге: {a}. Удержи место!",
 "Tu es <b>{r}</b> avec {a}. Encore <b>{k}</b> pour entrer dans le top 3.": "Ты <b>{r}</b>: {a}. Ещё <b>{k}</b> до топ-3.",
 "{n} ami inscrit": "{n} друг записался",
-"{n} amis inscrits": "{n} друзей записались"
+"{n} amis inscrits": "{n} друзей записались",
+"Dans ta story Instagram, ajoute le sticker « Lien » et colle-le.": "В сторис Instagram добавь стикер «Ссылка» и вставь её."
 };
