@@ -23,6 +23,20 @@ match /fights/{id} {
 }
 ```
 
+## Langues
+
+Le site est en 10 langues : français (texte source), anglais, espagnol, portugais (Brésil), russe,
+arabe et ourdou (de droite à gauche), chinois, hindi, bengali. Langue choisie : `?lang=xx`, sinon le
+choix enregistré, sinon celle du navigateur (anglais par défaut) ; sélecteur dans Profil → Réglages,
+sur l'accueil et en pied de page. Moteur : `js/i18n.js` (`t('Texte en français')`, `tParts` pour les
+libellés de données, `tn` pour le pluriel) ; traductions : `js/i18n/<langue>.js`.
+
+Après avoir ajouté ou changé un texte :
+`python3 tools/i18n_check.py` (textes manquants par langue), puis
+`python3 tools/i18n_check.py --missing en > textes.json` et une traduction par ligne dans un fichier
+texte, fusionnée par `python3 tools/i18n_build.py en textes.json traductions.txt` (vérifie les
+variables `{n}` et les balises). Les actus et les pages /pronos restent en français.
+
 ## Lancer l'appli en local
 
 Aucune installation : HTML, CSS et JavaScript (modules ES), sans dépendance.
