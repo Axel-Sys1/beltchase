@@ -9,6 +9,9 @@ export const CONFIG = {
   LAUNCH_AT: '2026-12-01T00:00:00+01:00',
   PRELAUNCH_BONUS: 1000, // Gold offerts à chaque pré-inscrit, à sa première connexion avec le même e-mail
   INSTAGRAM: 'https://www.instagram.com/beltchase.officiel/',
+  // Concours des parrains de la pré-inscription (bientot.html, règlement : legal.html#concours) : le n°1 du
+  // classement à la date du lancement gagne ce lot. '' : pas de concours affiché.
+  CONTEST_PRIZE: 'des gants dédicacés par Axel Sola',
   STARTING_BALANCE: 100,  // monnaie rare : on démarre petit et on gagne en pariant juste
   DAILY_BONUS: 50,
   MIN_STAKE: 1,

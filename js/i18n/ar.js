@@ -784,7 +784,7 @@ export default {
 "Heures": "ساعات",
 "Min": "دقيقة",
 "Sec": "ثانية",
-"Pré-inscris-toi : <b>{n} Gold</b> et le titre exclusif <b>Pionnier</b> offerts au lancement.": "سجّل مسبقًا: <b>{n} Gold</b> ولقب <b>الرائد</b> الحصري عند الإطلاق.",
+"Pré-inscris-toi : <b>{n} Gold</b> et le titre exclusif <b>OG</b> offerts au lancement.": "سجّل مسبقًا: <b>{n} Gold</b> ولقب <b>OG</b> الحصري عند الإطلاق.",
 "Pronostique": "توقّع",
 "Vainqueur, méthode, round : sur les vrais combats de MMA, boxe, kick et JJB.": "الفائز، الطريقة، الجولة: في نزالات حقيقية من MMA والملاكمة والكيك بوكسينغ والجوجيتسو.",
 "Collectionne": "اجمع",
@@ -799,8 +799,8 @@ export default {
 "Tu étais déjà sur la liste !": "كنت على القائمة بالفعل!",
 "BeltChase, le jeu de pronos des fans de combat, ouvre le {d}. Pré-inscris-toi : {n} Gold offerts !": "BeltChase، لعبة التوقعات لعشّاق النزالات، تنطلق في {d}. سجّل مسبقًا: {n} Gold مجانًا!",
 "Lien copié !": "تم نسخ الرابط!",
-"Merci d'avoir été là avant le lancement ! +{n} Gold et le titre Pionnier.": "شكرًا لوجودك معنا قبل الإطلاق! +{n} Gold ولقب الرائد.",
-"Pionnier": "الرائد",
+"Merci d'avoir été là avant le lancement ! +{n} Gold et le titre OG.": "شكرًا لوجودك معنا قبل الإطلاق! +{n} Gold ولقب OG.",
+"OG": "OG",
 "Pré-inscrit avant le lancement": "سجّل مسبقًا قبل الإطلاق",
 "Invité par <b>{p}</b>": "بدعوة من <b>{p}</b>",
 "Chaque ami qui se pré-inscrit avec ton lien te fait monter dans le classement.": "كل صديق يسجّل مسبقًا عبر رابطك يرفعك في الترتيب.",
@@ -815,7 +815,9 @@ export default {
 "Seuls comptent les amis qui se pré-inscrivent avec ton lien. Partager ne suffit pas.": "يُحتسب فقط الأصدقاء الذين يسجّلون مسبقًا عبر رابطك. المشاركة وحدها لا تكفي.",
 "Ton pseudo doit faire entre 2 et 16 caractères (lettres, chiffres, espaces, _ . -).": "يجب أن يكون اسمك المستعار بين 2 و16 حرفًا (حروف، أرقام، مسافات، _ . -).",
 "Un ami": "صديق",
-"Pré-inscris-toi : ton <b>pseudo réservé</b>, <b>{n} Gold</b>, le cadre et le titre exclusifs <b>Pionnier</b> au lancement.": "سجّل مسبقًا: <b>اسم مستعار محجوز</b>، <b>{n} Gold</b>، والإطار واللقب الحصريان <b>الرائد</b> عند الإطلاق.",
+"Pré-inscris-toi : ton <b>pseudo réservé</b>, <b>{n} Gold</b>, le cadre et le titre exclusifs <b>OG</b> au lancement.": "سجّل مسبقًا: <b>اسم مستعار محجوز</b>، <b>{n} Gold</b>، والإطار واللقب الحصريان <b>OG</b> عند الإطلاق.",
 "Ce pseudo est déjà réservé. Choisis-en un autre.": "هذا الاسم المستعار محجوز بالفعل. اختر اسمًا آخر.",
-"Merci d'avoir été là avant le lancement ! +{n} Gold, le cadre et le titre Pionnier.": "شكرًا لوجودك معنا قبل الإطلاق! +{n} Gold، وإطار ولقب الرائد."
+"Merci d'avoir été là avant le lancement ! +{n} Gold, le cadre et le titre OG.": "شكرًا لوجودك معنا قبل الإطلاق! +{n} Gold، وإطار ولقب OG.",
+"Le n°1 le {d} à minuit gagne <b>des gants dédicacés par Axel Sola</b>, combattant de l'UFC, livrés chez lui !": "صاحب المركز الأول في {d} عند منتصف الليل يربح <b>قفازات موقّعة من أكسيل سولا</b>، مقاتل UFC، تصله إلى منزله!",
+"Règlement": "الشروط"
 };

@@ -31,7 +31,7 @@ place du jeu (`functions/_middleware.js`). `https://beltchase.com/?app` ouvre le
 30 jours (cookie) : aperçu, page admin. À l'heure du lancement, la page bascule seule sur le jeu.
 En local (`serve.py`), l'accueil reste le jeu : la page est sur <http://localhost:5173/bientot>.
 
-Chaque pré-inscrit (pseudo + e-mail) reçoit `CONFIG.PRELAUNCH_BONUS` Gold et le titre exclusif « Pionnier » à sa première
+Chaque pré-inscrit (pseudo + e-mail) reçoit `CONFIG.PRELAUNCH_BONUS` Gold et le titre exclusif « OG » à sa première
 connexion avec la même adresse (`js/services/prelaunch.js`). Liste des adresses : page `#admin` →
 « Télécharger la liste » (CSV, pour l'e-mail du lancement). Lien à suivre : `?src=instagram`, `?src=tiktok`…
 

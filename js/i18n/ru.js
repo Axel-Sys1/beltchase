@@ -784,7 +784,7 @@ export default {
 "Heures": "Часов",
 "Min": "Мин",
 "Sec": "Сек",
-"Pré-inscris-toi : <b>{n} Gold</b> et le titre exclusif <b>Pionnier</b> offerts au lancement.": "Запишись заранее: <b>{n} Gold</b> и эксклюзивный титул <b>Первопроходец</b> при запуске.",
+"Pré-inscris-toi : <b>{n} Gold</b> et le titre exclusif <b>OG</b> offerts au lancement.": "Запишись заранее: <b>{n} Gold</b> и эксклюзивный титул <b>OG</b> при запуске.",
 "Pronostique": "Прогнозируй",
 "Vainqueur, méthode, round : sur les vrais combats de MMA, boxe, kick et JJB.": "Победитель, способ, раунд: на реальных боях MMA, бокса, кикбоксинга и BJJ.",
 "Collectionne": "Собирай",
@@ -799,8 +799,8 @@ export default {
 "Tu étais déjà sur la liste !": "Ты уже был в списке!",
 "BeltChase, le jeu de pronos des fans de combat, ouvre le {d}. Pré-inscris-toi : {n} Gold offerts !": "BeltChase, игра прогнозов для фанатов единоборств, открывается {d}. Запишись: {n} Gold в подарок!",
 "Lien copié !": "Ссылка скопирована!",
-"Merci d'avoir été là avant le lancement ! +{n} Gold et le titre Pionnier.": "Спасибо, что был с нами до запуска! +{n} Gold и титул Первопроходец.",
-"Pionnier": "Первопроходец",
+"Merci d'avoir été là avant le lancement ! +{n} Gold et le titre OG.": "Спасибо, что был с нами до запуска! +{n} Gold и титул OG.",
+"OG": "OG",
 "Pré-inscrit avant le lancement": "Записался до запуска",
 "Invité par <b>{p}</b>": "Тебя пригласил <b>{p}</b>",
 "Chaque ami qui se pré-inscrit avec ton lien te fait monter dans le classement.": "Каждый друг, записавшийся по твоей ссылке, поднимает тебя в рейтинге.",
@@ -815,7 +815,9 @@ export default {
 "Seuls comptent les amis qui se pré-inscrivent avec ton lien. Partager ne suffit pas.": "Считаются только друзья, записавшиеся по твоей ссылке. Просто поделиться мало.",
 "Ton pseudo doit faire entre 2 et 16 caractères (lettres, chiffres, espaces, _ . -).": "Ник должен быть от 2 до 16 символов (буквы, цифры, пробелы, _ . -).",
 "Un ami": "Друг",
-"Pré-inscris-toi : ton <b>pseudo réservé</b>, <b>{n} Gold</b>, le cadre et le titre exclusifs <b>Pionnier</b> au lancement.": "Запишись заранее: <b>ник зарезервирован</b>, <b>{n} Gold</b>, эксклюзивные рамка и титул <b>Первопроходец</b> при запуске.",
+"Pré-inscris-toi : ton <b>pseudo réservé</b>, <b>{n} Gold</b>, le cadre et le titre exclusifs <b>OG</b> au lancement.": "Запишись заранее: <b>ник зарезервирован</b>, <b>{n} Gold</b>, эксклюзивные рамка и титул <b>OG</b> при запуске.",
 "Ce pseudo est déjà réservé. Choisis-en un autre.": "Этот ник уже занят. Выбери другой.",
-"Merci d'avoir été là avant le lancement ! +{n} Gold, le cadre et le titre Pionnier.": "Спасибо, что был с нами до запуска! +{n} Gold, рамка и титул Первопроходец."
+"Merci d'avoir été là avant le lancement ! +{n} Gold, le cadre et le titre OG.": "Спасибо, что был с нами до запуска! +{n} Gold, рамка и титул OG.",
+"Le n°1 le {d} à minuit gagne <b>des gants dédicacés par Axel Sola</b>, combattant de l'UFC, livrés chez lui !": "Первый в рейтинге {d} в полночь получит <b>перчатки с автографом Акселя Солы</b>, бойца UFC, с доставкой на дом!",
+"Règlement": "Правила"
 };

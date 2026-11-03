@@ -784,7 +784,7 @@ export default {
 "Heures": "时",
 "Min": "分",
 "Sec": "秒",
-"Pré-inscris-toi : <b>{n} Gold</b> et le titre exclusif <b>Pionnier</b> offerts au lancement.": "立即预约：上线时送 <b>{n} Gold</b> 和专属称号 <b>先锋</b>。",
+"Pré-inscris-toi : <b>{n} Gold</b> et le titre exclusif <b>OG</b> offerts au lancement.": "立即预约：上线时送 <b>{n} Gold</b> 和专属称号 <b>OG</b>。",
 "Pronostique": "竞猜",
 "Vainqueur, méthode, round : sur les vrais combats de MMA, boxe, kick et JJB.": "胜者、方式、回合：竞猜真实的 MMA、拳击、踢拳和巴西柔术比赛。",
 "Collectionne": "收集",
@@ -799,8 +799,8 @@ export default {
 "Tu étais déjà sur la liste !": "你之前已在名单中！",
 "BeltChase, le jeu de pronos des fans de combat, ouvre le {d}. Pré-inscris-toi : {n} Gold offerts !": "BeltChase，格斗迷的竞猜游戏，将于{d}上线。立即预约：免费送 {n} Gold！",
 "Lien copié !": "链接已复制！",
-"Merci d'avoir été là avant le lancement ! +{n} Gold et le titre Pionnier.": "感谢你在上线前就来支持！+{n} Gold 和先锋称号。",
-"Pionnier": "先锋",
+"Merci d'avoir été là avant le lancement ! +{n} Gold et le titre OG.": "感谢你在上线前就来支持！+{n} Gold 和OG称号。",
+"OG": "OG",
 "Pré-inscrit avant le lancement": "上线前预约",
 "Invité par <b>{p}</b>": "邀请人：<b>{p}</b>",
 "Chaque ami qui se pré-inscrit avec ton lien te fait monter dans le classement.": "每有一位好友通过你的链接预约，你的排名就会上升。",
@@ -815,7 +815,9 @@ export default {
 "Seuls comptent les amis qui se pré-inscrivent avec ton lien. Partager ne suffit pas.": "只计算通过你的链接预约的好友，仅分享不算。",
 "Ton pseudo doit faire entre 2 et 16 caractères (lettres, chiffres, espaces, _ . -).": "昵称需为 2 到 16 个字符（字母、数字、空格、_ . -）。",
 "Un ami": "一位好友",
-"Pré-inscris-toi : ton <b>pseudo réservé</b>, <b>{n} Gold</b>, le cadre et le titre exclusifs <b>Pionnier</b> au lancement.": "立即预约：上线时获得<b>专属昵称</b>、<b>{n} Gold</b>，以及专属<b>先锋</b>头像框和称号。",
+"Pré-inscris-toi : ton <b>pseudo réservé</b>, <b>{n} Gold</b>, le cadre et le titre exclusifs <b>OG</b> au lancement.": "立即预约：上线时获得<b>专属昵称</b>、<b>{n} Gold</b>，以及专属<b>OG</b>头像框和称号。",
 "Ce pseudo est déjà réservé. Choisis-en un autre.": "该昵称已被预留，请换一个。",
-"Merci d'avoir été là avant le lancement ! +{n} Gold, le cadre et le titre Pionnier.": "感谢你在上线前就来支持！+{n} Gold、先锋头像框和称号。"
+"Merci d'avoir été là avant le lancement ! +{n} Gold, le cadre et le titre OG.": "感谢你在上线前就来支持！+{n} Gold、OG头像框和称号。",
+"Le n°1 le {d} à minuit gagne <b>des gants dédicacés par Axel Sola</b>, combattant de l'UFC, livrés chez lui !": "{d}零点排名第一的人将获得<b>UFC 选手 Axel Sola 亲笔签名的拳套</b>，送货上门！",
+"Règlement": "活动规则"
 };

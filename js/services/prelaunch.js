@@ -1,5 +1,5 @@
 // Bonus des pré-inscrits (bientot.html) : à la première connexion avec l'adresse pré-inscrite,
-// CONFIG.PRELAUNCH_BONUS Gold, le cadre et le titre exclusifs « Pionnier », une seule fois par joueur. Son lien de
+// CONFIG.PRELAUNCH_BONUS Gold, le cadre et le titre exclusifs « OG », une seule fois par joueur. Son lien de
 // parrainage de la pré-inscription (?ref=CODE) est relié à son compte, pour qu'il serve encore.
 import { CONFIG } from '../config.js';
 import { cloud, linkPrelaunchCode, prelaunchCode } from './cloud.js';
@@ -27,6 +27,6 @@ export async function claimPrelaunchBonus() {
     me.owned['title-pionnier'] = Date.now();
     me.owned['frame-pionnier'] = Date.now();
     me.balance += CONFIG.PRELAUNCH_BONUS;
-    me.inbox.push({ type: 'reward', amount: CONFIG.PRELAUNCH_BONUS, text: t('Merci d\'avoir été là avant le lancement ! +{n} Gold, le cadre et le titre Pionnier.', { n: CONFIG.PRELAUNCH_BONUS.toLocaleString() }) });
+    me.inbox.push({ type: 'reward', amount: CONFIG.PRELAUNCH_BONUS, text: t('Merci d\'avoir été là avant le lancement ! +{n} Gold, le cadre et le titre OG.', { n: CONFIG.PRELAUNCH_BONUS.toLocaleString() }) });
   });
 }

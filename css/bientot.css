@@ -186,3 +186,8 @@ a { color: var(--accent); }
 .pre-cards:hover .lc-2 { transform: rotate(16deg) translate(14px, 6px); }
 .pre-cards-cap { position: relative; z-index: 2; margin: 34px 0 0; color: var(--muted); font-size: 13px; font-weight: 700; }
 @media (max-width: 460px) { .pre-cards { height: 190px; } .pre-cards .lc { width: 112px; margin: 0 -14px; } }
+
+/* Lot du concours des parrains */
+.pre-prize { margin: 10px 0 4px; padding: 12px 14px; border-radius: 10px; background: linear-gradient(90deg, rgba(242, 182, 48, 0.2), rgba(242, 182, 48, 0.05)); border: 1px solid rgba(242, 182, 48, 0.5); font-size: 15px; }
+.pre-prize b { color: var(--accent); }
+.pre-prize a { margin-inline-start: 4px; color: var(--muted); font-size: 13px; }

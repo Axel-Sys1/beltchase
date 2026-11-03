@@ -784,7 +784,7 @@ export default {
 "Heures": "घंटे",
 "Min": "मिनट",
 "Sec": "सेकंड",
-"Pré-inscris-toi : <b>{n} Gold</b> et le titre exclusif <b>Pionnier</b> offerts au lancement.": "अभी प्री-रजिस्टर करो: लॉन्च पर <b>{n} Gold</b> और खास <b>पायनियर</b> टाइटल।",
+"Pré-inscris-toi : <b>{n} Gold</b> et le titre exclusif <b>OG</b> offerts au lancement.": "अभी प्री-रजिस्टर करो: लॉन्च पर <b>{n} Gold</b> और खास <b>OG</b> टाइटल।",
 "Pronostique": "प्रेडिक्ट करो",
 "Vainqueur, méthode, round : sur les vrais combats de MMA, boxe, kick et JJB.": "विजेता, तरीका, राउंड: असली MMA, बॉक्सिंग, किकबॉक्सिंग और BJJ फ़ाइट्स पर।",
 "Collectionne": "इकट्ठा करो",
@@ -799,8 +799,8 @@ export default {
 "Tu étais déjà sur la liste !": "तुम पहले से लिस्ट में थे!",
 "BeltChase, le jeu de pronos des fans de combat, ouvre le {d}. Pré-inscris-toi : {n} Gold offerts !": "BeltChase, फ़ाइट फ़ैन्स का प्रेडिक्शन गेम, {d} को खुल रहा है। प्री-रजिस्टर करो: {n} Gold मुफ़्त!",
 "Lien copié !": "लिंक कॉपी हो गया!",
-"Merci d'avoir été là avant le lancement ! +{n} Gold et le titre Pionnier.": "लॉन्च से पहले साथ देने के लिए शुक्रिया! +{n} Gold और पायनियर टाइटल।",
-"Pionnier": "पायनियर",
+"Merci d'avoir été là avant le lancement ! +{n} Gold et le titre OG.": "लॉन्च से पहले साथ देने के लिए शुक्रिया! +{n} Gold और OG टाइटल।",
+"OG": "OG",
 "Pré-inscrit avant le lancement": "लॉन्च से पहले प्री-रजिस्टर किया",
 "Invité par <b>{p}</b>": "<b>{p}</b> ने बुलाया",
 "Chaque ami qui se pré-inscrit avec ton lien te fait monter dans le classement.": "तुम्हारे लिंक से प्री-रजिस्टर करने वाला हर दोस्त तुम्हें रैंकिंग में ऊपर ले जाता है।",
@@ -815,7 +815,9 @@ export default {
 "Seuls comptent les amis qui se pré-inscrivent avec ton lien. Partager ne suffit pas.": "सिर्फ़ वही दोस्त गिने जाते हैं जो तुम्हारे लिंक से प्री-रजिस्टर करें। सिर्फ़ शेयर करना काफ़ी नहीं।",
 "Ton pseudo doit faire entre 2 et 16 caractères (lettres, chiffres, espaces, _ . -).": "यूज़रनेम 2 से 16 अक्षरों का होना चाहिए (अक्षर, अंक, स्पेस, _ . -)।",
 "Un ami": "एक दोस्त",
-"Pré-inscris-toi : ton <b>pseudo réservé</b>, <b>{n} Gold</b>, le cadre et le titre exclusifs <b>Pionnier</b> au lancement.": "अभी प्री-रजिस्टर करो: लॉन्च पर <b>रिज़र्व यूज़रनेम</b>, <b>{n} Gold</b>, और खास <b>पायनियर</b> फ़्रेम व टाइटल।",
+"Pré-inscris-toi : ton <b>pseudo réservé</b>, <b>{n} Gold</b>, le cadre et le titre exclusifs <b>OG</b> au lancement.": "अभी प्री-रजिस्टर करो: लॉन्च पर <b>रिज़र्व यूज़रनेम</b>, <b>{n} Gold</b>, और खास <b>OG</b> फ़्रेम व टाइटल।",
 "Ce pseudo est déjà réservé. Choisis-en un autre.": "यह यूज़रनेम पहले से रिज़र्व है। कोई और चुनो।",
-"Merci d'avoir été là avant le lancement ! +{n} Gold, le cadre et le titre Pionnier.": "लॉन्च से पहले साथ देने के लिए शुक्रिया! +{n} Gold, पायनियर फ़्रेम और टाइटल।"
+"Merci d'avoir été là avant le lancement ! +{n} Gold, le cadre et le titre OG.": "लॉन्च से पहले साथ देने के लिए शुक्रिया! +{n} Gold, OG फ़्रेम और टाइटल।",
+"Le n°1 le {d} à minuit gagne <b>des gants dédicacés par Axel Sola</b>, combattant de l'UFC, livrés chez lui !": "{d} को आधी रात तक नंबर 1 रहने वाले को मिलेंगे <b>UFC फ़ाइटर Axel Sola के साइन किए ग्लव्स</b>, घर तक डिलीवरी!",
+"Règlement": "नियम"
 };

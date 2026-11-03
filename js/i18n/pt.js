@@ -784,7 +784,7 @@ export default {
 "Heures": "Horas",
 "Min": "Min",
 "Sec": "Seg",
-"Pré-inscris-toi : <b>{n} Gold</b> et le titre exclusif <b>Pionnier</b> offerts au lancement.": "Pré-inscreva-se: <b>{n} Gold</b> e o título exclusivo <b>Pioneiro</b> no lançamento.",
+"Pré-inscris-toi : <b>{n} Gold</b> et le titre exclusif <b>OG</b> offerts au lancement.": "Pré-inscreva-se: <b>{n} Gold</b> e o título exclusivo <b>OG</b> no lançamento.",
 "Pronostique": "Dê seu palpite",
 "Vainqueur, méthode, round : sur les vrais combats de MMA, boxe, kick et JJB.": "Vencedor, método, round: nas lutas reais de MMA, boxe, kickboxing e jiu-jítsu.",
 "Collectionne": "Colecione",
@@ -799,8 +799,8 @@ export default {
 "Tu étais déjà sur la liste !": "Você já estava na lista!",
 "BeltChase, le jeu de pronos des fans de combat, ouvre le {d}. Pré-inscris-toi : {n} Gold offerts !": "BeltChase, o jogo de palpites dos fãs de luta, abre em {d}. Pré-inscreva-se: {n} Gold grátis!",
 "Lien copié !": "Link copiado!",
-"Merci d'avoir été là avant le lancement ! +{n} Gold et le titre Pionnier.": "Obrigado por estar aqui antes do lançamento! +{n} Gold e o título Pioneiro.",
-"Pionnier": "Pioneiro",
+"Merci d'avoir été là avant le lancement ! +{n} Gold et le titre OG.": "Obrigado por estar aqui antes do lançamento! +{n} Gold e o título OG.",
+"OG": "OG",
 "Pré-inscrit avant le lancement": "Pré-inscrito antes do lançamento",
 "Invité par <b>{p}</b>": "Convidado por <b>{p}</b>",
 "Chaque ami qui se pré-inscrit avec ton lien te fait monter dans le classement.": "Cada amigo que se pré-inscreve com seu link te faz subir no ranking.",
@@ -815,7 +815,9 @@ export default {
 "Seuls comptent les amis qui se pré-inscrivent avec ton lien. Partager ne suffit pas.": "Só contam os amigos que se pré-inscrevem com seu link. Compartilhar não basta.",
 "Ton pseudo doit faire entre 2 et 16 caractères (lettres, chiffres, espaces, _ . -).": "Seu apelido deve ter de 2 a 16 caracteres (letras, números, espaços, _ . -).",
 "Un ami": "Um amigo",
-"Pré-inscris-toi : ton <b>pseudo réservé</b>, <b>{n} Gold</b>, le cadre et le titre exclusifs <b>Pionnier</b> au lancement.": "Pré-inscreva-se: seu <b>apelido reservado</b>, <b>{n} Gold</b>, a moldura e o título exclusivos <b>Pioneiro</b> no lançamento.",
+"Pré-inscris-toi : ton <b>pseudo réservé</b>, <b>{n} Gold</b>, le cadre et le titre exclusifs <b>OG</b> au lancement.": "Pré-inscreva-se: seu <b>apelido reservado</b>, <b>{n} Gold</b>, a moldura e o título exclusivos <b>OG</b> no lançamento.",
 "Ce pseudo est déjà réservé. Choisis-en un autre.": "Esse apelido já está reservado. Escolha outro.",
-"Merci d'avoir été là avant le lancement ! +{n} Gold, le cadre et le titre Pionnier.": "Obrigado por estar aqui antes do lançamento! +{n} Gold, a moldura e o título Pioneiro."
+"Merci d'avoir été là avant le lancement ! +{n} Gold, le cadre et le titre OG.": "Obrigado por estar aqui antes do lançamento! +{n} Gold, a moldura e o título OG.",
+"Le n°1 le {d} à minuit gagne <b>des gants dédicacés par Axel Sola</b>, combattant de l'UFC, livrés chez lui !": "O nº 1 em {d} à meia-noite ganha <b>luvas autografadas por Axel Sola</b>, lutador do UFC, entregues em casa!",
+"Règlement": "Regulamento"
 };

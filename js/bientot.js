@@ -255,7 +255,7 @@ function render() {
       </div>
 
       <div class="pre-card">
-        <p class="pre-gift"><span aria-hidden="true">🎁</span> ${t('Pré-inscris-toi : ton <b>pseudo réservé</b>, <b>{n} Gold</b>, le cadre et le titre exclusifs <b>Pionnier</b> au lancement.', { n: fmt(CONFIG.PRELAUNCH_BONUS) })}</p>
+        <p class="pre-gift"><span aria-hidden="true">🎁</span> ${t('Pré-inscris-toi : ton <b>pseudo réservé</b>, <b>{n} Gold</b>, le cadre et le titre exclusifs <b>OG</b> au lancement.', { n: fmt(CONFIG.PRELAUNCH_BONUS) })}</p>
         <div class="pre-form-slot">${formHtml()}</div>
         <p class="pre-count" hidden></p>
       </div>
@@ -263,6 +263,7 @@ function render() {
 
     <section class="pre-board" aria-labelledby="pre-board-title">
       <h2 id="pre-board-title">${t('Classement des parrains')}</h2>
+      ${CONFIG.CONTEST_PRIZE ? `<p class="pre-prize"><span aria-hidden="true">🥊</span> ${t('Le n°1 le {d} à minuit gagne <b>des gants dédicacés par Axel Sola</b>, combattant de l\'UFC, livrés chez lui !', { d: launchDay })} <a href="/legal#concours">${t('Règlement')}</a></p>` : ''}
       <p class="pre-board-sub">${t('Seuls comptent les amis qui se pré-inscrivent avec ton lien. Partager ne suffit pas.')}</p>
       <div class="pre-board-body">${boardHtml()}</div>
     </section>
