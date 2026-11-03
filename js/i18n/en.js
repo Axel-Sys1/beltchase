@@ -830,5 +830,12 @@ export default {
 "Toute l'actu MMA, UFC et boxe en direct, et le jeu de pronos pour la vivre à fond.": "All the MMA, UFC and boxing news live, plus the picks game to live it to the fullest.",
 "L'actu est déjà là : reviens quand tu veux. Le {d}, le jeu ouvre avec le calendrier et les résultats.": "The news is already here: come back anytime. On {d}, the game opens with the schedule and results.",
 "Suis l'actu": "Follow the news",
-"MMA, UFC, boxe, kick : les infos qui comptent, en continu, au même endroit.": "MMA, UFC, boxing, kickboxing: the news that matters, nonstop, in one place."
+"MMA, UFC, boxe, kick : les infos qui comptent, en continu, au même endroit.": "MMA, UFC, boxing, kickboxing: the news that matters, nonstop, in one place.",
+"Exemple de prono": "Sample pick",
+"Ton prono : Gane par KO": "Your pick: Gane by KO",
+"Vainqueur, méthode, round : plus ton prono est précis, plus tu gagnes de Gold.": "Winner, method, round: the more precise your pick, the more Gold you win.",
+"Lancement le {d}": "Launching {d}",
+"Pronostique les vrais combats, collectionne les cartes et suis toute l'actu MMA et boxe.": "Predict real fights, collect the cards and follow all the MMA and boxing news.",
+"Fais inscrire le plus d'amis et gagne <b>des gants dédicacés par Axel Sola</b>, combattant de l'UFC": "Get the most friends to sign up and win <b>gloves signed by Axel Sola</b>, UFC fighter",
+"Le jeu en un coup d'œil": "The game at a glance"
 };

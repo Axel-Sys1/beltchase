@@ -830,5 +830,12 @@ export default {
 "Toute l'actu MMA, UFC et boxe en direct, et le jeu de pronos pour la vivre à fond.": "Все новости MMA, UFC и бокса в прямом эфире и игра прогнозов, чтобы прожить их на полную.",
 "L'actu est déjà là : reviens quand tu veux. Le {d}, le jeu ouvre avec le calendrier et les résultats.": "Новости уже здесь: заходи когда угодно. {d} откроется игра с календарём и результатами.",
 "Suis l'actu": "Следи за новостями",
-"MMA, UFC, boxe, kick : les infos qui comptent, en continu, au même endroit.": "MMA, UFC, бокс, кикбоксинг: главные новости без остановки, в одном месте."
+"MMA, UFC, boxe, kick : les infos qui comptent, en continu, au même endroit.": "MMA, UFC, бокс, кикбоксинг: главные новости без остановки, в одном месте.",
+"Exemple de prono": "Пример прогноза",
+"Ton prono : Gane par KO": "Твой прогноз: Ган нокаутом",
+"Vainqueur, méthode, round : plus ton prono est précis, plus tu gagnes de Gold.": "Победитель, способ, раунд: чем точнее прогноз, тем больше Gold.",
+"Lancement le {d}": "Запуск {d}",
+"Pronostique les vrais combats, collectionne les cartes et suis toute l'actu MMA et boxe.": "Прогнозируй реальные бои, собирай карточки и следи за всеми новостями MMA и бокса.",
+"Fais inscrire le plus d'amis et gagne <b>des gants dédicacés par Axel Sola</b>, combattant de l'UFC": "Приведи больше всех друзей и выиграй <b>перчатки с автографом Акселя Солы</b>, бойца UFC",
+"Le jeu en un coup d'œil": "Игра с первого взгляда"
 };

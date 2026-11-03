@@ -830,5 +830,12 @@ export default {
 "Toute l'actu MMA, UFC et boxe en direct, et le jeu de pronos pour la vivre à fond.": "Todas as notícias de MMA, UFC e boxe ao vivo, e o jogo de palpites para viver tudo ao máximo.",
 "L'actu est déjà là : reviens quand tu veux. Le {d}, le jeu ouvre avec le calendrier et les résultats.": "As notícias já estão aqui: volte quando quiser. Em {d}, o jogo abre com o calendário e os resultados.",
 "Suis l'actu": "Acompanhe as notícias",
-"MMA, UFC, boxe, kick : les infos qui comptent, en continu, au même endroit.": "MMA, UFC, boxe, kickboxing: as notícias que importam, sem parar, num só lugar."
+"MMA, UFC, boxe, kick : les infos qui comptent, en continu, au même endroit.": "MMA, UFC, boxe, kickboxing: as notícias que importam, sem parar, num só lugar.",
+"Exemple de prono": "Exemplo de palpite",
+"Ton prono : Gane par KO": "Seu palpite: Gane por KO",
+"Vainqueur, méthode, round : plus ton prono est précis, plus tu gagnes de Gold.": "Vencedor, método, round: quanto mais preciso o palpite, mais Gold você ganha.",
+"Lancement le {d}": "Lançamento em {d}",
+"Pronostique les vrais combats, collectionne les cartes et suis toute l'actu MMA et boxe.": "Dê palpites nas lutas reais, colecione as cartas e acompanhe todas as notícias de MMA e boxe.",
+"Fais inscrire le plus d'amis et gagne <b>des gants dédicacés par Axel Sola</b>, combattant de l'UFC": "Traga mais amigos e ganhe <b>luvas autografadas por Axel Sola</b>, lutador do UFC",
+"Le jeu en un coup d'œil": "O jogo num piscar de olhos"
 };

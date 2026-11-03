@@ -830,5 +830,12 @@ export default {
 "Toute l'actu MMA, UFC et boxe en direct, et le jeu de pronos pour la vivre à fond.": "MMA، UFC اور باکسنگ کی تمام خبریں براہ راست، اور انہیں بھرپور جینے کے لیے پیشگوئی گیم۔",
 "L'actu est déjà là : reviens quand tu veux. Le {d}, le jeu ouvre avec le calendrier et les résultats.": "خبریں ابھی سے یہاں ہیں: جب چاہیں واپس آئیں۔ {d} کو گیم شیڈول اور نتائج کے ساتھ کھلے گا۔",
 "Suis l'actu": "خبریں فالو کریں",
-"MMA, UFC, boxe, kick : les infos qui comptent, en continu, au même endroit.": "MMA، UFC، باکسنگ، کک باکسنگ: اہم خبریں، مسلسل، ایک ہی جگہ۔"
+"MMA, UFC, boxe, kick : les infos qui comptent, en continu, au même endroit.": "MMA، UFC، باکسنگ، کک باکسنگ: اہم خبریں، مسلسل، ایک ہی جگہ۔",
+"Exemple de prono": "پیشگوئی کی مثال",
+"Ton prono : Gane par KO": "آپ کی پیشگوئی: Gane ناک آؤٹ سے",
+"Vainqueur, méthode, round : plus ton prono est précis, plus tu gagnes de Gold.": "فاتح، طریقہ، راؤنڈ: جتنی درست پیشگوئی، اتنا زیادہ Gold۔",
+"Lancement le {d}": "{d} کو لانچ",
+"Pronostique les vrais combats, collectionne les cartes et suis toute l'actu MMA et boxe.": "اصلی مقابلوں کی پیشگوئی کریں، کارڈز جمع کریں اور MMA اور باکسنگ کی تمام خبریں فالو کریں۔",
+"Fais inscrire le plus d'amis et gagne <b>des gants dédicacés par Axel Sola</b>, combattant de l'UFC": "سب سے زیادہ دوستوں کو شامل کریں اور جیتیں <b>UFC فائٹر Axel Sola کے دستخط شدہ دستانے</b>",
+"Le jeu en un coup d'œil": "گیم ایک نظر میں"
 };

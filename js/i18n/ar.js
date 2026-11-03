@@ -830,5 +830,12 @@ export default {
 "Toute l'actu MMA, UFC et boxe en direct, et le jeu de pronos pour la vivre à fond.": "كل أخبار MMA وUFC والملاكمة مباشرة، ولعبة التوقعات لتعيشها بالكامل.",
 "L'actu est déjà là : reviens quand tu veux. Le {d}, le jeu ouvre avec le calendrier et les résultats.": "الأخبار هنا بالفعل: عد متى شئت. في {d} تنطلق اللعبة مع الجدول والنتائج.",
 "Suis l'actu": "تابع الأخبار",
-"MMA, UFC, boxe, kick : les infos qui comptent, en continu, au même endroit.": "MMA وUFC والملاكمة والكيك: الأخبار المهمة دون توقف، في مكان واحد."
+"MMA, UFC, boxe, kick : les infos qui comptent, en continu, au même endroit.": "MMA وUFC والملاكمة والكيك: الأخبار المهمة دون توقف، في مكان واحد.",
+"Exemple de prono": "مثال على توقّع",
+"Ton prono : Gane par KO": "توقّعك: غان بالضربة القاضية",
+"Vainqueur, méthode, round : plus ton prono est précis, plus tu gagnes de Gold.": "الفائز، الطريقة، الجولة: كلما كان توقّعك أدق، ربحت Gold أكثر.",
+"Lancement le {d}": "الإطلاق في {d}",
+"Pronostique les vrais combats, collectionne les cartes et suis toute l'actu MMA et boxe.": "توقّع النزالات الحقيقية، اجمع البطاقات وتابع كل أخبار MMA والملاكمة.",
+"Fais inscrire le plus d'amis et gagne <b>des gants dédicacés par Axel Sola</b>, combattant de l'UFC": "ادعُ أكبر عدد من الأصدقاء واربح <b>قفازات موقّعة من أكسيل سولا</b>، مقاتل UFC",
+"Le jeu en un coup d'œil": "اللعبة في لمحة"
 };

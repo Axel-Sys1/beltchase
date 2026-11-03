@@ -830,5 +830,12 @@ export default {
 "Toute l'actu MMA, UFC et boxe en direct, et le jeu de pronos pour la vivre à fond.": "MMA、UFC 与拳击的全部新闻实时更新，再加上竞猜游戏，让你尽情投入。",
 "L'actu est déjà là : reviens quand tu veux. Le {d}, le jeu ouvre avec le calendrier et les résultats.": "新闻已经上线：随时回来看看。{d}，游戏将随赛程和结果一起开放。",
 "Suis l'actu": "关注新闻",
-"MMA, UFC, boxe, kick : les infos qui comptent, en continu, au même endroit.": "MMA、UFC、拳击、踢拳：重要消息不间断，一站看全。"
+"MMA, UFC, boxe, kick : les infos qui comptent, en continu, au même endroit.": "MMA、UFC、拳击、踢拳：重要消息不间断，一站看全。",
+"Exemple de prono": "竞猜示例",
+"Ton prono : Gane par KO": "你的竞猜：Gane KO 获胜",
+"Vainqueur, méthode, round : plus ton prono est précis, plus tu gagnes de Gold.": "胜者、方式、回合：竞猜越精准，赢得的 Gold 越多。",
+"Lancement le {d}": "{d}上线",
+"Pronostique les vrais combats, collectionne les cartes et suis toute l'actu MMA et boxe.": "竞猜真实比赛，收集卡牌，关注所有 MMA 与拳击新闻。",
+"Fais inscrire le plus d'amis et gagne <b>des gants dédicacés par Axel Sola</b>, combattant de l'UFC": "邀请最多好友预约，赢取<b>UFC 选手 Axel Sola 亲笔签名的拳套</b>",
+"Le jeu en un coup d'œil": "游戏一览"
 };

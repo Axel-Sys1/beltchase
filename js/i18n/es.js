@@ -830,5 +830,12 @@ export default {
 "Toute l'actu MMA, UFC et boxe en direct, et le jeu de pronos pour la vivre à fond.": "Toda la actualidad de MMA, UFC y boxeo en directo, y el juego de pronósticos para vivirla a tope.",
 "L'actu est déjà là : reviens quand tu veux. Le {d}, le jeu ouvre avec le calendrier et les résultats.": "Las noticias ya están aquí: vuelve cuando quieras. El {d}, el juego abre con el calendario y los resultados.",
 "Suis l'actu": "Sigue la actualidad",
-"MMA, UFC, boxe, kick : les infos qui comptent, en continu, au même endroit.": "MMA, UFC, boxeo, kick: las noticias que importan, sin parar, en un solo lugar."
+"MMA, UFC, boxe, kick : les infos qui comptent, en continu, au même endroit.": "MMA, UFC, boxeo, kick: las noticias que importan, sin parar, en un solo lugar.",
+"Exemple de prono": "Ejemplo de pronóstico",
+"Ton prono : Gane par KO": "Tu pronóstico: Gane por KO",
+"Vainqueur, méthode, round : plus ton prono est précis, plus tu gagnes de Gold.": "Ganador, método, asalto: cuanto más preciso tu pronóstico, más Gold ganas.",
+"Lancement le {d}": "Lanzamiento el {d}",
+"Pronostique les vrais combats, collectionne les cartes et suis toute l'actu MMA et boxe.": "Pronostica combates reales, colecciona las cartas y sigue toda la actualidad de MMA y boxeo.",
+"Fais inscrire le plus d'amis et gagne <b>des gants dédicacés par Axel Sola</b>, combattant de l'UFC": "Consigue que se inscriban más amigos y gana <b>unos guantes firmados por Axel Sola</b>, luchador de la UFC",
+"Le jeu en un coup d'œil": "El juego de un vistazo"
 };

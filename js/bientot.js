@@ -27,6 +27,7 @@ const DONE_KEY = 'beltchase:preinscrit'; // { email, code } de l'inscription fai
 const REF_KEY = 'beltchase:ref';
 const CODES_KEY = 'beltchase:mescodes'; // codes des inscriptions faites ici : pas de parrainage de soi-même
 const COUNT_EVERY_MS = 60_000; // nombre d'inscrits relu toutes les minutes (1 lecture Firestore)
+const SHOW_COUNT_FROM = 50; // en dessous, le compteur ferait vide : on ne l'affiche pas
 const TOP = 10; // lignes du classement des parrains
 const EMAIL = /^[^@\s/]+@[^@\s/]+\.[^@\s/]+$/; // pas de « / » : l'adresse sert d'identifiant de document
 const PSEUDO = /^[\p{L}\p{N} _.-]{2,16}$/u;
@@ -143,9 +144,8 @@ async function loadCount() {
     const snap = await F.getDoc(F.doc(d, 'stats', 'preinscriptions'));
     const n = snap.exists() ? snap.data().count : 0;
     const el = root.querySelector('.pre-count');
-    if (!el) return;
-    el.innerHTML = n ? `<span class="pre-count-dot" aria-hidden="true"></span>${tn(n, '<b>{n}</b> fan déjà pré-inscrit', '<b>{n}</b> fans déjà pré-inscrits', { n: fmt(n) })}`
-      : t('Sois le premier à te pré-inscrire !');
+    if (!el || n < SHOW_COUNT_FROM) return;
+    el.innerHTML = `<span class="pre-count-dot" aria-hidden="true"></span>${tn(n, '<b>{n}</b> fan déjà pré-inscrit', '<b>{n}</b> fans déjà pré-inscrits', { n: fmt(n) })}`;
     el.hidden = false;
   } catch { /* compteur facultatif */ }
 }
@@ -216,6 +216,8 @@ const formHtml = () => (done ? `
 
 // Actus (js/services/news.js, comme l'écran Actus du jeu) : seulement les 3 « à la une » du moment.
 // Seulement le titre, la source et un lien vers l'article d'origine.
+// Titres avec un gros mot (citations) : pas sur la page d'accueil.
+const VULGAR = /\b(putain|merde|connard|conne?s?|encul\w*|salope|pute|niqu\w*|batard|fuck\w*|shit|bitch)\b/i;
 const ago = (ts) => {
   const m = Math.max(1, Math.round((Date.now() - ts) / 60000));
   try {
@@ -225,7 +227,7 @@ const ago = (ts) => {
 };
 function newsHtml() {
   if (!news.items.length) return `<p class="pre-board-empty">${news.error ? t('Les actus sont momentanément indisponibles.') : t('Chargement…')}</p>`;
-  const top = headlines(news.items, 3);
+  const top = headlines(news.items.filter((a) => !VULGAR.test(a.title)), 3);
   const link = (a, inner, cls) => `<a class="${cls}" href="${escapeHtml(a.link)}" target="_blank" rel="noopener">${inner}</a>`;
   return `
     <div class="pn-top">${top.map((a) => link(a, `
@@ -236,13 +238,24 @@ function newsHtml() {
 function renderNews() {
   const el = root.querySelector('.pre-news-body');
   if (el) el.innerHTML = newsHtml();
-  // Bandeau « En direct » sous le compte à rebours : la plus grosse actu, renvoie vers la section.
-  const flash = root.querySelector('.pre-flash');
-  const top = headlines(news.items, 1)[0] || news.items[0];
-  if (flash && top) {
-    flash.innerHTML = `<span class="pre-live">${t('En direct')}</span><span class="pre-flash-t">${escapeHtml(top.title)}</span>`;
-    flash.hidden = false;
-  }
+}
+
+// Aperçu du jeu : un prono comme dans l'appli (maquette statique, cotes d'exemple).
+const oct = (code, initials) => `<span class="pv-oct" style="background-image:url(https://flagcdn.com/w160/${code}.png)"><b>${initials}</b></span>`;
+function previewHtml() {
+  return `
+  <div class="pv" aria-label="${t('Exemple de prono')}">
+    <p class="pv-ev">UFC · ${t('Combat principal')} · ${t('Poids lourds')}</p>
+    <div class="pv-fight">
+      <div class="pv-f">${oct('fr', 'CG')}<strong>Gane</strong></div>
+      <span class="pv-vs">VS</span>
+      <div class="pv-f">${oct('us', 'JH')}<strong>Hokit</strong></div>
+    </div>
+    <div class="pv-odds"><span class="is-on">Gane <b>2,18</b></span><span>Hokit <b>1,63</b></span></div>
+    <div class="pv-meth"><span class="is-on">KO / TKO</span><span>${t('Soumission')}</span><span>${t('Décision')}</span></div>
+    <div class="pv-slip"><span>${t('Ton prono : Gane par KO')}</span><b>× 4,40</b></div>
+    <p class="pv-cap">${t('Vainqueur, méthode, round : plus ton prono est précis, plus tu gagnes de Gold.')}</p>
+  </div>`;
 }
 
 function boardHtml() {
@@ -273,40 +286,45 @@ function render() {
     </header>
 
     <section class="pre-hero">
-      <p class="pre-kicker">${t('Lancement officiel')}</p>
+      <p class="pre-kicker">${t('Lancement le {d}', { d: escapeHtml(launchDay) })}</p>
       <h1 class="pre-title">${t('L\'actu et les pronos <b>des fans de combat</b>')}</h1>
-      <p class="pre-tagline">${t('Toute l\'actu MMA, UFC et boxe en direct, et le jeu de pronos pour la vivre à fond.')}</p>
-      <p class="pre-date">${escapeHtml(launchDay).replace(/^1er /, '1<sup>er</sup> ')}</p>
-
-      <div class="pre-cards" aria-label="${t('Exemples de cartes à collectionner')}">
-        ${SHOWCASE.map(([id, flag], i) => { const c = CARDS.find((x) => x.id === id); return c ? `<div class="lc lc-${i}">${fightCardHtml(c, { flag })}</div>` : ''; }).join('')}
-      </div>
-      <p class="pre-cards-cap">${t('{n} cartes à collectionner · MMA, boxe, kick, JJB…', { n: CARDS.length })}</p>
-
-      <div class="cd" role="timer" aria-label="${t('Compte à rebours avant le lancement')}">
-        ${[t('Jours'), t('Heures'), t('Min'), t('Sec')].map((l) => `<div class="cd-cell"><span class="cd-num">–</span><span class="cd-lbl">${l}</span></div>`).join('')}
-      </div>
-
-      <p class="pre-count" role="status" hidden></p>
-      <a class="pre-flash" href="#pre-news" hidden></a>
+      <p class="pre-tagline">${t('Pronostique les vrais combats, collectionne les cartes et suis toute l\'actu MMA et boxe.')}</p>
+      ${CONFIG.CONTEST_PRIZE ? `<a class="pre-prize-top" href="#pre-board"><span class="pre-prize-ico" aria-hidden="true">🥊</span><span>${t('Fais inscrire le plus d\'amis et gagne <b>des gants dédicacés par Axel Sola</b>, combattant de l\'UFC')}</span></a>` : ''}
 
       <div class="pre-card">
         <p class="pre-gift"><span aria-hidden="true">🎁</span> ${t('Pré-inscris-toi : ton <b>pseudo réservé</b>, <b>{n} Gold</b>, le cadre et le titre exclusifs <b>OG</b> au lancement.', { n: fmt(CONFIG.PRELAUNCH_BONUS) })}</p>
         <div class="pre-form-slot">${formHtml()}</div>
       </div>
+
+      <div class="cd" role="timer" aria-label="${t('Compte à rebours avant le lancement')}">
+        ${[t('Jours'), t('Heures'), t('Min'), t('Sec')].map((l) => `<div class="cd-cell"><span class="cd-num">–</span><span class="cd-lbl">${l}</span></div>`).join('')}
+      </div>
+      <p class="pre-count" role="status" hidden></p>
     </section>
 
-    <section class="pre-news" id="pre-news" aria-labelledby="pre-news-title">
-      <h2 id="pre-news-title"><span class="pre-live">${t('En direct')}</span>${t('L\'actu du moment')}</h2>
-      <p class="pre-news-sub">${t('L\'actu est déjà là : reviens quand tu veux. Le {d}, le jeu ouvre avec le calendrier et les résultats.', { d: launchDay })}</p>
-      <div class="pre-news-body">${newsHtml()}</div>
+    <section class="pre-game" aria-labelledby="pre-game-title">
+      <h2 id="pre-game-title">${t('Le jeu en un coup d\'œil')}</h2>
+      <div class="pre-game-grid">
+        ${previewHtml()}
+        <div>
+          <div class="pre-cards" aria-label="${t('Exemples de cartes à collectionner')}">
+            ${SHOWCASE.map(([id, flag], i) => { const c = CARDS.find((x) => x.id === id); return c ? `<div class="lc lc-${i}">${fightCardHtml(c, { flag })}</div>` : ''; }).join('')}
+          </div>
+          <p class="pre-cards-cap">${t('{n} cartes à collectionner · MMA, boxe, kick, JJB…', { n: CARDS.length })}</p>
+        </div>
+      </div>
     </section>
 
-    <section class="pre-board" aria-labelledby="pre-board-title">
+    <section class="pre-board" id="pre-board" aria-labelledby="pre-board-title">
       <h2 id="pre-board-title">${t('Classement des parrains')}</h2>
       ${CONFIG.CONTEST_PRIZE ? `<p class="pre-prize"><span aria-hidden="true">🥊</span> ${t('Le n°1 le {d} à minuit gagne <b>des gants dédicacés par Axel Sola</b>, combattant de l\'UFC, livrés chez lui !', { d: launchDay })} <a href="/legal#concours">${t('Règlement')}</a></p>` : ''}
       <p class="pre-board-sub">${t('Seuls comptent les amis qui se pré-inscrivent avec ton lien. Partager ne suffit pas.')}</p>
       <div class="pre-board-body">${boardHtml()}</div>
+    </section>
+
+    <section class="pre-news" id="pre-news" aria-labelledby="pre-news-title">
+      <h2 id="pre-news-title"><span class="pre-live">${t('En direct')}</span>${t('L\'actu du moment')}</h2>
+      <div class="pre-news-body">${newsHtml()}</div>
     </section>
 
     <section class="pre-feats">

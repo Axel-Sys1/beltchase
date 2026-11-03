@@ -830,5 +830,12 @@ export default {
 "Toute l'actu MMA, UFC et boxe en direct, et le jeu de pronos pour la vivre à fond.": "MMA, UFC আর বক্সিংয়ের সব খবর লাইভ, আর পুরোপুরি উপভোগ করতে প্রেডিকশন গেম।",
 "L'actu est déjà là : reviens quand tu veux. Le {d}, le jeu ouvre avec le calendrier et les résultats.": "খবর এখনই এখানে: যখন খুশি ফিরে এসো। {d} গেম চালু হবে সূচি আর ফলাফল নিয়ে।",
 "Suis l'actu": "খবর ফলো করো",
-"MMA, UFC, boxe, kick : les infos qui comptent, en continu, au même endroit.": "MMA, UFC, বক্সিং, কিকবক্সিং: দরকারি খবর, অবিরাম, এক জায়গায়।"
+"MMA, UFC, boxe, kick : les infos qui comptent, en continu, au même endroit.": "MMA, UFC, বক্সিং, কিকবক্সিং: দরকারি খবর, অবিরাম, এক জায়গায়।",
+"Exemple de prono": "প্রেডিকশনের উদাহরণ",
+"Ton prono : Gane par KO": "তোমার প্রেডিকশন: Gane, KO-তে",
+"Vainqueur, méthode, round : plus ton prono est précis, plus tu gagnes de Gold.": "বিজয়ী, পদ্ধতি, রাউন্ড: যত নিখুঁত প্রেডিকশন, তত বেশি Gold।",
+"Lancement le {d}": "{d} লঞ্চ",
+"Pronostique les vrais combats, collectionne les cartes et suis toute l'actu MMA et boxe.": "আসল ফাইটে প্রেডিক্ট করো, কার্ড সংগ্রহ করো আর MMA ও বক্সিংয়ের সব খবর ফলো করো।",
+"Fais inscrire le plus d'amis et gagne <b>des gants dédicacés par Axel Sola</b>, combattant de l'UFC": "সবচেয়ে বেশি বন্ধু যোগ করাও আর জেতো <b>UFC ফাইটার Axel Sola-র সই করা গ্লাভস</b>",
+"Le jeu en un coup d'œil": "এক নজরে গেম"
 };
