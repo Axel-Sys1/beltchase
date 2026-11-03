@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BeltChase · Reel de présentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;1,700;1,800&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/cards.css">
+<!-- Reel / TikTok de présentation (1080 × 1920, 15 s, sans musique : le son tendance s'ajoute dans l'appli).
+     window.seek(t) fige l'animation à t secondes : les images sont exportées une à une puis assemblées en
+     MP4 (tools/frames2mp4.swift). Ouvrir la page tout court pour la voir jouer. -->
+<style>
+  :root { --display: 'Barlow Condensed', sans-serif; --body: 'Barlow', sans-serif; --muted: #8a9abb; --accent: #f2b630; --accent-ink: #08122a;
+    --gold: linear-gradient(180deg, #ffe08a, #f2b630 55%, #c48a12); --ease-out: cubic-bezier(.2,.9,.3,1); }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #000; display: grid; place-items: center; min-height: 100vh; }
+  #stage { position: relative; width: 1080px; height: 1920px; overflow: hidden; color: #fff; font-family: var(--body);
+    background: radial-gradient(70% 45% at 50% 40%, #16295a, #08122a 70%, #050a18); transform-origin: top center; }
+  #stage::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(120deg, transparent 0 46px, rgba(255,255,255,.025) 46px 50px); }
+  @media (max-height: 1920px) { #stage { transform: scale(calc(100vh / 1920px)); } }
+  .scene { position: absolute; inset: 0; opacity: 0; animation: show var(--d) linear var(--s) both; }
+  @keyframes show { 0% { opacity: 0; } 8% { opacity: 1; } 92% { opacity: 1; } 100% { opacity: 0; } }
+  .last { animation-name: show-last; }
+  @keyframes show-last { 0% { opacity: 0; } 8% { opacity: 1; } 100% { opacity: 1; } }
+
+  .cage { position: absolute; left: 50%; top: 50%; width: 900px; height: 900px; fill: none; transform: translate(-50%, -50%); }
+  .cage path { stroke: #f2b630; stroke-width: 3; vector-effect: non-scaling-stroke; }
+  .cage path + path { stroke-dasharray: 10 12; opacity: .6; }
+  .bg-cage { opacity: .12; animation: spin 15s linear both; }
+  @keyframes spin { to { transform: translate(-50%, -50%) rotate(45deg) scale(1.15); } }
+
+  /* 1. Intro */
+  .intro-cage { animation: zoom 2.2s cubic-bezier(.55,0,.2,1) both; filter: drop-shadow(0 0 30px rgba(242,182,48,.7)); }
+  @keyframes zoom { 0% { transform: translate(-50%,-50%) scale(.1) rotate(-25deg); opacity: 0; } 25% { opacity: 1; } 100% { transform: translate(-50%,-50%) scale(3.2) rotate(0); opacity: .1; } }
+  .intro-logo { position: absolute; left: 50%; top: 50%; display: flex; align-items: center; gap: 26px; transform: translate(-50%,-50%);
+    font: italic 800 150px/1 var(--display); animation: logo 2.2s ease-out both; }
+  .intro-logo b { color: var(--accent); font-weight: inherit; }
+  .intro-logo svg { width: 170px; height: 170px; }
+  @keyframes logo { 0% { opacity: 0; transform: translate(-50%,-50%) scale(.7); } 30%, 75% { opacity: 1; transform: translate(-50%,-50%) scale(1); } 100% { opacity: 0; transform: translate(-50%,-50%) scale(1.4); } }
+
+  .title { position: absolute; left: 60px; right: 60px; text-align: center; font: italic 800 150px/.9 var(--display); text-transform: uppercase; }
+  .title em { font-style: inherit; padding: 0 .08em; background: var(--gold); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .kick { position: absolute; left: 0; right: 0; text-align: center; font: 700 44px/1 var(--display); letter-spacing: .22em; text-transform: uppercase; color: var(--muted); }
+  .up { animation: up .7s var(--ease-out) var(--u, 0s) both; }
+  @keyframes up { from { opacity: 0; transform: translateY(60px); } }
+  .pop { animation: pop .5s cubic-bezier(.3,1.5,.5,1) var(--u, 0s) both; }
+  @keyframes pop { from { opacity: 0; transform: scale(.6); } }
+
+  /* 3. Prono */
+  .pv { position: absolute; left: 90px; right: 90px; top: 640px; padding: 46px; border-radius: 40px; background: linear-gradient(180deg, #15284f, #0f1f40); border: 3px solid #2d4a7c; box-shadow: 0 40px 80px -30px #000; }
+  .pv-ev { text-align: center; color: var(--muted); font: 700 32px/1 var(--display); letter-spacing: .12em; text-transform: uppercase; margin-bottom: 34px; }
+  .pv-fight { display: flex; align-items: center; justify-content: space-around; }
+  .pv-f { display: grid; justify-items: center; gap: 18px; }
+  .pv-f strong { font: italic 800 72px/1 var(--display); text-transform: uppercase; }
+  .oct { width: 190px; height: 190px; background-size: cover; background-position: center; clip-path: polygon(30% 0,70% 0,100% 30%,100% 70%,70% 100%,30% 100%,0 70%,0 30%); }
+  .vs { width: 110px; height: 110px; display: grid; place-items: center; background: var(--gold); color: var(--accent-ink); font: italic 800 46px/1 var(--display); clip-path: polygon(30% 0,70% 0,100% 30%,100% 70%,70% 100%,30% 100%,0 70%,0 30%); }
+  .row { display: grid; gap: 18px; margin-top: 30px; }
+  .r2 { grid-template-columns: 1fr 1fr; } .r3 { grid-template-columns: repeat(3, 1fr); }
+  .btn { position: relative; display: flex; justify-content: space-between; align-items: center; padding: 26px 28px; border-radius: 18px; background: #0b1733; border: 3px solid #20365f; font: 600 38px/1 var(--body); overflow: hidden; }
+  .r3 .btn { justify-content: center; font-size: 32px; padding: 24px 6px; }
+  .btn b { font: 800 46px/1 var(--display); }
+  .btn i { position: absolute; inset: 0; background: var(--gold); opacity: 0; animation: on .25s ease-out var(--u) both; }
+  .btn span, .btn b { position: relative; }
+  .btn.sel span, .btn.sel b { animation: ink .25s ease-out var(--u) both; }
+  @keyframes on { to { opacity: 1; } }
+  @keyframes ink { to { color: #08122a; } }
+  .slip { display: flex; justify-content: space-between; align-items: center; margin-top: 30px; padding: 26px 30px; border-radius: 18px; border: 3px dashed rgba(242,182,48,.7); font: 600 38px/1 var(--body); }
+  .slip b { color: var(--accent); font: 800 60px/1 var(--display); }
+
+  /* 4. Cartes */
+  .fan { position: absolute; left: 0; right: 0; top: 660px; height: 800px; }
+  .fan .lc { position: absolute; top: 0; left: 50%; width: 400px; }
+  .fan .lc-0 { transform: translateX(-120%) rotate(-12deg) translateY(90px); }
+  .fan .lc-2 { transform: translateX(20%) rotate(12deg) translateY(90px); }
+  .fan .lc-1 { transform: translateX(-50%) scale(1.12); z-index: 2; }
+  .fan .lc > div { animation: card .6s cubic-bezier(.3,1.4,.5,1) var(--u) both; }
+  @keyframes card { from { opacity: 0; transform: translateY(160px) rotate(8deg); } }
+
+  /* 5. Rangs */
+  .ranks { position: absolute; left: 90px; right: 90px; top: 640px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 60px 20px; }
+  .ranks div { display: grid; justify-items: center; gap: 16px; font: italic 800 48px/1 var(--display); text-transform: uppercase; }
+  .ranks svg { width: 150px; height: 170px; filter: drop-shadow(0 0 24px color-mix(in srgb, currentColor 55%, transparent)); }
+
+  /* 6. Fin */
+  .date { position: absolute; left: 0; right: 0; top: 580px; text-align: center; font: italic 800 196px/.9 var(--display); text-transform: uppercase; }
+  .date em { font-style: inherit; padding: 0 .06em; background: var(--gold); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .prize { position: absolute; left: 110px; right: 110px; top: 1080px; padding: 34px 40px; border-radius: 26px; text-align: center; font: 600 46px/1.3 var(--body);
+    background: linear-gradient(90deg, rgba(242,182,48,.3), rgba(242,182,48,.08)); border: 3px solid rgba(242,182,48,.7); }
+  .prize b { color: var(--accent); }
+  .cta { position: absolute; left: 50%; top: 1400px; transform: translateX(-50%); white-space: nowrap; padding: 34px 70px; border-radius: 24px; background: var(--gold); color: var(--accent-ink);
+    font: italic 800 72px/1 var(--display); text-transform: uppercase; box-shadow: 0 20px 60px -10px rgba(242,182,48,.6); }
+  .foot { position: absolute; left: 0; right: 0; top: 1640px; text-align: center; font: 700 38px/1 var(--display); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+  .mini-logo { position: absolute; left: 50%; top: 250px; transform: translateX(-50%); display: flex; align-items: center; gap: 18px; font: italic 800 74px/1 var(--display); }
+  .mini-logo b { color: var(--accent); font-weight: inherit; }
+  .mini-logo svg { width: 92px; height: 92px; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <svg class="cage bg-cage" viewBox="0 0 400 400"><path d="M117 8h166l109 109v166L283 392H117L8 283V117z"/><path d="M128 36h144l92 92v144l-92 92H128l-92-92V128z"/></svg>
+  <div id="scenes"></div>
+</div>
+<template id="logo"><svg viewBox="0 0 64 64"><path d="M21 3h22l18 18v22L43 61H21L3 43V21z" fill="#0b1733" stroke="#f2b630" stroke-width="5" stroke-linejoin="round"/><text x="32" y="42" text-anchor="middle" font-family="Barlow Condensed, sans-serif" font-style="italic" font-weight="800" font-size="27" fill="#f2b630">BC</text></svg></template>
+<script type="module">
+import { CARDS } from '../js/data/cards.js';
+import { fightCardHtml } from '../js/ui/fightCard.js';
+import { RADIANT, TIERS } from '../js/services/ranks.js';
+import { rankEmblem } from '../js/ui/icons.js';
+
+const logo = document.getElementById('logo').innerHTML;
+const card = (id, flag) => fightCardHtml(CARDS.find((c) => c.id === id), { flag });
+const scene = (s, d, html, cls = '') => `<div class="scene ${cls}" style="--s:${s}s;--d:${d}s">${html}</div>`;
+const at = (s) => `--u:${s}s`;
+
+document.getElementById('scenes').innerHTML = [
+  scene(0, 2.3, `
+    <svg class="cage intro-cage" viewBox="0 0 400 400"><path d="M117 8h166l109 109v166L283 392H117L8 283V117z"/><path d="M128 36h144l92 92v144l-92 92H128l-92-92V128z"/></svg>
+    <div class="intro-logo">${logo}<span>BELT<b>CHASE</b></span></div>`),
+  scene(2.2, 2.6, `
+    <div class="title up" style="top:700px;${at(2.3)}">Le jeu de pronos<br><em>des fans de combat</em></div>
+    <div class="kick up" style="top:1120px;${at(2.7)}">MMA · UFC · boxe · kick · JJB</div>`),
+  scene(4.7, 3.1, `
+    <div class="title up" style="top:330px;font-size:130px;${at(4.75)}"><em>Pronostique</em></div>
+    <div class="pv up" style="${at(4.9)}">
+      <div class="pv-ev">UFC · Combat principal</div>
+      <div class="pv-fight">
+        <div class="pv-f"><div class="oct" style="background-image:url(https://flagcdn.com/w320/fr.png)"></div><strong>Gane</strong></div>
+        <div class="vs">VS</div>
+        <div class="pv-f"><div class="oct" style="background-image:url(https://flagcdn.com/w320/us.png)"></div><strong>Hokit</strong></div>
+      </div>
+      <div class="row r2"><div class="btn sel" style="${at(5.7)}"><i></i><span>Gane</span><b>2,18</b></div><div class="btn"><span>Hokit</span><b>1,63</b></div></div>
+      <div class="row r3"><div class="btn sel" style="${at(6.3)}"><i></i><span>KO / TKO</span></div><div class="btn"><span>Soumission</span></div><div class="btn"><span>Décision</span></div></div>
+      <div class="slip pop" style="${at(6.9)}"><span>Ton prono : Gane par KO</span><b>× 4,40</b></div>
+    </div>`),
+  scene(7.7, 2.5, `
+    <div class="title up" style="top:330px;font-size:130px;${at(7.75)}"><em>Collectionne</em></div>
+    <div class="fan">
+      <div class="lc lc-0"><div style="${at(8.0)}">${card('boxe-tyson-fury', '🇬🇧')}</div></div>
+      <div class="lc lc-2"><div style="${at(8.25)}">${card('boxe-oleksandr-usyk', '🇺🇦')}</div></div>
+      <div class="lc lc-1"><div style="${at(8.5)}">${card('mma-ilia-topuria', '🇬🇪')}</div></div>
+    </div>
+    <div class="kick up" style="top:1560px;${at(8.8)}">151 cartes de combattants</div>`),
+  scene(10.1, 2.2, `
+    <div class="title up" style="top:330px;font-size:120px;${at(10.15)}">Chasse <em>la ceinture</em></div>
+    <div class="ranks">${[...TIERS, RADIANT].map((r, i) => `<div class="pop" style="color:${r.color};${at(10.3 + i * 0.09)}">${rankEmblem({ ...r, division: r.id === 'radiant' ? null : 3, label: r.name })}${r.name}</div>`).join('')}</div>`),
+  scene(12.2, 2.8, `
+    <div class="mini-logo up" style="${at(12.25)}">${logo}<span>BELT<b>CHASE</b></span></div>
+    <div class="kick up" style="top:470px;${at(12.3)}">Lancement</div>
+    <div class="date up" style="${at(12.35)}"><em>3 décembre</em></div>
+    <div class="prize up" style="${at(12.7)}">Les gants dédicacés d'<b>Axel Sola</b><br>pour le meilleur parrain</div>
+    <div class="cta pop" style="${at(13.1)}">Lien en bio</div>
+    <div class="foot up" style="${at(13.3)}">Gratuit · sans argent réel</div>`, 'last'),
+].join('');
+
+// Silhouettes des cartes en données intégrées : l'export (html-to-image) ne recharge pas les url() des masques.
+window.ready = Promise.all([...document.querySelectorAll('.fc-sil')].map(async (el) => {
+  const raw = /url\('([^']+)'\)/.exec(el.getAttribute('style'))?.[1];
+  if (!raw) return;
+  const url = new URL(raw).pathname.replace(/^\/marketing\//, '/'); // la page est dans marketing/ : images à la racine
+  const blob = await (await fetch(url)).blob();
+  const data = await new Promise((ok) => { const r = new FileReader(); r.onload = () => ok(r.result); r.readAsDataURL(blob); });
+  el.style.setProperty('--sil', `url('${data}')`);
+}));
+
+// Export image par image : fige toutes les animations à t secondes.
+window.seek = (t) => {
+  for (const a of document.getAnimations()) { a.pause(); a.currentTime = t * 1000; }
+};
+window.DURATION = 15;
+if (new URLSearchParams(location.search).has('export')) window.seek(0);
+</script>
+</body>
+</html>
