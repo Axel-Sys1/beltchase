@@ -6,7 +6,7 @@ export const CONFIG = {
   ADMIN_EMAILS: ['axel.sirieys@gmail.com'],
   // Lancement officiel. Avant cette date, beltchase.com affiche la page de pré-inscription (bientot.html,
   // functions/_middleware.js) ; ?app dans l'adresse ouvre quand même le jeu (aperçu, admin).
-  LAUNCH_AT: '2026-12-01T00:00:00+01:00',
+  LAUNCH_AT: '2026-12-03T00:00:00+01:00',
   PRELAUNCH_BONUS: 1000, // Gold offerts à chaque pré-inscrit, à sa première connexion avec le même e-mail
   INSTAGRAM: 'https://www.instagram.com/beltchase.officiel/',
   // Concours des parrains de la pré-inscription (bientot.html, règlement : legal.html#concours) : le n°1 du

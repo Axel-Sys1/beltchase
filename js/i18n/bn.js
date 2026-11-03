@@ -768,7 +768,7 @@ export default {
 "Fiche du combattant": "ফাইটার প্রোফাইল",
 "Touche une de tes cartes pour voir les stats du combattant et en faire ta favorite.": "ফাইটারের পরিসংখ্যান দেখতে আর প্রিয় করতে আপনার কোনো কার্ডে চাপুন।",
 "Affiche {m}": "{m} পোস্টার",
-"Lancement le 1er décembre": "১ ডিসেম্বর লঞ্চ",
+"Lancement le 3 décembre": "৩ ডিসেম্বর লঞ্চ",
 "<b>{n}</b> fans déjà pré-inscrits": "<b>{n}</b> জন ফ্যান আগেই প্রি-রেজিস্টার করেছে",
 "Tu es sur la liste !": "তুমি লিস্টে আছ!",
 "Rendez-vous le {d}. Crée ton compte avec <b>{e}</b> pour recevoir ton bonus.": "{d} দেখা হবে। বোনাস পেতে <b>{e}</b> দিয়ে অ্যাকাউন্ট খোলো।",

@@ -64,6 +64,6 @@ Légende :
 > 🃏 151 cartes de combattants à collectionner
 > 🏆 Une ceinture à gagner chaque mois
 > Gratuit · 100 % virtuel · sans argent réel.
-> 🎁 Pré-inscris-toi (lien en bio) : 1 000 Gold offerts au lancement le 1er décembre
+> 🎁 Pré-inscris-toi (lien en bio) : 1 000 Gold offerts au lancement le 3 décembre
 > Ton prono pour le prochain gros combat ? Dis-le en commentaire 👇
 > #MMA #UFC #boxe #pronostic #sportsdecombat #MMAFrance

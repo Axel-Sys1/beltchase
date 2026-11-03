@@ -768,7 +768,7 @@ export default {
 "Fiche du combattant": "选手资料",
 "Touche une de tes cartes pour voir les stats du combattant et en faire ta favorite.": "点你的一张卡牌，查看选手数据并设为最爱。",
 "Affiche {m}": "{m} 海报",
-"Lancement le 1er décembre": "12月1日上线",
+"Lancement le 3 décembre": "12月3日上线",
 "<b>{n}</b> fans déjà pré-inscrits": "已有 <b>{n}</b> 位粉丝预约",
 "Tu es sur la liste !": "你已在名单中！",
 "Rendez-vous le {d}. Crée ton compte avec <b>{e}</b> pour recevoir ton bonus.": "{d}见。用 <b>{e}</b> 注册账号即可领取奖励。",

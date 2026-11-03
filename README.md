@@ -25,7 +25,7 @@ match /fights/{id} {
 
 ## Pré-inscription (jusqu'au lancement)
 
-Avant `CONFIG.LAUNCH_AT` (1er décembre 2026, minuit à Paris), l'accueil de beltchase.com sert
+Avant `CONFIG.LAUNCH_AT` (3 décembre 2026, minuit à Paris), l'accueil de beltchase.com sert
 `bientot.html` (compte à rebours + inscription par e-mail, `js/bientot.js`, `css/bientot.css`) à la
 place du jeu (`functions/_middleware.js`). `https://beltchase.com/?app` ouvre le jeu et s'en souvient
 30 jours (cookie) : aperçu, page admin. À l'heure du lancement, la page bascule seule sur le jeu.

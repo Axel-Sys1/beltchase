@@ -768,7 +768,7 @@ export default {
 "Fiche du combattant": "ملف المقاتل",
 "Touche une de tes cartes pour voir les stats du combattant et en faire ta favorite.": "اضغط على إحدى بطاقاتك لترى إحصاءات المقاتل وتجعلها مفضّلتك.",
 "Affiche {m}": "ملصق {m}",
-"Lancement le 1er décembre": "الإطلاق في 1 ديسمبر",
+"Lancement le 3 décembre": "الإطلاق في 3 ديسمبر",
 "<b>{n}</b> fans déjà pré-inscrits": "<b>{n}</b> من المشجعين سجّلوا مسبقًا",
 "Tu es sur la liste !": "أنت على القائمة!",
 "Rendez-vous le {d}. Crée ton compte avec <b>{e}</b> pour recevoir ton bonus.": "نلتقي في {d}. أنشئ حسابك باستخدام <b>{e}</b> لتحصل على مكافأتك.",

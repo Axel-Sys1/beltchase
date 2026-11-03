@@ -768,7 +768,7 @@ export default {
 "Fiche du combattant": "فائٹر پروفائل",
 "Touche une de tes cartes pour voir les stats du combattant et en faire ta favorite.": "فائٹر کے اعداد و شمار دیکھنے اور پسندیدہ بنانے کے لیے اپنا کوئی کارڈ دبائیں۔",
 "Affiche {m}": "{m} پوسٹر",
-"Lancement le 1er décembre": "1 دسمبر کو لانچ",
+"Lancement le 3 décembre": "3 دسمبر کو لانچ",
 "<b>{n}</b> fans déjà pré-inscrits": "<b>{n}</b> فینز پہلے ہی پری رجسٹر کر چکے ہیں",
 "Tu es sur la liste !": "آپ فہرست میں ہیں!",
 "Rendez-vous le {d}. Crée ton compte avec <b>{e}</b> pour recevoir ton bonus.": "{d} کو ملتے ہیں۔ بونس کے لیے <b>{e}</b> سے اکاؤنٹ بنائیں۔",

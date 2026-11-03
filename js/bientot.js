@@ -55,7 +55,7 @@ const myLink = () => `https://beltchase.com/?ref=${done.code}`;
 
 document.documentElement.lang = lang;
 if (langInfo.rtl) document.documentElement.dir = 'rtl';
-document.title = `BeltChase · ${t('Lancement le 1er décembre')}`;
+document.title = `BeltChase · ${t('Lancement le 3 décembre')}`;
 
 let fb = null;
 async function db() {

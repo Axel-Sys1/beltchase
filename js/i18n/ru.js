@@ -768,7 +768,7 @@ export default {
 "Fiche du combattant": "Профиль бойца",
 "Touche une de tes cartes pour voir les stats du combattant et en faire ta favorite.": "Нажми на свою карту, чтобы увидеть статистику бойца и сделать её любимой.",
 "Affiche {m}": "Афиша: {m}",
-"Lancement le 1er décembre": "Запуск 1 декабря",
+"Lancement le 3 décembre": "Запуск 3 декабря",
 "<b>{n}</b> fans déjà pré-inscrits": "<b>{n}</b> фанатов уже записались",
 "Tu es sur la liste !": "Ты в списке!",
 "Rendez-vous le {d}. Crée ton compte avec <b>{e}</b> pour recevoir ton bonus.": "Ждём тебя {d}. Создай аккаунт с <b>{e}</b>, чтобы получить бонус.",

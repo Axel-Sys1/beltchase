@@ -768,7 +768,7 @@ export default {
 "Fiche du combattant": "फ़ाइटर प्रोफ़ाइल",
 "Touche une de tes cartes pour voir les stats du combattant et en faire ta favorite.": "फ़ाइटर के आँकड़े देखने और पसंदीदा बनाने के लिए अपना कोई कार्ड दबाएँ।",
 "Affiche {m}": "{m} पोस्टर",
-"Lancement le 1er décembre": "1 दिसंबर को लॉन्च",
+"Lancement le 3 décembre": "3 दिसंबर को लॉन्च",
 "<b>{n}</b> fans déjà pré-inscrits": "<b>{n}</b> फ़ैन पहले ही प्री-रजिस्टर कर चुके हैं",
 "Tu es sur la liste !": "तुम लिस्ट में हो!",
 "Rendez-vous le {d}. Crée ton compte avec <b>{e}</b> pour recevoir ton bonus.": "{d} को मिलते हैं। बोनस पाने के लिए <b>{e}</b> से अकाउंट बनाओ।",

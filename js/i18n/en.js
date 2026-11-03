@@ -768,7 +768,7 @@ export default {
 "Fiche du combattant": "Fighter profile",
 "Touche une de tes cartes pour voir les stats du combattant et en faire ta favorite.": "Tap one of your cards to see the fighter's stats and make it your favorite.",
 "Affiche {m}": "Poster {m}",
-"Lancement le 1er décembre": "Launching December 1",
+"Lancement le 3 décembre": "Launching December 3",
 "<b>{n}</b> fans déjà pré-inscrits": "<b>{n}</b> fans already pre-registered",
 "Tu es sur la liste !": "You're on the list!",
 "Rendez-vous le {d}. Crée ton compte avec <b>{e}</b> pour recevoir ton bonus.": "See you on {d}. Create your account with <b>{e}</b> to get your bonus.",

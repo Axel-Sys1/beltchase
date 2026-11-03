@@ -768,7 +768,7 @@ export default {
 "Fiche du combattant": "Ficha del peleador",
 "Touche une de tes cartes pour voir les stats du combattant et en faire ta favorite.": "Toca una de tus cartas para ver las estadísticas del peleador y hacerla tu favorita.",
 "Affiche {m}": "Cartel {m}",
-"Lancement le 1er décembre": "Lanzamiento el 1 de diciembre",
+"Lancement le 3 décembre": "Lanzamiento el 3 de diciembre",
 "<b>{n}</b> fans déjà pré-inscrits": "<b>{n}</b> fans ya preinscritos",
 "Tu es sur la liste !": "¡Estás en la lista!",
 "Rendez-vous le {d}. Crée ton compte avec <b>{e}</b> pour recevoir ton bonus.": "Nos vemos el {d}. Crea tu cuenta con <b>{e}</b> para recibir tu bono.",
