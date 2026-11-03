@@ -6,6 +6,7 @@ import { CONFIG } from '../config.js';
 import { escapeHtml } from '../util.js';
 import { CARD_PHOTOS } from '../data/cardPhotos.js';
 import { CARD_STATS } from '../data/cardStats.js';
+import { CARD_SILHOUETTES } from '../data/cardSilhouettes.js';
 import { sizedPhoto } from '../providers/photos.js';
 import { sportMeta } from '../sports.js';
 import { icons } from './icons.js';
@@ -22,6 +23,12 @@ export function cardPhoto(card) {
   if (card.img) return { src: card.cutout ? `${card.img}/preview` : card.img, cut: !!card.cutout };
   return null;
 }
+
+// Silhouette du vrai combattant (contour tiré d'une photo libre, tools/card_silhouettes.py), en aplat sombre
+// liseré de la couleur de la rareté ; sinon GHOST.
+// Adresse complète : une url() dans une variable CSS se lit depuis la feuille de style (css/), pas la page.
+const silUrl = (id) => (typeof document === 'undefined' ? '' : new URL(`icons/silhouettes/${encodeURIComponent(id)}.png`, document.baseURI).href);
+const silhouette = (card) => (CARD_SILHOUETTES[card.id] ? `<span class="fc-sil" style="--sil:url('${silUrl(card.id)}')" aria-hidden="true"></span>` : '');
 
 // Combattant sans photo libre : silhouette en garde (buste, poings levés) aux couleurs de la rareté.
 const GHOST = `<svg class="fc-ghost" viewBox="0 0 200 220" aria-hidden="true">
@@ -69,7 +76,7 @@ export function fightCardHtml(card, { owned = true, size = '', count = 0, favori
         <div class="fc-art">
           <span class="fc-bigname" aria-hidden="true">${escapeHtml(last)}</span>
           ${ph ? `<img class="fc-photo ${ph.cut ? 'is-cut' : 'is-full'}" src="${escapeHtml(ph.src)}" alt="${escapeHtml(card.name)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">`
-    : owned ? `${flagCode(flag) ? `<img class="fc-flagbg" src="https://flagcdn.com/w640/${flagCode(flag)}.png" alt="" loading="lazy" onerror="this.remove()">` : ''}${GHOST}`
+    : owned ? `${flagCode(flag) ? `<img class="fc-flagbg" src="https://flagcdn.com/w640/${flagCode(flag)}.png" alt="" loading="lazy" onerror="this.remove()">` : ''}${silhouette(card) || GHOST}`
       : '<span class="fc-silhouette" aria-hidden="true">?</span>'}
           <span class="fc-shine" aria-hidden="true"></span>
         </div>

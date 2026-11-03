@@ -151,7 +151,7 @@ def commons_photo(name):
     return None
 
 
-def write_credits(photos, names):
+def write_credits(photos, names, intro=None):
     """Section « Crédits photos » de legal.html (auteur et licence des photos Wikimedia, obligatoires)."""
     import html
     path = os.path.join(ROOT, 'legal.html')
@@ -160,8 +160,8 @@ def write_credits(photos, names):
         f'        <li>{html.escape(n)} : <a href="{html.escape(v.get("page", ""))}" rel="noopener">photo</a> de {html.escape(v["credit"])}'
         f'{", " + html.escape(v["license"]) if v.get("license") else ""}</li>' for n, v in wiki)
     block = ('    <section id="credits" class="card">\n      <h2>Crédits photos</h2>\n'
-             '      <p>Portraits des combattants de MMA : ESPN. Logos et affiches des soirées : TheSportsDB et les organisateurs. Drapeaux : flagcdn.com (domaine public).\n'
-             '        Les photos suivantes viennent de Wikimedia Commons, sous licence libre (auteur et licence indiqués) :</p>\n'
+             '      <p>' + (intro or 'Portraits des combattants de MMA : ESPN. Logos et affiches des soirées : TheSportsDB et les organisateurs. Drapeaux : flagcdn.com (domaine public).\n'
+             '        Les photos suivantes viennent de Wikimedia Commons, sous licence libre (auteur et licence indiqués) :') + '</p>\n'
              f'      <ul class="credits-list">\n{items}\n      </ul>\n    </section>\n')
     text = open(path, encoding='utf-8').read()
     text = re.sub(r'    <section id="credits" class="card">.*?</section>\n', '', text, flags=re.S)

@@ -2203,3 +2203,12 @@ h1.tagline { font: inherit; font-size: 16px; letter-spacing: normal; margin: 1em
 .bc-bg.is-soft::before { opacity: 0.55; }
 .bc-bg.is-soft .bc-sparks { opacity: 0.6; }
 @media (prefers-reduced-motion: reduce) { .bc-bg.is-soft .bc-cage { animation: none; } }
+
+/* Silhouette du vrai combattant (icons/silhouettes/<id>.png, masque blanc) : aplat sombre, liseré et halo
+   de la couleur de la rareté, fondu vers le bas comme le reste de l'illustration. */
+.fc-sil { position: absolute; left: 50%; bottom: 22%; width: 96%; height: 74%; transform: translateX(-50%);
+  filter: drop-shadow(0 0 1.5px var(--c1)) drop-shadow(0 0 1px var(--c1)) drop-shadow(0 0 12px color-mix(in srgb, var(--c1) 60%, transparent)); }
+.fc-sil::before { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, #161a2c, #07080f 70%);
+  -webkit-mask: var(--sil) center bottom / contain no-repeat; mask: var(--sil) center bottom / contain no-repeat; }
+.fc-sil::after { content: ''; position: absolute; inset: 0; background: linear-gradient(115deg, color-mix(in srgb, var(--c1) 35%, transparent), transparent 45%);
+  -webkit-mask: var(--sil) center bottom / contain no-repeat; mask: var(--sil) center bottom / contain no-repeat; mix-blend-mode: screen; }
