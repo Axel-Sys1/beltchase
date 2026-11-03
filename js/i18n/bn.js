@@ -824,5 +824,6 @@ export default {
 "<b>{n}</b> fan déjà pré-inscrit": "<b>{n}</b> জন ফ্যান প্রি-রেজিস্টার করেছে",
 "Les actus sont momentanément indisponibles.": "খবর এখন পাওয়া যাচ্ছে না।",
 "L'actu MMA et boxe": "MMA আর বক্সিংয়ের খবর",
-"Les dernières infos, mises à jour en continu. Le jeu ouvre le {d}.": "সর্বশেষ খবর, সবসময় আপডেট। গেম চালু হবে {d}।"
+"Les dernières infos, mises à jour en continu. Le jeu ouvre le {d}.": "সর্বশেষ খবর, সবসময় আপডেট। গেম চালু হবে {d}।",
+"L'actu du moment": "এই মুহূর্তের খবর"
 };

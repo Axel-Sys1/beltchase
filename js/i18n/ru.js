@@ -824,5 +824,6 @@ export default {
 "<b>{n}</b> fan déjà pré-inscrit": "<b>{n}</b> фанат уже записался",
 "Les actus sont momentanément indisponibles.": "Новости временно недоступны.",
 "L'actu MMA et boxe": "Новости MMA и бокса",
-"Les dernières infos, mises à jour en continu. Le jeu ouvre le {d}.": "Свежие новости, обновляются постоянно. Игра откроется {d}."
+"Les dernières infos, mises à jour en continu. Le jeu ouvre le {d}.": "Свежие новости, обновляются постоянно. Игра откроется {d}.",
+"L'actu du moment": "Главное сейчас"
 };

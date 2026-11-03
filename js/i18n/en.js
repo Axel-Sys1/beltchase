@@ -824,5 +824,6 @@ export default {
 "<b>{n}</b> fan déjà pré-inscrit": "<b>{n}</b> fan already pre-registered",
 "Les actus sont momentanément indisponibles.": "News is temporarily unavailable.",
 "L'actu MMA et boxe": "MMA and boxing news",
-"Les dernières infos, mises à jour en continu. Le jeu ouvre le {d}.": "The latest news, updated continuously. The game opens on {d}."
+"Les dernières infos, mises à jour en continu. Le jeu ouvre le {d}.": "The latest news, updated continuously. The game opens on {d}.",
+"L'actu du moment": "Trending now"
 };

@@ -824,5 +824,6 @@ export default {
 "<b>{n}</b> fan déjà pré-inscrit": "<b>{n}</b> fã já pré-inscrito",
 "Les actus sont momentanément indisponibles.": "As notícias estão indisponíveis no momento.",
 "L'actu MMA et boxe": "Notícias de MMA e boxe",
-"Les dernières infos, mises à jour en continu. Le jeu ouvre le {d}.": "As últimas notícias, atualizadas o tempo todo. O jogo abre em {d}."
+"Les dernières infos, mises à jour en continu. Le jeu ouvre le {d}.": "As últimas notícias, atualizadas o tempo todo. O jogo abre em {d}.",
+"L'actu du moment": "Destaques do momento"
 };

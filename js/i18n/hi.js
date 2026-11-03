@@ -824,5 +824,6 @@ export default {
 "<b>{n}</b> fan déjà pré-inscrit": "<b>{n}</b> फ़ैन प्री-रजिस्टर कर चुका है",
 "Les actus sont momentanément indisponibles.": "खबरें अभी उपलब्ध नहीं हैं।",
 "L'actu MMA et boxe": "MMA और बॉक्सिंग की खबरें",
-"Les dernières infos, mises à jour en continu. Le jeu ouvre le {d}.": "ताज़ा खबरें, लगातार अपडेट। गेम {d} को खुलेगा।"
+"Les dernières infos, mises à jour en continu. Le jeu ouvre le {d}.": "ताज़ा खबरें, लगातार अपडेट। गेम {d} को खुलेगा।",
+"L'actu du moment": "अभी की बड़ी खबरें"
 };

@@ -824,5 +824,6 @@ export default {
 "<b>{n}</b> fan déjà pré-inscrit": "已有 <b>{n}</b> 位粉丝预约",
 "Les actus sont momentanément indisponibles.": "新闻暂时无法显示。",
 "L'actu MMA et boxe": "MMA 与拳击新闻",
-"Les dernières infos, mises à jour en continu. Le jeu ouvre le {d}.": "最新消息，持续更新。游戏将于{d}开放。"
+"Les dernières infos, mises à jour en continu. Le jeu ouvre le {d}.": "最新消息，持续更新。游戏将于{d}开放。",
+"L'actu du moment": "当下热点"
 };

@@ -214,7 +214,7 @@ const formHtml = () => (done ? `
   </form>
   <p class="pre-msg" role="alert" hidden></p>`);
 
-// Actus (js/services/news.js, comme l'écran Actus du jeu) : 3 « à la une » avec image, puis la suite.
+// Actus (js/services/news.js, comme l'écran Actus du jeu) : seulement les 3 « à la une » du moment.
 // Seulement le titre, la source et un lien vers l'article d'origine.
 const ago = (ts) => {
   const m = Math.max(1, Math.round((Date.now() - ts) / 60000));
@@ -226,14 +226,12 @@ const ago = (ts) => {
 function newsHtml() {
   if (!news.items.length) return `<p class="pre-board-empty">${news.error ? t('Les actus sont momentanément indisponibles.') : t('Chargement…')}</p>`;
   const top = headlines(news.items, 3);
-  const rest = news.items.filter((a) => !top.includes(a)).slice(0, 8);
   const link = (a, inner, cls) => `<a class="${cls}" href="${escapeHtml(a.link)}" target="_blank" rel="noopener">${inner}</a>`;
   return `
     <div class="pn-top">${top.map((a) => link(a, `
       <img src="${escapeHtml(a.image)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">
       <span class="pn-meta">${escapeHtml(a.source)} · ${ago(a.date)}</span>
-      <strong>${escapeHtml(a.title)}</strong>`, 'pn-card')).join('')}</div>
-    <ul class="pn-list">${rest.map((a) => `<li>${link(a, `<strong>${escapeHtml(a.title)}</strong><span class="pn-meta">${escapeHtml(a.source)} · ${ago(a.date)}</span>`, 'pn-item')}</li>`).join('')}</ul>`;
+      <strong>${escapeHtml(a.title)}</strong>`, 'pn-card')).join('')}</div>`;
 }
 function renderNews() {
   const el = root.querySelector('.pre-news-body');
@@ -290,8 +288,7 @@ function render() {
     </section>
 
     <section class="pre-news" aria-labelledby="pre-news-title">
-      <h2 id="pre-news-title">${t('L\'actu MMA et boxe')}</h2>
-      <p class="pre-news-sub">${t('Les dernières infos, mises à jour en continu. Le jeu ouvre le {d}.', { d: launchDay })}</p>
+      <h2 id="pre-news-title">${t('L\'actu du moment')}</h2>
       <div class="pre-news-body">${newsHtml()}</div>
     </section>
 
