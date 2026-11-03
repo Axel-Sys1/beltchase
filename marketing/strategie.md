@@ -45,13 +45,12 @@ Compte : **@beltchase.officiel** (Instagram, pro). TikTok : même nom, à créer
 
 ## Profil (fait le 03/11/2026)
 - Nom affiché : « BeltChase · Pronos MMA & Boxe » (compte dans la recherche Instagram). Modifiable 2 fois / 14 jours.
-- Photo : logo octogone « BC ». Bio (149/150) :
-  🥊 Pronos MMA, UFC & boxe entre fans · 🏆 Chasse la ceinture · 151 cartes ·
-  🆓 Gratuit · 100 % virtuel, sans argent réel · 🔔 Lancement bientôt · notifs ON
+- Photo : logo octogone « BC ». Bio courte (le lien beltchase.com s'affiche juste en dessous) :
+  🥊 Pronos MMA & boxe entre fans · 🏆 Chasse la ceinture · 151 cartes · 🆓 Gratuit · sans argent réel · 👇 Joue ici
 - Réglages : commentaires offensants masqués, invitations de messages spam masquées, partage en story et
   republication autorisés, intégration sur les sites web activée (les médias peuvent reprendre nos posts).
   Filtrage avancé laissé coupé : le chambrage entre fans fait l'engagement.
-- **Le jour du lancement** : lien beltchase.com (appli mobile), remplacer la ligne 🔔 par « 👇 Joue gratuitement ».
+- Lien beltchase.com : à ajouter depuis l'appli mobile (pas possible sur le web).
 - Plus tard : 3 stories « À la une » (Le jeu · Cartes · Rangs).
 
 ## Premier post (prêt) : carrousel de lancement, 5 visuels (marketing/carrousel/car-1…5.jpg)
