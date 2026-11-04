@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;1,700;1,800&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../css/styles.css">
+<link rel="stylesheet" href="../css/cards.css">
 <!--
   Visuels pour Instagram et TikTok (stories, reels, pubs) : 1080 × 1920, plus la photo de profil 1080 × 1080.
   Ouvrir http://localhost:5173/marketing/pub.html, bouton « Télécharger PNG » sous chaque visuel.
@@ -125,6 +126,19 @@
   .ps-ranks div { display: grid; justify-items: center; gap: 12px; font: italic 800 40px/1 var(--display); text-transform: uppercase; }
   .ps-ranks svg { width: 120px; height: 135px; filter: drop-shadow(0 0 20px color-mix(in srgb, currentColor 55%, transparent)); }
   .ps-rule { position: absolute; left: 50%; width: 120px; height: 4px; transform: translateX(-50%); background: var(--gold-grad); border-radius: 4px; }
+
+  /* Pubs Meta : pas de cotes ni de gains (règles jeux d'argent), pas de vrais combattants (nom, image) : cartes fictives */
+  .ma-fan { position: absolute; left: 0; right: 0; height: 640px; }
+  .ma-fan .fc { position: absolute; width: var(--cw, 330px); top: 0; left: 50%; }
+  .ma-fan .fc:nth-child(1) { transform: translateX(-118%) rotate(-11deg) translateY(70px); }
+  .ma-fan .fc:nth-child(2) { transform: translateX(18%) rotate(11deg) translateY(70px); }
+  .ma-fan .fc:nth-child(3) { transform: translateX(-50%) scale(1.1); z-index: 2; }
+  .ma-news { position: absolute; left: 80px; right: 80px; display: flex; align-items: center; gap: 22px; padding: 22px 26px; border-radius: 24px;
+    background: rgba(15,31,64,.92); border: 3px solid #2d4a7c; }
+  .ma-news b { flex: none; display: inline-flex; align-items: center; gap: 10px; padding: 8px 14px; border-radius: 8px; background: #e8283f; color: #fff; font: 800 26px/1 var(--display); letter-spacing: .1em; text-transform: uppercase; }
+  .ma-news b::before { content: ''; width: 10px; height: 10px; border-radius: 50%; background: #fff; }
+  .ma-news span { font: 700 36px/1.2 Barlow, sans-serif; }
+  .ma-cta { position: absolute; left: 50%; transform: translateX(-50%); white-space: nowrap; background: var(--gold-grad); color: #08122a; font: italic 800 58px/1 var(--display); text-transform: uppercase; padding: 30px 60px; border-radius: 20px; box-shadow: 0 18px 50px -10px rgba(242,182,48,.6); }
   /* Profil */
   .ad.square .logo-big { position: absolute; inset: 0; display: grid; place-items: center; }
   .ad.square .logo-big svg { width: 760px; height: 760px; filter: drop-shadow(0 30px 60px rgba(242,182,48,.3)); }
@@ -144,6 +158,7 @@
 
 <script type="module">
 import { fightCardHtml } from '../js/ui/fightCard.js';
+import { CARDS } from '../js/data/cards.js';
 import { RADIANT, TIERS } from '../js/services/ranks.js';
 import { rankEmblem } from '../js/ui/icons.js';
 import { lang } from '../js/i18n.js';
@@ -170,6 +185,7 @@ let markN = 0;
 const markSvg = () => { markN += 1; return markTpl.replaceAll('mk-gold', `mk-gold-${markN}`); };
 const top = () => `<div class="ad-top">${markSvg()}<div class="ad-brand">BELT<span>CHASE</span></div></div>`;
 
+const realCard = (id, flag) => fightCardHtml(CARDS.find((c) => c.id === id), { flag });
 const psLogo = () => `<div class="ps-logo">${markSvg()}<b style="font:inherit;color:#fff">BELT<span>CHASE</span></b></div>`;
 const psFighter = (code, name, country) => `<div class="ps-f"><div class="ps-oct" style="background-image:url(https://flagcdn.com/w640/${code}.png)"></div><strong>${name}</strong><small>${country}</small></div>`;
 const foot = `<div class="ad-foot">${L('Gratuit')} · <span>${L('100 % virtuel')}</span> · ${L('sans argent réel')}</div>`;
@@ -306,6 +322,29 @@ const ADS = [
   { id: 'post-depart', fmt: 'portrait', label: 'Post · Premier post (logo seul, 4:5)', html: `
     <svg viewBox="0 0 400 400" style="position:absolute;left:50%;top:50%;width:1250px;height:1250px;transform:translate(-50%,-50%);opacity:.18;fill:none"><path d="M117 8h166l109 109v166L283 392H117L8 283V117z" stroke="#f2b630" stroke-width="1.5"/><path d="M128 36h144l92 92v144l-92 92H128l-92-92V128z" stroke="#f2b630" stroke-width="1" stroke-dasharray="4 6"/></svg>
     <div style="position:absolute;left:50%;top:50%;width:520px;height:520px;transform:translate(-50%,-50%);filter:drop-shadow(0 30px 70px rgba(242,182,48,.35))">${markSvg().replace('<svg', '<svg style="width:100%;height:100%"')}</div>` },
+  { id: 'meta-feed', fmt: 'portrait', label: 'Meta · Feed 4:5 (1080 × 1350)', html: `
+    ${psLogo()}
+    <div class="ps-big" style="top:150px;font-size:104px">Le QG des fans <em>de MMA &amp; boxe</em></div>
+    <div class="ma-news" style="top:400px"><b>En direct</b><span>L'actu des combats, au même endroit</span></div>
+    <div class="ma-fan" style="top:525px;--cw:280px">${fake('epique', L('Le Sniper'), 'Brésil', 'Poids légers', '🇧🇷')}${fake('legendaire', L('La Machine'), 'États-Unis', 'Poids lourds', '🇺🇸')}${fake('mythique', L('Ton Champion'), 'France', 'Poids moyens', '🇫🇷')}</div>
+    <div class="ps-line" style="top:1020px">Pronostique les combats, collectionne les cartes.<br><b>Lancement le 3 décembre.</b></div>
+    <div class="ma-cta" style="top:1135px">Réserve ton pseudo</div>
+    <div class="ps-kicker" style="top:1268px;font-size:28px">Jeu gratuit · sans argent réel</div>` },
+  { id: 'meta-story', label: 'Meta · Story / Reel 9:16 (1080 × 1920)', html: `
+    ${psLogo()}
+    <div class="ps-big" style="top:270px;font-size:118px">Le QG des fans <em>de MMA &amp; boxe</em></div>
+    <div class="ma-news" style="top:560px"><b>En direct</b><span>L'actu des combats, au même endroit</span></div>
+    <div class="ma-fan" style="top:720px;--cw:310px">${fake('epique', L('Le Sniper'), 'Brésil', 'Poids légers', '🇧🇷')}${fake('legendaire', L('La Machine'), 'États-Unis', 'Poids lourds', '🇺🇸')}${fake('mythique', L('Ton Champion'), 'France', 'Poids moyens', '🇫🇷')}</div>
+    <div class="ps-line" style="top:1290px">Pronostique les combats, collectionne les cartes.<br><b>Lancement le 3 décembre.</b></div>
+    <div class="ma-cta" style="top:1440px">Réserve ton pseudo</div>
+    <div class="ps-kicker" style="top:1620px;font-size:28px">Jeu gratuit · sans argent réel</div>` },
+  { id: 'meta-carre', fmt: 'square', label: 'Meta · Carré 1:1 (1080 × 1080)', html: `
+    ${psLogo()}
+    <div class="ps-big" style="top:130px;font-size:92px">Le QG des fans <em>de MMA &amp; boxe</em></div>
+    <div class="ma-news" style="top:330px"><b>En direct</b><span>L'actu des combats, au même endroit</span></div>
+    <div class="ma-fan" style="top:440px;--cw:215px">${fake('epique', L('Le Sniper'), 'Brésil', 'Poids légers', '🇧🇷')}${fake('legendaire', L('La Machine'), 'États-Unis', 'Poids lourds', '🇺🇸')}${fake('mythique', L('Ton Champion'), 'France', 'Poids moyens', '🇫🇷')}</div>
+    <div class="ma-cta" style="top:850px">Réserve ton pseudo</div>
+    <div class="ps-kicker" style="top:990px;font-size:28px">Jeu gratuit · sans argent réel</div>` },
   { id: 'og-concours', fmt: 'og', label: 'Aperçu des liens partagés (1200 × 630)', html: `
     <div class="ad-slash" style="left:820px"></div>
     <div class="og-mark">${markSvg()}<b>BELT<span>CHASE</span></b></div>
