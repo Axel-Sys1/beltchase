@@ -52,3 +52,10 @@ Toujours « gratuit · sans argent réel » quelque part. Visuels dans ce dossie
   > tag le pote qui est le chat noir 😭
   > le 3 décembre on saura enfin qui a raison. lien en bio
 - En story : sondage « T'es lequel ? » avec les 4 profils.
+
+## 6. Ça ou ça ?
+- Insta feed : `post-ou.jpg` (KO/soumission, MMA/boxe, direct à 4h/rediff, pote qui spoile/qui commente tout).
+- Légende :
+  > réponds avec tes 4 lettres 👇 moi c'est 1A 2A 3A 4B
+  > le 3 décembre, place aux vrais pronos. lien en bio
+- En story : 4 sondages à la suite, un par duel.
