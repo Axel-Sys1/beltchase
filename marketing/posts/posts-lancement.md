@@ -45,3 +45,10 @@ Toujours « gratuit · sans argent réel » quelque part. Visuels dans ce dossie
 ## Rythme conseillé (jusqu'au 3 décembre)
 - 3 posts feed par semaine (débat combat, jeu/rangs, concours), 1 TikTok tous les 2 jours, stories chaque jour.
 - Répondre à tous les commentaires la première heure.
+
+## 5. Tag ton pote (le plus partageable)
+- Insta feed : `post-tag.jpg` (4 profils : Sniper, Chat noir, Fan aveugle, Prudent). Aucune cote ni gain.
+- Légende :
+  > tag le pote qui est le chat noir 😭
+  > le 3 décembre on saura enfin qui a raison. lien en bio
+- En story : sondage « T'es lequel ? » avec les 4 profils.
