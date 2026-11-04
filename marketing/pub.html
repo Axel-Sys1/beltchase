@@ -156,6 +156,11 @@
   .ou span small { flex: none; display: grid; place-items: center; width: 46px; height: 46px; border-radius: 10px; font: 800 28px/1 var(--display); color: #08122a; }
   .ou .a small { background: #f2b630; } .ou .b small { background: #5aa8ff; }
   .ou i { font: italic 800 34px/1 var(--display); color: #8a9abb; text-align: center; font-style: normal; text-transform: uppercase; }
+
+  /* Post « Choisis ton excuse » : liste numérotée, réponse en commentaire */
+  .ex-list { position: absolute; left: 80px; right: 80px; display: grid; gap: 14px; }
+  .ex { display: flex; align-items: center; gap: 24px; padding: 16px 28px; border-radius: 24px; background: linear-gradient(180deg, #15284f, #0f1f40); border: 3px solid #2d4a7c; font: 700 38px/1.2 Barlow, sans-serif; }
+  .ex b { flex: none; display: grid; place-items: center; width: 70px; height: 70px; border-radius: 18px; background: var(--gold-grad); color: #08122a; font: italic 800 44px/1 var(--display); }
   /* Profil */
   .ad.square .logo-big { position: absolute; inset: 0; display: grid; place-items: center; }
   .ad.square .logo-big svg { width: 760px; height: 760px; filter: drop-shadow(0 30px 60px rgba(242,182,48,.3)); }
@@ -384,6 +389,19 @@ const ADS = [
       <div class="ou"><b>4</b><span class="a"><small>A</small>Ton pote qui spoile</span><i>ou</i><span class="b"><small>B</small>Ton pote qui commente tout</span></div>
     </div>
     <div class="ps-line" style="top:1215px">Tes vrais pronos, c'est le 3 décembre. <b>Lien en bio.</b></div>` },
+  { id: 'post-excuse', fmt: 'portrait', label: 'Post · Choisis ton excuse (4:5)', html: `
+    ${psLogo()}
+    <div class="ps-kicker" style="top:180px">Ton prono a raté ?</div>
+    <div class="ps-big" style="top:240px;font-size:120px">Choisis <em>ton excuse</em></div>
+    <div class="ex-list" style="top:420px">
+      <div class="ex"><b>1</b>L'arbitre a arrêté trop tôt</div>
+      <div class="ex"><b>2</b>Il était blessé, ça se voyait</div>
+      <div class="ex"><b>3</b>Les juges ont rien vu</div>
+      <div class="ex"><b>4</b>J'avais dit R2, pas R1</div>
+      <div class="ex"><b>5</b>J'ai cliqué sur le mauvais</div>
+      <div class="ex"><b>6</b>Je l'avais dit hier, t'étais là</div>
+    </div>
+    <div class="ps-line" style="top:1230px">Le 3 décembre, plus d'excuses. <b>Lien en bio.</b></div>` },
   { id: 'og-concours', fmt: 'og', label: 'Aperçu des liens partagés (1200 × 630)', html: `
     <div class="ad-slash" style="left:820px"></div>
     <div class="og-mark">${markSvg()}<b>BELT<span>CHASE</span></b></div>

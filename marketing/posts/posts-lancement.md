@@ -59,3 +59,9 @@ Toujours « gratuit · sans argent réel » quelque part. Visuels dans ce dossie
   > réponds avec tes 4 lettres 👇 moi c'est 1A 2A 3A 4B
   > le 3 décembre, place aux vrais pronos. lien en bio
 - En story : 4 sondages à la suite, un par duel.
+
+## 7. Choisis ton excuse
+- Insta feed : `post-excuse.jpg` (6 excuses quand le prono rate, réponse par numéro).
+- Légende :
+  > ton excuse préférée ? moi c'est la 4 à chaque fois 😭
+  > le 3 décembre, plus d'excuses. lien en bio
