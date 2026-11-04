@@ -161,6 +161,14 @@
   .ex-list { position: absolute; left: 80px; right: 80px; display: grid; gap: 14px; }
   .ex { display: flex; align-items: center; gap: 24px; padding: 16px 28px; border-radius: 24px; background: linear-gradient(180deg, #15284f, #0f1f40); border: 3px solid #2d4a7c; font: 700 38px/1.2 Barlow, sans-serif; }
   .ex b { flex: none; display: grid; place-items: center; width: 70px; height: 70px; border-radius: 18px; background: var(--gold-grad); color: #08122a; font: italic 800 44px/1 var(--display); }
+
+  /* Post débat « Le GOAT ? » : 4 noms + drapeaux (pas de photos), on défend son choix en commentaire */
+  .gt-grid { position: absolute; left: 70px; right: 70px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .gt { position: relative; display: grid; justify-items: center; gap: 16px; padding: 34px 20px 30px; border-radius: 30px; background: linear-gradient(180deg, #15284f, #0f1f40); border: 3px solid #2d4a7c; }
+  .gt .oct { width: 150px; height: 150px; background-size: cover; background-position: center; clip-path: polygon(30% 0,70% 0,100% 30%,100% 70%,70% 100%,30% 100%,0 70%,0 30%); }
+  .gt strong { font: italic 800 60px/1 var(--display); text-transform: uppercase; text-align: center; }
+  .gt small { font: 700 28px/1 var(--display); letter-spacing: .14em; text-transform: uppercase; color: #8a9abb; }
+  .gt b { position: absolute; top: 20px; left: 22px; display: grid; place-items: center; width: 56px; height: 56px; border-radius: 14px; background: var(--gold-grad); color: #08122a; font: italic 800 34px/1 var(--display); }
   /* Profil */
   .ad.square .logo-big { position: absolute; inset: 0; display: grid; place-items: center; }
   .ad.square .logo-big svg { width: 760px; height: 760px; filter: drop-shadow(0 30px 60px rgba(242,182,48,.3)); }
@@ -402,6 +410,17 @@ const ADS = [
       <div class="ex"><b>6</b>Je l'avais dit hier, t'étais là</div>
     </div>
     <div class="ps-line" style="top:1230px">Le 3 décembre, plus d'excuses. <b>Lien en bio.</b></div>` },
+  { id: 'post-goat', fmt: 'portrait', label: 'Post débat · Le GOAT du MMA ? (4:5)', html: `
+    ${psLogo()}
+    <div class="ps-kicker" style="top:180px">Le débat qui ne finit jamais</div>
+    <div class="ps-big" style="top:240px;font-size:126px">Le GOAT <em>du MMA&nbsp;?</em></div>
+    <div class="gt-grid" style="top:420px">
+      <div class="gt"><b>A</b><div class="oct" style="background-image:url(https://flagcdn.com/w320/us.png)"></div><strong>Jon Jones</strong><small>USA</small></div>
+      <div class="gt"><b>B</b><div class="oct" style="background-image:url(https://flagcdn.com/w320/ca.png)"></div><strong>GSP</strong><small>Canada</small></div>
+      <div class="gt"><b>C</b><div class="oct" style="background-image:url(https://flagcdn.com/w320/ru.png)"></div><strong>Khabib</strong><small>Russie</small></div>
+      <div class="gt"><b>D</b><div class="oct" style="background-image:url(https://flagcdn.com/w320/br.png)"></div><strong>Anderson Silva</strong><small>Brésil</small></div>
+    </div>
+    <div class="ps-line" style="top:1230px"><b>Défends ton choix en commentaire.</b></div>` },
   { id: 'og-concours', fmt: 'og', label: 'Aperçu des liens partagés (1200 × 630)', html: `
     <div class="ad-slash" style="left:820px"></div>
     <div class="og-mark">${markSvg()}<b>BELT<span>CHASE</span></b></div>

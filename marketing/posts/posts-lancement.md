@@ -65,3 +65,12 @@ Toujours « gratuit · sans argent réel » quelque part. Visuels dans ce dossie
 - Légende :
   > ton excuse préférée ? moi c'est la 4 à chaque fois 😭
   > le 3 décembre, plus d'excuses. lien en bio
+
+## 8. Débat · Le GOAT du MMA ? (le plus de portée)
+- Insta feed + TikTok (en photo) : `post-goat.jpg` (Jon Jones, GSP, Khabib, Anderson Silva, drapeaux seulement).
+- Post « normal » (pas une pub payante) : noms cités pour un débat de fans, sans photo.
+- Légende :
+  > le débat qui ne finira jamais. ton GOAT et un seul argument 👇
+  > le 3 décembre, prouve que tu connais le MMA. lien en bio
+- Répondre aux commentaires qui s'embrouillent (sans prendre parti) : c'est ce qui fait tourner le post.
+- Suites possibles : « Le meilleur Français de l'histoire ? », « Boxe ou MMA : le plus dur ? », « Le KO de l'année ? ».
