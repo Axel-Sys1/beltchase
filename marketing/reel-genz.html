@@ -82,6 +82,15 @@
   @keyframes rk { 0% { opacity: 1; } 100% { opacity: 0; } }
   @keyframes rk-last { from { opacity: 0; transform: translateX(-50%) scale(1.4); } to { opacity: 1; transform: translateX(-50%) scale(1); } }
 
+
+  /* Actus (titres d'exemple, pas de vraies photos de presse) */
+  .news { position: absolute; left: 70px; right: 70px; top: 600px; display: grid; gap: 26px; }
+  .nw { display: grid; grid-template-columns: 220px 1fr; gap: 28px; align-items: center; padding: 22px; border-radius: 28px; background: linear-gradient(180deg, #15284f, #0f1f40); border: 3px solid #2d4a7c; box-shadow: 0 30px 60px -30px #000; }
+  .nw-img { width: 220px; height: 160px; border-radius: 18px; background-size: cover; background-position: center; }
+  .nw strong { display: block; margin: 12px 0 10px; font: 800 46px/1.15 var(--body); }
+  .nw small { font: 600 30px/1 var(--body); color: var(--muted); }
+  .live { display: inline-flex; align-items: center; gap: 10px; padding: 6px 14px; border-radius: 8px; background: #e8283f; color: #fff; font: 800 24px/1 var(--display); letter-spacing: .1em; text-transform: uppercase; }
+  .live::before { content: ''; width: 10px; height: 10px; border-radius: 50%; background: #fff; }
   .date { position: absolute; left: 0; right: 0; top: 500px; text-align: center; font: italic 800 210px/.9 var(--display); text-transform: uppercase; }
   .date em { font-style: inherit; padding: 0 .06em; background: var(--gold); -webkit-background-clip: text; background-clip: text; color: transparent; }
   .cta { position: absolute; left: 50%; top: 1400px; transform: translateX(-50%); white-space: nowrap; padding: 34px 70px; border-radius: 24px; background: var(--gold); color: var(--accent-ink);
@@ -110,7 +119,7 @@ const cap = (top, txt, u, cls = '') => `<div class="cap in ${cls}" style="top:${
 
 // Rangs qui défilent à toute vitesse, puis Radiant reste.
 const ladder = [...TIERS, RADIANT];
-const RK0 = 6.3;
+const RK0 = 7.9;
 const ranks = ladder.map((r, i) => {
   const last = i === ladder.length - 1;
   return `<div class="rank ${last ? 'final' : ''}" style="color:${r.color};${at(RK0 + i * 0.16)}">${rankEmblem({ ...r, division: last ? null : 3, label: r.name })}${r.name}</div>`;
@@ -145,25 +154,35 @@ document.getElementById('scenes').innerHTML = [
     <div class="tap" style="left:180px;top:1130px;${at(3.15)}"></div>
     <div class="tap" style="left:380px;top:1250px;${at(3.5)}"></div>
     <div class="gain punch" style="${at(3.9)}">+690 gold</div>`),
+  // Actus
+  scene(4.6, 6.2, `
+    ${cap(330, 'et tu suis toute l\'actu mma &amp; boxe 📰', 4.62)}
+    <div class="news">
+      ${[
+    ['UFC 334 : la carte complète', 'il y a 12 min', 'us'],
+    ['Résultats de la soirée de boxe', 'il y a 1 h', 'gb'],
+    ['Classement des poids lourds mis à jour', 'il y a 3 h', 'fr'],
+  ].map(([t, w, c], i) => `<div class="nw in" style="${at(4.8 + i * 0.22)}"><span class="nw-img" style="background-image:url(${flag(c)})"></span><div><b class="live">En direct</b><strong>${t}</strong><small>${w}</small></div></div>`).join('')}
+    </div>`),
   // Cartes
-  scene(4.6, 6.3, `
-    ${cap(330, 'tu collectionnes les cartes 🃏', 4.62)}
+  scene(6.2, 7.9, `
+    ${cap(330, 'tu collectionnes les cartes 🃏', 6.22)}
     <div class="fan">
-      <div class="lc lc-0"><div style="${at(4.75)}">${card('boxe-tyson-fury', '🇬🇧')}</div></div>
-      <div class="lc lc-2"><div style="${at(4.9)}">${card('boxe-oleksandr-usyk', '🇺🇦')}</div></div>
-      <div class="lc lc-1"><div style="${at(5.05)}">${card('mma-ilia-topuria', '🇬🇪')}</div></div>
+      <div class="lc lc-0"><div style="${at(6.35)}">${card('boxe-tyson-fury', '🇬🇧')}</div></div>
+      <div class="lc lc-2"><div style="${at(6.5)}">${card('boxe-oleksandr-usyk', '🇺🇦')}</div></div>
+      <div class="lc lc-1"><div style="${at(6.65)}">${card('mma-ilia-topuria', '🇬🇪')}</div></div>
     </div>`),
   // Rangs
-  scene(6.3, 8.2, `
-    ${cap(330, 'et tu grimpes de fer à radiant', 6.32)}
+  scene(7.9, 9.8, `
+    ${cap(330, 'et tu grimpes de fer à radiant', 7.92)}
     ${ranks}`),
   // Fin
-  scene(8.2, 11, `
-    <div class="mini punch" style="${at(8.22)}">${logo}<span>BELT<b>CHASE</b></span></div>
-    <div class="date punch" style="${at(8.3)}"><em>3 décembre</em></div>
-    ${cap(1020, 'le meilleur parrain gagne les gants signés axel sola 🥊', 8.6, 'dark')}
-    <div class="cta punch" style="${at(9.0)}">Lien en bio</div>
-    <div class="foot in" style="${at(9.2)}">Gratuit · sans argent réel</div>`, 'last'),
+  scene(9.8, 12.6, `
+    <div class="mini punch" style="${at(9.82)}">${logo}<span>BELT<b>CHASE</b></span></div>
+    <div class="date punch" style="${at(9.9)}"><em>3 décembre</em></div>
+    ${cap(1020, 'le meilleur parrain gagne les gants signés axel sola 🥊', 10.2, 'dark')}
+    <div class="cta punch" style="${at(10.6)}">Lien en bio</div>
+    <div class="foot in" style="${at(10.8)}">Gratuit · sans argent réel</div>`, 'last'),
 ].join('');
 
 // Silhouettes des cartes en données intégrées (l'export ne recharge pas les url() des masques).
@@ -177,7 +196,7 @@ window.ready = Promise.all([...document.querySelectorAll('.fc-sil')].map(async (
 }));
 
 window.seek = (t) => { for (const a of document.getAnimations()) { a.pause(); a.currentTime = t * 1000; } };
-window.DURATION = 11;
+window.DURATION = 12.6;
 if (new URLSearchParams(location.search).has('export')) window.seek(0);
 </script>
 </body>
