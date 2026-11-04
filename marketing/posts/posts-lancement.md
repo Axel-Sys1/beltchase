@@ -74,3 +74,10 @@ Toujours « gratuit · sans argent réel » quelque part. Visuels dans ce dossie
   > le 3 décembre, prouve que tu connais le MMA. lien en bio
 - Répondre aux commentaires qui s'embrouillent (sans prendre parti) : c'est ce qui fait tourner le post.
 - Suites possibles : « Le meilleur Français de l'histoire ? », « Boxe ou MMA : le plus dur ? », « Le KO de l'année ? ».
+
+## 9. Affiche « Toi vs ton pote » (présentation du site)
+- Feed : `affiche-feed.jpg` · Story / TikTok : `affiche-story.jpg`. Façon affiche de combat, sans vrai combattant.
+- Légende :
+  > le main event que t'attendais : toi vs ton pote 🥊
+  > 03.12 sur beltchase.com · tag celui que tu veux affronter
+- Idéal en post épinglé du profil.

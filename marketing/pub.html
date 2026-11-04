@@ -169,6 +169,23 @@
   .gt strong { font: italic 800 60px/1 var(--display); text-transform: uppercase; text-align: center; }
   .gt small { font: 700 28px/1 var(--display); letter-spacing: .14em; text-transform: uppercase; color: #8a9abb; }
   .gt b { position: absolute; top: 20px; left: 22px; display: grid; place-items: center; width: 56px; height: 56px; border-radius: 14px; background: var(--gold-grad); color: #08122a; font: italic 800 34px/1 var(--display); }
+
+  /* Affiche « TOI vs TON POTE » : façon affiche de combat, sans vrai combattant */
+  .af-bg { position: absolute; inset: 0; background: radial-gradient(60% 40% at 50% 42%, rgba(242,182,48,.28), transparent 70%), radial-gradient(40% 30% at 15% 45%, rgba(232,40,63,.25), transparent 70%), radial-gradient(40% 30% at 85% 45%, rgba(90,168,255,.25), transparent 70%); }
+  .af-cage { position: absolute; left: 50%; width: 1300px; height: 1300px; transform: translateX(-50%); fill: none; opacity: .22; }
+  .af-cage path { stroke: #f2b630; stroke-width: 2.5; vector-effect: non-scaling-stroke; }
+  .af-sil { position: absolute; width: 560px; filter: drop-shadow(0 0 3px var(--c)) drop-shadow(0 0 40px var(--c)); }
+  .af-sil svg { width: 100%; display: block; }
+  .af-sil.l { left: -70px; --c: rgba(255,90,110,.9); transform: scaleX(-1); }
+  .af-sil.r { right: -70px; --c: rgba(90,168,255,.9); }
+  .af-name { position: absolute; font: italic 800 120px/.85 var(--display); text-transform: uppercase; text-shadow: 0 10px 40px rgba(0,0,0,.8); }
+  .af-name small { display: block; font: 700 30px/1 var(--display); letter-spacing: .2em; color: #c9d4ea; margin-bottom: 10px; font-style: normal; }
+  .af-vs { position: absolute; left: 50%; transform: translateX(-50%); display: grid; place-items: center; width: 190px; height: 190px; background: var(--gold-grad); color: #08122a; font: italic 800 90px/1 var(--display);
+    clip-path: polygon(30% 0,70% 0,100% 30%,100% 70%,70% 100%,30% 100%,0 70%,0 30%); filter: drop-shadow(0 0 40px rgba(242,182,48,.8)); }
+  .af-date { position: absolute; left: 0; right: 0; text-align: center; font: italic 800 150px/.9 var(--display); }
+  .af-date em { font-style: inherit; padding: 0 .06em; background: var(--gold-grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .af-card { position: absolute; left: 90px; right: 90px; display: flex; justify-content: center; gap: 18px; font: 700 34px/1 var(--display); letter-spacing: .14em; text-transform: uppercase; color: #fff; }
+  .af-card span { color: var(--accent); }
   /* Profil */
   .ad.square .logo-big { position: absolute; inset: 0; display: grid; place-items: center; }
   .ad.square .logo-big svg { width: 760px; height: 760px; filter: drop-shadow(0 30px 60px rgba(242,182,48,.3)); }
@@ -221,6 +238,7 @@ const psFighter = (code, name, country) => `<div class="ps-f"><div class="ps-oct
 const foot = `<div class="ad-foot">${L('Gratuit')} · <span>${L('100 % virtuel')}</span> · ${L('sans argent réel')}</div>`;
 const cta = '<div class="ad-cta">beltchase.com</div>';
 const fighter = `<svg viewBox="0 0 200 220"><g fill="rgba(0,0,0,.55)"><ellipse cx="100" cy="60" rx="27" ry="33"/><path d="M88 88h24l3 16H85z"/><path d="M14 220c3-56 24-92 62-104l24 8 24-8c38 12 59 48 62 104z"/></g><g fill="rgba(0,0,0,.7)"><path d="M52 150l14-46 22 4-10 50z"/><path d="M148 150l-14-46-22 4 10 50z"/><rect x="58" y="74" width="34" height="40" rx="14"/><rect x="108" y="74" width="34" height="40" rx="14"/></g></svg>`;
+const fighterSolid = fighter.replaceAll('rgba(0,0,0,.55)', '#060a16').replaceAll('rgba(0,0,0,.7)', '#0b1226');
 
 // Cartes fictives (pas de vrais combattants en pub) : silhouette + drapeau, comme dans l'appli.
 const fake = (rarity, name, team, pos, flag) => fightCardHtml({ id: `ad-${rarity}`, name, rarity, sport: 'mma', team, national: true, pos }, { flag });
@@ -421,6 +439,34 @@ const ADS = [
       <div class="gt"><b>D</b><div class="oct" style="background-image:url(https://flagcdn.com/w320/br.png)"></div><strong>Anderson Silva</strong><small>Brésil</small></div>
     </div>
     <div class="ps-line" style="top:1230px"><b>Défends ton choix en commentaire.</b></div>` },
+  { id: 'affiche-feed', fmt: 'portrait', label: 'Affiche · Toi vs ton pote (4:5)', html: `
+    <div class="af-bg"></div>
+    <svg class="af-cage" viewBox="0 0 400 400" style="top:120px"><path d="M117 8h166l109 109v166L283 392H117L8 283V117z"/><path d="M128 36h144l92 92v144l-92 92H128l-92-92V128z" stroke-dasharray="6 8"/></svg>
+    ${psLogo()}
+    <div class="ps-kicker" style="top:170px;color:#c9d4ea">Main event · BeltChase</div>
+    <div class="ps-big" style="top:230px;font-size:96px">Qui connaît le mieux <em>le combat&nbsp;?</em></div>
+    <div class="af-sil l" style="top:470px">${fighterSolid}</div>
+    <div class="af-sil r" style="top:470px">${fighterSolid}</div>
+    <div class="af-name" style="left:80px;top:850px"><small>Coin rouge</small>Toi</div>
+    <div class="af-name" style="right:80px;top:850px;text-align:right"><small>Coin bleu</small>Ton pote</div>
+    <div class="af-vs" style="top:640px">VS</div>
+    <div class="af-date" style="top:1010px"><em>03.12</em></div>
+    <div class="af-card" style="top:1165px"><span>Pronos</span>·<span>Actu</span>·<span>Cartes</span>·<span>Rangs</span></div>
+    <div class="ps-kicker" style="top:1240px;font-size:28px">beltchase.com · gratuit · sans argent réel</div>` },
+  { id: 'affiche-story', label: 'Affiche · Toi vs ton pote (9:16)', html: `
+    <div class="af-bg"></div>
+    <svg class="af-cage" viewBox="0 0 400 400" style="top:400px"><path d="M117 8h166l109 109v166L283 392H117L8 283V117z"/><path d="M128 36h144l92 92v144l-92 92H128l-92-92V128z" stroke-dasharray="6 8"/></svg>
+    ${psLogo()}
+    <div class="ps-kicker" style="top:450px;color:#c9d4ea">Main event · BeltChase</div>
+    <div class="ps-big" style="top:510px;font-size:96px">Qui connaît le mieux <em>le combat&nbsp;?</em></div>
+    <div class="af-sil l" style="top:750px">${fighterSolid}</div>
+    <div class="af-sil r" style="top:750px">${fighterSolid}</div>
+    <div class="af-name" style="left:80px;top:1130px"><small>Coin rouge</small>Toi</div>
+    <div class="af-name" style="right:80px;top:1130px;text-align:right"><small>Coin bleu</small>Ton pote</div>
+    <div class="af-vs" style="top:920px">VS</div>
+    <div class="af-date" style="top:1290px"><em>03.12</em></div>
+    <div class="af-card" style="top:1445px"><span>Pronos</span>·<span>Actu</span>·<span>Cartes</span>·<span>Rangs</span></div>
+    <div class="ps-kicker" style="top:1520px;font-size:28px">beltchase.com · gratuit · sans argent réel</div>` },
   { id: 'og-concours', fmt: 'og', label: 'Aperçu des liens partagés (1200 × 630)', html: `
     <div class="ad-slash" style="left:820px"></div>
     <div class="og-mark">${markSvg()}<b>BELT<span>CHASE</span></b></div>
