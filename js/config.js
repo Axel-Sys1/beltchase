@@ -52,7 +52,7 @@ export const CONFIG = {
   // « Espace publicitaire » à sa taille. Passer à Google AdSense : voir README.md, « Publicité ».
   ADS: {
     enabled: true,                       // false : aucun emplacement
-    client: '',                          // identifiant éditeur AdSense « ca-pub-… » (vide : encarts seulement, rien chez Google)
+    client: 'ca-pub-3067182481592273', // identifiant éditeur AdSense (compte axel.sirieys, créé le 05/11/2026)
     slots: { top: '', side: '', bottom: '' }, // id des blocs d'annonces
     hosts: ['beltchase.com', 'www.beltchase.com'], // vraies annonces seulement ici (ailleurs : encarts)
     personalized: false,                 // public dès 15 ans : annonces non personnalisées
