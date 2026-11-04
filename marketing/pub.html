@@ -186,6 +186,28 @@
   .af-date em { font-style: inherit; padding: 0 .06em; background: var(--gold-grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
   .af-card { position: absolute; left: 90px; right: 90px; display: flex; justify-content: center; gap: 18px; font: 700 34px/1 var(--display); letter-spacing: .14em; text-transform: uppercase; color: #fff; }
   .af-card span { color: var(--accent); }
+
+  /* Carrousel épinglé « BeltChase en 30 secondes » : C'est quoi ? · Ce que tu y fais · Ce que tu gagnes · Le lien */
+  .ep-step { position: absolute; left: 0; right: 0; text-align: center; font: 800 34px/1 var(--display); letter-spacing: .22em; text-transform: uppercase; color: var(--accent); }
+  .ep-box { position: absolute; left: 90px; right: 90px; padding: 34px; border-radius: 32px; background: linear-gradient(180deg, #15284f, #0f1f40); border: 3px solid #2d4a7c; box-shadow: 0 30px 60px -30px #000; }
+  .ep-nw { display: flex; align-items: center; gap: 22px; padding: 18px 0; border-bottom: 2px solid rgba(255,255,255,.06); font: 700 36px/1.2 Barlow, sans-serif; }
+  .ep-nw:last-child { border: 0; }
+  .ep-nw small { display: block; font: 600 26px/1 Barlow, sans-serif; color: #8a9abb; margin-top: 8px; }
+  .ep-nw .live { flex: none; display: inline-flex; align-items: center; gap: 10px; padding: 8px 14px; border-radius: 8px; background: #e8283f; color: #fff; font: 800 24px/1 var(--display); letter-spacing: .1em; text-transform: uppercase; }
+  .ep-nw .live::before { content: ''; width: 10px; height: 10px; border-radius: 50%; background: #fff; }
+  .ep-pick { display: grid; gap: 16px; }
+  .ep-pick div { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+  .ep-pick span { padding: 20px 6px; border-radius: 14px; background: #0b1733; border: 3px solid #20365f; text-align: center; font: 700 32px/1 Barlow, sans-serif; }
+  .ep-pick .on { background: var(--gold-grad); border-color: #ffe08a; color: #08122a; }
+  .ep-pick label { font: 700 26px/1 var(--display); letter-spacing: .14em; text-transform: uppercase; color: #8a9abb; }
+  .ep-perks { position: absolute; left: 90px; right: 90px; display: grid; gap: 20px; }
+  .ep-perks div { display: flex; align-items: center; gap: 26px; padding: 26px 30px; border-radius: 26px; background: linear-gradient(180deg, #15284f, #0f1f40); border: 3px solid #2d4a7c; font: 700 40px/1.2 Barlow, sans-serif; }
+  .ep-perks i { flex: none; font-size: 60px; font-style: normal; }
+  .ep-perks small { display: block; font: 600 28px/1.25 Barlow, sans-serif; color: #8a9abb; margin-top: 6px; }
+  .ep-swipe { position: absolute; right: 70px; bottom: 70px; font: 800 34px/1 var(--display); letter-spacing: .14em; text-transform: uppercase; color: #c9d4ea; }
+  .ep-dots { position: absolute; left: 70px; bottom: 82px; display: flex; gap: 10px; }
+  .ep-dots i { width: 14px; height: 14px; border-radius: 50%; background: rgba(255,255,255,.25); }
+  .ep-dots i.on { background: var(--accent); width: 40px; border-radius: 8px; }
   /* Profil */
   .ad.square .logo-big { position: absolute; inset: 0; display: grid; place-items: center; }
   .ad.square .logo-big svg { width: 760px; height: 760px; filter: drop-shadow(0 30px 60px rgba(242,182,48,.3)); }
@@ -467,6 +489,53 @@ const ADS = [
     <div class="af-date" style="top:1290px"><em>03.12</em></div>
     <div class="af-card" style="top:1445px"><span>Pronos</span>·<span>Actu</span>·<span>Cartes</span>·<span>Rangs</span></div>
     <div class="ps-kicker" style="top:1520px;font-size:28px">beltchase.com · gratuit · sans argent réel</div>` },
+  { id: 'ep-1', fmt: 'portrait', label: 'Épinglé 1/5 · C\'est quoi ?', html: `
+    <div class="logo-big" style="position:absolute;left:50%;top:230px;width:300px;height:300px;transform:translateX(-50%);filter:drop-shadow(0 30px 60px rgba(242,182,48,.35))">${markSvg().replace('<svg', '<svg style="width:100%;height:100%"')}</div>
+    <div class="ps-kicker" style="top:600px">BeltChase en 30 secondes</div>
+    <div class="ps-big" style="top:670px;font-size:118px">Le site des fans <em>de MMA &amp; boxe</em></div>
+    <div class="ps-line" style="top:990px">L'actu, les pronos entre potes, les cartes.<br><b>Gratuit. Ouverture le 3 décembre.</b></div>
+    <div class="ep-dots"><i class="on"></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i></div><div class="ep-swipe">Swipe →</div>` },
+  { id: 'ep-2', fmt: 'portrait', label: 'Épinglé 2/5 · Actu', html: `
+    ${psLogo()}
+    <div class="ep-step" style="top:190px">01 · L'actu</div>
+    <div class="ps-big" style="top:250px;font-size:108px">Toute l'actu <em>au même endroit</em></div>
+    <div class="ep-box" style="top:520px">
+      <div class="ep-nw"><b class="live">En direct</b><div>La carte complète du prochain UFC<small>il y a 12 min</small></div></div>
+      <div class="ep-nw"><b class="live">En direct</b><div>Les résultats de la soirée de boxe<small>il y a 1 h</small></div></div>
+      <div class="ep-nw"><b class="live">En direct</b><div>Le classement des lourds bouge<small>il y a 3 h</small></div></div>
+    </div>
+    <div class="ps-line" style="top:1150px">MMA, UFC, boxe, kick, JJB. <b>Mis à jour en continu.</b></div>
+    <div class="ep-dots"><i class=""></i><i class="on"></i><i class=""></i><i class=""></i><i class=""></i></div>` },
+  { id: 'ep-3', fmt: 'portrait', label: 'Épinglé 3/5 · Pronos et rangs', html: `
+    ${psLogo()}
+    <div class="ep-step" style="top:190px">02 · Tes pronos</div>
+    <div class="ps-big" style="top:250px;font-size:108px">Prouve que tu <em>connais le combat</em></div>
+    <div class="ep-box ep-pick" style="top:530px">
+      <label>Le vainqueur</label><div style="grid-template-columns:1fr 1fr"><span class="on">Coin rouge</span><span>Coin bleu</span></div>
+      <label>La méthode</label><div><span class="on">KO</span><span>Soumission</span><span>Décision</span></div>
+      <label>Le round</label><div style="grid-template-columns:repeat(5,1fr)"><span>R1</span><span class="on">R2</span><span>R3</span><span>R4</span><span>R5</span></div>
+    </div>
+    <div class="ps-line" style="top:1140px">Bon prono : tu montes. De Fer à Radiant.<br><b>Défie tes potes dans tes ligues.</b></div>
+    <div class="ep-dots"><i class=""></i><i class=""></i><i class="on"></i><i class=""></i><i class=""></i></div>` },
+  { id: 'ep-4', fmt: 'portrait', label: 'Épinglé 4/5 · Cartes', html: `
+    ${psLogo()}
+    <div class="ep-step" style="top:190px">03 · Les cartes</div>
+    <div class="ps-big" style="top:250px;font-size:108px">151 cartes <em>à collectionner</em></div>
+    <div class="ma-fan" style="top:520px;--cw:300px">${fake('epique', L('Le Sniper'), 'Brésil', 'Poids légers', '🇧🇷')}${fake('legendaire', L('La Machine'), 'États-Unis', 'Poids lourds', '🇺🇸')}${fake('mythique', L('Ton Champion'), 'France', 'Poids moyens', '🇫🇷')}</div>
+    <div class="ps-line" style="top:1110px">De commune à mythique. <b>MMA, boxe, kick, JJB, lutte.</b></div>
+    <div class="ep-dots"><i class=""></i><i class=""></i><i class=""></i><i class="on"></i><i class=""></i></div>` },
+  { id: 'ep-5', fmt: 'portrait', label: 'Épinglé 5/5 · Inscris-toi', html: `
+    ${psLogo()}
+    <div class="ep-step" style="top:190px">Inscris-toi maintenant</div>
+    <div class="ps-big" style="top:250px;font-size:104px">Les premiers <em>sont avantagés</em></div>
+    <div class="ep-perks" style="top:510px">
+      <div><i>🔒</i><span>Ton pseudo réservé<small>Personne ne pourra te le prendre</small></span></div>
+      <div><i>👑</i><span>Le statut OG<small>Cadre et titre exclusifs, à vie</small></span></div>
+      <div><i>⚡</i><span>Un bonus de départ<small>Pour démarrer plus fort que les autres</small></span></div>
+    </div>
+    <div class="ma-cta" style="top:1050px">Lien en bio</div>
+    <div class="ps-kicker" style="top:1190px;font-size:28px">Gratuit · sans argent réel · 3 décembre</div>
+    <div class="ep-dots"><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class="on"></i></div>` },
   { id: 'og-concours', fmt: 'og', label: 'Aperçu des liens partagés (1200 × 630)', html: `
     <div class="ad-slash" style="left:820px"></div>
     <div class="og-mark">${markSvg()}<b>BELT<span>CHASE</span></b></div>
