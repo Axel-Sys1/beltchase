@@ -312,6 +312,7 @@ export default {
 "Combats du moment": "Fights right now",
 "Les combats à venir": "Upcoming fights",
 "Voir les {n} combats et parier": "See all {n} fights and bet",
+"Voir le combat et parier": "See the fight and bet",
 "Les vrais combats": "Real fights",
 "UFC, PFL, boxe, et les grandes soirées de kick, JJB et lutte : résultats officiels.": "UFC, PFL, boxing, plus the big kickboxing, BJJ and wrestling events: official results.",
 "KO, soumission ou décision ?": "KO, submission or decision?",

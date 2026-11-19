@@ -15,7 +15,7 @@ import { spotlight } from '../../services/spotlight.js';
 import { realNow } from '../../store.js';
 import { cardHtml } from '../cards.js';
 import { CARDS, cardById } from '../../services/cards.js';
-import { t } from '../../i18n.js';
+import { t, tn } from '../../i18n.js';
 import { langPicker } from '../langPicker.js';
 
 // Les matchs du moment, visibles sans pseudo : en direct d'abord, puis les gros matchs à venir.
@@ -38,7 +38,7 @@ function guestMatches(s) {
         <h2 class="section-title">${t('Les combats à venir')}</h2>
         <div class="match-grid">${soon.map(card).join('')}</div>` : ''}
       <button class="btn btn-primary btn-lg guest-cta" data-action="guest-pick" type="button">
-        ${t('Voir les {n} combats et parier', { n: fmt(real.length) })}
+        ${tn(real.length, 'Voir le combat et parier', 'Voir les {n} combats et parier', { n: fmt(real.length) })}
       </button>
     </section>`;
 }
@@ -148,8 +148,8 @@ export function renderOnboarding(s) {
         ${showcase.length ? `
         <div class="landing-cards" aria-label="${t('Exemples de cartes à collectionner')}">
           ${showcase.map((c, i) => `<div class="lc lc-${i}">${cardHtml(c)}</div>`).join('')}
-          <span class="lc-caption">${t('{n} cartes à collectionner · MMA, boxe, kick, JJB…', { n: CARDS.length })}</span>
-        </div>` : ''}
+        </div>
+        <p class="lc-caption">${t('{n} cartes à collectionner · MMA, boxe, kick, JJB…', { n: CARDS.length })}</p>` : ''}
         <div class="landing-ladder" aria-label="${t('Les rangs, de Fer à Radiant')}">
           ${ladder.map((r, i) => `<span style="animation-delay:${0.15 + i * 0.07}s">${rankEmblem(r)}</span>`).join('')}
         </div>

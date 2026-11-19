@@ -324,6 +324,7 @@ export default {
 "Combats du moment": "نزالات اللحظة",
 "Les combats à venir": "النزالات القادمة",
 "Voir les {n} combats et parier": "شاهد النزالات الـ{n} وراهن",
+"Voir le combat et parier": "شاهد النزال وراهن",
 "Les vrais combats": "نزالات حقيقية",
 "UFC, PFL, boxe, et les grandes soirées de kick, JJB et lutte : résultats officiels.": "UFC وPFL والملاكمة، وأكبر أمسيات الكيك والجوجيتسو والمصارعة: نتائج رسمية.",
 "KO, soumission ou décision ?": "ضربة قاضية أم استسلام أم قرار؟",

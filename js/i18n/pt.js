@@ -324,6 +324,7 @@ export default {
 "Combats du moment": "Lutas do momento",
 "Les combats à venir": "Próximas lutas",
 "Voir les {n} combats et parier": "Ver as {n} lutas e apostar",
+"Voir le combat et parier": "Ver a luta e apostar",
 "Les vrais combats": "Lutas reais",
 "UFC, PFL, boxe, et les grandes soirées de kick, JJB et lutte : résultats officiels.": "UFC, PFL, boxe e os grandes eventos de kick, jiu-jitsu e luta: resultados oficiais.",
 "KO, soumission ou décision ?": "KO, finalização ou decisão?",

@@ -288,7 +288,7 @@ a { color: var(--accent); }
 .pre-col .pv { padding: 12px; box-shadow: none; }
 .pre-col .pv-oct { width: 52px; height: 52px; }
 .pre-col .pv-f strong { font-size: 19px; }
-.pre-col .pre-cards { height: 180px; margin: 4px 0 0; }
+.pre-col .pre-cards { height: 180px; margin: 4px 0 24px; } /* les cartes inclinées dépassent du bas */
 .pre-col .pre-cards .lc { width: 104px; margin: 0 -14px; }
 .pre-col .pre-ladder { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px 6px; padding: 12px 6px; }
 .pre-col .pre-emblem { width: 36px; height: 41px; }

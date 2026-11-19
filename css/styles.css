@@ -1674,7 +1674,7 @@ h1.tagline { font: inherit; font-size: 16px; letter-spacing: normal; margin: 1em
 }
 .onboarding.has-bg .landing-title, .onboarding.has-bg .brand-big { text-shadow: 0 4px 24px rgba(0, 0, 0, 0.7); }
 .onboarding.has-bg .tagline { color: #e9e2f5; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8); }
-.landing-cards { position: relative; display: flex; justify-content: center; align-items: flex-end; height: 190px; margin: 6px 0 30px; }
+.landing-cards { position: relative; display: flex; justify-content: center; align-items: flex-end; height: 190px; margin: 6px 0 14px; }
 .lc { width: 112px; margin: 0 -14px; transition: transform 0.3s var(--ease-out); filter: drop-shadow(0 12px 18px rgba(0, 0, 0, 0.55)); }
 .lc .pc-name { font-size: 12px; }
 .lc .pc-team { font-size: 9px; }
@@ -1683,7 +1683,8 @@ h1.tagline { font: inherit; font-size: 16px; letter-spacing: normal; margin: 1em
 .lc-2 { transform: rotate(12deg) translateY(10px); }
 .landing-cards:hover .lc-0 { transform: rotate(-16deg) translate(-12px, 6px); }
 .landing-cards:hover .lc-2 { transform: rotate(16deg) translate(12px, 6px); }
-.lc-caption { position: absolute; bottom: -24px; left: 0; right: 0; text-align: center; font-size: 12px; font-weight: 700; color: var(--muted); }
+/* Sous l'éventail (dans le flux) : les cartes inclinées dépassent du bas de leur boîte. */
+.lc-caption { margin: 0; text-align: center; font-size: 12px; font-weight: 700; color: var(--muted); }
 .landing-hero { padding-bottom: 18px; }
 @media (min-width: 900px) {
   .landing-bg { inset: 0 0 auto 30%; background-position: 60% 20%; opacity: 0.7;
@@ -2058,7 +2059,7 @@ h1.tagline { font: inherit; font-size: 16px; letter-spacing: normal; margin: 1em
 .album-rar-mythique span { background: linear-gradient(90deg, #ff7ab8, #ffd66b, #7dffc4, #7cd2ff); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .album-card { padding: 0; border: 0; background: none; text-align: left; }
 .credits-list { margin: 8px 0 0; padding-left: 18px; columns: 2 260px; font-size: 13px; color: var(--muted); }
-.credits-list li { margin-bottom: 4px; break-inside: avoid; }
+.credits-list li { margin-bottom: 4px; break-inside: avoid; overflow-wrap: anywhere; }
 
 /* Choix de la langue : menu à drapeaux (langPicker.js). */
 .lang-menu { position: relative; display: inline-block; }

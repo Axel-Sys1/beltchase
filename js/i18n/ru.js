@@ -324,6 +324,7 @@ export default {
 "Combats du moment": "Бои сейчас",
 "Les combats à venir": "Ближайшие бои",
 "Voir les {n} combats et parier": "Все бои ({n}) и ставки",
+"Voir le combat et parier": "Смотреть бой и ставить",
 "Les vrais combats": "Реальные бои",
 "UFC, PFL, boxe, et les grandes soirées de kick, JJB et lutte : résultats officiels.": "UFC, PFL, бокс и крупные турниры по кику, БЖЖ и борьбе: официальные результаты.",
 "KO, soumission ou décision ?": "КО, сабмишн или решение?",

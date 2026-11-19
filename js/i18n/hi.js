@@ -324,6 +324,7 @@ export default {
 "Combats du moment": "अभी के मुकाबले",
 "Les combats à venir": "आने वाले मुकाबले",
 "Voir les {n} combats et parier": "सभी {n} मुकाबले देखें और दांव लगाएँ",
+"Voir le combat et parier": "मुकाबला देखें और दांव लगाएँ",
 "Les vrais combats": "असली मुकाबले",
 "UFC, PFL, boxe, et les grandes soirées de kick, JJB et lutte : résultats officiels.": "UFC, PFL, बॉक्सिंग, और किक, BJJ व कुश्ती के बड़े इवेंट: आधिकारिक नतीजे।",
 "KO, soumission ou décision ?": "KO, सबमिशन या फ़ैसला?",

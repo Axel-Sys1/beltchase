@@ -324,6 +324,7 @@ export default {
 "Combats du moment": "正在进行的比赛",
 "Les combats à venir": "即将开始的比赛",
 "Voir les {n} combats et parier": "查看全部 {n} 场比赛并竞猜",
+"Voir le combat et parier": "查看比赛并竞猜",
 "Les vrais combats": "真实比赛",
 "UFC, PFL, boxe, et les grandes soirées de kick, JJB et lutte : résultats officiels.": "UFC、PFL、拳击，以及踢拳、柔术和摔跤的重要赛事：官方结果。",
 "KO, soumission ou décision ?": "KO、降服还是判定？",
